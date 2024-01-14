@@ -1,7 +1,7 @@
 
 import { createApp } from 'vue';
 import App from './App.vue';
-// import router from './router'
+import router from './router'
 
 // ant design
 import Antd from 'ant-design-vue';
@@ -18,7 +18,19 @@ import { i18n } from './languages/i18n';
 import { useI18n } from 'vue-i18n';
 // day week month
 import dayjs from 'dayjs';
+import weekday from 'dayjs/plugin/weekday';
+import localeData from "dayjs/plugin/localeData";
+import customParseFormat from "dayjs/plugin/customParseFormat";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
 
+dayjs.extend(weekday);
+dayjs.extend(localeData);
+dayjs.extend(customParseFormat);
+dayjs.extend(utc);
+dayjs.extend(timezone);
+dayjs.locale("en");
+dayjs.locale("vi");
 
 library.add(faUserSecret);
 // createApp
@@ -31,7 +43,7 @@ const app = createApp(App, {
 
 app.component('font-awesome-icon', FontAwesomeIcon);
 // use
-// app.use(router);
+app.use(router);
 app.use(Antd);
 app.use(i18n);
 //mount
