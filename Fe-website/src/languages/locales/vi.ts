@@ -1,4 +1,5 @@
 export const vi = {
-    Login: "Đăng nhập",
-    
+    SignIn: "Đăng nhập",
+    SignUp: "Đăng ký",
+    Home: "Trang chủ",
 };

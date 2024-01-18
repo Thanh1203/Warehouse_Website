@@ -10,6 +10,7 @@ import 'ant-design-vue/dist/reset.css';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faUserSecret } from '@fortawesome/free-solid-svg-icons';
+import {fas} from "@fortawesome/free-solid-svg-icons";
 // style
 import "./assets/styles/tailwind.css";
 import "./style.scss";
@@ -33,6 +34,7 @@ dayjs.locale("en");
 dayjs.locale("vi");
 
 library.add(faUserSecret);
+library.add(fas);
 // createApp
 const app = createApp(App, {
     setup() {

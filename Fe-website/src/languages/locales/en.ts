@@ -1,3 +1,5 @@
 export const en = {
-    Login: "Login"
+    SignIn: "Sign iN",
+    SignUp: "Sign up",
+    Home: "Home",
 };
