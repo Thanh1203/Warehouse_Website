@@ -2,10 +2,10 @@
 import { createApp } from 'vue';
 import App from './App.vue';
 import router from './router'
-
-// ant design
+// antd
 import Antd from 'ant-design-vue';
 import 'ant-design-vue/dist/reset.css';
+
 // icon font awesome
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
@@ -46,7 +46,7 @@ const app = createApp(App, {
 app.component('font-awesome-icon', FontAwesomeIcon);
 // use
 app.use(router);
-app.use(Antd);
 app.use(i18n);
+app.use(Antd);
 //mount
 app.mount('#app');

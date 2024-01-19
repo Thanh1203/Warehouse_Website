@@ -5,6 +5,9 @@ import vue from '@vitejs/plugin-vue'
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  server: {
+    port: 5173,
+  },
   plugins: [
     vue(),
   ],
@@ -16,7 +19,7 @@ export default defineConfig({
   css: {
     preprocessorOptions: {
         scss: {
-            additionalData: `@import "@/assets/styles/global.scss";`,
+            additionalData: `@import "@/assets/styles/_global.scss"; @import "@/assets/styles/_variables.scss";`,
         },
     },
   },
