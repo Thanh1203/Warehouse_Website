@@ -30,6 +30,23 @@ export default (): RouteRecordRaw[] => {
                 title: translate("Home"),
                 layout: defaultLayout,
             }
+        },
+        {
+            path: "/information",
+            name: "information",
+            component: () => import("./information/index.vue"),
+            meta: {
+                tile: translate("Information"),
+            }
+        },
+        {
+            path: "/setting",
+            name: "setting",
+            component: () => import("./setting/index.vue"),
+            meta: {
+                title: translate("Setting"),
+                layout: defaultLayout,
+            }
         }
     ]
 };

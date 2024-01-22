@@ -1,18 +1,23 @@
 <template>
-<div class="layOut-Container">
-    <div>
-        
-    </div>
-    <div class="tw-grow">
-        <slot></slot>
-    </div>
+<div class="default-layout">
+  <SlideMenu/>
+  <div class="body-layout"></div>
 </div>
 </template>
 <script setup lang="ts">
+import SlideMenu from "@/components/slide-menu/index.vue"
 </script>
 <style scoped lang="scss">
-.layOut-Container {
-    display: flex;
-
+.default-layout {
+  height: 100vh;
+  width: 100%;
+  overflow: auto;
+  display: flex;
+  .body-layout {
+    flex-grow: 1;
+    background-color: beige;
+    height: 100vh;
+    width: 100%;
+  }
 }
 </style>

@@ -10,7 +10,8 @@ import 'ant-design-vue/dist/reset.css';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faUserSecret } from '@fortawesome/free-solid-svg-icons';
-import {fas} from "@fortawesome/free-solid-svg-icons";
+import { fas } from "@fortawesome/free-solid-svg-icons";
+import { faR } from "@fortawesome/free-solid-svg-icons";
 // style
 import "./assets/styles/tailwind.css";
 import "./style.scss";
@@ -24,6 +25,7 @@ import localeData from "dayjs/plugin/localeData";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
+import { far } from '@fortawesome/free-regular-svg-icons';
 
 dayjs.extend(weekday);
 dayjs.extend(localeData);
@@ -35,6 +37,7 @@ dayjs.locale("vi");
 
 library.add(faUserSecret);
 library.add(fas);
+library.add(far);
 // createApp
 const app = createApp(App, {
     setup() {
