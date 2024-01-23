@@ -8,7 +8,9 @@ export default (): RouteRecordRaw[] => {
             component: () => import("@/views/static-page/404/index.vue"),
             props: true,
             meta: {
-
+                hideSidebar: true,
+                title: "404 Not found",
+                screenId: "",
             }
         }
 

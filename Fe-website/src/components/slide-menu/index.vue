@@ -3,9 +3,8 @@
     <div class="menu-header">
         <a-dropdown class="tw-w-full tw-h-full tw-px-[12px]" :trigger="['click']" :placement="'rightTop'">
             <div class="tw-w-full tw-h-full tw-flex tw-items-center tw-justify-between">
-                <font-awesome-icon :icon="['far', 'circle-user']" size="2xl" style="color: #000;"/>
-                <h2 class="tw-font-[500]">Nguyễn Văn A</h2> 
-                <font-awesome-icon :icon="['fas', 'arrow-right']" style="color: #000;"/>
+                <h3 class="tw-font-[400]">Nguyễn Đức Thành</h3> 
+                <font-awesome-icon :icon="['fas', 'bars']" style="color: #000;"/>
             </div>
             <template #overlay>
                 <a-menu class="tw-ml-[12px]">
@@ -24,11 +23,16 @@
         </a-dropdown>
     </div>
     <div class="menu-body">
-        <AntdMenu :items="itemsMenu"/>
+        <AntdMenu :items="menuAdmin" :mode="'vertical'" v-model:selectedKeys="selectedKeys"
+        v-model:openKeys="openKeys"
+        :force-sub-menu-render="false" :inline-collapsed="false"
+        :multiple="false" :selectable="true" :theme="'light'"
+        @handle-click="handleClickMenu"
+        />
     </div>
     <div class="menu-footer">
         <div class="tw-flex tw-items-center tw-justify-center" @click="handleOpenSetting">
-            <font-awesome-icon :icon="['fas', 'gear']" size="xl" style="color: #000;"/>
+            <font-awesome-icon :icon="['fas', 'gear']" style="color: #000;"/>
             <span class="tw-ml-[12px] tw-leading-6 tw-pt-1">
                 {{ translate("Setting") }}
             </span>
@@ -41,40 +45,17 @@ import { translate } from '@/languages/i18n';
 import { useRouter } from 'vue-router';
 import AntdMenu from '@/components/antd-menu/index.vue'
 import { ref } from 'vue';
-import { h } from 'vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { faChartPie, faChartSimple, faUsers, faWarehouse } from '@fortawesome/free-solid-svg-icons';
-import { faProductHunt } from '@fortawesome/free-brands-svg-icons';
+import { menuAdmin } from '@/utils/common';
 
 const router = useRouter();
+const selectedKeys = ref<string[]>(['DASHBOARD']);
+const openKeys = ref<string[]>(['DASHBOARD']);
 
-const itemsMenu = ref([
-    {
-        key: 1,
-        label: translate("Dashboard"),
-        icon: () => h(FontAwesomeIcon, { icon: faChartSimple, size: 'xl' }),
-    },
-    {
-        key: 2,
-        label: translate("Personnel"),
-        icon: () => h(FontAwesomeIcon, {icon: faUsers, size: 'xl'}),
-    },
-    {
-        key: 3,
-        label: translate("Warehouse"),
-        icon: () => h(FontAwesomeIcon, {icon: faWarehouse, size: 'xl'}),
-    },
-    {
-        key: 4,
-        label: translate("Products"),
-        icon: () => h(FontAwesomeIcon, {icon: faProductHunt, size: 'xl'}),
-    },
-    {
-        key: 5,
-        label: translate("StatisticsReports"),
-        icon: () => h(FontAwesomeIcon, {icon: faChartPie, size: 'xl'}),
-    },
-])
+const handleClickMenu = (ev: any) => {
+    
+    console.log(ev.key);
+}
 
 const handleLogOut = () => {
     router.push("/login");
@@ -93,20 +74,22 @@ const handleOpenSetting = () => {
     flex-direction: column;
     justify-content: space-between;
     .menu-header {
-        width: 100%;
+        width: 250px;
         border-bottom: 1px solid #f2f2f2;
         cursor: pointer;
-        padding: 24px 0;
+        padding: 12px 0;
     }
     .menu-body {
         flex-grow: 1;
+        width: 250px;
     }
     .menu-footer {
-        padding: 24px 12px;
+        width: 250px;
+        padding: 12px 12px;
         display: flex;
         align-items: center;
         font-size: 16px;
-        font-weight: 500;
+        font-weight: 400;
         cursor: pointer;
         border-top: 1px solid #f2f2f2;
     }

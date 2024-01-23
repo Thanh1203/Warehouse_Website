@@ -1,7 +1,9 @@
 <template>
 <div class="default-layout">
   <SlideMenu/>
-  <div class="body-layout"></div>
+  <div class="body-layout">
+    <slot></slot>
+  </div>
 </div>
 </template>
 <script setup lang="ts">

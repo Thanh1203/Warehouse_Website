@@ -17,4 +17,10 @@ const router = createRouter({
     // },
 });
 
+router.beforeEach((routeTo: any, routeFrom, next) => {
+    const title = routeTo?.meta?.title;
+    document.title = "" + title;
+    return next();
+})
+
 export default router;

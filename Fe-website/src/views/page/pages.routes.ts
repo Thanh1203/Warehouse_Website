@@ -9,25 +9,25 @@ export default (): RouteRecordRaw[] => {
             name: "signIn",
             component: () => import("./sign-in/index.vue"),
             meta: {
-                title: translate("login"),
+                title: translate("SignIn"),
                 publicRoute: true,
             },
         },
         {
             path: "/sign-up",
-            name: "signUp",
+            name: "SignUp",
             component: () => import("./sign-up/index.vue"),
             meta: {
-                title: translate("signUp"),
+                title: translate("SignUp"),
                 publicRoute: true,
             }
         },
         {
             path: "/",
-            name: "home",
-            component: () => import("./home/index.vue"),
+            name: "dashboard",
+            component: () => import("./dashboard/index.vue"),
             meta: {
-                title: translate("Home"),
+                title: translate("Dashboard"),
                 layout: defaultLayout,
             }
         },
@@ -36,7 +36,7 @@ export default (): RouteRecordRaw[] => {
             name: "information",
             component: () => import("./information/index.vue"),
             meta: {
-                tile: translate("Information"),
+                title: translate("Information"),
             }
         },
         {
@@ -45,6 +45,69 @@ export default (): RouteRecordRaw[] => {
             component: () => import("./setting/index.vue"),
             meta: {
                 title: translate("Setting"),
+                layout: defaultLayout,
+            }
+        },
+        {
+            path: "/customer-report",
+            name: "customer report",
+            component: () => import("./reports/customer-report/index.vue"),
+            meta: {
+                title: translate("CustomerReport"),
+                layout: defaultLayout,
+            }
+        },
+        {
+            path: "/product-report",
+            name: "product report",
+            component: () => import("./reports/product-report/index.vue"),
+            meta: {
+                title: translate("ProductReport"),
+                layout: defaultLayout,
+            }
+        },
+        {
+            path: "/sale-report",
+            name: "sale report",
+            component: () => import("./reports/sale-report/index.vue"),
+            meta: {
+                title: translate("SalesReport"),
+                layout: defaultLayout,
+            }
+        },
+        {
+            path: "/personnal",
+            name: "personnal",
+            component: () => import("./personnel/index.vue"),
+            meta: {
+                title: translate("Personnel"),
+                layout: defaultLayout,
+            }
+        },
+        {
+            path: "/warehouse",
+            name: "warehouse",
+            component: () => import("./warehouse/index.vue"),
+            meta: {
+                title: translate("Warehouse"),
+                layout: defaultLayout,
+            }
+        },
+        {
+            path: "/product-category",
+            name: "product category",
+            component: () => import("./products/product-category/index.vue"),
+            meta: {
+                title: translate("ProductCategory"),
+                layout: defaultLayout,
+            }
+        },
+        {
+            path: "/product-information",
+            name: "product information",
+            component: () => import("./products/product-information/index.vue"),
+            meta: {
+                title: translate("ProductInformation"),
                 layout: defaultLayout,
             }
         }

@@ -1,9 +1,9 @@
 <template>
     <a-menu
-    v-model:openKeys="props.openKeys"
-    v-model:selectedKeys="props.selectedKeys"
+    v-model:openKeys="valueOpenKeys"
+    v-model:selectedKeys="valueSelectedKeys"
     :items="props.items"
-    @click="$emit('handleClick')"
+    @click="clickItem"
     :mode="props.mode"
     :forceSubMenuRender="props.forceSubMenuRender"
     :inlineCollapsed="props.inlineCollapsed"
@@ -13,6 +13,7 @@
 </template>
 <script setup lang="ts">
 import VueTypes from "vue-types";
+import { ref, watch } from "vue";
 
 const props = defineProps({
     openKeys: VueTypes.array.def([]),
@@ -28,9 +29,31 @@ const props = defineProps({
     subMenuOpenDelay: VueTypes.number.def(0)
 });
 const emit = defineEmits(['handleClick']);
+
+const clickItem = (ev: any) => {
+    emit('handleClick', ev);
+}
+
+const valueOpenKeys = ref(props.openKeys);
+const valueSelectedKeys = ref(props.selectedKeys);
+
+watch(
+    () => props.openKeys,
+    (val) => {
+        valueOpenKeys.value = val;
+    },
+)
+
+watch(
+    () => props.selectedKeys,
+    (val) => {
+        valueSelectedKeys.value = val;
+    }
+)
 </script>
 <style lang="scss">
 .ant-menu {
+    border: none !important;
     .ant-menu-title-content {
         font-size: 16px;
     }

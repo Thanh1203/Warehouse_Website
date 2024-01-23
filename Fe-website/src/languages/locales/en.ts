@@ -10,4 +10,9 @@ export const en = {
     Warehouse: "Warehouse",
     Products: "Products",
     StatisticsReports: "Statistics reports",
+    ProductCategory: "Product category",
+    ProductInformation: "Product information",
+    CustomerReport: "Customer report",
+    ProductReport: "Product report",
+    SalesReport: "Sales report",
 };
