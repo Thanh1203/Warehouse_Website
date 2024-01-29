@@ -23,12 +23,7 @@
         </a-dropdown>
     </div>
     <div class="menu-body">
-        <AntdMenu :items="menuAdmin" :mode="'vertical'" v-model:selectedKeys="selectedKeys"
-        v-model:openKeys="openKeys"
-        :force-sub-menu-render="false" :inline-collapsed="false"
-        :multiple="false" :selectable="true" :theme="'light'"
-        @handle-click="handleClickMenu"
-        />
+        <a-menu :items="menuAdmin" v-model:selectedKeys="selectedKeys" v-model:openKeys="openKeys" @click="handleClickMenu" :mode="'vertical'"/>
     </div>
     <div class="menu-footer">
         <div class="tw-flex tw-items-center tw-justify-center" @click="handleOpenSetting">
@@ -42,19 +37,24 @@
 </template>
 <script setup lang="ts">
 import { translate } from '@/languages/i18n';
-import { useRouter } from 'vue-router';
-import AntdMenu from '@/components/antd-menu/index.vue'
-import { ref } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+import { ref, watch, onMounted } from 'vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { menuAdmin } from '@/utils/common';
+import { PC_MENU } from '@/constants/pcMenu';
 
 const router = useRouter();
+const route = useRoute();
+
+
 const selectedKeys = ref<string[]>(['DASHBOARD']);
-const openKeys = ref<string[]>(['DASHBOARD']);
+const openKeys = ref<string[]>([]);
+
+const menuPath = structuredClone(PC_MENU);
 
 const handleClickMenu = (ev: any) => {
-    
-    console.log(ev.key);
+    const path = menuPath.find(i => i.key === ev.key);
+    router.push(path?.path || "/");
 }
 
 const handleLogOut = () => {
@@ -64,6 +64,15 @@ const handleLogOut = () => {
 const handleOpenSetting = () => {
     router.push("/setting");
 };
+
+const handleSelectMenu = (value: string) => {
+    const path: any = menuPath.find(i => i.path == value);
+    selectedKeys.value = [path?.key];
+}
+
+onMounted(() => {
+    handleSelectMenu(route.path);
+})
 </script>
 <style scoped lang="scss">
 .slide-menu {

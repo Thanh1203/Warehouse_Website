@@ -17,9 +17,10 @@ import SlideMenu from "@/components/slide-menu/index.vue"
   display: flex;
   .body-layout {
     flex-grow: 1;
-    background-color: beige;
+    background-color: #efefef;
     height: 100vh;
     width: 100%;
+    padding: 24px;
   }
 }
 </style>
