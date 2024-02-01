@@ -85,9 +85,9 @@ export default (): RouteRecordRaw[] => {
             }
         },
         {
-            path: "/warehouse",
-            name: "warehouse",
-            component: () => import("./warehouse/index.vue"),
+            path: "/warehouse-configuration",
+            name: "warehouse configuration",
+            component: () => import("./warehouse/warehouse-setting/index.vue"),
             meta: {
                 title: translate("Warehouse"),
                 layout: defaultLayout,
@@ -110,6 +110,24 @@ export default (): RouteRecordRaw[] => {
                 title: translate("ProductInformation"),
                 layout: defaultLayout,
             }
-        }
+        },
+        {
+            path: "/warehouse-import",
+            name: "warehouse import",
+            component: () => import("./warehouse/warehouse-import/index.vue"),
+            meta: {
+                title: translate(""),
+                layout: defaultLayout,
+            }
+        },
+        {
+            path: "/warehouse-export",
+            name: "warehouse export",
+            component: () => import("./warehouse/warehouse-export/index.vue"),
+            meta: {
+                title: translate(""),
+                layout: defaultLayout,
+            }
+        },
     ]
 };

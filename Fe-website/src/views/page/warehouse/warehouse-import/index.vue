@@ -1,3 +1,3 @@
-<template>Warehouse</template>
+<template>Warehouse import</template>
 <script setup lang="ts"></script>
 <style scoped lang="scss"></style>

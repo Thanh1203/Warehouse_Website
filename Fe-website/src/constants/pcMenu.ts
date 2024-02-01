@@ -20,10 +20,6 @@ export const PC_MENU = [
         path: "/personnal",
     },
     {
-        key: "WAREHOSE",
-        path: "/warehouse",
-    },
-    {
         key: "PRODUCTCATEGORY",
         path: "/product-category",
     },
@@ -31,4 +27,16 @@ export const PC_MENU = [
         key: "PRODUCTINFORMATION",
         path: "/product-information",
     },
+    {
+        key: "WAREHOUSECONFIGURATION",
+        path: "/warehouse-configuration",
+    },
+    {
+        key: "ENTERWAREHOUSE",
+        path: "/warehouse-import",
+    },
+    {
+        key: "EXPORTWAREHOUSE",
+        path: "/warehouse-export",
+    }
 ];

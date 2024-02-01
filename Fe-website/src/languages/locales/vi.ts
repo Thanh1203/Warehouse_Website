@@ -15,4 +15,7 @@ export const vi = {
     CustomerReport: "Báo cáo khách hàng",
     ProductReport: "Báo cáo sản phẩm",
     SalesReport: "Báo cáo doanh thu",
+    WarehouseConfiguration: "Cấu hình kho",
+    EnterWarehouse: "Nhập kho",
+    ExportWarehouse: "Xuất kho",
 };
