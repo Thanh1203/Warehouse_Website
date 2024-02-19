@@ -17,5 +17,7 @@ export const en = {
     SalesReport: "Sales report",
     WarehouseConfiguration: "Warehouse configuration",
     EnterWarehouse: "Enter warehouse",
-    ExportWarehouse: "Export from warehouse"
+    ExportWarehouse: "Export from warehouse",
+    CreateWarehouse: "Create warehouse",
+    WarehouseCode: "Warehouse code",
 };

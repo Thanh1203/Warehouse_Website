@@ -19,3 +19,54 @@
 .ant-btn-primary {
     background-color: #1677ff;
 }
+
+//filter section
+.filter-section {
+    .ant-form-item {
+        height: 60px;
+        margin-right: 12px;
+        .ant-input {
+            height: 30px;
+            margin-top: 8px;
+        }
+        .ant-select {
+            height: 30px;
+            margin-top: 8px;
+            .ant-select-selector {
+                height: 100%;
+            }
+        }
+    }
+}
+
+//antd btn
+.ant-btn {
+    border-radius: 12px;
+}
+
+//modal
+.ant-modal {
+    padding: 0;
+    // close
+    .ant-modal-close-x {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    //header
+    .ant-modal-header {
+        margin-bottom: 24px;
+        .ant-modal-title {
+            font-size: 20px;
+        }
+    }
+    // content
+    .ant-modal-content {
+        border-radius: 12px;
+        padding: 24px;
+    }
+    // footer
+    .ant-modal-footer {
+        margin-top: 24px;
+    }
+}

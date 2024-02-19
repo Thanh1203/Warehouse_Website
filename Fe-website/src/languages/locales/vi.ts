@@ -18,4 +18,6 @@ export const vi = {
     WarehouseConfiguration: "Cấu hình kho",
     EnterWarehouse: "Nhập kho",
     ExportWarehouse: "Xuất kho",
+    CreateWarehouse: "Tạo kho hàng",
+    WarehouseCode: "Mã kho",
 };
