@@ -1,42 +1,58 @@
 <template>
-<BaseModal :visible="isVisible" :after-close="handleClose" :title="translate('CreateWarehouse')">
-    <div class="tw-w-full tw-flex tw-items-center tw-justify-between tw-mb-6">
-        <div class="tw-basis-1/2 tw-flex tw-flex-col tw-items-start tw-justify-center tw-mr-4">
+<BaseModal :visible="isVisible" :title="translate('CreateWarehouse')" :defaultFooter="false" @cancel="$emit('closeModal')">
+    <div class="tw-w-full tw-flex tw-items-start tw-justify-between tw-mb-6">
+        <div class="tw-basis-1/2 tw-flex tw-flex-col tw-items-start tw-justify-start tw-mr-4">
             <span class="tw-mb-2">{{ translate('WarehouseCode') }}<span class="required-star">*</span></span>
-            <a-input class="tw-w-full"/>   
+            <div v-if="!isEdit" class="tw-w-full">
+                <a-input  class="tw-w-full" :status="v$.warehouseId.$error ? 'error' : ''" v-model:value="v$.warehouseId.$model"/>
+                <ErrorMess :params="[64]" :title="translate('WarehouseCode')" :validator="v$.warehouseId.$errors[0]?.$validator"/>
+            </div>
+            <span v-else>{{ state.warehouseId }}</span>
         </div>
-        <div class="tw-basis-1/2 tw-flex tw-flex-col tw-items-start tw-justify-center">
+        <div class="tw-basis-1/2 tw-flex tw-flex-col tw-items-start tw-justify-start">
             <span class="tw-mb-2">Tên kho hàng<span class="required-star">*</span></span>
-            <a-input class="tw-w-full"/>
+            <a-input class="tw-w-full" :status="v$.warehouseName.$error ? 'error' : ''" v-model:value="v$.warehouseName.$model"/>
+            <ErrorMess :params="[64]" :title="'Tên kho hàng'" :validator="v$.warehouseName.$errors[0]?.$validator"/>
         </div>
     </div>
-    <div class="tw-w-full tw-flex tw-flex-col tw-items-start tw-justify-center">
-        <span class="tw-mb-2">Địa chỉ<span class="required-star">*</span></span>
+    <div class="tw-w-full tw-flex tw-flex-col tw-items-start tw-justify-start tw-mb-6">
+        <span class="tw-mb-2">Vị trí<span class="required-star">*</span></span>
         <div class="tw-w-full tw-border tw-p-4 tw-rounded-xl">
-            <div class="tw-w-full tw-flex tw-items-center tw-justify-between tw-mb-6">
-                <div class="tw-basis-1/3 tw-flex tw-flex-col tw-items-start tw-justify-center tw-mr-4">
+            <div class="tw-w-full tw-flex tw-items-start tw-justify-between tw-mb-6">
+                <div class="tw-basis-1/2 tw-flex tw-flex-col tw-items-start tw-justify-start tw-mr-4">
                     <span class="tw-mb-2">Quốc gia<span class="required-star">*</span></span>
-                    <a-select class="tw-w-full"/>
+                    <a-select class="tw-w-full" :status="v$.Nation.$error ? 'error' : ''" v-model:value="v$.Nation.$model"/>
+                    <ErrorMess :params="[64]" :title="'Quốc gia'" :validator="v$.Nation.$errors[0]?.$validator"/>
                 </div>
-                <div class="tw-basis-1/3 tw-flex tw-flex-col tw-items-start tw-justify-center tw-mr-4">
-                    <span class="tw-mb-2">Tỉnh / Thành phố<span class="required-star">*</span></span>
-                    <a-select class="tw-w-full"/>
-                </div>
-                <div class="tw-basis-1/3 tw-flex tw-flex-col tw-items-start tw-justify-center">
-                    <span class="tw-mb-2">Quận / Huyện<span class="required-star">*</span></span>
-                    <a-select class="tw-w-full"/>
+                <div class="tw-basis-1/2 tw-flex tw-flex-col tw-items-start tw-justify-start tw-mr-4">
+                    <span class="tw-mb-2">Khu vực<span class="required-star">*</span></span>
+                    <a-select class="tw-w-full" :status="v$.Area.$error ? 'error' : ''" v-model:value="v$.Area.$model"/>
+                    <ErrorMess :params="[64]" :title="'Khu vực'" :validator="v$.Nation.$errors[0]?.$validator"/>
                 </div>
             </div>
-            <div class="tw-w-full tw-flex tw-items-center tw-justify-between">
-                <div class="tw-basis-1/3 tw-flex tw-flex-col tw-items-start tw-justify-center tw-mr-4">
-                    <span class="tw-mb-2">Phường / Xã<span class="required-star">*</span></span>
-                    <a-select class="tw-w-full"/>
-                </div>
-                <div class="tw-basis-2/3 tw-flex tw-flex-col tw-items-start tw-justify-center tw-mr-4">
-                    <span class="tw-mb-2">Đường / Số nhà<span class="required-star">*</span></span>
-                    <a-input class="tw-w-full"/>
-                </div>
+            <div class="tw-w-full tw-flex tw-flex-col tw-items-start tw-justify-start tw-mr-4">
+                <span class="tw-mb-2">Địa chỉ<span class="required-star">*</span></span>
+                <a-input class="tw-w-full" :status="v$.describe.$error ? 'error' : ''" v-model:value="v$.describe.$model"/>
+                <ErrorMess :params="[64]" :title="'Địa chỉ'" :validator="v$.Nation.$errors[0]?.$validator"/>
             </div>
+        </div>
+    </div>
+    <div class="tw-flex tw-items-start tw-justify-between">
+        <div class="tw-basis-1/2 tw-flex tw-flex-col tw-items-start tw-justify-center tw-mr-4 tw-w-full">
+            <div class="tw-mb-2 tw-flex tw-items-center tw-justify-between tw-w-full">
+                <span>Diện tích (m<sup>2</sup>)<span class="required-star">*</span></span>
+                <span class="tw-opacity-70">(A = Chiêu dài x Chiều rộng)</span>
+            </div>
+            <a-input class="tw-w-full" :status="v$.Acreage.$error ? 'error' : ''" v-model:value="v$.Acreage.$model"/>
+            <ErrorMess :params="[64]" :title="'Diện tích'" :validator="v$.Nation.$errors[0]?.$validator"/>
+        </div>
+        <div class="tw-basis-1/2 tw-flex tw-flex-col tw-items-start tw-justify-center tw-w-full">
+            <div class="tw-mb-2 tw-flex tw-items-center tw-justify-between tw-w-full">
+                <span>Sức chứa (m<sup>3</sup>)<span class="required-star">*</span></span>
+                <span class="tw-opacity-70">(V = A x H)</span>
+            </div>
+            <a-input class="tw-w-full" :status="v$.Tankage.$error ? 'error' : ''" v-model:value="v$.Tankage.$model"/>
+            <ErrorMess :params="[64]" :title="'sức chứa'" :validator="v$.Nation.$errors[0]?.$validator"/>
         </div>
     </div>
     <template #footer>
@@ -52,7 +68,11 @@
 <script setup lang="ts">
 import BaseModal from "@/components/antd-modal/index.vue";
 import AntdButton from "@/components/antd-button/index.vue";
+import ErrorMess from "@/components/error-mess/index.vue";
 import { translate } from "@/languages/i18n";
+import { required, maxLength } from "@vuelidate/validators";
+import useVuelidate from "@vuelidate/core";
+import { ref, watch, onMounted, defineAsyncComponent, reactive, computed } from 'vue';
 
 const emit = defineEmits(['closeModal', 'handleSubmit']);
 
@@ -60,14 +80,71 @@ const props = defineProps({
     isVisible: {
         type: Boolean,
         required: true,
+    },
+    isEdit: {
+        type: Boolean,
+        required: true,
+    },
+    form: {
+        type: Object,
+        required: true,
     }
 });
 
-const handleClose = () => {
-    emit('closeModal');
+const state: any = reactive({
+    warehouseId: props?.form?.warehouseId,
+    warehouseName: props?.form?.warehouseName,
+    Nation: props?.form?.Nation,
+    Area: props?.form?.Area,
+    describe: props?.form?.describe,
+    Acreage: props?.form?.Acreage,
+    Tankage: props?.form?.Tankage,
+});
+
+const rules = {
+    warehouseId: {
+        required,
+    },
+    warehouseName: {
+        required,
+    },
+    Nation: {
+        required,
+    },
+    Area: {
+        required,
+    },
+    describe: {
+        required,
+    },
+    Acreage: {
+        required,
+    },
+    Tankage: {
+        required,
+    }
+
 };
 
+const v$ = useVuelidate(rules, state);
+
+watch(
+  () => props.form,
+    (val) => {
+    v$.value.$reset();
+    (state.warehouseId = val.warehouseId),(state.warehouseName = val.warehouseName), (state.Nation = val.Nation), (state.Area = val.Area), (state.describe = val.describe), (state.Acreage = val.Acreage), (state.Tankage = val.Tankage);
+  },
+  {
+    deep: true,
+  },
+);
+
 const handleSubmit = async () => {
-    emit('handleSubmit');
+    v$.value.$touch();
+    if (v$.value.$invalid) {
+        return false;
+    }
+    emit('handleSubmit', state);
 };
+
 </script>

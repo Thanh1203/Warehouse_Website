@@ -2,7 +2,9 @@
 <div class="default-layout">
   <SlideMenu/>
   <div class="body-layout">
-    <slot></slot>
+    <div>
+      <slot></slot>
+    </div>
   </div>
 </div>
 </template>
@@ -21,6 +23,7 @@ import SlideMenu from "@/components/slide-menu/index.vue"
     height: 100vh;
     width: 100%;
     padding: 24px;
+    overflow-y: scroll;
   }
 }
 </style>

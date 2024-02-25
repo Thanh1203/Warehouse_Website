@@ -12,7 +12,9 @@
             <slot name="action"></slot>
         </div>
     </div>
-    <slot></slot>
+    <div class="tw-mt-6">
+        <slot name="body"></slot>
+    </div>
 </div>
 </template>
 <script setup lang="ts">

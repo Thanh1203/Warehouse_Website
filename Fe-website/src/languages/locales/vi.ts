@@ -20,4 +20,16 @@ export const vi = {
     ExportWarehouse: "Xuất kho",
     CreateWarehouse: "Tạo kho hàng",
     WarehouseCode: "Mã kho",
+    warehouseName: "Tên kho hàng",
+    EnterWarehouseName: "Nhập tên kho hàng",
+    Nation: "Quốc gia",
+    Area: "Khu vực",
+    DateCreated: "Ngày tạo",
+    Search: "Tìm kiếm",
+    Agree: "Đồng ý",
+    Cancel: "Hủy",
+    ConfirmDeletWarehouses: "Bạn có chắc chắn muốn xóa những kho hàng này không?",
+    validate: {
+        requiredInput: "Xin vui lòng hoàn thiện %s",
+    },
 };

@@ -70,3 +70,48 @@
         margin-top: 24px;
     }
 }
+
+//antd select
+
+.ant-select-clear {
+    display: flex !important;
+}
+
+
+// action table
+.ant-table {
+    .ant-table-row {
+        position: relative;
+        .action{
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 0;
+            opacity: 0;
+            transform: translateX(100%);
+            transition: all 0.3s ease 0s;
+            visibility: hidden;
+            .action-btn {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                height: 16px;
+                min-width: 16px;
+                padding: 0;
+            }
+        }
+        &:hover {
+            .action {
+                width: 100%;
+                opacity: 1;
+                transform: translateX(0);
+                visibility: visible;
+                display: flex;
+            }
+        }
+    }
+}

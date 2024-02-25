@@ -20,4 +20,16 @@ export const en = {
     ExportWarehouse: "Export from warehouse",
     CreateWarehouse: "Create warehouse",
     WarehouseCode: "Warehouse code",
+    warehouseName: "warehouse name",
+    EnterWarehouseName: "Enter the warehouse name",
+    Nation: "Nation",
+    Area: "Area",
+    DateCreated: "Date created",
+    Search: "Search",
+    Agree: "Agree",
+    Cancel: "Cancel",
+    ConfirmDeletWarehouses: "Are you sure you want to delete these warehouse?",
+    validate: {
+        requiredInput: "%s required",
+    },
 };
