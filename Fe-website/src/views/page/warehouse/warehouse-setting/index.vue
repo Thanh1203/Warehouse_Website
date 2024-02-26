@@ -1,15 +1,15 @@
 <template>
 <a-form class="tw-flex tw-justify-start tw-items-start tw-rounded-lg tw-bg-white tw-px-6 tw-py-5 tw-mb-6 filter-section">
     <a-form-item class="tw-w-[250px]">
-        <span class="tw-text-xs">{{ translate('EnterWarehouseName') }}</span>
+        <span class="tw-opacity-70">{{ translate('EnterWarehouseName') }}</span>
         <a-input :placeholder="translate('Search')" v-model:value="filterSearching.keyword"/>
     </a-form-item>
     <a-form-item class="tw-w-[150px]">
-        <span class="tw-text-xs">Chọn quốc gia</span>
+        <span class="tw-opacity-70">Chọn quốc gia</span>
         <a-select :placeholder="translate('Nation')" v-model:value="filterSearching.nationSlected" :options="option1Fake"/>
     </a-form-item>
     <a-form-item class="tw-w-[150px]">
-        <span class="tw-text-xs">Chọn khu vực</span>
+        <span class="tw-opacity-70">Chọn khu vực</span>
         <a-select :placeholder="'Khu vực'" v-model:value="filterSearching.areaSelected" :options="option2Fake" :allowClear="true"/>
     </a-form-item>
     <a-form-item class="tw-flex tw-items-end">
@@ -17,7 +17,7 @@
             <template #icon>
                 <font-awesome-icon :icon="['far', 'trash-can']" />
             </template>
-            <span class="tw-ml-2">Xóa</span> 
+            <span class="tw-ml-2">{{ translate('Delete') }}</span> 
         </AntdButton>
     </a-form-item>
 </a-form>
@@ -66,7 +66,7 @@
     </template>
 </Section>
 <!-- modal -->
-<ModalCreate :is-visible="isVisibleModalCreate" :is-edit="isEdit" :form="formState" @close-modal="closeModal" @handle-submit="handleSubmitForm"/>
+<ModalCreate :is-visible="isVisibleModalCreate" :is-edit="isEdit" :form="formState" :title-modal="titleModal" @close-modal="closeModal" @handle-submit="handleSubmitForm"/>
 <ModalConfirm :is-visible="isVisibleModalConfirm" @close-modal="closeModal" @handle-submit="handleDeleteManyRow" :title-modal="messConfirmRows || messConfirmSingleRow"/>
 <ModalInfo :is-visible="isVisibleModalInfo" @close-modal="closeModal" :state="formState"/>
 </template>
@@ -127,6 +127,7 @@ const columns = ref<Array<any>>([
 ]);
 const messConfirmRows = ref<any>("");
 const messConfirmSingleRow = ref<any>("");
+const titleModal = ref<any>("");
 
 const filterSearching = reactive({
     keyword: "",
@@ -144,6 +145,7 @@ const formState = reactive({
     Tankage: null,
 })
 
+//handle filter
 const disabledDeleteFilter = computed(() => filterSearching?.keyword?.length === 0 && filterSearching?.nationSlected === null && filterSearching?.areaSelected === null);
 
 const handleClearFilter = () => {
@@ -164,6 +166,7 @@ const handleCreateRow = () => {
     formState.Acreage = null;
     formState.Tankage = null;
     formState.warehouseId = "";
+    titleModal.value = "Tạo kho hàng";
 };
 
 const closeModal = () => {
@@ -228,6 +231,7 @@ const handleEditRow = (data: any) => {
     formState.Acreage = data.Acreage;
     formState.Tankage = data.Tankage;
     formState.warehouseId = data.warehouseId;
+    titleModal.value = "Cập nhật thông tin kho hàng";
 }
 //data fake
 const datafake = [

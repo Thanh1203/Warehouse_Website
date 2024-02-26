@@ -1,5 +1,5 @@
 <template>
-<BaseModal :visible="isVisible" :title="translate('CreateWarehouse')" :defaultFooter="false" @cancel="$emit('closeModal')">
+<BaseModal :visible="isVisible" :title="titleModal" :defaultFooter="false" @cancel="$emit('closeModal')">
     <div class="tw-w-full tw-flex tw-items-start tw-justify-between tw-mb-6">
         <div class="tw-basis-1/2 tw-flex tw-flex-col tw-items-start tw-justify-start tw-mr-4">
             <span class="tw-mb-2">{{ translate('WarehouseCode') }}<span class="required-star">*</span></span>
@@ -88,7 +88,11 @@ const props = defineProps({
     form: {
         type: Object,
         required: true,
-    }
+    },
+    titleModal: {
+        type: String,
+        required: true,
+    },
 });
 
 const state: any = reactive({

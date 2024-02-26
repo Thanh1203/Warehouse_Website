@@ -32,4 +32,5 @@ export const vi = {
     validate: {
         requiredInput: "Xin vui lòng hoàn thiện %s",
     },
+    Delete: "Xóa",
 };

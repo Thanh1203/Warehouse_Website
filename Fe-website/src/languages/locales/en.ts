@@ -32,4 +32,5 @@ export const en = {
     validate: {
         requiredInput: "%s required",
     },
+    Delete: "Delete",
 };
