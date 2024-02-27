@@ -115,3 +115,17 @@
         }
     }
 }
+
+// antd steps
+.ant-steps {
+    .ant-steps-item-container {
+        display: flex;
+        align-items: center;
+        justify-content: start;
+        .ant-steps-item-icon {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    }
+}

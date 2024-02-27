@@ -21,7 +21,7 @@
             </template>
             <span class="tw-text-sm tw-ml-2">Xóa <span v-if="listSelect?.length > 0">({{ listSelect?.length }})</span></span>
         </AntdButton>
-        <AntdButton :type="'primary'">
+        <AntdButton :type="'primary'" @click="handelCreate">
             <template #icon>
                 <font-awesome-icon :icon="['fas', 'plus']"/>
             </template>
@@ -37,6 +37,7 @@
         :no-sort="true"
         :dataSource="dataFake"
         :columns="columns"
+        @onSelected="handleSelectRow"
         >
             <template #custom-body="{column, record}">
                 <template v-if="column.key === 'action'">
@@ -56,6 +57,8 @@
         </AntdTable>
     </template>
 </Section>
+<!-- modal -->
+<ModalCreate :isVisible="isVisibleModalCreate" :titleModal="titleModal" @closeModal="onCancel"/>
 </template>
 <script setup lang="ts">
 import { translate } from "@/languages/i18n";
@@ -63,6 +66,9 @@ import AntdButton from "@/components/antd-button/index.vue";
 import Section from "@/components/section/index.vue";
 import AntdTable from "@/components/antd-table/index.vue";
 import { ref, computed, reactive } from "vue";
+import { defineAsyncComponent } from "vue";
+
+const ModalCreate = defineAsyncComponent(() => import("./components/ModalCreate.vue"))
 
 const listSelect = ref<any>([]);
 const columns = ref<Array<any>>([
@@ -92,6 +98,8 @@ const columns = ref<Array<any>>([
         fixed: "right",
     }
 ]);
+const isVisibleModalCreate = ref<boolean>(false);
+const titleModal = ref<any>("");
 
 const filterSearching = reactive({
     keyword: "",
@@ -100,6 +108,16 @@ const filterSearching = reactive({
 // handle filter
 const disabledDeleteFilter = computed(() => filterSearching?.keyword?.length === 0);
 
+// close modal
+const onCancel = () => {
+    isVisibleModalCreate.value = false;
+};
+
+// modal create
+const handelCreate = () => {
+    isVisibleModalCreate.value = true;
+    titleModal.value = "Tạo chủng loại sản phẩm";
+};
 
 // handle data table
 const handleSelectRow = (rows: any) => {

@@ -45,7 +45,7 @@
         :data-source="datafake"
         :has-checkbox="true"
         :no-sort="true"
-        @on-selected="handleSelectRow"
+        @onSelected="handleSelectRow"
         >
             <template #custom-body="{column, record}">
                 <template v-if="column.key === 'action'">
@@ -169,6 +169,7 @@ const handleCreateRow = () => {
     titleModal.value = "Tạo kho hàng";
 };
 
+// close modal
 const closeModal = () => {
     isVisibleModalCreate.value = false;
     isVisibleModalConfirm.value = false;

@@ -1,62 +1,64 @@
 <template>
 <BaseModal :visible="isVisible" :title="titleModal" :defaultFooter="false" @cancel="$emit('closeModal')">
-    <div class="tw-w-full tw-flex tw-items-start tw-justify-between tw-mb-6">
-        <div class="tw-basis-1/2 tw-flex tw-flex-col tw-items-start tw-justify-start tw-mr-4">
-            <span class="tw-mb-2">{{ translate('WarehouseCode') }}<span class="required-star">*</span></span>
-            <div v-if="!isEdit" class="tw-w-full">
-                <a-input  class="tw-w-full" :status="v$.warehouseId.$error ? 'error' : ''" v-model:value="v$.warehouseId.$model"/>
-                <ErrorMess :params="[64]" :title="translate('WarehouseCode')" :validator="v$.warehouseId.$errors[0]?.$validator"/>
-            </div>
-            <span v-else>{{ state.warehouseId }}</span>
-        </div>
-        <div class="tw-basis-1/2 tw-flex tw-flex-col tw-items-start tw-justify-start">
-            <span class="tw-mb-2">Tên kho hàng<span class="required-star">*</span></span>
-            <a-input class="tw-w-full" :status="v$.warehouseName.$error ? 'error' : ''" v-model:value="v$.warehouseName.$model"/>
-            <ErrorMess :params="[64]" :title="'Tên kho hàng'" :validator="v$.warehouseName.$errors[0]?.$validator"/>
-        </div>
-    </div>
-    <div class="tw-w-full tw-flex tw-flex-col tw-items-start tw-justify-start tw-mb-6">
-        <span class="tw-mb-2">Vị trí<span class="required-star">*</span></span>
-        <div class="tw-w-full tw-border tw-p-4 tw-rounded-xl">
-            <div class="tw-w-full tw-flex tw-items-start tw-justify-between tw-mb-6">
-                <div class="tw-basis-1/2 tw-flex tw-flex-col tw-items-start tw-justify-start tw-mr-4">
-                    <span class="tw-mb-2">Quốc gia<span class="required-star">*</span></span>
-                    <a-select class="tw-w-full" :status="v$.Nation.$error ? 'error' : ''" v-model:value="v$.Nation.$model"/>
-                    <ErrorMess :params="[64]" :title="'Quốc gia'" :validator="v$.Nation.$errors[0]?.$validator"/>
+    <a-form @submit.prevent="handleSubmit">
+        <div class="tw-w-full tw-flex tw-items-start tw-justify-between tw-mb-6">
+            <div class="tw-basis-1/2 tw-flex tw-flex-col tw-items-start tw-justify-start tw-mr-4">
+                <span class="tw-mb-2 tw-opacity-70">{{ translate('WarehouseCode') }}<span class="required-star">*</span></span>
+                <div v-if="!isEdit" class="tw-w-full">
+                    <a-input  class="tw-w-full" :status="v$.warehouseId.$error ? 'error' : ''" v-model:value="v$.warehouseId.$model"/>
+                    <ErrorMess :params="[64]" :title="translate('WarehouseCode')" :validator="v$.warehouseId.$errors[0]?.$validator"/>
                 </div>
-                <div class="tw-basis-1/2 tw-flex tw-flex-col tw-items-start tw-justify-start tw-mr-4">
-                    <span class="tw-mb-2">Khu vực<span class="required-star">*</span></span>
-                    <a-select class="tw-w-full" :status="v$.Area.$error ? 'error' : ''" v-model:value="v$.Area.$model"/>
-                    <ErrorMess :params="[64]" :title="'Khu vực'" :validator="v$.Nation.$errors[0]?.$validator"/>
+                <span v-else>{{ state.warehouseId }}</span>
+            </div>
+            <div class="tw-basis-1/2 tw-flex tw-flex-col tw-items-start tw-justify-start">
+                <span class="tw-mb-2 tw-opacity-70">Tên kho hàng<span class="required-star">*</span></span>
+                <a-input class="tw-w-full" :status="v$.warehouseName.$error ? 'error' : ''" v-model:value="v$.warehouseName.$model"/>
+                <ErrorMess :params="[64]" :title="'Tên kho hàng'" :validator="v$.warehouseName.$errors[0]?.$validator"/>
+            </div>
+        </div>
+        <div class="tw-w-full tw-flex tw-flex-col tw-items-start tw-justify-start tw-mb-6">
+            <span class="tw-mb-2 tw-opacity-70">Vị trí<span class="required-star">*</span></span>
+            <div class="tw-w-full tw-border tw-p-4 tw-rounded-xl">
+                <div class="tw-w-full tw-flex tw-items-start tw-justify-between tw-mb-6">
+                    <div class="tw-basis-1/2 tw-flex tw-flex-col tw-items-start tw-justify-start tw-mr-4">
+                        <span class="tw-mb-2 tw-opacity-70">Quốc gia<span class="required-star">*</span></span>
+                        <a-select class="tw-w-full" :status="v$.Nation.$error ? 'error' : ''" v-model:value="v$.Nation.$model"/>
+                        <ErrorMess :params="[64]" :title="'Quốc gia'" :validator="v$.Nation.$errors[0]?.$validator"/>
+                    </div>
+                    <div class="tw-basis-1/2 tw-flex tw-flex-col tw-items-start tw-justify-start tw-mr-4">
+                        <span class="tw-mb-2 tw-opacity-70">Khu vực<span class="required-star">*</span></span>
+                        <a-select class="tw-w-full" :status="v$.Area.$error ? 'error' : ''" v-model:value="v$.Area.$model"/>
+                        <ErrorMess :params="[64]" :title="'Khu vực'" :validator="v$.Nation.$errors[0]?.$validator"/>
+                    </div>
+                </div>
+                <div class="tw-w-full tw-flex tw-flex-col tw-items-start tw-justify-start tw-mr-4">
+                    <span class="tw-mb-2 tw-opacity-70">Địa chỉ<span class="required-star">*</span></span>
+                    <a-input class="tw-w-full" :status="v$.describe.$error ? 'error' : ''" v-model:value="v$.describe.$model"/>
+                    <ErrorMess :params="[64]" :title="'Địa chỉ'" :validator="v$.Nation.$errors[0]?.$validator"/>
                 </div>
             </div>
-            <div class="tw-w-full tw-flex tw-flex-col tw-items-start tw-justify-start tw-mr-4">
-                <span class="tw-mb-2">Địa chỉ<span class="required-star">*</span></span>
-                <a-input class="tw-w-full" :status="v$.describe.$error ? 'error' : ''" v-model:value="v$.describe.$model"/>
-                <ErrorMess :params="[64]" :title="'Địa chỉ'" :validator="v$.Nation.$errors[0]?.$validator"/>
+        </div>
+        <div class="tw-flex tw-items-start tw-justify-between">
+            <div class="tw-basis-1/2 tw-flex tw-flex-col tw-items-start tw-justify-center tw-mr-4 tw-w-full">
+                <div class="tw-mb-2 tw-flex tw-items-center tw-justify-between tw-w-full">
+                    <span class="tw-opacity-70">Diện tích (m<sup>2</sup>)<span class="required-star">*</span></span>
+                    <span class="tw-opacity-65">(A = Chiêu dài x Chiều rộng)</span>
+                </div>
+                <a-input class="tw-w-full" :status="v$.Acreage.$error ? 'error' : ''" v-model:value="v$.Acreage.$model"/>
+                <ErrorMess :params="[64]" :title="'Diện tích'" :validator="v$.Nation.$errors[0]?.$validator"/>
+            </div>
+            <div class="tw-basis-1/2 tw-flex tw-flex-col tw-items-start tw-justify-center tw-w-full">
+                <div class="tw-mb-2 tw-flex tw-items-center tw-justify-between tw-w-full">
+                    <span class="tw-opacity-70">Sức chứa (m<sup>3</sup>)<span class="required-star">*</span></span>
+                    <span class="tw-opacity-65">(V = A x H)</span>
+                </div>
+                <a-input class="tw-w-full" :status="v$.Tankage.$error ? 'error' : ''" v-model:value="v$.Tankage.$model"/>
+                <ErrorMess :params="[64]" :title="'sức chứa'" :validator="v$.Nation.$errors[0]?.$validator"/>
             </div>
         </div>
-    </div>
-    <div class="tw-flex tw-items-start tw-justify-between">
-        <div class="tw-basis-1/2 tw-flex tw-flex-col tw-items-start tw-justify-center tw-mr-4 tw-w-full">
-            <div class="tw-mb-2 tw-flex tw-items-center tw-justify-between tw-w-full">
-                <span>Diện tích (m<sup>2</sup>)<span class="required-star">*</span></span>
-                <span class="tw-opacity-70">(A = Chiêu dài x Chiều rộng)</span>
-            </div>
-            <a-input class="tw-w-full" :status="v$.Acreage.$error ? 'error' : ''" v-model:value="v$.Acreage.$model"/>
-            <ErrorMess :params="[64]" :title="'Diện tích'" :validator="v$.Nation.$errors[0]?.$validator"/>
-        </div>
-        <div class="tw-basis-1/2 tw-flex tw-flex-col tw-items-start tw-justify-center tw-w-full">
-            <div class="tw-mb-2 tw-flex tw-items-center tw-justify-between tw-w-full">
-                <span>Sức chứa (m<sup>3</sup>)<span class="required-star">*</span></span>
-                <span class="tw-opacity-70">(V = A x H)</span>
-            </div>
-            <a-input class="tw-w-full" :status="v$.Tankage.$error ? 'error' : ''" v-model:value="v$.Tankage.$model"/>
-            <ErrorMess :params="[64]" :title="'sức chứa'" :validator="v$.Nation.$errors[0]?.$validator"/>
-        </div>
-    </div>
+    </a-form>
     <template #footer>
-        <AntdButton :type="'primary'" @click="handleSubmit">
+        <AntdButton :type="'primary'" @click="handleSubmit()">
             <template #icon>
                 <font-awesome-icon :icon="['far', 'floppy-disk']" />
             </template>
