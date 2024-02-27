@@ -5,7 +5,7 @@
         <span class="tw-text-xl tw-font-[600] tw-ml-3">{{ titleModal}}</span>
     </div>
     <div class="tw-mt-6 tw-px-10">
-        <span class="subConfirmDelete">Dữ liệu bị xóa sẽ không thể khôi phục!</span>
+        <span class="subConfirmDelete">{{ translate('NoDataRestore') }}</span>
     </div>
 </BaseModal>
 </template>
