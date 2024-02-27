@@ -5,35 +5,35 @@
         <a-input :placeholder="translate('Search')" v-model:value="filterSearching.keyword"/>
     </a-form-item>
     <a-form-item class="tw-w-[150px]">
-        <span class="tw-opacity-70">Chọn quốc gia</span>
+        <span class="tw-opacity-70">{{translate('SelectNation')}}</span>
         <a-select :placeholder="translate('Nation')" v-model:value="filterSearching.nationSlected" :options="option1Fake"/>
     </a-form-item>
     <a-form-item class="tw-w-[150px]">
-        <span class="tw-opacity-70">Chọn khu vực</span>
-        <a-select :placeholder="'Khu vực'" v-model:value="filterSearching.areaSelected" :options="option2Fake" :allowClear="true"/>
+        <span class="tw-opacity-70">{{translate('SelectArea')}}</span>
+        <a-select :placeholder="translate('Area')" v-model:value="filterSearching.areaSelected" :options="option2Fake" :allowClear="true"/>
     </a-form-item>
     <a-form-item class="tw-flex tw-items-end">
         <AntdButton :type="'text'" danger :disabled="disabledDeleteFilter" @click="handleClearFilter">
             <template #icon>
                 <font-awesome-icon :icon="['far', 'trash-can']" />
             </template>
-            <span class="tw-ml-2">{{ translate('Delete') }}</span> 
+            <span class="tw-ml-2">{{translate('Delete')}}</span> 
         </AntdButton>
     </a-form-item>
 </a-form>
-<Section :title="'Danh sách kho'" :sub-title="'Số lượng kho hàng :'" :number="String(datafake?.length)">
+<Section :title="translate('WarehouseList')" :sub-title="translate('NumberOfWarehouses')" :number="String(datafake?.length)">
     <template #action>
         <AntdButton :type="'text'" danger class="tw-mr-2" :disabled="disableDeleteRow" @click="preDeleteRow">
             <template #icon>
                 <font-awesome-icon :icon="['far', 'trash-can']"/>
             </template>
-            <span class="tw-text-sm tw-ml-2">Xóa <span v-if="listSelect?.length > 0">({{ listSelect?.length }})</span></span>
+            <span class="tw-text-sm tw-ml-2">{{translate('Delete')}}<span v-if="listSelect?.length > 0">({{ listSelect?.length }})</span></span>
         </AntdButton>
         <AntdButton :type="'primary'" @click="handleCreateRow">
             <template #icon>
                 <font-awesome-icon :icon="['fas', 'plus']"/>
             </template>
-            <span class="tw-text-sm tw-ml-2">Thêm mới</span>
+            <span class="tw-text-sm tw-ml-2">{{translate('AddNew')}}</span>
         </AntdButton>
     </template>
     <template #body>

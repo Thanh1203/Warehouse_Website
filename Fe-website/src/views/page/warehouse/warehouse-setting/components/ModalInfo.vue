@@ -1,8 +1,8 @@
 <template>
-<BaseModal :visible="isVisible" :title="'Thông tin kho hàng'" :defaultFooter="false" :width="'600px'" @cancel="$emit('closeModal')">
+<BaseModal :visible="isVisible" :title="translate('WarehouseInformation')" :defaultFooter="false" :width="'600px'" @cancel="$emit('closeModal')">
 <div class="tw-mb-4 tw-w-full tw-flex">
     <div class="tw-basis-1/3 tw-flex tw-items-start tw-justify-between tw-font-medium">
-        <span>Tên kho hàng</span>
+        <span>{{translate('warehouseName')}}</span>
         <span>:</span>
     </div>
     <div class="tw-pl-3 tw-basis-2/3 tw-flex tw-items-start">
@@ -11,7 +11,7 @@
 </div>
 <div class="tw-mb-4 tw-w-full tw-flex">
     <div class="tw-basis-1/3 tw-flex tw-items-start tw-justify-between tw-font-medium">
-        <span>Quốc gia</span>
+        <span>{{translate('Nation')}}</span>
         <span>:</span>
     </div>
     <div class="tw-pl-3 tw-basis-2/3 tw-flex tw-items-start">
@@ -20,7 +20,7 @@
 </div>
 <div class="tw-mb-4 tw-w-full tw-flex">
     <div class="tw-basis-1/3 tw-flex tw-items-start tw-justify-between tw-font-medium">
-        <span>Địa chỉ</span>
+        <span>{{translate('Address')}}</span>
         <span>:</span>
     </div>
     <div class="tw-pl-3 tw-basis-2/3 tw-flex tw-items-start">
@@ -29,7 +29,7 @@
 </div>
 <div class="tw-mb-4 tw-w-full tw-flex">
     <div class="tw-basis-1/3 tw-flex tw-items-start tw-justify-between tw-font-medium">
-        <span>Diện tích</span>
+        <span>{{ translate('Acreage') }}</span>
         <span>:</span>
     </div>
     <div class="tw-pl-3 tw-basis-2/3 tw-flex tw-items-start">
@@ -38,7 +38,7 @@
 </div>
 <div class="tw-mb-4 tw-w-full tw-flex">
     <div class="tw-basis-1/3 tw-flex tw-item-start tw-justify-between tw-font-medium">
-        <span>Sức chứa</span>
+        <span>{{ translate('Tankage') }}</span>
         <span>:</span>
     </div>
     <div class="tw-pl-3 tw-basis-2/3 tw-flex tw-item-start">
@@ -47,7 +47,7 @@
 </div>
 <div class="tw-mb-4 tw-w-full tw-flex">
     <div class="tw-basis-1/3 tw-flex tw-item-start tw-justify-between tw-font-medium">
-        <span>Ngày tạo</span>
+        <span>{{ translate('DateCreated') }}</span>
         <span>:</span>
     </div>
     <div class="tw-pl-3 tw-basis-2/3 tw-flex tw-item-start">
