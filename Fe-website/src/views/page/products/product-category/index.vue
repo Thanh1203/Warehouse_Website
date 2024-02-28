@@ -99,7 +99,7 @@ const columns = ref<Array<any>>([
     }
 ]);
 const isVisibleModalCreate = ref<boolean>(false);
-const titleModal = ref<any>("");
+const titleModal = ref<string>("");
 
 const filterSearching = reactive({
     keyword: "",

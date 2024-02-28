@@ -46,4 +46,5 @@ export const en = {
     Width: "Width",
     Save: "Save",
     NoDataRestore: "Deleted data cannot be restored!",
+    noData: "No data",
 };

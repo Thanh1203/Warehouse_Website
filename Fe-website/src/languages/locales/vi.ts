@@ -47,4 +47,5 @@ export const vi = {
     Width: "Chiều rộng",
     Save: "Lưu",
     NoDataRestore: "Dữ liệu bị xóa sẽ không thể khôi phục!",
+    noData: "Không có dữ liệu",
 };
