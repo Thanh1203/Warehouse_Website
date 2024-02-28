@@ -137,8 +137,8 @@ const filterSearching = reactive({
 const formState = reactive({
     warehouseId:  "",
     warehouseName: "",
-    Nation: "",
-    Area: "",
+    Nation: null,
+    Area: null,
     describe: "",
     DateCreated: "",
     Acreage: null,
@@ -159,8 +159,8 @@ const handleCreateRow = () => {
     isVisibleModalCreate.value = true;
     isEdit.value = false;
     formState.warehouseName = "";
-    formState.Nation = "";
-    formState.Area = "";
+    formState.Nation = null;
+    formState.Area = null;
     formState.describe = "";
     formState.DateCreated = "";
     formState.Acreage = null;

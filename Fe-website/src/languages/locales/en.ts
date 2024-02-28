@@ -54,4 +54,5 @@ export const en = {
     EmployeeCode: "Employee code",
     EmployeeName: "Employee name",
     Role: "Role",
+    noData: "No data",
 };

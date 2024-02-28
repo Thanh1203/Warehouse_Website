@@ -67,7 +67,7 @@
     }
     // footer
     .ant-modal-footer {
-        margin-top: 24px;
+        margin-top: 0;
     }
 }
 
@@ -121,11 +121,37 @@
     .ant-steps-item-container {
         display: flex;
         align-items: center;
-        justify-content: start;
+        justify-content: flex-start;
         .ant-steps-item-icon {
             display: flex;
             justify-content: center;
             align-items: center;
         }
     }
+}
+
+// produc categrory
+.property-list {
+    .property-list-action {
+        position: absolute;
+        right: 0;
+        opacity: 0;
+        width: 0;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        transform: translateX(100%);
+        transition: all 0.3s ease 0s;
+        visibility: hidden;
+    }
+    &:hover {
+        .property-list-action {
+            opacity: 1;
+            width: 80px;
+            transform: translateX(0);
+            visibility: visible;
+        } 
+    }
+
 }

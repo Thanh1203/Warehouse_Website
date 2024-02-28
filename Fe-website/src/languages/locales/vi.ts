@@ -55,4 +55,5 @@ export const vi = {
     EmployeeCode: "Mã nhân viên",
     EmployeeName: "Tên nhân viên",
     Role: "Chức vụ",
+    noData: "Không có dữ liệu",
 };

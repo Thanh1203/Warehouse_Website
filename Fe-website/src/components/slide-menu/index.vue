@@ -40,8 +40,8 @@ import { translate } from '@/languages/i18n';
 import { useRoute, useRouter } from 'vue-router';
 import { ref, watch, onMounted } from 'vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { menuAdmin } from '@/utils/common';
-import { PC_MENU } from '@/constants/pcMenu';
+import { menuAdmin } from '@/constants/pcMenu';
+import { PC_MENU } from '@/constants/index';
 
 const router = useRouter();
 const route = useRoute();

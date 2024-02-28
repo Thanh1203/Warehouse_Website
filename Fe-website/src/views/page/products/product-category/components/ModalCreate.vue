@@ -14,37 +14,17 @@
             }
         ]"/>
     </div>
-    <div v-if="currentSteps === 0" class="tw-mb-6">
-        <StepOne :state="formStepOne" :step="currentSteps"/>
-    </div>
-    <!-- <div v-else-if="currentSteps === 1" class="tw-mb-6">
-        <StepTwo :state="formStepOne" :step="currentSteps"/>
-    </div>
-    <div v-else class="tw-mb-6">
-        <StepThree :state="formStepOne" :step="currentSteps"/>
-    </div> -->
-    <template #footer>
-        <div class="tw-w-full tw-flex tw-items-center" :class="currentSteps !== 0 ? 'tw-justify-between' : 'tw-justify-end'">
-            <AntdButton v-if="currentSteps !== 0 " :type="'primary'" @click="preStep">
-                <template #icon>
-                    <font-awesome-icon :icon="['fas', 'arrow-left']" />
-                </template>
-                <span class="tw-text-sm tw-ml-2">Quay lại</span>
-            </AntdButton>
-            <AntdButton v-if="currentSteps === 2" :type="'primary'">
-                <template #icon>
-                    <font-awesome-icon :icon="['far', 'floppy-disk']" />
-                </template>
-                <span class="tw-ml-2 tw-text-sm">Lưu</span>
-            </AntdButton>
-            <AntdButton v-else :type="'primary'" @click="nextStep">
-                <template #icon>
-                    <font-awesome-icon :icon="['fas', 'arrow-right']" />
-                </template>
-                <span class="tw-ml-2 tw-text-sm">Tiếp</span>
-            </AntdButton>
+    <a-form >
+        <div v-if="currentSteps === 0">
+            <StepOne :formState="formStep" @nextStep="nextStep"/>
         </div>
-    </template>
+        <div v-else-if="currentSteps === 1" class="tw-mb-6">
+            <StepTwo :formState="formStep" @preStep="preStep" @nextStep="nextStep"/>
+        </div>
+        <div v-else class="tw-mb-6">
+            <StepThree :formState="formStep"/>
+        </div>
+    </a-form>
 </BaseModal>
 </template>
 <script lang="ts" setup>
@@ -52,7 +32,7 @@ import BaseModal from "@/components/antd-modal/index.vue";
 import AntdButton from "@/components/antd-button/index.vue";
 import ErrorMess from "@/components/error-mess/index.vue";
 import { translate } from "@/languages/i18n";
-import { ref, watch, defineAsyncComponent } from "vue";
+import { ref, watch, defineAsyncComponent, reactive } from "vue";
 
 const StepOne = defineAsyncComponent(() => import("./stepOne.vue"));
 const StepTwo = defineAsyncComponent(() => import("./stepTwo.vue"));
@@ -70,18 +50,31 @@ const props = defineProps({
     },
 })
 
-const formStepOne = ref<any>({
-    id: "",
-    name: "",
+const formStep = reactive<any>({
+    genusId: "",
+    genusName: "",
+    listProperty: []
 });
+
 const currentSteps = ref<any>(0);
 
-
-const nextStep = () => {
+const nextStep = (state: any) => {
+    if (currentSteps.value === 0) {
+        formStep.genusId = state.id;
+        formStep.genusName = state.name;
+    } else if (currentSteps.value === 1) {
+        formStep.listProperty = state.list;
+        console.log(formStep)
+    }
     currentSteps.value++;
 };
 
 const preStep = () => {
     currentSteps.value--;
+    if (currentSteps.value === 0) {
+        formStep.genusId = "";
+        formStep.genusName = "";
+        formStep.listProperty = [];
+    };
 }
 </script>
