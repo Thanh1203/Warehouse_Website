@@ -88,7 +88,7 @@ const isEdit = ref<boolean>(false);
 const listSelect = ref<Array<any>>([]);
 const columns = ref<Array<any>>([
     {
-        title: "Mã kho",
+        title: translate('WarehouseCode'),
         dataIndex: "warehouseId",
         key: "warehouseId",
         align: "left"
@@ -166,7 +166,7 @@ const handleCreateRow = () => {
     formState.Acreage = null;
     formState.Tankage = null;
     formState.warehouseId = "";
-    titleModal.value = "Tạo kho hàng";
+    titleModal.value = translate('CreateWarehouse');
 };
 
 // close modal
@@ -206,7 +206,7 @@ const handleDeleteManyRow = () => {
 const deleteSingleRow = () => {
     isVisibleModalConfirm.value = true;
     messConfirmRows.value = "";
-    messConfirmSingleRow.value = "Bạn có chắc chắn muốn xóa kho hàng này?";
+    messConfirmSingleRow.value = translate('ConfirmDeletWarehouses');
 }
 
 const handleViewRow = (data: any) => {
@@ -232,7 +232,7 @@ const handleEditRow = (data: any) => {
     formState.Acreage = data.Acreage;
     formState.Tankage = data.Tankage;
     formState.warehouseId = data.warehouseId;
-    titleModal.value = "Cập nhật thông tin kho hàng";
+    titleModal.value = translate('');
 }
 //data fake
 const datafake = [

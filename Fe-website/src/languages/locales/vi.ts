@@ -28,7 +28,7 @@ export const vi = {
     Search: "Tìm kiếm",
     Agree: "Đồng ý",
     Cancel: "Hủy",
-    ConfirmDeletWarehouses: "Bạn có chắc chắn muốn xóa những kho hàng này không?",
+    ConfirmDeletWarehouses: "Bạn có chắc chắn muốn xóa kho hàng này không?",
     validate: {
         requiredInput: "Xin vui lòng hoàn thiện %s",
     },
@@ -47,4 +47,12 @@ export const vi = {
     Width: "Chiều rộng",
     Save: "Lưu",
     NoDataRestore: "Dữ liệu bị xóa sẽ không thể khôi phục!",
+    UpdateWarehouse: "Cập nhật thông tin kho hàng",
+    PageNotFound: "Không tìm thấy trang",
+    EnterEmployeeName: "Nhập tên nhân viên",
+    SelectWarehouseLocation: "Chọn vị trí kho",
+    WarehouseLocation: "Vị trí kho",
+    EmployeeCode: "Mã nhân viên",
+    EmployeeName: "Tên nhân viên",
+    Role: "Chức vụ",
 };
