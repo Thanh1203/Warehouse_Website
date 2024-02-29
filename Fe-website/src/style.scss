@@ -92,4 +92,8 @@
 .invalid-feedback {
     margin-top: 0px;
     color: $base-red-400;
-  }
+}
+
+.is-invalid {
+    border: 1px solid $base-red-400;
+}
