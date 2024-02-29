@@ -58,7 +58,7 @@
     </template>
 </Section>
 <!-- modal -->
-<ModalCreate :isVisible="isVisibleModalCreate" :titleModal="titleModal" @closeModal="onCancel"/>
+<ModalCreate :isVisible="isVisibleModalCreate" :titleModal="titleModal" @closeModal="onCancel" :form="formState"/>
 </template>
 <script setup lang="ts">
 import { translate } from "@/languages/i18n";
@@ -67,6 +67,12 @@ import Section from "@/components/section/index.vue";
 import AntdTable from "@/components/antd-table/index.vue";
 import { ref, computed, reactive } from "vue";
 import { defineAsyncComponent } from "vue";
+
+interface FormState {
+    genusId: string | number,
+    genusName: string,
+    listProperty: string[] | number[],
+};
 
 const ModalCreate = defineAsyncComponent(() => import("./components/ModalCreate.vue"))
 
@@ -104,6 +110,11 @@ const titleModal = ref<string>("");
 const filterSearching = reactive({
     keyword: "",
 });
+const formState = reactive<FormState>({
+    genusId: "",
+    genusName: "",
+    listProperty: []
+})
 
 // handle filter
 const disabledDeleteFilter = computed(() => filterSearching?.keyword?.length === 0);
