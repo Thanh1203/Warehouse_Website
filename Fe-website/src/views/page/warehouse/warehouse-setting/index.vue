@@ -77,6 +77,18 @@ import { translate } from "@/languages/i18n";
 import AntdButton from "@/components/antd-button/index.vue";
 import AntdTable from "@/components/antd-table/index.vue";
 
+interface Columns {
+    title?: string,
+    dataIndex: string,
+    key: string,
+    ellipsis?: boolean,
+    align?: string,
+    width?: number | null,
+    maxWidth?: number | null,
+    fixed?: string,
+    aligin?: string,
+};
+
 const ModalCreate = defineAsyncComponent(() => import("./components/ModalCreate.vue"));
 const ModalConfirm = defineAsyncComponent(() => import("@/components/antd-modal-confirm/index.vue"));
 const ModalInfo = defineAsyncComponent(() => import("./components/ModalInfo.vue"));
@@ -86,7 +98,7 @@ const isVisibleModalConfirm = ref<boolean>(false);
 const isVisibleModalInfo = ref<boolean>(false);
 const isEdit = ref<boolean>(false);
 const listSelect = ref<Array<any>>([]);
-const columns = ref<Array<any>>([
+const columns = ref<Array<Columns>>([
     {
         title: translate('WarehouseCode'),
         dataIndex: "warehouseId",
@@ -125,9 +137,9 @@ const columns = ref<Array<any>>([
         fixed: "right",
     },
 ]);
-const messConfirmRows = ref<any>("");
-const messConfirmSingleRow = ref<any>("");
-const titleModal = ref<any>("");
+const messConfirmRows = ref<string>("");
+const messConfirmSingleRow = ref<string>("");
+const titleModal = ref<string>("");
 
 const filterSearching = reactive({
     keyword: "",
@@ -137,8 +149,8 @@ const filterSearching = reactive({
 const formState = reactive({
     warehouseId:  "",
     warehouseName: "",
-    Nation: "",
-    Area: "",
+    Nation: null,
+    Area: null,
     describe: "",
     DateCreated: "",
     Acreage: null,
@@ -159,8 +171,8 @@ const handleCreateRow = () => {
     isVisibleModalCreate.value = true;
     isEdit.value = false;
     formState.warehouseName = "";
-    formState.Nation = "";
-    formState.Area = "";
+    formState.Nation = null;
+    formState.Area = null;
     formState.describe = "";
     formState.DateCreated = "";
     formState.Acreage = null;
