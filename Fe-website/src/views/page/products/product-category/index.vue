@@ -118,11 +118,12 @@ const columns = ref<Array<any>>([
 const filterSearching = reactive({
     keyword: "",
 });
+
 const formState = reactive<FormState>({
     id: "",
     name: "",
-    listProperty: []
-})
+    listProperty: [],
+});
 
 // handle filter
 const disabledDeleteFilter = computed(() => filterSearching?.keyword?.length === 0);
