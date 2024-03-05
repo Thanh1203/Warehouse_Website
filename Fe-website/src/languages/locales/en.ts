@@ -46,4 +46,12 @@ export const en = {
     Width: "Width",
     Save: "Save",
     NoDataRestore: "Deleted data cannot be restored!",
+    UpdateWarehouse: "Update warehouse information",
+    PageNotFound: "Page not found",
+    EnterEmployeeName: "Enter the employee name",
+    SelectWarehouseLocation: "Select warehouse location",
+    WarehouseLocation: "Warehouse location",
+    EmployeeCode: "Employee code",
+    EmployeeName: "Employee name",
+    Role: "Role",
 };
