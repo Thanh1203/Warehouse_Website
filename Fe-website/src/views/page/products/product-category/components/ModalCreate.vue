@@ -3,24 +3,24 @@
     <a-form class="tw-w-full tw-mb-6">
         <div class="tw-w-full tw-flex tw-items-start tw-justify-center tw-mb-6">
             <div class="tw-basis-1/2 tw-flex tw-flex-col tw-items-start tw-justify-start tw-mr-3">
-                <span class="tw-mb-2">Mã chủ loại<span class="required-star">*</span></span>
-                <a-input v-model:value="v$.genusId.$model" :status="v$.genusId.$error ? 'error' : ''" :placeholder="'Mã chủng loại'"/>
-                <ErrorMess :params="[64]" :title="'Mã chủng loại'" :validator="v$.genusId.$errors[0]?.$validator"/>
+                <span class="tw-mb-2">{{ translate('CategoryCode') }}<span class="required-star">*</span></span>
+                <a-input v-model:value="v$.id.$model" :status="v$.id.$error ? 'error' : ''" :placeholder="translate('CategoryCode')" :disabled="isEdit" />
+                <ErrorMess :params="[64]" :title="translate('CategoryCode')" :validator="v$.id.$errors[0]?.$validator"/>
             </div>
             <div class="tw-basis-1/2 tw-flex tw-flex-col tw-items-start tw-justify-start">
-                <span class="tw-mb-2">Tên chủ loại<span class="required-star">*</span></span>
-                <a-input v-model:value="v$.genusName.$model" :status="v$.genusName.$error ? 'error' : ''" :placeholder="'Tên chủng loại'"/> 
-                <ErrorMess :params="[64]" :title="'Tên chủng loại'" :validator="v$.genusName.$errors[0]?.$validator"/>
+                <span class="tw-mb-2">{{ translate('CategoryName') }}<span class="required-star">*</span></span>
+                <a-input v-model:value="v$.name.$model" :status="v$.name.$error ? 'error' : ''" :placeholder="translate('CategoryName')"/> 
+                <ErrorMess :params="[64]" :title="translate('CategoryName')" :validator="v$.name.$errors[0]?.$validator"/>
             </div>
         </div>
         <div class="tw-w-full tw-flex tw-flex-col tw-items-start tw-justify-center">
-            <span class="tw-mb-2">Thuộc tính<span class="required-star">*</span></span>
-            <div class="tw-w-full tw-flex tw-justify-between tw-border tw-rounded-[12px]" :class="formState?.listProperty?.length === 0 ? 'is-invalid' : ''">
+            <span class="tw-mb-2">{{ translate('Properties') }}<span class="required-star">*</span></span>
+            <div class="tw-w-full tw-flex tw-justify-between tw-border tw-rounded-[12px]" :class="isvalidLisProps ? 'is-invalid' : ''">
                 <div class="tw-w-full tw-flex tw-justify-between">
                     <div class="tw-w-1/2 tw-flex tw-flex-col tw-items-center tw-justify-start tw-py-3">
                         <div class="tw-border-b tw-w-full tw-flex tw-items-center tw-justify-center tw-pb-3 tw-text-[16px] tw-font-[600]">
-                            <span class="tw-border-r tw-border-[#000] tw-pr-6">Danh sách thuộc tính</span>
-                            <span class="tw-pl-6">Số lượng : {{ formState?.listProperty?.length }}</span>
+                            <span class="tw-border-r tw-border-[#000] tw-pr-6">{{ translate('PropertiesList') }}</span>
+                            <span class="tw-pl-6"> {{ translate('Quantity') }} {{ formState?.listProperty?.length }}</span>
                         </div>
                         <div v-if="formState?.listProperty?.length > 0" class="tw-w-full">
                             <div class="tw-w-full tw-flex tw-items-center tw-justify-center tw-p-3 tw-border-0 tw-border-b tw-relative property-list tw-overflow-hidden" v-for="(ele, idx) in formState?.listProperty" :key="idx">
@@ -53,20 +53,20 @@
                     <div class="tw-w-1/2 tw-border-l tw-py-3 tw-pl-3">
                         <div class="tw-w-full tw-flex tw-items-end tw-justify-start">
                             <div class="tw-mr-3">
-                                <span class="tw-mb-2">Tên thuộc tính</span>
-                                <a-input class="tw-w-full" :placeholder="'Nhập tên thuộc tính'" v-model:value="nameProperty"/>
+                                <span class="tw-mb-2">{{ translate('PropertyName') }}</span>
+                                <a-input class="tw-w-full" :placeholder="translate('EnterPropertyName')" v-model:value="nameProperty"/>
                             </div>
                             <AntdButton :type="'primary'" ghost :disabled="disableBtnAdd" @click="handleAddProperties()">
                                 <template #icon>
                                     <font-awesome-icon :icon="['fas', 'plus']" />
                                 </template>
-                                <span class="tw-ml-2">Thêm</span>
+                                <span class="tw-ml-2">{{ translate('Add') }}</span>
                             </AntdButton>
                         </div>
                     </div>
                 </div>
             </div>
-            <ErrorMess :params="[64]" :title="'Thuộc tính'" :validator="isvalidLisProps"/>
+            <span v-if="isvalidLisProps" class="tw-text-[#dd2f08]">{{ translate('PleaseCompleteAttribute') }}</span>
         </div>
     </a-form>
     <template #footer>
@@ -84,15 +84,15 @@ import BaseModal from "@/components/antd-modal/index.vue";
 import AntdButton from "@/components/antd-button/index.vue";
 import ErrorMess from "@/components/error-mess/index.vue";
 import { translate } from "@/languages/i18n";
-import { ref, watch, defineAsyncComponent, reactive, computed } from "vue";
+import { ref, watch, defineAsyncComponent, reactive, computed, onMounted } from "vue";
 import { required, maxLength } from "@vuelidate/validators";
 import useVuelidate from '@vuelidate/core';
 import NoData from "@/components/NoData/index.vue";
 import { STR_UPPER_CASE } from "@/utils/common";
 
 interface FormState {
-    genusId: string | number,
-    genusName: string,
+    id: string | number,
+    name: string,
     listProperty: string[],
 };
 
@@ -110,24 +110,29 @@ const props = defineProps({
         type: Object,
         required: true,
     },
+    isEdit: {
+        type: Boolean,
+        required: true,
+    },
 })
 
 const prorpertyEditing = ref<string>("");
 const newPropEdit = ref<string>("");
-const isEditProperty = ref<boolean>(false);
 const nameProperty = ref<string>("");
+const isEditProperty = ref<boolean>(false);
+const isvalidLisProps = ref<boolean>(false);
 
 const formState = reactive<FormState>({
-    genusId: props?.form?.genusId,
-    genusName: props?.form?.genusName,
+    id: props?.form?.id,
+    name: props?.form?.name,
     listProperty: props?.form?.listProperty,
 });
 
 const rules = {
-    genusId: {
+    id: {
         required,
     },
-    genusName: {
+    name: {
         required,
     },
 };
@@ -167,16 +172,55 @@ const handleDeleteProperty = (idx: number) => {
 
 const disableBtnSaveEdit = computed(() => newPropEdit?.value?.length === 0);
 
-const isvalidLisProps = computed(() => { if(formState?.listProperty?.length === 0) return "required" });
+const checkProps = () => {
+    if (formState?.listProperty?.length === 0) {
+        isvalidLisProps.value = true;
+        return false;
+    }
+    return true;
+};
+
+const onKeyDown = (ev: any) => {
+    if (ev.key === 'Enter' && !disableBtnAdd.value) {
+        handleAddProperties();
+    }
+}
 
 const handleSubmit = () => {
     v$.value.$touch();
-    if (v$.value.$invalid || formState?.listProperty?.length === 0) {
+    if (v$.value.$invalid || !checkProps()) {
         return false;
     }
-    console.log(formState);
-}
+    try {
+        emit("handleSubmit", formState);
+    } catch (error) {
+        console.log(error);
+    }
+};
 
+watch(
+    () => formState?.listProperty,
+    (val) => {
+        if (val.length !== 0) {
+            isvalidLisProps.value = false;
+        }
+    }, {
+        deep: true,
+    }
+);
 
+watch(
+  () => props.form,
+  (val) => {
+    v$.value.$reset();
+    (formState.name = val.name), (formState.id = val.id), (formState.listProperty = val.listProperty);
+  },
+  {
+    deep: true,
+  },
+);
 
+onMounted(() => {
+    document.addEventListener("keydown", onKeyDown);
+})
 </script>
