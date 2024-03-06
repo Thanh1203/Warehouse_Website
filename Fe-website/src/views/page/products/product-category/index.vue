@@ -60,6 +60,7 @@
 <!-- modal -->
 <ModalCreate :isVisible="isVisibleModalCreate" :titleModal="titleModal" :form="formState" :isEdit="isEdit" @closeModal="onCancel" @handleSubmit="handleSubmitForm"/>
 <ModalConfirm :isVisible="isVisibleModalConfirm" :titleModal="titleModal" @closeModal="onCancel" @handleSubmit="handleDelete"/>
+<ModalInfo :isVisible="isVisibleModalInfo" :titleModal="titleModal" :form="formState" @closeModal="onCancel"/>
 </template>
 <script setup lang="ts">
 import { translate } from "@/languages/i18n";
@@ -77,8 +78,9 @@ interface FormState {
     dateCreated?: string,
 };
 
-const ModalCreate = defineAsyncComponent(() => import("./components/ModalCreate.vue"))
+const ModalCreate = defineAsyncComponent(() => import("./components/ModalCreate.vue"));
 const ModalConfirm = defineAsyncComponent(() => import("@/components/antd-modal-confirm/index.vue"));
+const ModalInfo = defineAsyncComponent(() => import("./components/ModalInfo.vue"));
 
 const listSelect = ref<any>([]);
 const isVisibleModalCreate = ref<boolean>(false);
@@ -204,6 +206,7 @@ const handleDelete = () => {
 
 const handleView = (item: FormState) => {
     isVisibleModalInfo.value = true;
+    titleModal.value = "Chi tiết chủng loại";
     formState.id = item.id;
     formState.name = item.name;
     formState.listProperty = item.listProperty;
