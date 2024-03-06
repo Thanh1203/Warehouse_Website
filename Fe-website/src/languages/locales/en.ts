@@ -69,4 +69,5 @@ export const en = {
     PropertyName: "Property name",
     EnterPropertyName: "Enter the property name",
     Add: "Add",
+    TotalProducts: "Total number of products: ",
 };

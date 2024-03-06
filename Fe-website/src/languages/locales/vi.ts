@@ -18,7 +18,7 @@ export const vi = {
     WarehouseConfiguration: "Cấu hình kho",
     EnterWarehouse: "Nhập kho",
     ExportWarehouse: "Xuất kho",
-    CreateWarehouse: "Tạo kho hàng",
+    CreateWarehouse: "Thêm mới kho hàng",
     WarehouseCode: "Mã kho",
     warehouseName: "Tên kho hàng",
     EnterWarehouseName: "Nhập tên kho hàng",
@@ -70,4 +70,6 @@ export const vi = {
     PropertyName: "Tên thuộc tính",
     EnterPropertyName: "Nhập tên thuộc tính",
     Add: "Thêm",
+    TotalProducts: "Tổng số sản phẩm: ",
+
 };

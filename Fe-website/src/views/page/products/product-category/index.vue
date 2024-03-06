@@ -15,7 +15,7 @@
 </a-form>
 <Section :title="translate('CategoryList')" :subTitle="translate('TotalCategories')" :number="String(dataFake?.length)">
     <template #action>
-        <AntdButton :type="'text'" danger :disabled="disableDeleteRow" class="tw-mr-2"  @click="preDeleteMany">
+        <AntdButton :type="'text'" danger :disabled="disableDeleteRow" class="tw-mr-2"  @click="handleDeleteMany">
             <template #icon>
                 <font-awesome-icon :icon="['far', 'trash-can']"/>
             </template>
@@ -48,7 +48,7 @@
                         <AntdButton class="action-btn" :type="'light-hover'" shape="circle" @click="handleUpdate(record)">
                             <font-awesome-icon :icon="['far', 'pen-to-square']" style="color: #001F3F;"/>
                         </AntdButton>
-                        <AntdButton class="action-btn" :type="'light-hover'" shape="circle" @click="preDeteleSingle(record.id)">
+                        <AntdButton class="action-btn" :type="'light-hover'" shape="circle" @click="handleDeleteSingle(record.id)">
                             <font-awesome-icon :icon="['far', 'trash-can']" style="color: #FF0000;" />
                         </AntdButton>
                     </div>
@@ -153,7 +153,7 @@ const handelCreate = () => {
     formState.name = "";
     formState.listProperty = [];
     isVisibleModalCreate.value = true;
-    titleModal.value = "Tạo chủng loại sản phẩm";
+    titleModal.value = "Thêm mới chủng loại sản phẩm";
     isEdit.value = false;
 };
 
@@ -166,12 +166,12 @@ const handleUpdate = (item: FormState) => {
     titleModal.value = "Cập nhật chủng loại sản phẩm chủng loại sản phẩm";
 };
 
-const preDeleteMany = () => {
+const handleDeleteMany = () => {
     isVisibleModalConfirm.value = true;
     titleModal.value = "Bạn chắc chắn muốn xóa những chủng loại sản phẩm này?"
 };
 
-const preDeteleSingle = (id: string | number) => {
+const handleDeleteSingle = (id: string | number) => {
     idProduct.value = id;
     isVisibleModalConfirm.value = true;
     titleModal.value = "Bạn chắc chắn muốn xóa chủng loại sản phẩm này?"

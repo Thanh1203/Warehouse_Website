@@ -22,6 +22,7 @@
                             <span class="tw-border-r tw-border-[#000] tw-pr-6">{{ translate('PropertiesList') }}</span>
                             <span class="tw-pl-6"> {{ translate('Quantity') }} {{ formState?.listProperty?.length }}</span>
                         </div>
+                        <div></div>
                         <div v-if="formState?.listProperty?.length > 0" class="tw-w-full">
                             <div class="tw-w-full tw-flex tw-items-center tw-justify-center tw-p-3 tw-border-0 tw-border-b tw-relative property-list tw-overflow-hidden" v-for="(ele, idx) in formState?.listProperty" :key="idx">
                                 <span v-if="!handleCheckEdit(ele)" class="tw-text-[16px]">{{ ele }}</span>
