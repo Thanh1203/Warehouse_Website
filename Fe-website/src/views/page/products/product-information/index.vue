@@ -1,18 +1,18 @@
 <template>
-  <a-form class="tw-flex tw-justify-start tw-items-start tw-rounded-lg tw-bg-white tw-px-6 tw-py-5 tw-mb-6 filter-section">
-    <a-form-item class="tw-w-[300px]">
+  <a-form class="tw-flex tw-rounded-lg tw-bg-white tw-px-6 tw-py-5 tw-mb-6">
+    <a-form-item class="tw-w-[300px] !tw-mr-3">
       <span class="tw-opacity-70">{{ translate('Search')}}</span>
-      <a-input :placeholder="translate('Search')" v-model:value="filterSearching.keyword" />
+      <a-input :placeholder="translate('Search')" v-model:value="filterSearching.Keyword" class="tw-mt-2"/>
     </a-form-item>
-    <a-form-item class="tw-w-[250px]">
-        <span class="tw-opacity-70">{{translate('ProductCategory')}}</span>
-        <a-select :placeholder="translate('ProductCategory')" v-model:value="filterSearching.type" :options="dataFake1.map(ele => ({value: ele.id, label: ele.name}))"/>
+    <a-form-item class="tw-w-[250px] !tw-mr-3">
+        <span class="tw-opacity-70">{{translate('ProductClassification')}}</span>
+        <a-input :placeholder="translate('Classify')" v-model:value="filterSearching.Classify" class="tw-mt-2"/>
     </a-form-item>
-    <a-form-item class="tw-w-[200px]">
+    <a-form-item class="tw-w-[200px] !tw-mr-3">
         <span class="tw-opacity-70">{{translate('Color')}}</span>
-        <a-select :placeholder="translate('Color')" v-model:value="filterSearching.color" :options="dataFake2"/>
+        <a-select :placeholder="translate('Color')" v-model:value="filterSearching.Color" :options="dataFake2" class="tw-mt-2"/>
     </a-form-item>
-    <a-form-item class="tw-flex tw-items-end">
+    <a-form-item>
       <AntdButton :type="'text'" danger :disabled="disabledDeleteFilter"  @click="handleClearFilter">
         <template #icon>
           <font-awesome-icon :icon="['far', 'trash-can']" />
@@ -22,7 +22,7 @@
     </a-form-item>
   </a-form>
   <div class="tw-w-full tw-h-full tw-flex tw-bg-white tw-p-6 tw-rounded-lg product-Info">
-    <Section class="tw-w-1/5 tw-h-auto tw-bg-transparent tw-border tw-border-solid tw-mr-2" :title="'Danh sách chủng loại'" :subTitle="translate('TotalCategories')" :number="String(dataFake3?.length)">
+    <Section class="!tw-w-1/5 !tw-h-auto tw-bg-transparent tw-border tw-border-solid tw-mr-2" :title="'Danh sách chủng loại'" :subTitle="translate('TotalCategories')" :number="String(dataFake3?.length)">
       <template #body>
         <a-menu
           mode="inline"
@@ -31,10 +31,11 @@
             key: x.id,
             label: x.name,
           }))"
+          v-model:selectedKeys="selectedKeys"
         />
       </template>
     </Section>
-    <Section class="tw-w-4/5 tw-bg-transparent tw-border tw-border-solid tw-ml-2" :title="'Danh sách sản phẩm'" :subTitle="translate('TotalProducts')" :number="String(dataFake4?.length)">
+    <Section class="!tw-w-4/5 tw-bg-transparent tw-border tw-border-solid tw-ml-2" :title="'Danh sách sản phẩm'" :subTitle="translate('TotalProducts')" :number="String(dataFake4?.length)">
       <template #action>
         <AntdButton :type="'text'" danger class="tw-mr-2" :disabled="disableDeleteMany" @click="handleDeleteMany">
             <template #icon>
@@ -53,7 +54,7 @@
         <AntdTable
           ref="table"
           key-field="id"
-          :index-column="true"
+          :index-column="false"
           :has-checkbox="true"
           :no-sort="true"
           :dataSource="dataFake4"
@@ -79,19 +80,23 @@
       </template>
     </Section>
   </div>
+  <!-- modal -->
+  <ModalCreate :isVisible="isVisibleModalCreate" :isEdit="isEdit" :titleModal="titleModal" @closeModal="onCancel" @handleSubmit="handleSubmit"/>
 </template>
 <script setup lang="ts">
 import { translate } from "@/languages/i18n";
-import { computed, reactive, ref } from "vue";
+import { computed, defineAsyncComponent, reactive, ref } from "vue";
 import AntdButton from "@/components/antd-button/index.vue";
 import Section from "@/components/section/index.vue";
 import AntdTable from "@/components/antd-table/index.vue";
 import { notification } from "ant-design-vue";
 
+const ModalCreate = defineAsyncComponent(() => import("./components/modalCreate.vue"));
+
 const listSelect = ref<Array<string | number>>([]);
-const idProductCategory = ref<string | number>("");
 const idProduct = ref<string | number>("");
 const titleModal = ref<string>("");
+const selectedKeys = ref<string[]>(['ALL']);
 const isVisibleModalCreate = ref<boolean>(false);
 const isVisibleModalConfirm = ref<boolean>(false);
 const isVisibleModalInfo = ref<boolean>(false);
@@ -116,6 +121,12 @@ const columns = ref<Array<any>>([
     align: "left",
   },
   {
+    title: "Phân loại",
+    dataIndex: "Classify",
+    key: 'Classify',
+    align: "left",
+  },
+  {
     title: "Màu sắc",
     dataIndex: "color",
     key: 'color',
@@ -137,23 +148,29 @@ const columns = ref<Array<any>>([
 ]);
 
 const filterSearching = reactive({
-  keyword: "",
-  type: null,
-  color: null,
+  Keyword: "",
+  Color: null,
+  Classify: "",
+});
+const formState = reactive({
+  id: "",
+  name: "",
+  nameCategory: "",
 });
 
 // handle filter
-const disabledDeleteFilter = computed(() => filterSearching?.keyword?.length === 0 && filterSearching?.type === null && filterSearching?.color === null);
+const disabledDeleteFilter = computed(() => filterSearching?.Keyword?.length === 0 && filterSearching?.Color === null && filterSearching?.Classify?.length === 0);
 
 const handleClearFilter = () => {
-  filterSearching.keyword = "";
-  filterSearching.type = null;
-  filterSearching.color = null;
+  filterSearching.Keyword = "";
+  filterSearching.Color = null;
+  filterSearching.Classify = "";
 };
 
 //handle product category
 const handleSelectCategory = (item: any) => {
-  idProductCategory.value = item.key;
+  selectedKeys.value = [item.key];
+  console.log(selectedKeys.value[0]);
 };
 
 // close modal
@@ -172,7 +189,7 @@ const handleSelectRow = (rows: any) => {
 const handleCreate = () => {
   isVisibleModalCreate.value = true;
   isEdit.value = false;
-  titleModal.value = "Thêm mới sản phẩm";
+  titleModal.value = "Thêm mới thông tin sản phẩm";
 };
 
 const handleEdit = (item: any) => {
@@ -211,29 +228,10 @@ const handleSubmit = (state: any) => {
     message: translate('Success'),
   });
 }
+
+
+
 //data fake
-const dataFake1 = [
-  {
-      id: "CL01",
-      name: "Bàn phím",
-      dateCreated: "01/01/2024",
-      listProperty: ["Màu sắc", "Kích thước"],
-  },
-  {
-      id: "CL02",
-      name: "Chuột",
-      dateCreated: "01/01/2024",
-      listProperty: ["Màu sắc", "Kích thước"],
-  },
-  {
-      id: "CL03",
-      name: "Tai nghe",
-      dateCreated: "01/01/2024",
-      listProperty: ["Màu sắc", "Kích thước"],
-  }
-];
-
-
 const dataFake2 = [
   {
     value: "Trắng",
@@ -251,22 +249,20 @@ const dataFake2 = [
 
 const dataFake3 = [
   {
-      id: "CL01",
-      name: "Bàn phím",
-      dateCreated: "01/01/2024",
-      listProperty: ["Màu sắc", "Kích thước"],
+    id: "ALL",
+    name: "Tất cả",
   },
   {
-      id: "CL02",
-      name: "Chuột",
-      dateCreated: "01/01/2024",
-      listProperty: ["Màu sắc", "Kích thước"],
+    id: "CL01",
+    name: "Bàn phím",
   },
   {
-      id: "CL03",
-      name: "Tai nghe",
-      dateCreated: "01/01/2024",
-      listProperty: ["Màu sắc", "Kích thước"],
+    id: "CL02",
+    name: "Chuột",
+  },
+  {
+    id: "CL03",
+    name: "Tai nghe",
   }
 ];
 
@@ -278,6 +274,7 @@ const dataFake4 = [
     name: "Bàn phím 1",
     dayCreated: "01/01/2024",
     color: "Trắng",
+    Classify: "Văn phòng",
   },
   {
     id: "SP02",
@@ -286,6 +283,7 @@ const dataFake4 = [
     name: "Bàn phím 2",
     dayCreated: "01/01/2024",
     color: "Trắng",
+    Classify: "Gamming",
   },
   {
     id: "SP03",
@@ -294,6 +292,7 @@ const dataFake4 = [
     name: "Bàn phím 3",
     dayCreated: "01/01/2024",
     color: "Đen",
+    Classify: "Custom",
   },
   {
     id: "SP04",
@@ -302,6 +301,7 @@ const dataFake4 = [
     name: "Chuột 1",
     dayCreated: "01/01/2024",
     color: "Đen",
+    Classify: "Gamming",
   },
   {
     id: "SP05",
@@ -310,6 +310,7 @@ const dataFake4 = [
     name: "Chuột 2",
     dayCreated: "01/01/2024",
     color: "xám",
+    Classify: "Văn phòng",
   },
   {
     id: "SP06",
@@ -318,6 +319,7 @@ const dataFake4 = [
     name: "Tai nghe 1",
     dayCreated: "01/01/2024",
     color: "xám",
+    Classify: "Kiểm âm",
   }
 ];
 </script>
