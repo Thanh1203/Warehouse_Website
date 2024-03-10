@@ -43,3 +43,13 @@ export const PC_MENU = [
         path: "/warehouse-export",
     }
 ];
+
+export const DEFAULT_PROPERTY = {
+    Color: "Color", // màu sắc
+    Material: "Material", // chất liệu
+    Weight: "Weight", // trọng lượng
+    Size: "Size", // kích thước
+    Classify: "Classify", // phân loại
+    ConnectionTypes: "ConnectionTypes", // kiểu kết nối
+    Producer: "Producer", // hãng sản xuất,
+};
