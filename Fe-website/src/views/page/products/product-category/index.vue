@@ -123,8 +123,7 @@ import { notification } from 'ant-design-vue'
 interface FormState {
   id: string | number
   name: string
-  listProperty: string[] | number[]
-  dateCreated?: string
+  propertyExtend: string[] | number[]
 }
 
 const ModalCreate = defineAsyncComponent(() => import('./components/ModalCreate.vue'))
@@ -173,7 +172,7 @@ const filterSearching = reactive({
 const formState = reactive<FormState>({
   id: '',
   name: '',
-  listProperty: []
+  propertyExtend: [],
 })
 
 // handle filter
@@ -200,7 +199,7 @@ const disableDeleteRow = computed(() => listSelect?.value?.length === 0)
 const handelCreate = () => {
   formState.id = ''
   formState.name = ''
-  formState.listProperty = []
+  formState.propertyExtend = []
   isVisibleModalCreate.value = true
   titleModal.value = 'Thêm mới chủng loại sản phẩm'
   isEdit.value = false
@@ -209,7 +208,7 @@ const handelCreate = () => {
 const handleUpdate = (item: FormState) => {
   formState.id = item.id
   formState.name = item.name
-  formState.listProperty = item.listProperty
+  formState.propertyExtend = item.propertyExtend
   isVisibleModalCreate.value = true
   isEdit.value = true
   titleModal.value = 'Cập nhật chủng loại sản phẩm chủng loại sản phẩm'
@@ -258,8 +257,8 @@ const handleView = (item: FormState) => {
   titleModal.value = 'Chi tiết chủng loại'
   formState.id = item.id
   formState.name = item.name
-  formState.listProperty = item.listProperty
-  formState.dateCreated = item.dateCreated
+  formState.propertyExtend = item.propertyExtend
+
 }
 
 //datafake
@@ -268,19 +267,19 @@ const dataFake = [
     id: 'CL01',
     name: 'Bàn phím',
     dateCreated: '01/01/2024',
-    listProperty: ['Màu sắc', 'Kích thước']
+    propertyExtend: ['Màu sắc', 'Kích thước']
   },
   {
     id: 'CL02',
     name: 'Chuột',
     dateCreated: '01/01/2024',
-    listProperty: ['Màu sắc', 'Kích thước']
+    propertyExtend: ['Màu sắc', 'Kích thước']
   },
   {
     id: 'CL03',
     name: 'Tai nghe',
     dateCreated: '01/01/2024',
-    listProperty: ['Màu sắc', 'Kích thước']
+    propertyExtend: ['Màu sắc', 'Kích thước']
   }
 ]
 </script>

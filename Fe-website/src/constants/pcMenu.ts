@@ -1,6 +1,6 @@
 import { translate } from "@/languages/i18n";
 import { faProductHunt } from "@fortawesome/free-brands-svg-icons";
-import { faAddressBook, faChartColumn, faChartLine, faChartPie, faChartSimple, faDatabase, faDownload, faGear, faGears, faInfo, faRightToBracket, faUpload, faUsers, faWarehouse } from "@fortawesome/free-solid-svg-icons";
+import { faAddressBook, faChartColumn, faChartLine, faChartPie, faChartSimple, faDatabase, faDownload, faGear, faGears, faIndustry, faInfo, faRightToBracket, faUpload, faUsers, faWarehouse } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { h } from "vue";
 
@@ -46,17 +46,17 @@ const menuAdmin = [
             {
                 key: "WAREHOUSECONFIGURATION",
                 label: translate("WarehouseConfiguration"),
-                icon: () => h(FontAwesomeIcon, {icon: faGears}),
+                icon: () => h(FontAwesomeIcon, { icon: faGears }),
             },
             {
                 key: "ENTERWAREHOUSE",
                 label: translate("EnterWarehouse"),
-                icon: () => h(FontAwesomeIcon, {icon: faDownload}),
+                icon: () => h(FontAwesomeIcon, { icon: faDownload }),
             },
             {
                 key: "EXPORTWAREHOUSE",
                 label: translate("ExportWarehouse"),
-                icon: () => h(FontAwesomeIcon, {icon: faUpload}),
+                icon: () => h(FontAwesomeIcon, { icon: faUpload }),
             }
         ]
     },
@@ -66,15 +66,25 @@ const menuAdmin = [
         icon: () => h(FontAwesomeIcon, { icon: faProductHunt }),
         children: [
             {
+                key: 'PRODUCTPRODUCER',
+                label: translate('Producer'),
+                icon: () => h(FontAwesomeIcon, {icon: faIndustry })
+            },
+            {
                 key: 'PRODUCTCATEGORY',
                 label: translate("ProductCategory"),
                 icon: () => h(FontAwesomeIcon, { icon: faDatabase }),
             },
             {
+                key: 'PRODUCTCLASSIFY',
+                label: translate('ProductClassify'),
+                icon: () => h(FontAwesomeIcon, { icon: faInfo }),
+            },
+            {
                 key: 'PRODUCTINFORMATION',
                 label: translate("ProductInformation"),
                 icon: () => h(FontAwesomeIcon, { icon: faInfo }),
-            }
+            },
         ]
     },
 ];

@@ -41,22 +41,25 @@
           />
         </div>
       </div>
+      <div class="tw-w-full tw-flex tw-flex-col tw-items-start tw-justify-center tw-mb-6">
+        <span>{{ translate('DefaultProperties') }}:</span>
+        <div class="tw-w-full tw-mt-2 tw-flex tw-items-center tw-justify-between">
+          <div
+            v-for="(item, idx) in propsDefault"
+            :key="idx"
+            class="tw-w-[110px] tw-px-2 tw-py-1 tw-border tw-border-slate-950 tw-flex tw-justify-center tw-items-center"
+          >
+            <span>{{ item.label }}</span>
+          </div>
+        </div>
+      </div>
       <div class="tw-w-full tw-flex tw-flex-col tw-items-start tw-justify-center">
-        <span class="tw-mb-2"
-          >{{ translate('Properties') }}<span class="required-star">*</span></span
-        >
+        <span class="tw-mb-2">{{ translate('CustomProperties') }}:</span>
         <a-select
           mode="tags"
           class="tw-w-full"
-          v-model:value="v$.listProperty.$model"
+          v-model:value="v$.propertyExtend.$model"
           :placeholder="translate('EnterProperty')"
-          :options="propsOptions"
-          :status="v$.listProperty.$error ? 'error' : ''"
-        />
-        <ErrorMess
-          :params="[64]"
-          :title="translate('Properties')"
-          :validator="v$.listProperty.$errors[0]?.$validator"
         />
       </div>
     </a-form>
@@ -78,14 +81,12 @@ import { translate } from '@/languages/i18n'
 import { ref, watch, defineAsyncComponent, reactive, computed, onMounted } from 'vue'
 import { required, maxLength } from '@vuelidate/validators'
 import useVuelidate from '@vuelidate/core'
-import NoData from '@/components/NoData/index.vue'
-import { STR_UPPER_CASE } from '@/utils/common'
 import { DEFAULT_PROPERTY } from '@/constants'
 
 interface FormState {
   id: string | number
   name: string
-  listProperty: string[]
+  propertyExtend: string[]
 }
 
 const emit = defineEmits(['closeModal', 'handleSubmit'])
@@ -108,13 +109,10 @@ const props = defineProps({
   }
 })
 
-const nameProperty = ref<string>('')
-const isvalidLisProps = ref<boolean>(false)
-
 const formState = reactive<FormState>({
   id: props?.form?.id,
   name: props?.form?.name,
-  listProperty: props?.form?.listProperty
+  propertyExtend: props?.form?.propertyExtend
 })
 
 const rules = {
@@ -124,28 +122,18 @@ const rules = {
   name: {
     required
   },
-  listProperty: {
-    required
-  }
+  propertyExtend: {}
 }
 
 const v$ = useVuelidate(rules, formState)
 
-const checkProps = () => {
-  if (formState?.listProperty?.length === 0) {
-    isvalidLisProps.value = true
-    return false
-  }
-  return true
-}
-
-const propsOptions = computed(
+const propsDefault = computed(
   () => Object.values(DEFAULT_PROPERTY)?.map((x) => ({ value: x, label: translate(`${x}`) }))
 )
 
 const handleSubmit = () => {
   v$.value.$touch()
-  if (v$.value.$invalid || !checkProps()) {
+  if (v$.value.$invalid) {
     return false
   }
   try {
@@ -156,24 +144,12 @@ const handleSubmit = () => {
 }
 
 watch(
-  () => formState?.listProperty,
-  (val) => {
-    if (val.length !== 0) {
-      isvalidLisProps.value = false
-    }
-  },
-  {
-    deep: true
-  }
-)
-
-watch(
   () => props.form,
   (val) => {
-    v$.value.$reset()
-    ;(formState.name = val.name),
-      (formState.id = val.id),
-      (formState.listProperty = val.listProperty)
+    v$.value.$reset();
+    (formState.name = val.name),
+    (formState.id = val.id),
+    (formState.propertyExtend = val.propertyExtend)
   },
   {
     deep: true

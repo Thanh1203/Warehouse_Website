@@ -129,5 +129,23 @@ export default (): RouteRecordRaw[] => {
                 layout: defaultLayout,
             }
         },
+        {
+            path: "/product-classify",
+            name: "product classify",
+            component: () => import("./products/product-classify/index.vue"),
+            meta: {
+                title: translate(''),
+                layout: defaultLayout,
+            }
+        },
+        {
+            path: "/product-producer",
+            name: "product producer",
+            component: () => import("./products/product-producer/index.vue"),
+            meta: {
+                title: translate(''),
+                layout: defaultLayout,
+            }
+        },
     ]
 };

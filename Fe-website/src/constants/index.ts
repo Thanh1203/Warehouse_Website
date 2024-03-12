@@ -41,6 +41,14 @@ export const PC_MENU = [
     {
         key: "EXPORTWAREHOUSE",
         path: "/warehouse-export",
+    },
+    {
+        key: "PRODUCTCLASSIFY",
+        path: "/product-classify",
+    },
+    {
+        key: "PRODUCTPRODUCER",
+        path: "/product-producer",
     }
 ];
 
@@ -51,5 +59,6 @@ export const DEFAULT_PROPERTY = {
     Size: "Size", // kích thước
     Classify: "Classify", // phân loại
     ConnectionTypes: "ConnectionTypes", // kiểu kết nối
-    Producer: "Producer", // hãng sản xuất,
+    Producer: "Producer", // hãng sản xuất
+    Designs: "Designs", // Thiết kế
 };

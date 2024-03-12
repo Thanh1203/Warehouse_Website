@@ -71,5 +71,17 @@ export const vi = {
     EnterPropertyName: "Nhập tên thuộc tính",
     Add: "Thêm",
     TotalProducts: "Tổng số sản phẩm: ",
-
+    EnterProperty: "Nhập thuộc tính",
+    Material: "Chất liệu",
+    Weight: "Trọng lượng",
+    Size: "Kích thước",
+    Classify: "Phân loại",
+    ConnectionTypes: "Kiểu kết nối",
+    Producer: "Hãng sản xuất",
+    DefaultProperties: "Thuộc tính mặc định",
+    CustomProperties: "Thuộc tính mở rộng",
+    Designs: "Thiết kế",
+    ProductCode: "Mã sản phẩm",
+    Describe: "Mô tả",
+    ProductClassify: "Phân loại sản phẩm",
 };

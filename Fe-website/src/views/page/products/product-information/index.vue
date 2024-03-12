@@ -5,14 +5,14 @@
       <a-input :placeholder="translate('Search')" v-model:value="filterSearching.Keyword" class="tw-mt-2"/>
     </a-form-item>
     <a-form-item class="tw-w-[250px] !tw-mr-3">
-        <span class="tw-opacity-70">{{translate('ProductClassification')}}</span>
+        <span class="tw-opacity-70">{{translate('ProductClassify')}}</span>
         <a-input :placeholder="translate('Classify')" v-model:value="filterSearching.Classify" class="tw-mt-2"/>
     </a-form-item>
     <a-form-item class="tw-w-[200px] !tw-mr-3">
-        <span class="tw-opacity-70">{{translate('Color')}}</span>
-        <a-select :placeholder="translate('Color')" v-model:value="filterSearching.Color" :options="dataFake2" class="tw-mt-2"/>
+        <span class="tw-opacity-70">{{translate('Producer')}}</span>
+        <a-select :placeholder="translate('Producer')" v-model:value="filterSearching.producerCode" :options="dataFake2.map(x => ({value: x.id, label: x.name}))" class="tw-mt-2"/>
     </a-form-item>
-    <a-form-item>
+    <a-form-item class="tw-flex tw-items-end">
       <AntdButton :type="'text'" danger :disabled="disabledDeleteFilter"  @click="handleClearFilter">
         <template #icon>
           <font-awesome-icon :icon="['far', 'trash-can']" />
@@ -81,7 +81,8 @@
     </Section>
   </div>
   <!-- modal -->
-  <ModalCreate :isVisible="isVisibleModalCreate" :isEdit="isEdit" :titleModal="titleModal" @closeModal="onCancel" @handleSubmit="handleSubmit"/>
+  <ModalCreate :isVisible="isVisibleModalCreate" :form="formState" :isEdit="isEdit" :titleModal="titleModal" @closeModal="onCancel" @handleSubmit="handleSubmit"/>
+  <ModalInfo :isVisible="isVisibleModalInfo" :titleModal="titleModal" :idProduct="idProduct" @closeModal="onCancel"/>
 </template>
 <script setup lang="ts">
 import { translate } from "@/languages/i18n";
@@ -92,9 +93,10 @@ import AntdTable from "@/components/antd-table/index.vue";
 import { notification } from "ant-design-vue";
 
 const ModalCreate = defineAsyncComponent(() => import("./components/modalCreate.vue"));
+const ModalInfo = defineAsyncComponent(() => import("./components/modalInfo.vue"));
 
 const listSelect = ref<Array<string | number>>([]);
-const idProduct = ref<string | number>("");
+const idProduct = ref<string>("");
 const titleModal = ref<string>("");
 const selectedKeys = ref<string[]>(['ALL']);
 const isVisibleModalCreate = ref<boolean>(false);
@@ -104,8 +106,8 @@ const isEdit = ref<boolean>(false);
 const columns = ref<Array<any>>([
   {
     title: "Mã sản phẩm",
-    dataIndex: 'id',
-    key: 'id',
+    dataIndex: 'code',
+    key: 'code',
     align: "left",
   },
   {
@@ -116,8 +118,8 @@ const columns = ref<Array<any>>([
   },
   {
     title: "Chủng loại",
-    dataIndex: "nameCategory",
-    key: 'nameCategory',
+    dataIndex: "categoryName",
+    key: 'categoryName',
     align: "left",
   },
   {
@@ -127,9 +129,9 @@ const columns = ref<Array<any>>([
     align: "left",
   },
   {
-    title: "Màu sắc",
-    dataIndex: "color",
-    key: 'color',
+    title: translate('Producer'),
+    dataIndex: "Producer",
+    key: 'Producer',
     align: "left",
   },
   {
@@ -149,22 +151,31 @@ const columns = ref<Array<any>>([
 
 const filterSearching = reactive({
   Keyword: "",
-  Color: null,
-  Classify: "",
+  producerCode: null,
+  Classify: null,
 });
 const formState = reactive({
   id: "",
+  code: "",
   name: "",
-  nameCategory: "",
+  categoryCode: null,
+  classifyCode: null,
+  producerCode: null,
+  Size: "",
+  Material: "",
+  ConnectionTypes: "",
+  Color: "",
+  Designs: "",
+  Describe: "",
 });
 
 // handle filter
-const disabledDeleteFilter = computed(() => filterSearching?.Keyword?.length === 0 && filterSearching?.Color === null && filterSearching?.Classify?.length === 0);
+const disabledDeleteFilter = computed(() => filterSearching?.Keyword?.length === 0 && filterSearching?.producerCode === null && filterSearching?.Classify === null);
 
 const handleClearFilter = () => {
   filterSearching.Keyword = "";
-  filterSearching.Color = null;
-  filterSearching.Classify = "";
+  filterSearching.producerCode = null;
+  filterSearching.Classify = null;
 };
 
 //handle product category
@@ -190,21 +201,46 @@ const handleCreate = () => {
   isVisibleModalCreate.value = true;
   isEdit.value = false;
   titleModal.value = "Thêm mới thông tin sản phẩm";
+  formState.id = "";
+  formState.code = "";
+  formState.name = "";
+  formState.categoryCode = null;
+  formState.Size = "";
+  formState.Material = "";
+  formState.ConnectionTypes = "";
+  formState.Color = "";
+  formState.Designs = "";
+  formState.Describe = "";
+  formState.classifyCode = null;
+  formState.producerCode = null;
 };
 
 const handleEdit = (item: any) => {
   isVisibleModalCreate.value = true;
   isEdit.value = true;
   titleModal.value = "Cập nhật thông tin sản phẩm";
+  formState.id = item.id;
+  formState.code = item.code;
+  formState.name = item.name;
+  formState.categoryCode = item.categoryCode;
+  formState.Size = item.Size;
+  formState.Material = item.Material;
+  formState.ConnectionTypes = item.ConnectionTypes;
+  formState.Color = item.Color;
+  formState.Designs = item.Designs;
+  formState.Describe = item.Describe;
+  formState.classifyCode = item.classifyCode;
+  formState.producerCode = item.producerCode;
 };
 
 const handleView = (item: any) => {
   isVisibleModalInfo.value = true;
   isEdit.value = false;
   titleModal.value = "Thông tin sản phẩm";
+  idProduct.value = item.id;
 };
 
-const handleDeleteSingle = (id: string | number) => {
+const handleDeleteSingle = (id: string) => {
   idProduct.value = id;
   isVisibleModalConfirm.value = true;
   titleModal.value = "Bạn có chắc chắn muốn xóa sản phẩm này";
@@ -227,24 +263,22 @@ const handleSubmit = (state: any) => {
   notification['success']({
     message: translate('Success'),
   });
-}
-
-
+};
 
 //data fake
 const dataFake2 = [
   {
-    value: "Trắng",
-    label: "Trắng",
+    id: 'HgA',
+    name: "Hãng A",
   },
   {
-    value: "Đen",
-    label: "Đen",
+    id: 'HgB',
+    name: "Hãng B",
   },
   {
-    value: "Hồng",
-    label: "Hồng",
-  }
+    id: 'HgC',
+    name: "Hãng C",
+  },
 ];
 
 const dataFake3 = [
@@ -269,57 +303,111 @@ const dataFake3 = [
 const dataFake4 = [
   {
     id: "SP01",
-    typeCategory: "CL01",
-    nameCategory: "Bàn phím",
+    code: "SP01",
+    categoryCode: "CL01",
+    categoryName: "Bàn phím",
     name: "Bàn phím 1",
     dayCreated: "01/01/2024",
-    color: "Trắng",
+    Color: "Trắng",
     Classify: "Văn phòng",
+    Producer: "Hãng A",
+    Size: "30 x 30",
+    Material: "Nhựa, nhôm",
+    ConnectionTypes: "3 mode",
+    Designs: "TKL",
+    Describe: "Bàn phím cơ văn phòng",
+    classifyCode: "PL1",
+    producerCode: "HgA",
   },
   {
     id: "SP02",
-    typeCategory: "CL01",
-    nameCategory: "Bàn phím",
+    code: "SP01",
+    categoryCode: "CL01",
+    categoryName: "Bàn phím",
     name: "Bàn phím 2",
     dayCreated: "01/01/2024",
-    color: "Trắng",
+    Color: "Trắng",
     Classify: "Gamming",
+    Producer: "Hãng A",
+    Size: "30 x 30",
+    Material: "Nhôm",
+    ConnectionTypes: "1 mode",
+    Designs: "layout 75%",
+    Describe: "Bàn phím cơ gamming",
+    classifyCode: "PL2",
+    producerCode: "HgA",
   },
   {
     id: "SP03",
-    typeCategory: "CL01",
-    nameCategory: "Bàn phím",
+    code: "SP01",
+    categoryCode: "CL01",
+    categoryName: "Bàn phím",
     name: "Bàn phím 3",
     dayCreated: "01/01/2024",
-    color: "Đen",
+    Color: "Đen",
     Classify: "Custom",
+    Producer: "Hãng A",
+    Size: "40 x 40",
+    Material: "Nhựa",
+    ConnectionTypes: "3 mode",
+    Designs: "full size",
+    Describe: "Bàn phím cơ custom có hostswap",
+    classifyCode: "PL3",
+    producerCode: "HgA",
   },
   {
     id: "SP04",
-    typeCategory: "CL02",
-    nameCategory: "Chuột",
+    code: "SP01",
+    categoryCode: "CL02",
+    categoryName: "Chuột",
     name: "Chuột 1",
     dayCreated: "01/01/2024",
-    color: "Đen",
+    Color: "Đen",
     Classify: "Gamming",
+    Producer: "Hãng B",
+    Size: "",
+    Material: "Nhựa",
+    ConnectionTypes: "2 mode",
+    Designs: "Đối xứng",
+    Describe: "Chuột gamming thiết kế đối xứng",
+    classifyCode: "PL2",
+    producerCode: "HgB",
   },
   {
     id: "SP05",
-    typeCategory: "CL02",
-    nameCategory: "Chuột",
+    code: "SP01",
+    categoryCode: "CL02",
+    categoryName: "Chuột",
     name: "Chuột 2",
     dayCreated: "01/01/2024",
-    color: "xám",
+    Color: "xám",
     Classify: "Văn phòng",
+    Producer: "Hãng B",
+    Size: "",
+    Material: "Nhựa",
+    ConnectionTypes: "dây USB",
+    Designs: "Công thái học",
+    Describe: "Chuột văn phòng thiết kế công thái học ôm tay",
+    classifyCode: "PL1",
+    producerCode: "HgB",
   },
   {
     id: "SP06",
-    typeCategory: "CL03",
-    nameCategory: "Tai nghe",
+    code: "SP01",
+    categoryCode: "CL03",
+    categoryName: "Tai nghe",
     name: "Tai nghe 1",
     dayCreated: "01/01/2024",
-    color: "xám",
+    Color: "xám",
     Classify: "Kiểm âm",
+    Producer: "Hãng C",
+    Size: "",
+    Material: "Nhựa",
+    ConnectionTypes: "2 mode",
+    Designs: "In ear",
+    Describe: "Tai nghe DJ kiểm âm",
+    classifyCode: "PL4",
+    producerCode: "HgC",
   }
 ];
 </script>
