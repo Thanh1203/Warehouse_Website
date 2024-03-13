@@ -122,6 +122,7 @@ import { notification } from 'ant-design-vue'
 
 interface FormState {
   id: string | number
+  code: string | number
   name: string
   propertyExtend: string[] | number[]
 }
@@ -140,8 +141,8 @@ const idProduct = ref<string | number>('')
 const columns = ref<Array<any>>([
   {
     title: 'Mã chủng loại',
-    dataIndex: 'id',
-    key: 'id',
+    dataIndex: 'code',
+    key: 'code',
     align: 'left'
   },
   {
@@ -171,6 +172,7 @@ const filterSearching = reactive({
 
 const formState = reactive<FormState>({
   id: '',
+  code: '',
   name: '',
   propertyExtend: [],
 })
@@ -198,6 +200,7 @@ const disableDeleteRow = computed(() => listSelect?.value?.length === 0)
 // create, update, delete & view
 const handelCreate = () => {
   formState.id = ''
+  formState.code = ''
   formState.name = ''
   formState.propertyExtend = []
   isVisibleModalCreate.value = true
@@ -207,6 +210,7 @@ const handelCreate = () => {
 
 const handleUpdate = (item: FormState) => {
   formState.id = item.id
+  formState.code = item.code
   formState.name = item.name
   formState.propertyExtend = item.propertyExtend
   isVisibleModalCreate.value = true
@@ -229,23 +233,27 @@ const handleSubmitForm = (state: FormState) => {
   try {
     let temp: any = null
     const params = { page: 1, size: 20 }
-    if (!isEdit.value) {
+    if (state.id) {
       console.log('create')
+      notification['success']({
+        message: translate('noti.createSuccess')
+      })
     } else {
       console.log('update')
+      notification['success']({
+        message: translate('noti.updateSuccess')
+      })
     }
-
-    notification['success']({
-      message: translate('Success')
-    })
   } catch (error) {
     console.log(error)
+    notification['error']({
+      message: translate('noti.fail')
+    })
   }
   onCancel()
 }
 
 const handleDelete = () => {
-  console.log('delete')
   notification['success']({
     message: translate('Success')
   })
@@ -255,31 +263,33 @@ const handleDelete = () => {
 const handleView = (item: FormState) => {
   isVisibleModalInfo.value = true
   titleModal.value = 'Chi tiết chủng loại'
-  formState.id = item.id
+  formState.code = item.code
   formState.name = item.name
   formState.propertyExtend = item.propertyExtend
-
 }
 
 //datafake
 const dataFake = [
   {
     id: 'CL01',
+    code: 'CL01',
     name: 'Bàn phím',
     dateCreated: '01/01/2024',
-    propertyExtend: ['Màu sắc', 'Kích thước']
+    propertyExtend: []
   },
   {
     id: 'CL02',
+    code: 'CL02',
     name: 'Chuột',
     dateCreated: '01/01/2024',
-    propertyExtend: ['Màu sắc', 'Kích thước']
+    propertyExtend: []
   },
   {
     id: 'CL03',
+    code: 'CL03',
     name: 'Tai nghe',
     dateCreated: '01/01/2024',
-    propertyExtend: ['Màu sắc', 'Kích thước']
+    propertyExtend: []
   }
 ]
 </script>

@@ -81,7 +81,7 @@
     </Section>
   </div>
   <!-- modal -->
-  <ModalCreate :isVisible="isVisibleModalCreate" :form="formState" :isEdit="isEdit" :titleModal="titleModal" @closeModal="onCancel" @handleSubmit="handleSubmit"/>
+  <ModalCreate :isVisible="isVisibleModalCreate" :form="formState" :isEdit="isEdit" :titleModal="titleModal" @closeModal="onCancel" @handleSubmit="handleSubmitForm"/>
   <ModalInfo :isVisible="isVisibleModalInfo" :titleModal="titleModal" :idProduct="idProduct" @closeModal="onCancel"/>
 </template>
 <script setup lang="ts">
@@ -253,17 +253,29 @@ const handleDeleteMany = () => {
   titleModal.value = "Bạn có chắc chắn muốn xóa sản phẩm này";
 };
 
-const handleSubmit = (state: any) => {
-  if (!isEdit.value) {
-    console.log('create');
-  } else {
-    console.log('update');
-  };
-
-  notification['success']({
-    message: translate('Success'),
-  });
-};
+const handleSubmitForm = (state: any) => {
+  try {
+    let temp: any = null
+    const params = { page: 1, size: 20 }
+    if (state.id) {
+      console.log('create')
+      notification['success']({
+        message: translate('noti.createSuccess')
+      })
+    } else {
+      console.log('update')
+      notification['success']({
+        message: translate('noti.updateSuccess')
+      })
+    }
+  } catch (error) {
+    console.log(error)
+    notification['error']({
+      message: translate('noti.fail')
+    })
+  }
+  onCancel()
+}
 
 //data fake
 const dataFake2 = [
