@@ -52,10 +52,9 @@
         <template #icon>
           <font-awesome-icon :icon="['far', 'trash-can']" />
         </template>
-        <span class="tw-text-sm tw-ml-2"
-          >{{ translate('Delete')
-          }}<span v-if="listSelect?.length > 0">({{ listSelect?.length }})</span></span
-        >
+        <span class="tw-text-sm tw-ml-2">
+          {{ translate('Delete')}} <span v-if="listSelect?.length > 0">({{ listSelect?.length }})</span>
+        </span>
       </AntdButton>
       <AntdButton :type="'primary'" @click="handleCreateRow">
         <template #icon>
@@ -119,9 +118,10 @@
   />
   <ModalConfirm
     :is-visible="isVisibleModalConfirm"
+    :title-modal="titleModal"
+    :isMany="confirmMany"
     @close-modal="closeModal"
     @handle-submit="handleDeleteManyRow"
-    :title-modal="messConfirmRows || messConfirmSingleRow"
   />
   <ModalInfo :is-visible="isVisibleModalInfo" @close-modal="closeModal" :state="formState" />
 </template>
@@ -152,6 +152,7 @@ const isVisibleModalCreate = ref<boolean>(false)
 const isVisibleModalConfirm = ref<boolean>(false)
 const isVisibleModalInfo = ref<boolean>(false)
 const isEdit = ref<boolean>(false)
+const confirmMany = ref<boolean>(false);
 const listSelect = ref<Array<any>>([])
 const columns = ref<Array<Columns>>([
   {
@@ -192,8 +193,6 @@ const columns = ref<Array<Columns>>([
     fixed: 'right'
   }
 ])
-const messConfirmRows = ref<string>('')
-const messConfirmSingleRow = ref<string>('')
 const titleModal = ref<string>('')
 
 const filterSearching = reactive({
@@ -260,8 +259,8 @@ const handleSubmitForm = (state: any) => {
 // modal confirm
 const preDeleteRow = () => {
   isVisibleModalConfirm.value = true
-  messConfirmRows.value = translate('ConfirmDeletWarehouses')
-  messConfirmSingleRow.value = ''
+  confirmMany.value = true;
+  titleModal.value = translate('Warehouse');
 }
 
 // handle data table
@@ -277,8 +276,8 @@ const handleDeleteManyRow = () => {
 
 const deleteSingleRow = () => {
   isVisibleModalConfirm.value = true
-  messConfirmRows.value = ''
-  messConfirmSingleRow.value = translate('ConfirmDeletWarehouses')
+  confirmMany.value = false;
+  titleModal.value = translate('Warehouse');
 }
 
 const handleViewRow = (data: any) => {

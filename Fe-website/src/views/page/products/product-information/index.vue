@@ -1,77 +1,87 @@
 <template>
   <a-form class="tw-flex tw-rounded-lg tw-bg-white tw-px-6 tw-py-5 tw-mb-6">
     <a-form-item class="tw-w-[300px] !tw-mr-3">
-      <span class="tw-opacity-70">{{ translate('Search')}}</span>
-      <a-input :placeholder="translate('Search')" v-model:value="filterSearching.Keyword" class="tw-mt-2"/>
+      <span class="tw-opacity-70">{{ translate("Search") }}</span>
+      <a-input :placeholder="translate('Search')" v-model:value="filterSearching.Keyword" class="tw-mt-2" />
     </a-form-item>
     <a-form-item class="tw-w-[250px] !tw-mr-3">
-        <span class="tw-opacity-70">{{translate('ProductClassify')}}</span>
-        <a-input :placeholder="translate('Classify')" v-model:value="filterSearching.Classify" class="tw-mt-2"/>
+      <span class="tw-opacity-70">{{ translate("ProductClassify") }}</span>
+      <a-input :placeholder="translate('Classify')" v-model:value="filterSearching.Classify" class="tw-mt-2" />
     </a-form-item>
     <a-form-item class="tw-w-[200px] !tw-mr-3">
-        <span class="tw-opacity-70">{{translate('Producer')}}</span>
-        <a-select :placeholder="translate('Producer')" v-model:value="filterSearching.producerCode" :options="dataFake2.map(x => ({value: x.id, label: x.name}))" class="tw-mt-2"/>
+      <span class="tw-opacity-70">{{ translate("Producer") }}</span>
+      <a-select
+        :placeholder="translate('Producer')"
+        v-model:value="filterSearching.producerCode"
+        :options="dataFake2.map((x) => ({ value: x.id, label: x.name }))"
+        class="tw-mt-2"
+      />
     </a-form-item>
     <a-form-item class="tw-flex tw-items-end">
-      <AntdButton :type="'text'" danger :disabled="disabledDeleteFilter"  @click="handleClearFilter">
+      <AntdButton :type="'text'" danger :disabled="disabledDeleteFilter" @click="handleClearFilter">
         <template #icon>
           <font-awesome-icon :icon="['far', 'trash-can']" />
         </template>
-        <span class="tw-ml-2">{{ translate('Delete') }}</span>
+        <span class="tw-ml-2">{{ translate("Delete") }}</span>
       </AntdButton>
     </a-form-item>
   </a-form>
   <div class="tw-w-full tw-h-full tw-flex tw-bg-white tw-p-6 tw-rounded-lg product-Info">
-    <Section class="!tw-w-1/5 !tw-h-auto tw-bg-transparent tw-border tw-border-solid tw-mr-2" :title="'Danh sách chủng loại'" :subTitle="translate('TotalCategories')" :number="String(dataFake3?.length)">
+    <Section
+      class="!tw-w-1/5 !tw-h-auto tw-bg-transparent tw-border tw-border-solid tw-mr-2"
+      :title="translate('CategoryList')"
+      :subTitle="translate('TotalCategories')"
+      :number="String(dataFake3?.length)"
+    >
       <template #body>
         <a-menu
           mode="inline"
           @click="handleSelectCategory"
-          :items="dataFake3.map(x => ({
-            key: x.id,
-            label: x.name,
-          }))"
+          :items="
+            dataFake3.map((x) => ({
+              key: x.id,
+              label: x.name,
+            }))
+          "
           v-model:selectedKeys="selectedKeys"
         />
       </template>
     </Section>
-    <Section class="!tw-w-4/5 tw-bg-transparent tw-border tw-border-solid tw-ml-2" :title="'Danh sách sản phẩm'" :subTitle="translate('TotalProducts')" :number="String(dataFake4?.length)">
+    <Section
+      class="!tw-w-4/5 tw-bg-transparent tw-border tw-border-solid tw-ml-2"
+      :title="translate('ListProducts')"
+      :subTitle="translate('TotalProducts')"
+      :number="String(dataFake4?.length)"
+    >
       <template #action>
         <AntdButton :type="'text'" danger class="tw-mr-2" :disabled="disableDeleteMany" @click="handleDeleteMany">
-            <template #icon>
-                <font-awesome-icon :icon="['far', 'trash-can']"/>
-            </template>
-            <span class="tw-text-sm tw-ml-2">{{translate('Delete')}}<span v-if="listSelect?.length > 0">({{ listSelect?.length }})</span></span>
+          <template #icon>
+            <font-awesome-icon :icon="['far', 'trash-can']" />
+          </template>
+          <span class="tw-text-sm tw-ml-2"
+            >{{ translate("Delete") }} <span v-if="listSelect?.length > 0">({{ listSelect?.length }})</span></span
+          >
         </AntdButton>
         <AntdButton :type="'primary'" @click="handleCreate">
-            <template #icon>
-                <font-awesome-icon :icon="['fas', 'plus']"/>
-            </template>
-            <span class="tw-text-sm tw-ml-2">{{translate('AddNew')}}</span>
+          <template #icon>
+            <font-awesome-icon :icon="['fas', 'plus']" />
+          </template>
+          <span class="tw-text-sm tw-ml-2">{{ translate("AddNew") }}</span>
         </AntdButton>
       </template>
       <template #body>
-        <AntdTable
-          ref="table"
-          key-field="id"
-          :index-column="false"
-          :has-checkbox="true"
-          :no-sort="true"
-          :dataSource="dataFake4"
-          :columns="columns"
-          @onSelected="handleSelectRow"
-        >
-          <template #custom-body="{column, record}">
+        <AntdTable ref="table" key-field="id" :index-column="false" :has-checkbox="true" :no-sort="true" :dataSource="dataFake4" :columns="columns" @onSelected="handleSelectRow">
+          <template #custom-body="{ column, record }">
             <template v-if="column.key === 'action'">
               <div class="action">
                 <AntdButton class="action-btn" :type="'light-hover'" shape="circle" @click="handleView(record)">
-                  <font-awesome-icon :icon="['fas', 'circle-info']" style="color: #4CAF50;" />
+                  <font-awesome-icon :icon="['fas', 'circle-info']" style="color: #4caf50" />
                 </AntdButton>
                 <AntdButton class="action-btn" :type="'light-hover'" shape="circle" @click="handleEdit(record)">
-                  <font-awesome-icon :icon="['far', 'pen-to-square']" style="color: #001F3F;"/>
+                  <font-awesome-icon :icon="['far', 'pen-to-square']" style="color: #001f3f" />
                 </AntdButton>
                 <AntdButton class="action-btn" :type="'light-hover'" shape="circle" @click="handleDeleteSingle(record.id)">
-                  <font-awesome-icon :icon="['far', 'trash-can']" style="color: #FF0000;" />
+                  <font-awesome-icon :icon="['far', 'trash-can']" style="color: #ff0000" />
                 </AntdButton>
               </div>
             </template>
@@ -81,8 +91,9 @@
     </Section>
   </div>
   <!-- modal -->
-  <ModalCreate :isVisible="isVisibleModalCreate" :form="formState" :isEdit="isEdit" :titleModal="titleModal" @closeModal="onCancel" @handleSubmit="handleSubmitForm"/>
-  <ModalInfo :isVisible="isVisibleModalInfo" :titleModal="titleModal" :idProduct="idProduct" @closeModal="onCancel"/>
+  <ModalCreate :isVisible="isVisibleModalCreate" :form="formState" :isEdit="isEdit" :titleModal="titleModal" @closeModal="onCancel" @handleSubmit="handleSubmitForm" />
+  <ModalInfo :isVisible="isVisibleModalInfo" :titleModal="titleModal" :idProduct="idProduct" @closeModal="onCancel" />
+  <ModalConfirm :isVisible="isVisibleModalConfirm" :titleModal="titleModal" :isMany="confirmMany" @closeModal="onCancel" @handleSubmit="handleDelete" />
 </template>
 <script setup lang="ts">
 import { translate } from "@/languages/i18n";
@@ -94,50 +105,46 @@ import { notification } from "ant-design-vue";
 
 const ModalCreate = defineAsyncComponent(() => import("./components/modalCreate.vue"));
 const ModalInfo = defineAsyncComponent(() => import("./components/modalInfo.vue"));
+const ModalConfirm = defineAsyncComponent(() => import("@/components/antd-modal-confirm/index.vue"));
 
 const listSelect = ref<Array<string | number>>([]);
 const idProduct = ref<string>("");
 const titleModal = ref<string>("");
-const selectedKeys = ref<string[]>(['ALL']);
+const selectedKeys = ref<string[]>(["ALL"]);
 const isVisibleModalCreate = ref<boolean>(false);
 const isVisibleModalConfirm = ref<boolean>(false);
 const isVisibleModalInfo = ref<boolean>(false);
+const confirmMany = ref<boolean>(false);
 const isEdit = ref<boolean>(false);
 const columns = ref<Array<any>>([
   {
-    title: "Mã sản phẩm",
-    dataIndex: 'code',
-    key: 'code',
+    title: translate("ProductCode"),
+    dataIndex: "code",
+    key: "code",
     align: "left",
   },
   {
-    title: "Tên sản phẩm",
+    title: translate("ProductName"),
     dataIndex: "name",
-    key: 'name',
+    key: "name",
     align: "left",
   },
   {
-    title: "Chủng loại",
+    title: translate("Category"),
     dataIndex: "categoryName",
-    key: 'categoryName',
+    key: "categoryName",
     align: "left",
   },
   {
-    title: "Phân loại",
+    title: translate("Classify"),
     dataIndex: "Classify",
-    key: 'Classify',
+    key: "Classify",
     align: "left",
   },
   {
-    title: translate('Producer'),
+    title: translate("Producer"),
     dataIndex: "Producer",
-    key: 'Producer',
-    align: "left",
-  },
-  {
-    title: "Ngày tạo",
-    dataIndex: "dayCreated",
-    key: 'dayCreated',
+    key: "Producer",
     align: "left",
   },
   {
@@ -193,14 +200,14 @@ const onCancel = () => {
 
 // handle data table
 const handleSelectRow = (rows: any) => {
-    listSelect.value = rows.value.map((x: any) => x?.id);
+  listSelect.value = rows.value.map((x: any) => x?.id);
 };
 
 // create, delete product
 const handleCreate = () => {
   isVisibleModalCreate.value = true;
   isEdit.value = false;
-  titleModal.value = "Thêm mới thông tin sản phẩm";
+  titleModal.value = translate("AddProductInfo");
   formState.id = "";
   formState.code = "";
   formState.name = "";
@@ -218,7 +225,7 @@ const handleCreate = () => {
 const handleEdit = (item: any) => {
   isVisibleModalCreate.value = true;
   isEdit.value = true;
-  titleModal.value = "Cập nhật thông tin sản phẩm";
+  titleModal.value = translate("UpdateProductInfo");
   formState.id = item.id;
   formState.code = item.code;
   formState.name = item.name;
@@ -236,59 +243,63 @@ const handleEdit = (item: any) => {
 const handleView = (item: any) => {
   isVisibleModalInfo.value = true;
   isEdit.value = false;
-  titleModal.value = "Thông tin sản phẩm";
+  titleModal.value = translate("ProductInformation");
   idProduct.value = item.id;
 };
 
 const handleDeleteSingle = (id: string) => {
   idProduct.value = id;
   isVisibleModalConfirm.value = true;
-  titleModal.value = "Bạn có chắc chắn muốn xóa sản phẩm này";
+  titleModal.value = translate("Products");
+  confirmMany.value = false;
 };
 
 const disableDeleteMany = computed(() => listSelect?.value?.length === 0);
 
 const handleDeleteMany = () => {
   isVisibleModalConfirm.value = true;
-  titleModal.value = "Bạn có chắc chắn muốn xóa sản phẩm này";
+  titleModal.value = translate("Products");
+  confirmMany.value = true;
 };
 
 const handleSubmitForm = (state: any) => {
   try {
-    let temp: any = null
-    const params = { page: 1, size: 20 }
+    let temp: any = null;
+    const params = { page: 1, size: 20 };
     if (state.id) {
-      console.log('create')
-      notification['success']({
-        message: translate('noti.createSuccess')
-      })
+      console.log("create");
+      notification["success"]({
+        message: translate("noti.createSuccess"),
+      });
     } else {
-      console.log('update')
-      notification['success']({
-        message: translate('noti.updateSuccess')
-      })
+      console.log("update");
+      notification["success"]({
+        message: translate("noti.updateSuccess"),
+      });
     }
   } catch (error) {
-    console.log(error)
-    notification['error']({
-      message: translate('noti.fail')
-    })
+    console.log(error);
+    notification["error"]({
+      message: translate("noti.fail"),
+    });
   }
-  onCancel()
-}
+  onCancel();
+};
+
+const handleDelete = () => {};
 
 //data fake
 const dataFake2 = [
   {
-    id: 'HgA',
+    id: "HgA",
     name: "Hãng A",
   },
   {
-    id: 'HgB',
+    id: "HgB",
     name: "Hãng B",
   },
   {
-    id: 'HgC',
+    id: "HgC",
     name: "Hãng C",
   },
 ];
@@ -309,7 +320,7 @@ const dataFake3 = [
   {
     id: "CL03",
     name: "Tai nghe",
-  }
+  },
 ];
 
 const dataFake4 = [
@@ -319,7 +330,6 @@ const dataFake4 = [
     categoryCode: "CL01",
     categoryName: "Bàn phím",
     name: "Bàn phím 1",
-    dayCreated: "01/01/2024",
     Color: "Trắng",
     Classify: "Văn phòng",
     Producer: "Hãng A",
@@ -337,7 +347,6 @@ const dataFake4 = [
     categoryCode: "CL01",
     categoryName: "Bàn phím",
     name: "Bàn phím 2",
-    dayCreated: "01/01/2024",
     Color: "Trắng",
     Classify: "Gamming",
     Producer: "Hãng A",
@@ -355,7 +364,6 @@ const dataFake4 = [
     categoryCode: "CL01",
     categoryName: "Bàn phím",
     name: "Bàn phím 3",
-    dayCreated: "01/01/2024",
     Color: "Đen",
     Classify: "Custom",
     Producer: "Hãng A",
@@ -373,7 +381,6 @@ const dataFake4 = [
     categoryCode: "CL02",
     categoryName: "Chuột",
     name: "Chuột 1",
-    dayCreated: "01/01/2024",
     Color: "Đen",
     Classify: "Gamming",
     Producer: "Hãng B",
@@ -391,7 +398,6 @@ const dataFake4 = [
     categoryCode: "CL02",
     categoryName: "Chuột",
     name: "Chuột 2",
-    dayCreated: "01/01/2024",
     Color: "xám",
     Classify: "Văn phòng",
     Producer: "Hãng B",
@@ -409,7 +415,6 @@ const dataFake4 = [
     categoryCode: "CL03",
     categoryName: "Tai nghe",
     name: "Tai nghe 1",
-    dayCreated: "01/01/2024",
     Color: "xám",
     Classify: "Kiểm âm",
     Producer: "Hãng C",
@@ -420,7 +425,7 @@ const dataFake4 = [
     Describe: "Tai nghe DJ kiểm âm",
     classifyCode: "PL4",
     producerCode: "HgC",
-  }
+  },
 ];
 </script>
 <style lang="scss">
