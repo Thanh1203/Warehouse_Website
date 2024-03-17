@@ -24,7 +24,7 @@ const translate = (key: string, title?: string, params?: any[]) => {
     let strReplace = i18n.global.t(key);
 
     if (title) {
-        strReplace = strReplace.replace("%s", i18n.global.t(title));
+        strReplace = strReplace.replace("%s", i18n.global.t(title).toLocaleLowerCase());
     }
 
     if (params) {

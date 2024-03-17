@@ -134,7 +134,7 @@ export default (): RouteRecordRaw[] => {
             name: "product classify",
             component: () => import("./products/product-classify/index.vue"),
             meta: {
-                title: translate(''),
+                title: translate('ProductClassify'),
                 layout: defaultLayout,
             }
         },
@@ -143,7 +143,7 @@ export default (): RouteRecordRaw[] => {
             name: "product producer",
             component: () => import("./products/product-producer/index.vue"),
             meta: {
-                title: translate(''),
+                title: translate('Producer'),
                 layout: defaultLayout,
             }
         },
