@@ -108,4 +108,9 @@ export const en = {
     Category: "Category",
     AddProductInfo: "Add new product information",
     UpdateProductInfo: "Update product information",
+    ClassificationList: "Classification list",
+    TotalClassification: "Total classification: ",
+    ClassificationCode: "Classification code",
+    ClassificationName: "Classification name",
+    AddClassification: "Add new classification",
 };

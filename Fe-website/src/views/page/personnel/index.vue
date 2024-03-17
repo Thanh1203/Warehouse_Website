@@ -19,7 +19,7 @@
   </a-form>
   <Section :title="translate('WarehouseList')" :sub-title="translate('NumberOfWarehouses')" :number="String(datafake?.length)">
     <template #action>
-      <AntdButton :type="'text'" danger class="tw-mr-2" :disabled="disableDeleteRow" @click="preDeleteRow">
+      <AntdButton :type="'text'" danger class="tw-mr-2" :disabled="disableDeleteMany" @click="preDeleteRow">
         <template #icon>
           <font-awesome-icon :icon="['far', 'trash-can']" />
         </template>
@@ -112,7 +112,7 @@ const handleClearFilter = () => {
   filterSearching.locationSlected = null;
 };
 
-const disableDeleteRow = computed(() => listSelect?.value?.length === 0);
+const disableDeleteMany = computed(() => listSelect?.value?.length === 0);
 
 const preDeleteRow = () => {};
 

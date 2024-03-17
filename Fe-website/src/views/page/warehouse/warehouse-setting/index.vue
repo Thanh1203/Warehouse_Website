@@ -46,7 +46,7 @@
         :type="'text'"
         danger
         class="tw-mr-2"
-        :disabled="disableDeleteRow"
+        :disabled="disableDeleteMany"
         @click="preDeleteRow"
       >
         <template #icon>
@@ -268,7 +268,7 @@ const handleSelectRow = (rows: any) => {
   listSelect.value = rows.value.map((x: any) => x?.id)
 }
 
-const disableDeleteRow = computed(() => listSelect?.value?.length === 0)
+const disableDeleteMany = computed(() => listSelect?.value?.length === 0)
 
 const handleDeleteManyRow = () => {
   isVisibleModalConfirm.value = false

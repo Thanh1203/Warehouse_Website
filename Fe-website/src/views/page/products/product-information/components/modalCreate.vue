@@ -1,21 +1,23 @@
 <template>
   <BaseModal :visible="isVisible" :title="titleModal" :defaultFooter="false" @cancel="$emit('closeModal')">
     <a-form class="tw-mb-6">
-      <div class="tw-w-full tw-flex tw-items-center tw-justify-between tw-mb-6">
+      <div class="tw-w-full tw-flex tw-items-start tw-mb-6">
         <div class="tw-basis-1/2 tw-mr-2 tw-flex tw-flex-col tw-justify-start tw-items-start">
           <span>{{ translate("ProductCode") }}<span class="required-star">*</span></span>
           <div class="tw-w-full">
-            <a-input :placeholder="translate('ProductCode')" :disabled="isEdit" class="tw-mt-2" v-model:value="v$.code.$model" />
+            <a-input :placeholder="translate('ProductCode')" :status="v$.code.$error ? 'error' : ''" :disabled="isEdit" class="tw-mt-2" v-model:value="v$.code.$model" />
           </div>
+          <ErrorMess :params="[64]" :title="translate('ProductCode')" :validator="v$.code.$errors[0]?.$validator" />
         </div>
         <div class="tw-basis-1/2 tw-ml-2 tw-flex tw-flex-col tw-justify-start tw-items-start">
           <span>{{ translate("ProductName") }}<span class="required-star">*</span></span>
           <div class="tw-w-full">
-            <a-input :placeholder="translate('ProductName')" class="tw-mt-2" v-model:value="v$.name.$model" />
+            <a-input :placeholder="translate('ProductName')" class="tw-mt-2" v-model:value="v$.name.$model" :status="v$.name.$error ? 'error' : ''"/>
           </div>
+          <ErrorMess :params="[64]" :title="translate('ProductName')" :validator="v$.name.$errors[0]?.$validator" />
         </div>
       </div>
-      <div class="tw-w-full tw-flex tw-items-center tw-justify-between tw-mb-6">
+      <div class="tw-w-full tw-flex tw-items-start tw-mb-6">
         <div class="tw-basis-1/2 tw-mr-2 tw-flex tw-flex-col tw-justify-start tw-items-start">
           <span>{{ translate("ProductCategory") }}<span class="required-star">*</span></span>
           <div class="tw-w-full">
@@ -24,17 +26,20 @@
               class="tw-mt-2 tw-w-full"
               v-model:value="v$.categoryCode.$model"
               :options="dataFake2.map((x) => ({ value: x.id, label: x.name }))"
+              :status="v$.categoryCode.$error ? 'error' : ''"
             />
           </div>
+          <ErrorMess :params="[64]" :title="translate('ProductCategory')" :validator="v$.categoryCode.$errors[0]?.$validator" />
         </div>
         <div class="tw-basis-1/2 tw-ml-2 tw-flex tw-flex-col tw-justify-start tw-items-start">
           <span>{{ translate("Classify") }}<span class="required-star">*</span></span>
           <div class="tw-w-full">
-            <a-select :placeholder="translate('Classify')" class="tw-mt-2 tw-w-full" v-model:value="v$.classifyCode.$model" :options="dataFake" />
+            <a-select :placeholder="translate('Classify')" class="tw-mt-2 tw-w-full" v-model:value="v$.classifyCode.$model" :options="dataFake" :status="v$.classifyCode.$error ? 'error' : ''" />
           </div>
+          <ErrorMess :params="[64]" :title="translate('Classify')" :validator="v$.classifyCode.$errors[0]?.$validator" />
         </div>
       </div>
-      <div class="tw-w-full tw-flex tw-items-center tw-justify-between tw-mb-6">
+      <div class="tw-w-full tw-flex tw-items-start tw-mb-6">
         <div class="tw-basis-1/2 tw-mr-2 tw-flex tw-flex-col tw-justify-start tw-items-start">
           <span>{{ translate("Producer") }}<span class="required-star">*</span></span>
           <div class="tw-w-full">
@@ -43,8 +48,10 @@
               class="tw-mt-2 tw-w-full"
               v-model:value="v$.producerCode.$model"
               :options="dataFake3.map((x) => ({ value: x.id, label: x.name }))"
+              :status="v$.producerCode.$error ? 'error' : ''"
             />
           </div>
+          <ErrorMess :params="[64]" :title="translate('Producer')" :validator="v$.producerCode.$errors[0]?.$validator" />
         </div>
         <div class="tw-basis-1/2 tw-ml-2 tw-flex tw-flex-col tw-justify-start tw-items-start">
           <span>{{ translate("Size") }}</span>
@@ -53,7 +60,7 @@
           </div>
         </div>
       </div>
-      <div class="tw-w-full tw-flex tw-items-center tw-justify-between tw-mb-6">
+      <div class="tw-w-full tw-flex tw-items-start tw-mb-6">
         <div class="tw-basis-1/2 tw-mr-2 tw-flex tw-flex-col tw-justify-start tw-items-start">
           <span>{{ translate("Material") }}</span>
           <div class="tw-w-full">
@@ -67,7 +74,7 @@
           </div>
         </div>
       </div>
-      <div class="tw-w-full tw-flex tw-items-center tw-justify-between tw-mb-6">
+      <div class="tw-w-full tw-flex tw-items-start tw-mb-6">
         <div class="tw-basis-1/2 tw-mr-2 tw-flex tw-flex-col tw-justify-start tw-items-start">
           <span>{{ translate("Color") }}</span>
           <div class="tw-w-full">
@@ -105,6 +112,7 @@ import AntdButton from "@/components/antd-button/index.vue";
 import { required } from "@vuelidate/validators";
 import useVuelidate from "@vuelidate/core";
 import { reactive, watch } from "vue";
+import ErrorMess from "@/components/error-mess/index.vue";
 
 const emit = defineEmits(["closeModal", "handleSubmit"]);
 const props = defineProps({

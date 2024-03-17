@@ -15,7 +15,7 @@
   </a-form>
   <Section :title="translate('CategoryList')" :subTitle="translate('TotalCategories')" :number="String(dataFake?.length)">
     <template #action>
-      <AntdButton :type="'text'" danger :disabled="disableDeleteRow" class="tw-mr-2" @click="handleDeleteMany">
+      <AntdButton :type="'text'" danger :disabled="disableDeleteMany" class="tw-mr-2" @click="handleDeleteMany">
         <template #icon>
           <font-awesome-icon :icon="['far', 'trash-can']" />
         </template>
@@ -140,7 +140,7 @@ const handleSelectRow = (rows: any) => {
   listSelect.value = rows.value.map((x: any) => x?.id);
 };
 
-const disableDeleteRow = computed(() => listSelect?.value?.length === 0);
+const disableDeleteMany = computed(() => listSelect?.value?.length === 0);
 
 // create, update, delete & view
 const handelCreate = () => {

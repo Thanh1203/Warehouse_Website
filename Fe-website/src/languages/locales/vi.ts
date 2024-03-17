@@ -109,4 +109,9 @@ export const vi = {
     Category: "Chủng loại",
     AddProductInfo: "Thêm mới thông tin sản phẩm",
     UpdateProductInfo: "Cập nhật thông tin sản phẩm",
+    ClassificationList: "Danh sách phân loại",
+    TotalClassification: "Tổng số phân loại: ",
+    ClassificationCode: "Mã phân loại",
+    ClassificationName: "Tên phân loại",
+    AddClassification: "Thêm mới phân loại",
 };

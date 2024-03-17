@@ -1,7 +1,7 @@
 <template>
   <BaseModal :width="'1000px'" :visible="isVisible" :title="titleModal" :defaultFooter="false" :maskClosable="false" @cancel="$emit('closeModal')">
     <a-form class="tw-w-full tw-mb-6">
-      <div class="tw-w-full tw-flex tw-items-start tw-justify-center tw-mb-6">
+      <div class="tw-w-full tw-flex tw-items-start tw-mb-6">
         <div class="tw-basis-1/2 tw-flex tw-flex-col tw-items-start tw-justify-start tw-mr-3">
           <span class="tw-mb-2">{{ translate("CategoryCode") }}<span class="required-star">*</span></span>
           <a-input v-model:value="v$.code.$model" :status="v$.code.$error ? 'error' : ''" :placeholder="translate('CategoryCode')" :disabled="isEdit" />
@@ -13,7 +13,7 @@
           <ErrorMess :params="[64]" :title="translate('CategoryName')" :validator="v$.name.$errors[0]?.$validator" />
         </div>
       </div>
-      <div class="tw-w-full tw-flex tw-flex-col tw-items-start tw-justify-center tw-mb-6">
+      <div class="tw-w-full tw-flex tw-flex-col tw-items-start tw-mb-6">
         <span>{{ translate("DefaultProperties") }}:</span>
         <div class="tw-w-full tw-mt-2 tw-flex tw-items-center tw-justify-between">
           <div v-for="(item, idx) in propsDefault" :key="idx" class="tw-w-[110px] tw-px-2 tw-py-1 tw-border tw-border-slate-950 tw-flex tw-justify-center tw-items-center">
@@ -21,7 +21,7 @@
           </div>
         </div>
       </div>
-      <div class="tw-w-full tw-flex tw-flex-col tw-items-start tw-justify-center">
+      <div class="tw-w-full tw-flex tw-flex-col tw-items-start">
         <span class="tw-mb-2">{{ translate("CustomProperties") }}:</span>
         <a-select mode="tags" class="tw-w-full" v-model:value="v$.propertyExtend.$model" :placeholder="translate('EnterProperty')" />
       </div>

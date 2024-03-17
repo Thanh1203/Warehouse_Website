@@ -24,7 +24,7 @@
   </a-form>
   <Section :title="translate('ManufacturerList')" :subTitle="translate('TotalManufacturers')" :number="String(datafake?.length)">
     <template #action>
-      <AntdButton :type="'text'" danger :disabled="disableDeleteRow" class="tw-mr-2" @click="handleDeleteMany">
+      <AntdButton :type="'text'" danger :disabled="disableDeleteMany" class="tw-mr-2" @click="handleDeleteMany">
         <template #icon>
           <font-awesome-icon :icon="['far', 'trash-can']" />
         </template>
@@ -175,7 +175,7 @@ const handleUpdate = (item: FormState) => {
   titleModal.value = translate("UpdateManufacturerInfo");
 };
 
-const disableDeleteRow = computed(() => listSelect?.value?.length === 0);
+const disableDeleteMany = computed(() => listSelect?.value?.length === 0);
 
 const handleDeleteMany = () => {
   isVisibleModalConfirm.value = true;
