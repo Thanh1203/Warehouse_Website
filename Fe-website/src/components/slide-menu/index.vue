@@ -57,7 +57,7 @@ const handleClickMenu = (ev: any) => {
 }
 
 const handleLogOut = () => {
-    router.push("/login");
+    router.push({name: "signIn"});
 };
 
 const handleOpenSetting = () => {

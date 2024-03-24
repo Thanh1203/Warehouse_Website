@@ -1,5 +1,5 @@
 <template>
-    <a-button :type="type" :disabled="disabled" :loading="loading">
+    <a-button :type="type" :disabled="disabled" :loading="loading" :size="size">
         <template #icon>
             <slot name="icon"></slot>
         </template>

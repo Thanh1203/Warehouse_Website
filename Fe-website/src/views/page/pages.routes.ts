@@ -7,20 +7,11 @@ export default (): RouteRecordRaw[] => {
         {
             path: "/sign-in",
             name: "signIn",
-            component: () => import("./sign-in/index.vue"),
+            component: () => import("./Login/index.vue"),
             meta: {
                 title: translate("SignIn"),
                 publicRoute: true,
             },
-        },
-        {
-            path: "/sign-up",
-            name: "SignUp",
-            component: () => import("./sign-up/index.vue"),
-            meta: {
-                title: translate("SignUp"),
-                publicRoute: true,
-            }
         },
         {
             path: "/",
@@ -147,5 +138,13 @@ export default (): RouteRecordRaw[] => {
                 layout: defaultLayout,
             }
         },
+        {
+            path: "/forgot-password",
+            name: "forgot password",
+            component: () => import("./forgot-password/index.vue"),
+            meta: {
+                title: translate('ForgotPassword'),
+            }
+        }
     ]
 };
