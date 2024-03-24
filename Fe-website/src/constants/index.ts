@@ -1,5 +1,6 @@
 export const DEFAULT_MIN_LENGTH = 1;
 export const DEFAULT_MAX_LENGTH = 256;
+export const REGEX_TEL = /(84|0[3|5|7|8|9])+([0-9]{8})\b/;
 
 export const PC_MENU = [
     {

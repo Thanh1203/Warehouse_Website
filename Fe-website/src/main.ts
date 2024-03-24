@@ -26,6 +26,7 @@ import customParseFormat from "dayjs/plugin/customParseFormat";
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
 import { far } from '@fortawesome/free-regular-svg-icons';
+import { store } from './store';
 
 dayjs.extend(weekday);
 dayjs.extend(localeData);
@@ -51,5 +52,6 @@ app.component('font-awesome-icon', FontAwesomeIcon);
 app.use(router);
 app.use(i18n);
 app.use(Antd);
+app.use(store);
 //mount
 app.mount('#app');
