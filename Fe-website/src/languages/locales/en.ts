@@ -128,4 +128,8 @@ export const en = {
     PhoneNumber: "Phone mumber",
     LoginAgain: "Already have an account, log in again",
     DevelopmentStage: "The function is in the development stage",
+    StaffCharge: "Staff in charge",
+    UpdateWarehouseInfo: "Update warehouse information",
+    AddEmployee: "Add new employee",
+    SelectWarehouse: "Select warehouse",
 };

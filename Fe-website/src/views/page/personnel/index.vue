@@ -8,7 +8,7 @@
       <span class="tw-opacity-70">{{ translate("SelectWarehouseLocation") }}</span>
       <a-select :placeholder="translate('WarehouseLocation')" v-model:value="filterSearching.locationSlected" :options="option2Fake" class="tw-mt-2" />
     </a-form-item>
-    <a-form-item>
+    <a-form-item class="tw-flex tw-items-end">
       <AntdButton :type="'text'" danger :disabled="disabledDeleteFilter" @click="handleClearFilter">
         <template #icon>
           <font-awesome-icon :icon="['far', 'trash-can']" />
@@ -27,7 +27,7 @@
           >{{ translate("Delete") }}<span v-if="listSelect?.length > 0">({{ listSelect?.length }})</span></span
         >
       </AntdButton>
-      <AntdButton :type="'primary'" @click="handleCreateRow">
+      <AntdButton :type="'primary'" @click="handleCreate">
         <template #icon>
           <font-awesome-icon :icon="['fas', 'plus']" />
         </template>
@@ -51,6 +51,9 @@
       </AntdTable>
     </template>
   </Section>
+
+  <!-- modal -->
+  <ModalCreate :title="titleModal" :isEdit="isEdit" :form="formState" :isVisible="isVisibleModalCreate" @closeModal="onCancel"/>
 </template>
 <script setup lang="ts">
 import Section from "@/components/section/index.vue";
@@ -59,6 +62,20 @@ import { ref, watch, onMounted, defineAsyncComponent, reactive, computed } from 
 import AntdButton from "@/components/antd-button/index.vue";
 import AntdTable from "@/components/antd-table/index.vue";
 
+interface FormState {
+  id: string | number | null;
+  code: string;
+  name: string;
+  workplace: string;
+  warehoueName: string;
+  role: string;
+};
+
+const ModalCreate = defineAsyncComponent(() => import("./components/ModalCreate.vue"));
+
+const isVisibleModalCreate = ref<boolean>(false);
+const isEdit = ref<boolean>(false);
+const titleModal = ref<string>("");
 const listSelect = ref<Array<any>>([]);
 const columns = ref<Array<any>>([
   {
@@ -105,6 +122,15 @@ const filterSearching = reactive({
   locationSlected: null,
 });
 
+const formState = reactive<FormState>({
+  id: null,
+  code: "",
+  name: "",
+  workplace: "",
+  warehoueName: "",
+  role: "",
+});
+
 const disabledDeleteFilter = computed(() => filterSearching?.keyword?.length === 0 && filterSearching?.locationSlected === null);
 
 const handleClearFilter = () => {
@@ -126,18 +152,16 @@ const handleDeleteManyRow = () => {
 
 const deleteSingleRow = () => {};
 
-const handleCreateRow = () => {
-  // isVisibleModalCreate.value = true;
-  // isEdit.value = false;
-  // formState.warehouseName = "";
-  // formState.Nation = "";
-  // formState.Area = "";
-  // formState.describe = "";
-  // formState.DateCreated = "";
-  // formState.Acreage = null;
-  // formState.Tankage = null;
-  // formState.warehouseId = "";
-  // titleModal.value = translate('CreateWarehouse');
+const handleCreate = () => {
+  formState.id = null;
+  formState.code = "";
+  formState.name = "";
+  formState.workplace = "";
+  formState.warehoueName = "";
+  formState.role = "";
+  isVisibleModalCreate.value = true;
+  isEdit.value = false;
+  titleModal.value = translate('AddEmployee');
 };
 
 const handleEditRow = (data: any) => {
@@ -154,6 +178,10 @@ const handleEditRow = (data: any) => {
   // titleModal.value = translate('');
 };
 
+
+const onCancel = () => {
+  isVisibleModalCreate.value = false;
+}
 //data fake
 const option2Fake = [
   {
@@ -179,7 +207,7 @@ const datafake = [
     name: "Nguyen Van B",
     workplace: "Ha Noi",
     warehoueName: "Kho hàng 1",
-    role: "Nhân viên",
+    role: "Quản lí",
   },
   {
     id: "NV3",
@@ -193,7 +221,7 @@ const datafake = [
     name: "Nguyen Van D",
     workplace: "Ha Noi",
     warehoueName: "Kho hàng 2",
-    role: "Nhân viên",
+    role: "Quản lí",
   },
   {
     id: "NV5",
@@ -207,7 +235,7 @@ const datafake = [
     name: "Nguyen Van F",
     workplace: "Ha Noi",
     warehoueName: "Kho hàng 3",
-    role: "Nhân Viên",
+    role: "Quản lí",
   },
   {
     id: "NV7",
@@ -221,7 +249,7 @@ const datafake = [
     name: "Nguyen Van H",
     workplace: "Ha Noi",
     warehoueName: "Kho hàng 4",
-    role: "Nhân viên",
+    role: "Quản lí",
   },
   {
     id: "NV9",
@@ -235,7 +263,7 @@ const datafake = [
     name: "Nguyen Van K",
     workplace: "Ha Noi",
     warehoueName: "Kho hàng 5",
-    role: "Nhân viên",
+    role: "Quản lí",
   },
 ];
 </script>
