@@ -133,4 +133,6 @@ export const vi = {
     UpdateWarehouseInfo: "Cập nhật thông tin kho hàng",
     AddEmployee: "Thêm mới nhân viên",
     SelectWarehouse: "Chọn kho hàng",
+    PersonnelList: "Danh sách nhân sự",
+    NumberOfPersonnel: "Số lượng nhân sự: ",
 };
