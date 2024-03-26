@@ -73,7 +73,6 @@ import AntdTable from "@/components/antd-table/index.vue";
 const ModalCreate = defineAsyncComponent(() => import("./components/modalCreate.vue"));
 const ModalConfirm = defineAsyncComponent(() => import("@/components/antd-modal-confirm/index.vue"));
 
-
 const listSelect = ref<any>([]);
 const isVisibleModalCreate = ref<boolean>(false);
 const isVisibleModalConfirm = ref<boolean>(false);
@@ -113,7 +112,6 @@ const formState = reactive({
 
 // handle filter
 const disabledDeleteFilter = computed(() => filterSearching?.Keyword?.length === 0);
-
 const disableDeleteMany = computed(() => listSelect?.value?.length === 0);
 
 //close modal
@@ -149,7 +147,7 @@ const handleSubmitForm = () => {
 
 };
 
-const handleDeleteSingle = (item: any) => {
+const handleDeleteSingle = (val: number) => {
   isVisibleModalConfirm.value = true;
   titleModal.value = translate("ProductClassify");
   confirmMany.value = false;

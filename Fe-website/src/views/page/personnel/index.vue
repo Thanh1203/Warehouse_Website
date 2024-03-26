@@ -8,7 +8,7 @@
       <span class="tw-opacity-70">{{ translate("SelectWarehouseLocation") }}</span>
       <a-select :placeholder="translate('WarehouseLocation')" v-model:value="filterSearching.locationSlected" :options="option2Fake" class="tw-mt-2" />
     </a-form-item>
-    <a-form-item>
+    <a-form-item class="tw-flex tw-items-end">
       <AntdButton :type="'text'" danger :disabled="disabledDeleteFilter" @click="handleClearFilter">
         <template #icon>
           <font-awesome-icon :icon="['far', 'trash-can']" />
@@ -17,9 +17,9 @@
       </AntdButton>
     </a-form-item>
   </a-form>
-  <Section :title="translate('WarehouseList')" :sub-title="translate('NumberOfWarehouses')" :number="String(datafake?.length)">
+  <Section :title="translate('PersonnelList')" :sub-title="translate('NumberOfPersonnel')" :number="String(datafake?.length)">
     <template #action>
-      <AntdButton :type="'text'" danger class="tw-mr-2" :disabled="disableDeleteMany" @click="preDeleteRow">
+      <AntdButton :type="'text'" danger class="tw-mr-2" :disabled="disableDeleteMany" @click="handleDeleteMany">
         <template #icon>
           <font-awesome-icon :icon="['far', 'trash-can']" />
         </template>
@@ -27,7 +27,7 @@
           >{{ translate("Delete") }}<span v-if="listSelect?.length > 0">({{ listSelect?.length }})</span></span
         >
       </AntdButton>
-      <AntdButton :type="'primary'" @click="handleCreateRow">
+      <AntdButton :type="'primary'" @click="handleCreate">
         <template #icon>
           <font-awesome-icon :icon="['fas', 'plus']" />
         </template>
@@ -42,7 +42,7 @@
               <AntdButton class="action-btn" :type="'light-hover'" shape="circle" @click="handleEditRow(record)">
                 <font-awesome-icon :icon="['far', 'pen-to-square']" style="color: #001f3f" />
               </AntdButton>
-              <AntdButton class="action-btn" :type="'light-hover'" shape="circle" @click="deleteSingleRow">
+              <AntdButton class="action-btn" :type="'light-hover'" shape="circle" @click="handleDeleteSingle(record.id)">
                 <font-awesome-icon :icon="['far', 'trash-can']" style="color: #ff0000" />
               </AntdButton>
             </div>
@@ -51,6 +51,11 @@
       </AntdTable>
     </template>
   </Section>
+
+  <!-- modal -->
+  <ModalCreate :title="titleModal" :isEdit="isEdit" :form="formState" :isVisible="isVisibleModalCreate" @closeModal="onCancel"/>
+  <ModalConfirm :isVisible="isVisibleModalConfirm" :titleModal="titleModal" :isMany="confirmMany" @closeModal="onCancel" @handleSubmit="handleDelete" />
+
 </template>
 <script setup lang="ts">
 import Section from "@/components/section/index.vue";
@@ -59,6 +64,23 @@ import { ref, watch, onMounted, defineAsyncComponent, reactive, computed } from 
 import AntdButton from "@/components/antd-button/index.vue";
 import AntdTable from "@/components/antd-table/index.vue";
 
+interface FormState {
+  id: string | number | null;
+  code: string;
+  name: string;
+  workplace: string;
+  warehoueName: string;
+  role: string;
+};
+
+const ModalCreate = defineAsyncComponent(() => import("./components/ModalCreate.vue"));
+const ModalConfirm = defineAsyncComponent(() => import("@/components/antd-modal-confirm/index.vue"));
+
+const isVisibleModalConfirm = ref<boolean>(false);
+const isVisibleModalCreate = ref<boolean>(false);
+const confirmMany = ref<boolean>(false);
+const isEdit = ref<boolean>(false);
+const titleModal = ref<string>("");
 const listSelect = ref<Array<any>>([]);
 const columns = ref<Array<any>>([
   {
@@ -105,6 +127,15 @@ const filterSearching = reactive({
   locationSlected: null,
 });
 
+const formState = reactive<FormState>({
+  id: null,
+  code: "",
+  name: "",
+  workplace: "",
+  warehoueName: "",
+  role: "",
+});
+
 const disabledDeleteFilter = computed(() => filterSearching?.keyword?.length === 0 && filterSearching?.locationSlected === null);
 
 const handleClearFilter = () => {
@@ -114,46 +145,52 @@ const handleClearFilter = () => {
 
 const disableDeleteMany = computed(() => listSelect?.value?.length === 0);
 
-const preDeleteRow = () => {};
-
 const handleSelectRow = (rows: any) => {
   listSelect.value = rows.value.map((x: any) => x?.id);
 };
 
-const handleDeleteManyRow = () => {
-  // isVisibleModalConfirm.value = false;
+const handleDeleteSingle = (val: number) => {
+  isVisibleModalConfirm.value = true;
+  titleModal.value = translate("Personnel");
+  confirmMany.value = false;
 };
 
-const deleteSingleRow = () => {};
+const handleDeleteMany = () => {
+  isVisibleModalConfirm.value = true;
+  titleModal.value = translate("Personnel");
+  confirmMany.value = true;
+};
 
-const handleCreateRow = () => {
-  // isVisibleModalCreate.value = true;
-  // isEdit.value = false;
-  // formState.warehouseName = "";
-  // formState.Nation = "";
-  // formState.Area = "";
-  // formState.describe = "";
-  // formState.DateCreated = "";
-  // formState.Acreage = null;
-  // formState.Tankage = null;
-  // formState.warehouseId = "";
-  // titleModal.value = translate('CreateWarehouse');
+const handleCreate = () => {
+  formState.id = null;
+  formState.code = "";
+  formState.name = "";
+  formState.workplace = null;
+  formState.warehoueName = null;
+  formState.role = "";
+  isVisibleModalCreate.value = true;
+  isEdit.value = false;
+  titleModal.value = translate('AddEmployee');
 };
 
 const handleEditRow = (data: any) => {
-  // isEdit.value = true;
-  // isVisibleModalCreate.value = true;
-  // formState.warehouseName = data.warehouseName;
-  // formState.Nation = data.Nation;
-  // formState.Area = data.Area;
-  // formState.describe = data.describe;
-  // formState.DateCreated = data.DateCreated;
-  // formState.Acreage = data.Acreage;
-  // formState.Tankage = data.Tankage;
-  // formState.warehouseId = data.warehouseId;
-  // titleModal.value = translate('');
+  formState.id = data.id;
+  formState.code = data.code;
+  formState.name = data.name;
+  formState.workplace = data.workplace;
+  formState.warehoueName = data.warehoueName;
+  formState.role = data.role;
+  isVisibleModalCreate.value = true;
+  isEdit.value = true;
+  titleModal.value = translate('AddEmployee');
 };
 
+const handleDelete = () => {};
+
+const onCancel = () => {
+  isVisibleModalCreate.value = false;
+  isVisibleModalConfirm.value = false;
+}
 //data fake
 const option2Fake = [
   {
@@ -169,6 +206,7 @@ const option2Fake = [
 const datafake = [
   {
     id: "NV1",
+    code: "NV1",
     name: "Nguyen Van A",
     workplace: "Ha Noi",
     warehoueName: "Kho hàng 1",
@@ -176,13 +214,15 @@ const datafake = [
   },
   {
     id: "NV2",
+    code: "NV2",
     name: "Nguyen Van B",
     workplace: "Ha Noi",
     warehoueName: "Kho hàng 1",
-    role: "Nhân viên",
+    role: "Quản lí",
   },
   {
     id: "NV3",
+    code: "NV3",
     name: "Nguyen Van C",
     workplace: "Ha Noi",
     warehoueName: "Kho hàng 2",
@@ -190,13 +230,15 @@ const datafake = [
   },
   {
     id: "NV4",
+    code: "NV4",
     name: "Nguyen Van D",
     workplace: "Ha Noi",
     warehoueName: "Kho hàng 2",
-    role: "Nhân viên",
+    role: "Quản lí",
   },
   {
     id: "NV5",
+    code: "NV5",
     name: "Nguyen Van E",
     workplace: "Ha Noi",
     warehoueName: "Kho hàng 3",
@@ -204,13 +246,15 @@ const datafake = [
   },
   {
     id: "NV6",
+    code: "NV6",
     name: "Nguyen Van F",
     workplace: "Ha Noi",
     warehoueName: "Kho hàng 3",
-    role: "Nhân Viên",
+    role: "Quản lí",
   },
   {
     id: "NV7",
+    code: "NV7",
     name: "Nguyen Van G",
     workplace: "Ha Noi",
     warehoueName: "Kho hàng 4",
@@ -218,13 +262,15 @@ const datafake = [
   },
   {
     id: "NV8",
+    code: "NV8",
     name: "Nguyen Van H",
     workplace: "Ha Noi",
     warehoueName: "Kho hàng 4",
-    role: "Nhân viên",
+    role: "Quản lí",
   },
   {
     id: "NV9",
+    code: "NV9",
     name: "Nguyen Van I",
     workplace: "Ha Noi",
     warehoueName: "Kho hàng 5",
@@ -232,10 +278,11 @@ const datafake = [
   },
   {
     id: "NV10",
+    code: "NV10",
     name: "Nguyen Van K",
     workplace: "Ha Noi",
     warehoueName: "Kho hàng 5",
-    role: "Nhân viên",
+    role: "Quản lí",
   },
 ];
 </script>

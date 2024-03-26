@@ -129,4 +129,10 @@ export const vi = {
     PhoneNumber: "Số điện thoại",
     LoginAgain: "Đã có tài khoản, quay lại đăng nhập",
     DevelopmentStage: "Chức năng đang trong giai đoạn phát triển",
+    StaffCharge: "Nhân viên phụ trách",
+    UpdateWarehouseInfo: "Cập nhật thông tin kho hàng",
+    AddEmployee: "Thêm mới nhân viên",
+    SelectWarehouse: "Chọn kho hàng",
+    PersonnelList: "Danh sách nhân sự",
+    NumberOfPersonnel: "Số lượng nhân sự: ",
 };

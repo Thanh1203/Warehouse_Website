@@ -4,7 +4,7 @@
       <span class="tw-opacity-70">{{ translate("CategoryName") }}</span>
       <a-input :placeholder="translate('Search')" v-model:value="filterSearching.keyword" class="tw-mt-2" />
     </a-form-item>
-    <a-form-item>
+    <a-form-item class="tw-flex tw-items-end">
       <AntdButton :type="'text'" danger :disabled="disabledDeleteFilter" @click="handleClearFilter">
         <template #icon>
           <font-awesome-icon :icon="['far', 'trash-can']" />
@@ -85,21 +85,15 @@ const titleModal = ref<string>("");
 const idProduct = ref<string | number>("");
 const columns = ref<Array<any>>([
   {
-    title: "Mã chủng loại",
+    title: translate("CategoryCode"),
     dataIndex: "code",
     key: "code",
     align: "left",
   },
   {
-    title: "Tên chủng loại",
+    title: translate("CategoryName"),
     dataIndex: "name",
     key: "name",
-    align: "left",
-  },
-  {
-    title: "Ngày khởi tạo",
-    dataIndex: "dateCreated",
-    key: "dateCreated",
     align: "left",
   },
   {
@@ -114,7 +108,6 @@ const columns = ref<Array<any>>([
 const filterSearching = reactive({
   keyword: "",
 });
-
 const formState = reactive<FormState>({
   id: "",
   code: "",
@@ -221,21 +214,18 @@ const dataFake = [
     id: "CL01",
     code: "CL01",
     name: "Bàn phím",
-    dateCreated: "01/01/2024",
     propertyExtend: [],
   },
   {
     id: "CL02",
     code: "CL02",
     name: "Chuột",
-    dateCreated: "01/01/2024",
     propertyExtend: [],
   },
   {
     id: "CL03",
     code: "CL03",
     name: "Tai nghe",
-    dateCreated: "01/01/2024",
     propertyExtend: [],
   },
 ];
