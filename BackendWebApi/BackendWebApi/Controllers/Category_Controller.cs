@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BackendWebApi.Controllers
 {
-    [Route("api/catgory")]
+    [Route("api/category")]
     [ApiController]
     public class Category_Controller : Controller
     {

@@ -8,7 +8,7 @@ namespace BackendWebApi.Models
     public class Admin_Account
     {
         [Key]
-        public int AdminAccountId { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
@@ -16,6 +16,7 @@ namespace BackendWebApi.Models
         public string Email { get; set; }
         [JsonIgnore]
         public virtual ICollection<Personnel> Personnels { get; set; }
+        [JsonIgnore]
         public virtual ICollection<Warehouse_Info> Warehouse_Infos { get; set; }
     }
 }

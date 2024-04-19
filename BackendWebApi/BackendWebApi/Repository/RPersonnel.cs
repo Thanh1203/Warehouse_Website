@@ -82,7 +82,6 @@ namespace BackendWebApi.Repository
                 Address = personnel.Address,
                 Role = personnel.Role,
                 CompanyId = personnel.CompanyId,
-                WarehouseName = personnel.WarehouseName,
                 DateTime = DateTime.UtcNow,
             };
 
