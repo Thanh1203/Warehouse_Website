@@ -1,16 +1,16 @@
 <template>
   <a-form class="tw-flex tw-rounded-lg tw-bg-white tw-px-6 tw-py-5 tw-mb-6">
     <a-form-item class="tw-w-[250px] !tw-mr-3">
-      <span class="tw-opacity-70">{{ translate('EmployeeCode') }}</span>
-      <a-input :placeholder="translate('Search')" v-model:value="filterSearching.keyword" class="tw-mt-2" />
+      <span class="tw-opacity-70">{{ translate("EmployeeCode") }}</span>
+      <a-input :placeholder="translate('Search')" v-model:value="filterSearching.code" class="tw-mt-2" />
     </a-form-item>
     <a-form-item class="tw-w-[250px] !tw-mr-3">
       <span class="tw-opacity-70">{{ translate("EnterEmployeeName") }}</span>
-      <a-input :placeholder="translate('Search')" v-model:value="filterSearching.keyword" class="tw-mt-2" />
+      <a-input :placeholder="translate('Search')" v-model:value="filterSearching.name" class="tw-mt-2" />
     </a-form-item>
     <a-form-item class="tw-w-[200px] !tw-mr-3">
       <span class="tw-opacity-70">{{ translate("SelectArea") }}</span>
-      <a-select :placeholder="translate('SelectArea')" v-model:value="filterSearching.locationSlected" :options="option2Fake" class="tw-mt-2" />
+      <a-select :placeholder="translate('SelectArea')" v-model:value="filterSearching.address" :options="personnelAddress?.map((e) => ({ value: e, label: e }))" class="tw-mt-2" />
     </a-form-item>
     <a-form-item class="tw-flex tw-items-end">
       <AntdButton :type="'text'" danger :disabled="disabledDeleteFilter" @click="handleClearFilter">
@@ -21,9 +21,9 @@
       </AntdButton>
     </a-form-item>
   </a-form>
-  <Section :title="translate('PersonnelList')" :sub-title="translate('NumberOfPersonnel')" :number="String(datafake?.length)">
+  <Section :title="translate('PersonnelList')" :sub-title="translate('NumberOfPersonnel')" :number="String(totalPersonnel)">
     <template #action>
-      <AntdButton :type="'text'" danger class="tw-mr-2" :disabled="disableDeleteMany" @click="handleDeleteMany">
+      <AntdButton :type="'text'" danger class="tw-mr-2" :disabled="disableDeleteMany" @click="handleDeletePersonnel(listSelect, true)">
         <template #icon>
           <font-awesome-icon :icon="['far', 'trash-can']" />
         </template>
@@ -39,14 +39,14 @@
       </AntdButton>
     </template>
     <template #body>
-      <AntdTable ref="table" key-field="id" :index-column="true" :columns="columns" :data-source="datafake" :has-checkbox="true" :no-sort="true" @onSelected="handleSelectRow">
+      <AntdTable ref="table" key-field="id" :index-column="true" :columns="columns" :data-source="personnelData" :has-checkbox="true" :no-sort="true" @onSelected="handleSelectRow">
         <template #custom-body="{ column, record }">
           <template v-if="column.key === 'action'">
             <div class="action">
               <AntdButton class="action-btn" :type="'light-hover'" shape="circle" @click="handleEditRow(record)">
                 <font-awesome-icon :icon="['far', 'pen-to-square']" style="color: #001f3f" />
               </AntdButton>
-              <AntdButton class="action-btn" :type="'light-hover'" shape="circle" @click="handleDeleteSingle(record.id)">
+              <AntdButton class="action-btn" :type="'light-hover'" shape="circle" @click="handleDeletePersonnel(record, false)">
                 <font-awesome-icon :icon="['far', 'trash-can']" style="color: #ff0000" />
               </AntdButton>
             </div>
@@ -57,9 +57,7 @@
   </Section>
 
   <!-- modal -->
-  <ModalCreate :title="titleModal" :isEdit="isEdit" :form="formState" :isVisible="isVisibleModalCreate" @closeModal="onCancel"/>
-  <ModalConfirm :isVisible="isVisibleModalConfirm" :titleModal="titleModal" :isMany="confirmMany" @closeModal="onCancel" @handleSubmit="handleDelete" />
-
+  <ModalCreate :title="titleModal" :isEdit="isEdit" :form="formState" :isVisible="isVisibleModalCreate" @closeModal="onCancel" @handleSubmit="handleSubmitForm"/>
 </template>
 <script setup lang="ts">
 import Section from "@/components/section/index.vue";
@@ -67,30 +65,41 @@ import { translate } from "@/languages/i18n";
 import { ref, watch, onMounted, defineAsyncComponent, reactive, computed } from "vue";
 import AntdButton from "@/components/antd-button/index.vue";
 import AntdTable from "@/components/antd-table/index.vue";
+import { useStore } from "vuex";
+import { useRoute, useRouter } from "vue-router";
+import { debounce } from "vue-debounce";
+import { checkDeleteItem, removeNullObjects } from "@/utils/common";
+import { Modal, notification } from "ant-design-vue";
 
 interface FormState {
   id: string | number | null;
   code: string;
   name: string;
-  workplace: string;
-  warehoueName: string;
   role: string;
-};
+  address: string;
+  companyId: number | null;
+  allowDelete?: boolean
+}
 
 const ModalCreate = defineAsyncComponent(() => import("./components/ModalCreate.vue"));
-const ModalConfirm = defineAsyncComponent(() => import("@/components/antd-modal-confirm/index.vue"));
 
-const isVisibleModalConfirm = ref<boolean>(false);
+const store = useStore();
+const route = useRoute();
+const router = useRouter();
+
+const personnelData = computed(() => store.getters["personnel/personnelData"]);
+const totalPersonnel = computed(() => store.getters["personnel/totalPersonnel"]);
+const personnelAddress = computed(() => store.getters["personnel/addressData"]);
+
 const isVisibleModalCreate = ref<boolean>(false);
-const confirmMany = ref<boolean>(false);
 const isEdit = ref<boolean>(false);
 const titleModal = ref<string>("");
 const listSelect = ref<Array<any>>([]);
 const columns = ref<Array<any>>([
   {
     title: translate("EmployeeCode"),
-    dataIndex: "id",
-    key: "id",
+    dataIndex: "code",
+    key: "code",
     align: "left",
   },
   {
@@ -100,15 +109,9 @@ const columns = ref<Array<any>>([
     align: "left",
   },
   {
-    title: translate("Area"),
-    dataIndex: "workplace",
-    key: "workplace",
-    align: "left",
-  },
-  {
-    title: translate("warehouseName"),
-    dataIndex: "warehoueName",
-    key: "warehoueName",
+    title: translate("Address"),
+    dataIndex: "address",
+    key: "address",
     align: "left",
   },
   {
@@ -126,168 +129,177 @@ const columns = ref<Array<any>>([
   },
 ]);
 
-const filterSearching = reactive({
-  keyword: "",
-  locationSlected: null,
+const filterSearching = reactive<any>({
+  name: "",
+  address: null,
+  code: "",
 });
 
 const formState = reactive<FormState>({
   id: null,
   code: "",
   name: "",
-  workplace: "",
-  warehoueName: "",
   role: "",
+  address: "",
+  companyId: null,
 });
 
-const disabledDeleteFilter = computed(() => filterSearching?.keyword?.length === 0 && filterSearching?.locationSlected === null);
+//filter
+const disabledDeleteFilter = computed(() => filterSearching?.name?.length === 0 && filterSearching?.code?.length === 0 && filterSearching?.address === null);
 
 const handleClearFilter = () => {
-  filterSearching.keyword = "";
-  filterSearching.locationSlected = null;
+  filterSearching.name = "";
+  filterSearching.address = null;
+  filterSearching.code = "";
+};
+
+//CRUD
+const handleCreate = () => {
+  formState.id = 0;
+  formState.code = "";
+  formState.name = "";
+  formState.role = "";
+  formState.address = "";
+  formState.companyId = null;
+  formState.allowDelete = true;
+  isVisibleModalCreate.value = true;
+  isEdit.value = false;
+  titleModal.value = translate("AddEmployee");
+};
+
+const handleEditRow = (data: any) => {
+  formState.id = data?.id;
+  formState.code = data?.code;
+  formState.name = data?.name;
+  formState.role = data?.role;
+  formState.address = data?.address;
+  formState.companyId = data?.companyId;
+  formState.allowDelete = data?.allowDeletes
+  isVisibleModalCreate.value = true;
+  isEdit.value = true;
+  titleModal.value = translate("UpdateEmployee");
+};
+
+const handleSubmitForm = async (state: any) => {
+  isVisibleModalCreate.value = false;
+  if (isEdit.value && state.id != 0) {
+    try {
+      await store.dispatch("personnel/updatePersonnel", {
+        state: state,
+        params: {
+          ...route.query,
+        },
+      });
+      notification["success"]({
+        message: translate("noti.updateSuccess"),
+      });
+    } catch (error) {
+      console.log(error);
+      notification["error"]({
+        message: translate("noti.updateFail"),
+      });
+    }
+  } else {
+    try {
+      await store.dispatch("personnel/createPersonnel", {
+        state: state,
+        params: {
+          ...route.query,
+        },
+      });
+      notification["success"]({
+        message: translate("noti.createSuccess"),
+      });
+    } catch (error) {
+      console.log(error);
+      notification["error"]({
+        message: translate("noti.createFail"),
+      });
+    }
+  }
+}
+
+const handleSelectRow = (rows: any) => {
+  listSelect.value = rows.value.map((x: any) => ({ id: x?.id, allowDelete: x?.allowDelete }));
 };
 
 const disableDeleteMany = computed(() => listSelect?.value?.length === 0);
 
-const handleSelectRow = (rows: any) => {
-  listSelect.value = rows.value.map((x: any) => x?.id);
-};
+const handleDeletePersonnel = (itemDelete: any, isMany: boolean) => {
+  Modal.confirm({
+    title: translate(translate(isMany ? 'confirm.many' : 'confirm.one', "Personnel")),
+    content: translate('NoDataRestore'),
+    okText: translate('Agree'),
+    cancelText: translate('Cancel'),
+    centered: true,
+    async onOk() {
+      handleDelete(itemDelete);
+    }, 
+    onCancel() {},
+  })
+}
 
-const handleDeleteSingle = (val: number) => {
-  isVisibleModalConfirm.value = true;
-  titleModal.value = translate("Personnel");
-  confirmMany.value = false;
-};
+const handleDelete = async (itemDelete: any) => {
+  if (checkDeleteItem(itemDelete)) {
+    if (itemDelete.length > 1) {
+      const temp = itemDelete.map((x: any) => x?.id);
+      await store.dispatch("personnel/deletePersonnel", {
+        state: temp,
+        params: {
+          ...route.query,
+        },
+      });
+    } else {
+      await store.dispatch("personnel/deletePersonnel", {
+        state: [itemDelete.id],
+        params: {
+          ...route.query,
+        },
+      });
+    }
 
-const handleDeleteMany = () => {
-  isVisibleModalConfirm.value = true;
-  titleModal.value = translate("Personnel");
-  confirmMany.value = true;
-};
+    notification["success"]({
+      message: translate("noti.deleteSuccess")
+    });
+  } else {
+    notification["error"]({
+      message: translate("noti.deleteWarehouseFail"),
+    });
+  }
+}
 
-const handleCreate = () => {
-  formState.id = null;
-  formState.code = "";
-  formState.name = "";
-  formState.workplace = null;
-  formState.warehoueName = null;
-  formState.role = "";
-  isVisibleModalCreate.value = true;
-  isEdit.value = false;
-  titleModal.value = translate('AddEmployee');
-};
 
-const handleEditRow = (data: any) => {
-  formState.id = data.id;
-  formState.code = data.code;
-  formState.name = data.name;
-  formState.workplace = data.workplace;
-  formState.warehoueName = data.warehoueName;
-  formState.role = data.role;
-  isVisibleModalCreate.value = true;
-  isEdit.value = true;
-  titleModal.value = translate('AddEmployee');
-};
 
-const handleDelete = () => {};
 
+// close modal
 const onCancel = () => {
   isVisibleModalCreate.value = false;
-  isVisibleModalConfirm.value = false;
-}
-//data fake
-const option2Fake = [
-  {
-    value: 1,
-    label: "Hà nội",
-  },
-  {
-    value: 2,
-    label: "Hải dương",
-  },
-];
+};
 
-const datafake = [
-  {
-    id: "NV1",
-    code: "NV1",
-    name: "Nguyen Van A",
-    workplace: "Ha Noi",
-    warehoueName: "Kho hàng 1",
-    role: "Quản lí",
-  },
-  {
-    id: "NV2",
-    code: "NV2",
-    name: "Nguyen Van B",
-    workplace: "Ha Noi",
-    warehoueName: "Kho hàng 1",
-    role: "Quản lí",
-  },
-  {
-    id: "NV3",
-    code: "NV3",
-    name: "Nguyen Van C",
-    workplace: "Ha Noi",
-    warehoueName: "Kho hàng 2",
-    role: "Quản lí",
-  },
-  {
-    id: "NV4",
-    code: "NV4",
-    name: "Nguyen Van D",
-    workplace: "Ha Noi",
-    warehoueName: "Kho hàng 2",
-    role: "Quản lí",
-  },
-  {
-    id: "NV5",
-    code: "NV5",
-    name: "Nguyen Van E",
-    workplace: "Ha Noi",
-    warehoueName: "Kho hàng 3",
-    role: "Quản lí",
-  },
-  {
-    id: "NV6",
-    code: "NV6",
-    name: "Nguyen Van F",
-    workplace: "Ha Noi",
-    warehoueName: "Kho hàng 3",
-    role: "Quản lí",
-  },
-  {
-    id: "NV7",
-    code: "NV7",
-    name: "Nguyen Van G",
-    workplace: "Ha Noi",
-    warehoueName: "Kho hàng 4",
-    role: "Quản lí",
-  },
-  {
-    id: "NV8",
-    code: "NV8",
-    name: "Nguyen Van H",
-    workplace: "Ha Noi",
-    warehoueName: "Kho hàng 4",
-    role: "Quản lí",
-  },
-  {
-    id: "NV9",
-    code: "NV9",
-    name: "Nguyen Van I",
-    workplace: "Ha Noi",
-    warehoueName: "Kho hàng 5",
-    role: "Quản lí",
-  },
-  {
-    id: "NV10",
-    code: "NV10",
-    name: "Nguyen Van K",
-    workplace: "Ha Noi",
-    warehoueName: "Kho hàng 5",
-    role: "Quản lí",
-  },
-];
+const fetchData = async (params) => {
+  await store.dispatch("personnel/getPersonnel", params);
+};
+
+const fetchAddressPersonnel = async () => {
+  await store.dispatch("personnel/getAddress", null);
+};
+
+watch(
+  () => filterSearching,
+  debounce(() => {
+    const params = {
+      code: filterSearching?.code,
+      name: filterSearching?.name,
+      address: filterSearching?.address,
+    };
+    fetchData(removeNullObjects(params));
+  }, 500),
+  { deep: true },
+);
+
+onMounted(async () => {
+  await fetchData(null);
+  await fetchAddressPersonnel();
+});
 </script>
 <style scoped lang="scss"></style>

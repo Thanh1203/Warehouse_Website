@@ -22,9 +22,8 @@ namespace BackendWebApi.Repository
             foreach (var item in dataList)
             {
                 bool allowDelete = await _context.Warehouse_Infos.AnyAsync(p => p.StaffId == item.Id);
-
                 item.AllowDelete = !allowDelete;
-            }
+            };
 
             var result = new
             {
@@ -37,7 +36,6 @@ namespace BackendWebApi.Repository
 
         public async Task<object> SearchPersonnel(string strCode, string strName, string strAddress)
         {
-            var total = await _context.Personnels.CountAsync();
             var query = _context.Personnels.AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(strCode))
@@ -64,10 +62,12 @@ namespace BackendWebApi.Repository
                 item.AllowDelete = !allowDelete;
             }
 
+            var totalElement = await query.CountAsync();
+
             var result = new
             {
                 data = dataList,
-                totalElement = total,
+                totalElement,
             };
 
             return result;
@@ -81,17 +81,16 @@ namespace BackendWebApi.Repository
                 Name = personnel.Name,
                 Address = personnel.Address,
                 Role = personnel.Role,
-                CompanyId = personnel.CompanyId,
-                DateTime = DateTime.UtcNow,
+                CompanyId = 1,
             };
 
             _context.Personnels.Add(newPersonnel);
             await _context.SaveChangesAsync();
         }
 
-        public async Task Update([FromBody] Personnel personnel, int idUpdate)
+        public async Task Update([FromBody] Personnel personnel)
         {
-            var temp = _context.Personnels.SingleOrDefault(p => p.Id == idUpdate);
+            var temp = _context.Personnels.SingleOrDefault(p => p.Id == personnel.Id);
 
             if (temp != null)
             {
@@ -116,6 +115,11 @@ namespace BackendWebApi.Repository
                     await _context.SaveChangesAsync();
                 }
             }
+        }
+
+        public async Task<List<string>> GetAddressPersonnel()
+        {
+            return await _context.Personnels.Select(e => e.Address).Distinct().ToListAsync();
         }
     }
 }

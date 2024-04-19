@@ -33,13 +33,13 @@ namespace BackendWebApi.Repository
                     Code = item.Code,
                     Name = item.Name,
                     Nation = item.Nation,
-                    StaffId = item.StaffId,
+                    StaffId = (int)(item?.StaffId),
                     Area = item.Area,
                     Address = item.Address,
                     CompanyId = item.CompanyId,
                     AllowDelete = item.AllowDelete,
                     StaffName = staffName,
-                    TimeCreate = TimeZoneInfo.ConvertTimeFromUtc(item.DateTime, TimeZoneInfo.Local).ToString("dd/MM/yyyy")
+                    TimeCreate = TimeZoneInfo.ConvertTimeFromUtc((DateTime)item.DateTime, TimeZoneInfo.Local).ToString("dd/MM/yyyy")
                 };
                 warehouseInfoViewModels.Add(viewModel);
             }
@@ -86,13 +86,13 @@ namespace BackendWebApi.Repository
                     Code = item.Code,
                     Name = item.Name,
                     Nation = item.Nation,
-                    StaffId = item.StaffId,
+                    StaffId = (int)item.StaffId,
                     Area = item.Area,
                     Address = item.Address,
                     CompanyId = item.CompanyId,
                     AllowDelete = item.AllowDelete,
                     StaffName = staffName,
-                    TimeCreate = TimeZoneInfo.ConvertTimeFromUtc(item.DateTime, TimeZoneInfo.Local).ToString("dd/MM/yyyy")
+                    TimeCreate = TimeZoneInfo.ConvertTimeFromUtc((DateTime)item.DateTime, TimeZoneInfo.Local).ToString("dd/MM/yyyy")
                 };
                 warehouseInfoViewModels.Add(viewModel);
             }

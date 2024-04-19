@@ -50,11 +50,11 @@ namespace BackendWebApi.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdatePersonnel([FromBody] Personnel personnel, int idUpdate)
+        public async Task<IActionResult> UpdatePersonnel([FromBody] Personnel personnel)
         {
             try
             {
-                await _IPersonnel.Update(personnel, idUpdate);
+                await _IPersonnel.Update(personnel);
                 return Ok("Update successful!");
             }
             catch (Exception ex)
@@ -75,6 +75,21 @@ namespace BackendWebApi.Controllers
             {
                 return BadRequest($"Error: {ex.Message}");
             }
+        }
+
+        [HttpGet("address")]
+        public async Task<IActionResult> GetAddressPersonnel()
+        {
+            try
+            {
+                var address = await _IPersonnel.GetAddressPersonnel();
+                return Ok(address);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Error: {ex.Message}");
+            }
+
         }
     }
 }

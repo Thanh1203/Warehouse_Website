@@ -102,7 +102,8 @@ const state: any = reactive({
   nation: props?.form?.nation,
   area: props?.form?.area,
   address: props?.form?.address,
-  staffId: props?.form?.staffId
+  staffId: props?.form?.staffId,
+  allowDelete: props?.form?.allowDelete,
 });
 
 const rules = {
@@ -138,16 +139,13 @@ watch(
       (state.area = val.area),
       (state.address = val.address),
       (state.staffId = val.staffId),
-      (state.id = val.id)
+      (state.id = val.id),
+      (state.allowDelete = val.allowDelete)
   },
   {
     deep: true, immediate: true
   },
 );
-
-onMounted(async () => {
-  await store.dispatch("personnel/getPersonnel", null);
-})
 
 const handleSubmit = async () => {
   v$.value.$touch();
@@ -160,10 +158,14 @@ const handleSubmit = async () => {
     name: state?.name,
     nation: STR_UPPER_CASE(state?.nation),
     area: STR_UPPER_CASE(state?.area),
-    address: state?.address,
+    address: STR_UPPER_CASE(state?.address),
     staffId: state?.staffId,
-    allowDelete: true,
+    allowDelete: state?.allowDelete,
   }
   emit("handleSubmit", stateResult);
 };
+
+onMounted(async () => {
+  await store.dispatch("personnel/getPersonnel", null);
+})
 </script>

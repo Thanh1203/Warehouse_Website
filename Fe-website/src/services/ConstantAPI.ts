@@ -91,6 +91,10 @@ export default {
         DELETE: {
             url: "/api/personnel",
             method: "DELETE"
+        },
+        GET_ADDRESS: {
+            url: "/api/personnel/address",
+            method: "GET",
         }
     },
     producer: {

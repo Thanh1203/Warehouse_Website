@@ -135,4 +135,5 @@ export const en = {
     SelectWarehouse: "Select warehouse",
     PersonnelList: "Personnel list",
     NumberOfPersonnel: "Number of personnel",
+    UpdateEmployee: "Update employee",
 };

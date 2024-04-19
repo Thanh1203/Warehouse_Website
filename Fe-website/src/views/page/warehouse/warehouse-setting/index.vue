@@ -78,6 +78,7 @@ import { useStore } from "vuex";
 import { useRoute, useRouter } from "vue-router";
 import { debounce } from "vue-debounce";
 import { Modal, notification } from "ant-design-vue";
+import { checkDeleteItem, removeNullObjects } from "@/utils/common";
 
 interface Columns {
   title?: string;
@@ -92,7 +93,6 @@ interface Columns {
 }
 
 const ModalCreate = defineAsyncComponent(() => import("./components/ModalCreate.vue"));
-const ModalConfirm = defineAsyncComponent(() => import("@/components/antd-modal-confirm/index.vue"));
 const ModalInfo = defineAsyncComponent(() => import("./components/ModalInfo.vue"));
 
 const store = useStore();
@@ -170,9 +170,11 @@ const formState = reactive<any>({
   companyId: null,
   staffId: null,
   allowDelete: true,
+  timeCreate: "",
+  staffName: "",
 });
 
-//handle filter
+//filter
 const disabledDeleteFilter = computed(() => filterSearching?.keyword?.length === 0 && filterSearching?.nationSlected === null && filterSearching?.areaSelected === null);
 
 const handleClearFilter = () => {
@@ -181,7 +183,7 @@ const handleClearFilter = () => {
   filterSearching.areaSelected = null;
 };
 
-// modal create
+// CRUD
 const handleCreate = () => {
   isVisibleModalCreate.value = true;
   isEdit.value = false;
@@ -193,14 +195,25 @@ const handleCreate = () => {
   formState.address = "";
   formState.companyId = null;
   formState.staffId = null;
+  formState.allowDelete = true;
   titleModal.value = translate("CreateWarehouse");
 };
 
-// close modal
-const closeModal = () => {
-  isVisibleModalCreate.value = false;
-  isVisibleModalInfo.value = false;
+const handleEditRow = (data: any) => {
+  isEdit.value = true;
+  isVisibleModalCreate.value = true;
+  titleModal.value = translate("UpdateWarehouseInfo");
+  formState.id = data?.id;
+  formState.code = data?.code;
+  formState.name = data?.name;
+  formState.nation = data?.nation;
+  formState.area = data?.area;
+  formState.address = data?.address;
+  formState.companyId = data?.companyId;
+  formState.staffId = data?.staffId;
+  formState.allowDelete = data?.allowDelete;
 };
+
 
 const handleSubmitForm = async (state: any) => {
   isVisibleModalCreate.value = false;
@@ -243,14 +256,13 @@ const handleSubmitForm = async (state: any) => {
   }
 };
 
-// handle data table
 const handleSelectRow = (rows: any) => {
   listSelect.value = rows.value.map((x: any) => ({ id: x?.id, allowDelete: x?.allowDelete }));
 };
 
 const disableDeleteMany = computed(() => listSelect?.value?.length === 0);
 
-const handleDeleteWarehouse = async (itemDelete, isMany) => {
+const handleDeleteWarehouse = async (itemDelete: any, isMany: boolean) => {
   Modal.confirm({
     title: translate(translate(isMany ? 'confirm.many' : 'confirm.one', "Warehouse")),
     content: translate('NoDataRestore'),
@@ -264,9 +276,9 @@ const handleDeleteWarehouse = async (itemDelete, isMany) => {
   })
 }
 
-const handleDelete = async (itemDelete) => {
+const handleDelete = async (itemDelete: any) => {
   if (checkDeleteItem(itemDelete)) {
-    if (itemDelete.length > 0) {
+    if (itemDelete.length > 1) {
       const temp = itemDelete.map((x: any) => x?.id);
       await store.dispatch("warehouse/deleteWarehouse", {
         state: temp,
@@ -282,6 +294,10 @@ const handleDelete = async (itemDelete) => {
         },
       });
     }
+    
+    notification["success"]({
+      message: translate("noti.deleteSuccess")
+    });
   } else {
     notification["error"]({
       message: translate("noti.deleteWarehouseFail"),
@@ -289,22 +305,7 @@ const handleDelete = async (itemDelete) => {
   }
 };
 
-const checkDeleteItem = (item) => {
-  if (item.length > 0) {
-    if (!item.find(x => x?.allowDelete === false)) {
-      return true;
-    } else {
-      return false;
-    }
-  } else {
-    if (item.allowDelete) {
-      return true;
-    } else return false;
-  }
-}
-
 const handleViewRow = (data: any) => {
-  console.log(data);
   isVisibleModalInfo.value = true;
   formState.id = data?.id;
   formState.code = data?.code;
@@ -314,21 +315,15 @@ const handleViewRow = (data: any) => {
   formState.address = data?.address;
   formState.companyId = data?.companyId;
   formState.staffId = data?.staffId;
+  formState.allowDelete = data?.allowDelete;
+  formState.timeCreate = data?.timeCreate;
+  formState.staffName = data?.staffName;
 };
 
-const handleEditRow = (data: any) => {
-  isEdit.value = true;
-  isVisibleModalCreate.value = true;
-  titleModal.value = translate("UpdateWarehouseInfo");
-  formState.id = data?.id;
-  formState.code = data?.code;
-  formState.name = data?.name;
-  formState.nation = data?.nation;
-  formState.area = data?.area;
-  formState.address = data?.address;
-  formState.companyId = data?.companyId;
-  formState.staffId = data?.staffId;
-  formState.allowDelete = data?.allowDelete;
+// close modal
+const closeModal = () => {
+  isVisibleModalCreate.value = false;
+  isVisibleModalInfo.value = false;
 };
 
 const fetchData = async () => {
@@ -348,26 +343,8 @@ watch(
       nation: filterSearching?.nationSlected,
       area: filterSearching?.areaSelected,
     };
-    router.replace({
-      path: route.path,
-      query: params,
-    });
+    fetchWarehouse(removeNullObjects(params));
   }, 500),
-  {
-    deep: true,
-  },
-);
-
-watch(
-  () => route.query,
-  (newQuery, oldQuery) => {
-    const params = { ...newQuery };
-    if (route.path !== "/warehouse-configuration") return;
-    if (Object.keys(newQuery).length === 0) {
-      return router.replace({ path: route.path, query: { ...oldQuery } });
-    }
-    fetchWarehouse(params);
-  },
   { deep: true },
 );
 

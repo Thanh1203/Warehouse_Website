@@ -25,7 +25,7 @@ export default {
     },
     mutations: {
         SET_WAREHOUSE_INFO(state, payload) {
-            state.warehouseInfo = payload?.map(e => FLATTEN_OBJ(e))
+            state.warehouseInfo = payload
         },
         SET_TOTAL_WAREHOUSE(state, payload) {
             state.totalWarehouse = payload

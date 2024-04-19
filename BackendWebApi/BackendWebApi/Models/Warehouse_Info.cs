@@ -12,14 +12,14 @@ namespace BackendWebApi.Models
         public string Name { get; set; }
         public string Nation { get; set; }
         [ForeignKey("Personnel")]
-        public int StaffId { get; set; }
+        public int? StaffId { get; set; }
         public string Area { get; set; }
-        public string Address { get; set; }
+        public string? Address { get; set; }
         [ForeignKey("Admin_Account")]
         [JsonIgnore]
         public int CompanyId { get; set; }
         [JsonIgnore]
-        public DateTime DateTime { get; set; }
+        public DateTime? DateTime { get; set; }
         [JsonIgnore]
         public virtual Personnel? Personnel { get; set; }
         [JsonIgnore]
