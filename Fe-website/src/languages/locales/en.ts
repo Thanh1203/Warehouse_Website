@@ -94,6 +94,7 @@ export const en = {
         updateSuccess: "Update success",
         updateFail: "Update Fail",
         fail: "Fail",
+        deleteWarehouseFail: "Cannot delete warehouse with products in stock! Please check the stock again"
     },
     ManufacturerList: 'Manufacturer list',
     ManufacturerCode: "Manufacturer code",

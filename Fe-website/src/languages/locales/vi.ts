@@ -95,6 +95,7 @@ export const vi = {
         updateSuccess: "Cập nhật thành công",
         updateFail: "Cập nhật thất bại",
         fail: "Thất bại",
+        deleteWarehouseFail: "Không thể xóa kho hàng còn sản phẩm! vui lòng kiểm tra lại kho hàng",
     },
     ManufacturerList: "Danh sách hãng sản xuất",
     ManufacturerCode: "Mã hãng sản xuất",

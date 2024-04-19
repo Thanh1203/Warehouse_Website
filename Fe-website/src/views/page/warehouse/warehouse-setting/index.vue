@@ -6,11 +6,17 @@
     </a-form-item>
     <a-form-item class="tw-w-[150px] !tw-mr-3">
       <span class="tw-opacity-70">{{ translate("SelectNation") }}</span>
-      <a-select :placeholder="translate('Nation')" v-model:value="filterSearching.nationSlected" :options="option1Fake" class="tw-mt-2" />
+      <a-select :placeholder="translate('Nation')" v-model:value="filterSearching.nationSlected" :options="nationOption?.map((e) => ({ value: e, label: e }))" class="tw-mt-2" />
     </a-form-item>
     <a-form-item class="tw-w-[150px] !tw-mr-3">
       <span class="tw-opacity-70">{{ translate("SelectArea") }}</span>
-      <a-select :placeholder="translate('Area')" v-model:value="filterSearching.areaSelected" :options="option2Fake" :allowClear="true" class="tw-mt-2" />
+      <a-select
+        :placeholder="translate('Area')"
+        v-model:value="filterSearching.areaSelected"
+        :options="areaOption?.map((e) => ({ value: e, label: e }))"
+        :allowClear="true"
+        class="tw-mt-2"
+      />
     </a-form-item>
     <a-form-item class="tw-flex tw-items-end">
       <AntdButton :type="'text'" danger :disabled="disabledDeleteFilter" @click="handleClearFilter">
@@ -21,9 +27,9 @@
       </AntdButton>
     </a-form-item>
   </a-form>
-  <Section :title="translate('WarehouseList')" :sub-title="translate('NumberOfWarehouses')" :number="String(datafake?.length)">
+  <Section :title="translate('WarehouseList')" :sub-title="translate('NumberOfWarehouses')" :number="String(totalWarehouse)">
     <template #action>
-      <AntdButton :type="'text'" danger class="tw-mr-2" :disabled="disableDeleteMany" @click="preDeleteRow">
+      <AntdButton :type="'text'" danger class="tw-mr-2" :disabled="disableDeleteMany" @click="handleDeleteWarehouse(listSelect, true)">
         <template #icon>
           <font-awesome-icon :icon="['far', 'trash-can']" />
         </template>
@@ -39,18 +45,9 @@
       </AntdButton>
     </template>
     <template #body>
-      <AntdTable
-        ref="table"
-        key-field="warehouseId"
-        :index-column="true"
-        :columns="columns"
-        :data-source="datafake"
-        :has-checkbox="true"
-        :no-sort="true"
-        @onSelected="handleSelectRow"
-      >
+      <AntdTable ref="table" key-field="id" :index-column="true" :columns="columns" :data-source="warehouseData" :has-checkbox="true" :no-sort="true" @onSelected="handleSelectRow">
         <template #custom-body="{ column, record }">
-          <template v-if="column.key === 'action'">
+          <template v-if="column.key === 'action' && record">
             <div class="action">
               <AntdButton class="action-btn" :type="'light-hover'" shape="circle" @click="handleViewRow(record)">
                 <font-awesome-icon :icon="['fas', 'circle-info']" style="color: #4caf50" />
@@ -58,7 +55,7 @@
               <AntdButton class="action-btn" :type="'light-hover'" shape="circle" @click="handleEditRow(record)">
                 <font-awesome-icon :icon="['far', 'pen-to-square']" style="color: #001f3f" />
               </AntdButton>
-              <AntdButton class="action-btn" :type="'light-hover'" shape="circle" @click="deleteSingleRow">
+              <AntdButton class="action-btn" :type="'light-hover'" shape="circle" @click="handleDeleteWarehouse(record, false)">
                 <font-awesome-icon :icon="['far', 'trash-can']" style="color: #ff0000" />
               </AntdButton>
             </div>
@@ -69,7 +66,6 @@
   </Section>
   <!-- modal -->
   <ModalCreate :is-visible="isVisibleModalCreate" :is-edit="isEdit" :form="formState" :title-modal="titleModal" @close-modal="closeModal" @handle-submit="handleSubmitForm" />
-  <ModalConfirm :is-visible="isVisibleModalConfirm" :title-modal="titleModal" :isMany="confirmMany" @close-modal="closeModal" @handle-submit="handleDeleteManyRow" />
   <ModalInfo :is-visible="isVisibleModalInfo" @close-modal="closeModal" :state="formState" />
 </template>
 <script setup lang="ts">
@@ -78,6 +74,10 @@ import { ref, watch, onMounted, defineAsyncComponent, reactive, computed } from 
 import { translate } from "@/languages/i18n";
 import AntdButton from "@/components/antd-button/index.vue";
 import AntdTable from "@/components/antd-table/index.vue";
+import { useStore } from "vuex";
+import { useRoute, useRouter } from "vue-router";
+import { debounce } from "vue-debounce";
+import { Modal, notification } from "ant-design-vue";
 
 interface Columns {
   title?: string;
@@ -95,41 +95,54 @@ const ModalCreate = defineAsyncComponent(() => import("./components/ModalCreate.
 const ModalConfirm = defineAsyncComponent(() => import("@/components/antd-modal-confirm/index.vue"));
 const ModalInfo = defineAsyncComponent(() => import("./components/ModalInfo.vue"));
 
+const store = useStore();
+const route = useRoute();
+const router = useRouter();
+
+const warehouseData = computed(() => store.getters["warehouse/warehouseInfo"]);
+const totalWarehouse = computed(() => store.getters["warehouse/totalWarehouse"]);
+const nationOption = computed(() => store.getters["warehouse/nationData"]);
+const areaOption = computed(() => store.getters["warehouse/areaData"]);
+
 const isVisibleModalCreate = ref<boolean>(false);
-const isVisibleModalConfirm = ref<boolean>(false);
 const isVisibleModalInfo = ref<boolean>(false);
 const isEdit = ref<boolean>(false);
-const confirmMany = ref<boolean>(false);
 const listSelect = ref<Array<any>>([]);
 const columns = ref<Array<Columns>>([
   {
     title: translate("WarehouseCode"),
-    dataIndex: "warehouseId",
-    key: "warehouseId",
+    dataIndex: "code",
+    key: "code",
     align: "left",
   },
   {
     title: translate("warehouseName"),
-    dataIndex: "warehouseName",
-    key: "warehouseName",
+    dataIndex: "name",
+    key: "name",
     align: "left",
   },
   {
     title: translate("Nation"),
-    dataIndex: "Nation",
-    key: "Nation",
+    dataIndex: "nation",
+    key: "nation",
     align: "left",
   },
   {
     title: translate("Area"),
-    dataIndex: "Area",
-    key: "Area",
+    dataIndex: "area",
+    key: "area",
     align: "left",
   },
   {
     title: translate("StaffCharge"),
-    dataIndex: "personnelName",
-    key: "personnelName",
+    dataIndex: "staffName",
+    key: "staffName",
+    aligin: "left",
+  },
+  {
+    title: translate("DateCreated"),
+    dataIndex: "timeCreate",
+    key: "timeCreate",
     aligin: "left",
   },
   {
@@ -147,15 +160,16 @@ const filterSearching = reactive({
   nationSlected: null,
   areaSelected: null,
 });
-const formState = reactive({
-  warehouseId: "",
-  warehouseName: "",
-  Nation: null,
-  Area: null,
-  describe: "",
-  Acreage: null,
-  Tankage: null,
-  staff: "",
+const formState = reactive<any>({
+  id: "",
+  code: "",
+  name: "",
+  nation: "",
+  area: "",
+  address: "",
+  companyId: null,
+  staffId: null,
+  allowDelete: true,
 });
 
 //handle filter
@@ -171,160 +185,195 @@ const handleClearFilter = () => {
 const handleCreate = () => {
   isVisibleModalCreate.value = true;
   isEdit.value = false;
-  formState.warehouseName = "";
-  formState.Nation = null;
-  formState.Area = null;
-  formState.describe = "";
-  formState.Acreage = null;
-  formState.Tankage = null;
-  formState.warehouseId = "";
-  formState.staff = "";
+  formState.id = 0;
+  formState.code = "";
+  formState.name = "";
+  formState.nation = null;
+  formState.area = null;
+  formState.address = "";
+  formState.companyId = null;
+  formState.staffId = null;
   titleModal.value = translate("CreateWarehouse");
 };
 
 // close modal
 const closeModal = () => {
   isVisibleModalCreate.value = false;
-  isVisibleModalConfirm.value = false;
   isVisibleModalInfo.value = false;
 };
 
-const handleSubmitForm = (state: any) => {
+const handleSubmitForm = async (state: any) => {
   isVisibleModalCreate.value = false;
-  if (isEdit) {
-    console.log("edit");
-  } else {
-    console.log("create");
-  }
-};
+  if (isEdit.value && state.id !== 0) {
+    try {
+      await store.dispatch("warehouse/updateWarehouse", {
+        state: state,
+        params: {
+          ...route.query,
+        },
+      });
 
-// modal confirm
-const preDeleteRow = () => {
-  isVisibleModalConfirm.value = true;
-  confirmMany.value = true;
-  titleModal.value = translate("Warehouse");
+      notification["success"]({
+        message: translate("noti.updateSuccess"),
+      });
+    } catch (error) {
+      console.log(error);
+      notification["error"]({
+        message: translate("noti.updateFail"),
+      });
+    }
+  } else {
+    try {
+      await store.dispatch("warehouse/createWarehouse", {
+        state: state,
+        params: {
+          ...route.query,
+        },
+      });
+
+      notification["success"]({
+        message: translate("noti.createSuccess"),
+      });
+    } catch (error) {
+      console.log(error);
+      notification["error"]({
+        message: translate("noti.createFail"),
+      });
+    }
+  }
 };
 
 // handle data table
 const handleSelectRow = (rows: any) => {
-  listSelect.value = rows.value.map((x: any) => x?.id);
+  listSelect.value = rows.value.map((x: any) => ({ id: x?.id, allowDelete: x?.allowDelete }));
 };
 
 const disableDeleteMany = computed(() => listSelect?.value?.length === 0);
 
-const handleDeleteManyRow = () => {
-  isVisibleModalConfirm.value = false;
+const handleDeleteWarehouse = async (itemDelete, isMany) => {
+  Modal.confirm({
+    title: translate(translate(isMany ? 'confirm.many' : 'confirm.one', "Warehouse")),
+    content: translate('NoDataRestore'),
+    okText: translate('Agree'),
+    cancelText: translate('Cancel'),
+    centered: true,
+    async onOk() {
+      handleDelete(itemDelete);
+    }, 
+    onCancel() {},
+  })
+}
+
+const handleDelete = async (itemDelete) => {
+  if (checkDeleteItem(itemDelete)) {
+    if (itemDelete.length > 0) {
+      const temp = itemDelete.map((x: any) => x?.id);
+      await store.dispatch("warehouse/deleteWarehouse", {
+        state: temp,
+        params: {
+          ...route.query,
+        },
+      });
+    } else {
+      await store.dispatch("warehouse/deleteWarehouse", {
+        state: [itemDelete.id],
+        params: {
+          ...route.query,
+        },
+      });
+    }
+  } else {
+    notification["error"]({
+      message: translate("noti.deleteWarehouseFail"),
+    });
+  }
 };
 
-const deleteSingleRow = () => {
-  isVisibleModalConfirm.value = true;
-  confirmMany.value = false;
-  titleModal.value = translate("Warehouse");
-};
+const checkDeleteItem = (item) => {
+  if (item.length > 0) {
+    if (!item.find(x => x?.allowDelete === false)) {
+      return true;
+    } else {
+      return false;
+    }
+  } else {
+    if (item.allowDelete) {
+      return true;
+    } else return false;
+  }
+}
 
 const handleViewRow = (data: any) => {
+  console.log(data);
   isVisibleModalInfo.value = true;
-  formState.warehouseName = data.warehouseName;
-  formState.Nation = data.Nation;
-  formState.Area = data.Area;
-  formState.describe = data.describe;
-  formState.Acreage = data.Acreage;
-  formState.Tankage = data.Tankage;
-  formState.warehouseId = data.warehouseId;
-  formState.staff = data.staff;
+  formState.id = data?.id;
+  formState.code = data?.code;
+  formState.name = data?.name;
+  formState.nation = data?.nation;
+  formState.area = data?.area;
+  formState.address = data?.address;
+  formState.companyId = data?.companyId;
+  formState.staffId = data?.staffId;
 };
 
 const handleEditRow = (data: any) => {
   isEdit.value = true;
   isVisibleModalCreate.value = true;
-  formState.warehouseName = data.warehouseName;
-  formState.Nation = data.Nation;
-  formState.Area = data.Area;
-  formState.describe = data.describe;
-  formState.Acreage = data.Acreage;
-  formState.Tankage = data.Tankage;
-  formState.warehouseId = data.warehouseId;
   titleModal.value = translate("UpdateWarehouseInfo");
+  formState.id = data?.id;
+  formState.code = data?.code;
+  formState.name = data?.name;
+  formState.nation = data?.nation;
+  formState.area = data?.area;
+  formState.address = data?.address;
+  formState.companyId = data?.companyId;
+  formState.staffId = data?.staffId;
+  formState.allowDelete = data?.allowDelete;
 };
-//data fake
-const datafake = [
-  {
-    warehouseId: "WH01",
-    warehouseName: "Kho hàng 1",
-    Nation: "Việt Nam",
-    Area: "Hà nội",
-    describe: "Số 1 Cổ Nhuế Bắc từ Liêm",
-    Acreage: "1000",
-    Tankage: "12000",
-    personnelCode: "NV1",
-    personnelName: "Nguyễn Văn A",
-  },
-  {
-    warehouseId: "WH02",
-    warehouseName: "Kho hàng 2",
-    Nation: "Việt Nam",
-    Area: "Hà nội",
-    describe: "Số 1 Cổ Linh Long Biên",
-    Acreage: "1000",
-    Tankage: "12000",
-    personnelCode: "NV2",
-    personnelName: "Nguyễn Văn B",
-  },
-  {
-    warehouseId: "WH03",
-    warehouseName: "Kho hàng 3",
-    Nation: "Việt Nam",
-    Area: "Hà nội",
-    describe: "Số 1 Âu Cơ Tây Hồ",
-    Acreage: "1000",
-    Tankage: "12000",
-    personnelCode: "NV3",
-    personnelName: "Nguyễn Văn C",
-  },
-  {
-    warehouseId: "WH04",
-    warehouseName: "Kho hàng 4",
-    Nation: "Việt Nam",
-    Area: "Hà nội",
-    describe: "Số 1 Cầu Giấy Cầu Giấy",
-    Acreage: "1000",
-    Tankage: "12000",
-    personnelCode: "NV4",
-    personnelName: "Nguyễn Văn D",
-  },
-  {
-    warehouseId: "WH05",
-    warehouseName: "Kho hàng 5",
-    Nation: "Việt Nam",
-    Area: "Hà nội",
-    describe: "Số 1 Minh Khai Hai Bà Trưng",
-    Acreage: "1000",
-    Tankage: "12000",
-    personnelCode: "NV5",
-    personnelName: "Nguyễn Văn E",
-  },
-];
 
-const option1Fake = [
-  {
-    value: 1,
-    label: "Việt Nam",
-  },
-  {
-    value: 2,
-    label: "Lào",
-  },
-];
+const fetchData = async () => {
+  await store.dispatch("warehouse/getNationData", null);
+  await store.dispatch("warehouse/getAreaData", null);
+};
 
-const option2Fake = [
+const fetchWarehouse = async (params: any) => {
+  await store.dispatch("warehouse/getWarehouse", params);
+};
+
+watch(
+  () => filterSearching,
+  debounce(() => {
+    const params = {
+      name: filterSearching?.keyword,
+      nation: filterSearching?.nationSlected,
+      area: filterSearching?.areaSelected,
+    };
+    router.replace({
+      path: route.path,
+      query: params,
+    });
+  }, 500),
   {
-    value: 1,
-    label: "Hà nội",
+    deep: true,
   },
-  {
-    value: 2,
-    label: "Hải dương",
+);
+
+watch(
+  () => route.query,
+  (newQuery, oldQuery) => {
+    const params = { ...newQuery };
+    if (route.path !== "/warehouse-configuration") return;
+    if (Object.keys(newQuery).length === 0) {
+      return router.replace({ path: route.path, query: { ...oldQuery } });
+    }
+    fetchWarehouse(params);
   },
-];
+  { deep: true },
+);
+
+onMounted(async () => {
+  await fetchWarehouse(null);
+  await fetchData();
+});
 </script>
 <style scoped lang="scss"></style>
