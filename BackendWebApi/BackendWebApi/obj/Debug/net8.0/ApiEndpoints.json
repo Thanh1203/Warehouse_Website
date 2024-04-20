@@ -295,11 +295,6 @@
         "Name": "producer",
         "Type": "BackendWebApi.Models.Producer",
         "IsRequired": true
-      },
-      {
-        "Name": "idUpdate",
-        "Type": "System.Int32",
-        "IsRequired": false
       }
     ],
     "ReturnTypes": []

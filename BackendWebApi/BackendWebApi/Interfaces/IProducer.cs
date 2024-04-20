@@ -7,7 +7,7 @@ namespace BackendWebApi.Interfaces
         Task<object> GetProducers();
         Task<object> SearchProducer(string name);
         Task Create (Producer producer);
-        Task Update (Producer producer, int id);
-        Task Delete (List<int> id);
+        Task Update (Producer producer);
+        Task Delete (List<int> ids);
     }
 }

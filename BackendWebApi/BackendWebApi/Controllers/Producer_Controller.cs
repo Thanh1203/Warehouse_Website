@@ -50,11 +50,11 @@ namespace BackendWebApi.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateProducer([FromBody] Producer producer, int idUpdate)
+        public async Task<IActionResult> UpdateProducer([FromBody] Producer producer)
         {
             try
             {
-                await _IProducer.Update(producer, idUpdate);
+                await _IProducer.Update(producer);
                 return Ok("Update successful!");
             }
             catch (Exception ex)

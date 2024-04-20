@@ -4,7 +4,7 @@ using System.Text.Json.Serialization;
 
 namespace BackendWebApi.Models
 {
-    [Table("Personnel_Info")]
+    [Table("Personnel")]
     public class Personnel
     {
         [Key]

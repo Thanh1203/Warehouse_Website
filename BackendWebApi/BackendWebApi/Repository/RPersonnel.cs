@@ -16,10 +16,10 @@ namespace BackendWebApi.Repository
 
         public async Task<object> GetPersonnels()
         {
-            var total = await _context.Personnels.CountAsync();
-            var dataList = await _context.Personnels.ToListAsync();
+            var totalElement = await _context.Personnels.Where(e => e.CompanyId == 1).CountAsync();
+            var data = await _context.Personnels.Where(e => e.CompanyId == 1).ToListAsync();
 
-            foreach (var item in dataList)
+            foreach (var item in data)
             {
                 bool allowDelete = await _context.Warehouse_Infos.AnyAsync(p => p.StaffId == item.Id);
                 item.AllowDelete = !allowDelete;
@@ -27,8 +27,8 @@ namespace BackendWebApi.Repository
 
             var result = new
             {
-                data = dataList,
-                totalElement = total,
+                data,
+                totalElement,
             };
 
             return result;
@@ -36,7 +36,7 @@ namespace BackendWebApi.Repository
 
         public async Task<object> SearchPersonnel(string strCode, string strName, string strAddress)
         {
-            var query = _context.Personnels.AsQueryable();
+            var query = _context.Personnels.Where(e => e.CompanyId == 1).AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(strCode))
             {
@@ -53,9 +53,9 @@ namespace BackendWebApi.Repository
                 query = query.Where(e => e.Address.Contains(strAddress));
             }
 
-            var dataList = await query.ToListAsync();
+            var data = await query.ToListAsync();
 
-            foreach (var item in dataList)
+            foreach (var item in data)
             {
                 bool allowDelete = await _context.Warehouse_Infos.AnyAsync(p => p.StaffId == item.Id);
 
@@ -66,7 +66,7 @@ namespace BackendWebApi.Repository
 
             var result = new
             {
-                data = dataList,
+                data,
                 totalElement,
             };
 
@@ -117,9 +117,6 @@ namespace BackendWebApi.Repository
             }
         }
 
-        public async Task<List<string>> GetAddressPersonnel()
-        {
-            return await _context.Personnels.Select(e => e.Address).Distinct().ToListAsync();
-        }
+        public async Task<List<string>> GetAddressPersonnel() => await _context.Personnels.Where(e => e.CompanyId == 1).Select(e => e.Address).Distinct().ToListAsync();
     }
 }

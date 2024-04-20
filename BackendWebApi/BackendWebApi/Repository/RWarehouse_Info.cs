@@ -18,9 +18,9 @@ namespace BackendWebApi.Repository
 
         public async Task<object> GetWarehouseInfos()
         {
-            var dataList = await _context.Warehouse_Infos.ToListAsync();
-            var total = await _context.Warehouse_Infos.CountAsync();
-            var warehouseInfoViewModels = new List<WarehouseInfoViewModel>();
+            var data = new List<WarehouseInfoViewModel>();
+            var dataList = await _context.Warehouse_Infos.Where(e => e.CompanyId == 1).ToListAsync();
+            var totalElement = await _context.Warehouse_Infos.Where(e => e.CompanyId == 1).CountAsync();
 
             foreach (var item in dataList)
             {
@@ -41,13 +41,13 @@ namespace BackendWebApi.Repository
                     StaffName = staffName,
                     TimeCreate = TimeZoneInfo.ConvertTimeFromUtc((DateTime)item.DateTime, TimeZoneInfo.Local).ToString("dd/MM/yyyy")
                 };
-                warehouseInfoViewModels.Add(viewModel);
+                data.Add(viewModel);
             }
 
             var result = new
             {
-                data = warehouseInfoViewModels,
-                totalElement = total,
+                data,
+                totalElement,
             };
 
             return result;
@@ -55,8 +55,8 @@ namespace BackendWebApi.Repository
 
         public async Task<object> SearchWarehouseInfo(string strName, string strNation, string strArea)
         {
-            var warehouseInfoViewModels = new List<WarehouseInfoViewModel>();
-            var query = _context.Warehouse_Infos.AsQueryable();
+            var data = new List<WarehouseInfoViewModel>();
+            var query = _context.Warehouse_Infos.Where(e => e.CompanyId == 1).AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(strName))
             {
@@ -73,9 +73,9 @@ namespace BackendWebApi.Repository
                 query = query.Where(e => e.Area.Contains(strArea));
             }
 
-            var data = await query.ToListAsync();
+            var dataList = await query.ToListAsync();
 
-            foreach (var item in data)
+            foreach (var item in dataList)
             {
                 bool allowDelete = await _context.Warehouse_Data.AnyAsync(p => p.Id == item.Id);
                 string? staffName = await _context.Personnels.Where(p => p.Id == item.StaffId).Select(p => p.Name).SingleOrDefaultAsync();
@@ -94,7 +94,7 @@ namespace BackendWebApi.Repository
                     StaffName = staffName,
                     TimeCreate = TimeZoneInfo.ConvertTimeFromUtc((DateTime)item.DateTime, TimeZoneInfo.Local).ToString("dd/MM/yyyy")
                 };
-                warehouseInfoViewModels.Add(viewModel);
+                data.Add(viewModel);
             }
 
             var totalElement = await query.CountAsync();
@@ -102,19 +102,19 @@ namespace BackendWebApi.Repository
 
             return new
             {
-                data = warehouseInfoViewModels,
+                data,
                 totalElement,
             };
         }
 
         public async Task<List<string>> GetNationWarehouse()
         {
-            return await _context.Warehouse_Infos.Select(w => w.Nation).Distinct().ToListAsync();
+            return await _context.Warehouse_Infos.Where(e => e.CompanyId == 1).Select(w => w.Nation).Distinct().ToListAsync();
         }
 
         public async Task<List<string>> GetAreaWarehouse()
         {
-            return await _context.Warehouse_Infos.Select(w => w.Area).Distinct().ToListAsync();
+            return await _context.Warehouse_Infos.Where(e => e.CompanyId == 1).Select(w => w.Area).Distinct().ToListAsync();
         }
 
         public async Task Create([FromBody] Warehouse_Info warehouse)
