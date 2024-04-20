@@ -94,7 +94,8 @@ export const en = {
         updateSuccess: "Update success",
         updateFail: "Update Fail",
         fail: "Fail",
-        deleteWarehouseFail: "Cannot delete warehouse with products in stock! Please check the stock again"
+        deleteWarehouseFail: "Cannot delete warehouse with products in stock! Please check the stock again",
+        deleteProducerFail: "Unable to delete producer that still have products! Please check with the producer"
     },
     ManufacturerList: 'Manufacturer list',
     ManufacturerCode: "Manufacturer code",
@@ -136,4 +137,5 @@ export const en = {
     PersonnelList: "Personnel list",
     NumberOfPersonnel: "Number of personnel",
     UpdateEmployee: "Update employee",
+    EnterProducerName: "Enter the producer name",
 };

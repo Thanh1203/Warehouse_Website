@@ -2,10 +2,16 @@ import { createStore, Module, ModuleTree } from "vuex";
 import type { RootState } from "./storeType";
 import warehouse from "./modules/warehouse";
 import personnel from "./modules/personnel";
+import producer from "./modules/producer";
+import classify from "./modules/classify";
+import category from "./modules/category";
 
 const modules: ModuleTree<RootState> = {
     warehouse,
     personnel,
+    producer,
+    classify,
+    category,
 };
 
 const root: Module<RootState, RootState> = {

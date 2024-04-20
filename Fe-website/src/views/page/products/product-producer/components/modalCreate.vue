@@ -39,6 +39,7 @@ import { reactive, watch } from "vue";
 import { required } from "@vuelidate/validators";
 import useVuelidate from "@vuelidate/core";
 import ErrorMess from "@/components/error-mess/index.vue";
+import { STR_UPPER_CASE } from "@/utils/common";
 
 const emit = defineEmits(["closeModal", "handleSubmit"]);
 const props = defineProps({
@@ -54,16 +55,14 @@ const props = defineProps({
     type: Object,
     required: true,
   },
-  isEdit: {
-    type: Boolean,
-    required: true,
-  },
 });
 
 const formState = reactive({
-  code: props?.form.code,
-  name: props?.form.name,
+  id: props?.form?.id,
+  code: props?.form?.code,
+  name: props?.form?.name,
   origin: props?.form?.origin,
+  allowDelete: props?.form?.allowDelete,
 });
 
 const rules = {
@@ -79,8 +78,15 @@ const handleSubmit = () => {
   if (v$.value.$invalid) {
     return false;
   }
+  const state = {
+    id: formState.id,
+    code: formState.code,
+    name: formState.name,
+    origin: STR_UPPER_CASE(formState.origin),
+    allowDelete: formState.allowDelete,
+  };
   try {
-    emit("handleSubmit", formState);
+    emit("handleSubmit", state);
   } catch (error) {
     console.log(error);
   }
@@ -90,10 +96,10 @@ watch(
   () => props.form,
   (val) => {
     v$.value.$reset();
-    (formState.code = val.code), (formState.name = val.name), (formState.origin = val.origin);
+    (formState.code = val.code), (formState.name = val.name), (formState.origin = val.origin), (formState.allowDelete = val.allowDelete), (formState.id = val.id);
   },
   {
-    deep: true,
+    deep: true
   },
 );
 </script>

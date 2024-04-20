@@ -95,7 +95,9 @@ export const vi = {
         updateSuccess: "Cập nhật thành công",
         updateFail: "Cập nhật thất bại",
         fail: "Thất bại",
-        deleteWarehouseFail: "Không thể xóa kho hàng còn sản phẩm! vui lòng kiểm tra lại kho hàng",
+        deleteWarehouseFail: "Không thể xóa kho hàng còn sản phẩm! Vui lòng kiểm tra lại kho hàng",
+        deleteProducerFail: "Không thể xóa nhà sản xuất còn sản phẩm! Vui lòng kiểm tra lại nhà sản xuất",
+        
     },
     ManufacturerList: "Danh sách hãng sản xuất",
     ManufacturerCode: "Mã hãng sản xuất",
@@ -137,4 +139,5 @@ export const vi = {
     PersonnelList: "Danh sách nhân sự",
     NumberOfPersonnel: "Số lượng nhân sự: ",
     UpdateEmployee: "Cập nhật nhân viên",
+    EnterProducerName: "Nhập tên hãng sản xuất",
 };
