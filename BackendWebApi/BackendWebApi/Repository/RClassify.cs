@@ -17,32 +17,29 @@ namespace BackendWebApi.Repository
         public async Task<object> GetClassifies()
         {
             var data = new List<ClassifyViewModel>();
-            var dataList = await _context.Classifies.ToListAsync();
+            var dataList = await _context.Classifies.Where(e => e.CompanyId == 1).ToListAsync();
             var totalElement = await _context.Classifies.Where(e => e.CompanyId == 1).CountAsync();
 
             foreach (var item in dataList)
             {
                 bool allowDelete = await _context.Product_Infos.AnyAsync(p => p.ClassifyId == item.Id);
-                item.AllowDelete = !allowDelete;
                 var viewModel = new ClassifyViewModel
                 {
                     Id = item.Id,
                     Code = item.Code,
                     Name = item.Name,
-                    CompanyId = 1,
-                    TimeCreate = TimeZoneInfo.ConvertTimeToUtc((DateTime)item.DateTime, TimeZoneInfo.Local).ToString("dd/MM/yyyy"),
-                    AllowDelete = item.AllowDelete,
+                    CompanyId = item.CompanyId,
+                    TimeCreate = TimeZoneInfo.ConvertTimeToUtc(item.DateTime, TimeZoneInfo.Local).ToString("dd/MM/yyyy"),
+                    AllowDelete = !allowDelete,
                 };
                 data.Add(viewModel);
             }
 
-            var result = new
+            return new
             {
                 data,
                 totalElement,
-            };
-
-            return result;
+            }; ;
         }
 
         public async Task<object> SearchCalassifies(string str)
@@ -61,20 +58,19 @@ namespace BackendWebApi.Repository
             foreach (var item in dataList)
             {
                 bool allowDelete = await _context.Product_Infos.AnyAsync(p => p.ClassifyId == item.Id);
-                item.AllowDelete = !allowDelete;
                 var viewModel = new ClassifyViewModel
                 {
                     Id = item.Id,
                     Code = item.Code,
                     Name = item.Name,
-                    CompanyId = 1,
-                    TimeCreate = TimeZoneInfo.ConvertTimeToUtc((DateTime)item.DateTime, TimeZoneInfo.Local).ToString("dd/MM/yyyy"),
-                    AllowDelete = item.AllowDelete,
+                    CompanyId = item.CompanyId,
+                    TimeCreate = TimeZoneInfo.ConvertTimeToUtc(item.DateTime, TimeZoneInfo.Local).ToString("dd/MM/yyyy"),
+                    AllowDelete = !allowDelete,
                 };
                 data.Add(viewModel);
             }
 
-            var totalElement = await _context.Classifies.CountAsync();
+            var totalElement = await query.CountAsync();
 
             return new
             {

@@ -26,7 +26,6 @@ namespace BackendWebApi.Repository
             {
                 bool allowDelete = await _context.Warehouse_Data.AnyAsync(p => p.Id == item.Id);
                 string? staffName = await _context.Personnels.Where( p => p.Id == item.StaffId).Select(p => p.Name).SingleOrDefaultAsync();
-                item.AllowDelete = !allowDelete;
                 var viewModel = new WarehouseInfoViewModel
                 {
                     Id = item.Id,
@@ -37,9 +36,9 @@ namespace BackendWebApi.Repository
                     Area = item.Area,
                     Address = item.Address,
                     CompanyId = item.CompanyId,
-                    AllowDelete = item.AllowDelete,
+                    AllowDelete = !allowDelete,
                     StaffName = staffName,
-                    TimeCreate = TimeZoneInfo.ConvertTimeFromUtc((DateTime)item.DateTime, TimeZoneInfo.Local).ToString("dd/MM/yyyy")
+                    TimeCreate = TimeZoneInfo.ConvertTimeFromUtc(item.DateTime, TimeZoneInfo.Local).ToString("dd/MM/yyyy")
                 };
                 data.Add(viewModel);
             }
@@ -79,7 +78,6 @@ namespace BackendWebApi.Repository
             {
                 bool allowDelete = await _context.Warehouse_Data.AnyAsync(p => p.Id == item.Id);
                 string? staffName = await _context.Personnels.Where(p => p.Id == item.StaffId).Select(p => p.Name).SingleOrDefaultAsync();
-                item.AllowDelete = !allowDelete;
                 var viewModel = new WarehouseInfoViewModel
                 {
                     Id = item.Id,
@@ -90,9 +88,9 @@ namespace BackendWebApi.Repository
                     Area = item.Area,
                     Address = item.Address,
                     CompanyId = item.CompanyId,
-                    AllowDelete = item.AllowDelete,
+                    AllowDelete = !allowDelete,
                     StaffName = staffName,
-                    TimeCreate = TimeZoneInfo.ConvertTimeFromUtc((DateTime)item.DateTime, TimeZoneInfo.Local).ToString("dd/MM/yyyy")
+                    TimeCreate = TimeZoneInfo.ConvertTimeFromUtc(item.DateTime, TimeZoneInfo.Local).ToString("dd/MM/yyyy")
                 };
                 data.Add(viewModel);
             }

@@ -30,21 +30,18 @@ namespace BackendWebApi.Repository
                     Code = item.Code,
                     Name = item.Name,
                     Origin = item.Origin,
-                    CompanyId = 1,
+                    CompanyId = item.CompanyId,
                     TimeCreate = TimeZoneInfo.ConvertTimeToUtc((DateTime)item.DateTime, TimeZoneInfo.Local).ToString("dd/MM/yyyy"),
                     AllowDelete = item.AllowDelete,
                 };
                 data.Add(viewModal);
             }
 
-            var result = new
+            return new
             {
                 data,
                 totalElement,
-            };
-
-
-            return result;
+            }; ;
         }
 
         public async Task<object> SearchProducer(string str)
@@ -69,8 +66,8 @@ namespace BackendWebApi.Repository
                     Code = item.Code,
                     Name = item.Name,
                     Origin = item.Origin,
-                    CompanyId = 1,
-                    TimeCreate = TimeZoneInfo.ConvertTimeToUtc((DateTime)item.DateTime, TimeZoneInfo.Local).ToString("dd/MM/yyyy")
+                    CompanyId = item.CompanyId,
+                    TimeCreate = TimeZoneInfo.ConvertTimeToUtc(item.DateTime, TimeZoneInfo.Local).ToString("dd/MM/yyyy"),
                 };
                 data.Add(viewModal);
             }

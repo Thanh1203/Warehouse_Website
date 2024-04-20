@@ -19,7 +19,7 @@ namespace BackendWebApi.Models
         [JsonIgnore]
         public int CompanyId { get; set; }
         [JsonIgnore]
-        public DateTime? DateTime { get; set; }
+        public DateTime DateTime { get; set; }
         [JsonIgnore]
         public virtual Personnel? Personnel { get; set; }
         [JsonIgnore]

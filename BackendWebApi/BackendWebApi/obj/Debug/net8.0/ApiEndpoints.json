@@ -43,11 +43,6 @@
         "Name": "category",
         "Type": "BackendWebApi.Models.Category",
         "IsRequired": true
-      },
-      {
-        "Name": "idUpdate",
-        "Type": "System.Int32",
-        "IsRequired": false
       }
     ],
     "ReturnTypes": []
