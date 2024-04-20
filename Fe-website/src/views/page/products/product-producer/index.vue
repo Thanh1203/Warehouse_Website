@@ -1,7 +1,7 @@
 <template>
   <a-form class="tw-flex tw-rounded-lg tw-bg-white tw-px-6 tw-py-5 tw-mb-6">
     <a-form-item class="tw-w-[300px] !tw-mr-3">
-      <span class="tw-opacity-70">{{ translate("EnterProducerName") }}</span>
+      <span class="tw-opacity-70">{{ translate("ManufacturerName") }}</span>
       <a-input :placeholder="translate('Search')" v-model:value="filterSearching.Keyword" class="tw-mt-2" />
     </a-form-item>
     <a-form-item class="tw-flex tw-items-end">

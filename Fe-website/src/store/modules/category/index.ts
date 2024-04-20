@@ -16,7 +16,7 @@ export default {
         categoryData: (state) => state.categoryData,
         totalElement: (state) => state.totalElement,
     },
-    mutaions: {
+    mutations: {
         SET_CATEGORY_DATA(state, payload) {
             state.categoryData = payload
         },

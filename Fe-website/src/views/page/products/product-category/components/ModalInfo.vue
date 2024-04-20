@@ -5,7 +5,7 @@
         <span>{{ translate("CategoryCode") }}</span>
         <span class="tw-mr-4">:</span>
       </div>
-      <div class="tw-w-2/3 tw-flex tw-items-start">{{ form.id }}</div>
+      <div class="tw-w-2/3 tw-flex tw-items-start">{{ form.code }}</div>
     </div>
     <div class="tw-mt-4 tw-flex tw-items-start tw-justify-between">
       <div class="tw-w-1/3 tw-flex tw-items-start tw-justify-between">
@@ -19,13 +19,13 @@
         <span>{{ translate("DefaultProperties") }}</span>
         <span class="tw-mr-4">:</span>
       </div>
-      <div class="tw-w-2/3 tw-mt-2 tw-flex tw-items-center tw-justify-between tw-flex-wrap">
-        <div v-for="(item, idx) in propsDefault" :key="idx" class="tw-w-[110px] tw-px-2 tw-py-1 tw-mb-3 tw-border tw-border-slate-950 tw-flex tw-justify-center tw-items-center">
+      <div class="tw-w-2/3 tw-mt-2 tw-flex tw-items-center tw-justify-sart tw-flex-wrap tw-gap-4">
+        <div v-for="(item, idx) in propsDefault" :key="idx" class="tw-max-w-[150px] tw-px-4 tw-py-2 tw-mb-3 tw-border tw-border-slate-700 tw-flex tw-justify-center tw-items-center tw-rounded-xl ">
           <span>{{ item.label }}</span>
         </div>
       </div>
     </div>
-    <div class="tw-mt-4 tw-flex tw-items-start tw-justify-between">
+    <!-- <div class="tw-mt-4 tw-flex tw-items-start tw-justify-between">
       <div class="tw-w-1/3 tw-flex tw-items-start tw-justify-between">
         <span>{{ translate("CustomProperties") }}</span>
         <span class="tw-mr-4">:</span>
@@ -35,7 +35,7 @@
           {{ item }}
         </div>
       </div>
-    </div>
+    </div> -->
   </BaseModal>
 </template>
 <script setup lang="ts">
