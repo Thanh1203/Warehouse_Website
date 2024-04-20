@@ -7,7 +7,7 @@ namespace BackendWebApi.Interfaces
         Task<object> GetCategories();
         Task<object> SearchCategory(string name);
         Task Create (Category category);
-        Task Update (Category category, int id);
+        Task Update (Category category);
         Task Delete(List<int> ids);
     }
 }

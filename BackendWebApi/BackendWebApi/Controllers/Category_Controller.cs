@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BackendWebApi.Controllers
 {
-    [Route("api/catgory")]
+    [Route("api/category")]
     [ApiController]
     public class Category_Controller : Controller
     {
@@ -50,11 +50,11 @@ namespace BackendWebApi.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateCategory([FromBody] Category category, int idUpdate)
+        public async Task<IActionResult> UpdateCategory([FromBody] Category category)
         {
             try
             {
-                await _ICategory.Update(category, idUpdate);
+                await _ICategory.Update(category);
                 return Ok("Update successful!");
             }
             catch (Exception ex)

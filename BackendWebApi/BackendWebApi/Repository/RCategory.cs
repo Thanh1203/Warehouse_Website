@@ -18,44 +18,65 @@ namespace BackendWebApi.Repository
 
         public async Task<object> GetCategories()
         {
-            var datalist = await _context.Categories.ToListAsync();
-            var total = await _context.Categories.CountAsync();
+            var data = new List<CategoryViewModel>();
+            var datalist = await _context.Categories.Where(e => e.CompanyId == 1).ToListAsync();
+            var totalElement = await _context.Categories.Where(e => e.CompanyId == 1).CountAsync();
 
             foreach (var item in datalist)
             {
                 bool allowDelete = await _context.Product_Infos.AnyAsync(p => p.CategoryId == item.Id);
-
-                item.AllowDelete = !allowDelete;
+                var viewModel = new CategoryViewModel
+                {
+                    Id = item.Id,
+                    Name = item.Name,
+                    Code = item.Code,
+                    CompanyId = item.CompanyId,
+                    TimeCreate = TimeZoneInfo.ConvertTimeToUtc(item.DateTime, TimeZoneInfo.Local).ToString("dd/MM/yyyy"),
+                    AllowDelete = !allowDelete,
+                };
+                data.Add(viewModel);
             }
 
-            var result = new
-            {
-                data = datalist,
-                totalElement = total
+            return new 
+            { 
+                data,
+                totalElement,
             };
-
-            return result;
         }
 
         public async Task<object> SearchCategory(string str)
         {
-            var total = await _context.Categories.CountAsync();
-            var dataList = await _context.Categories.Where(m => m.Name.Contains(str)).ToListAsync();
+            var data = new List<CategoryViewModel>();
+            var query = _context.Categories.Where(e => e.CompanyId == 1).AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(str))
+            {
+                query = query.Where(e => e.Name.Contains(str));
+            }
+
+            var totalElement = await query.CountAsync();
+            var dataList = await query.ToListAsync();
 
             foreach (var item in dataList)
             {
                 bool allowDelete = await _context.Product_Infos.AnyAsync(p => p.CategoryId == item.Id);
-
-                item.AllowDelete = !allowDelete;
+                var viewModel = new CategoryViewModel
+                {
+                    Id = item.Id,
+                    Code = item.Code,
+                    Name = item.Name,
+                    CompanyId = item.CompanyId,
+                    TimeCreate = TimeZoneInfo.ConvertTimeToUtc(item.DateTime, TimeZoneInfo.Local).ToString("dd/MM/yyyy"),
+                    AllowDelete = !allowDelete,
+                };
+                data.Add(viewModel);
             }
 
-            var result = new
+            return new
             {
-                data = dataList,
-                totalElement = total,
+                data,
+                totalElement,
             };
-
-            return result;
         }
 
         public async Task Create([FromBody] Category category)
@@ -65,19 +86,21 @@ namespace BackendWebApi.Repository
                 Code = category.Code,
                 Name = category.Name,
                 DateTime = DateTime.UtcNow,
+                CompanyId = 1,
             };
 
             _context.Categories.Add(newCategory);
             await _context.SaveChangesAsync();
         }
 
-        public async Task Update([FromBody] Category category, int idUpdate)
+        public async Task Update([FromBody] Category category)
         {
-           var temp = _context.Categories.SingleOrDefault(e => e.Id == idUpdate);
+           var temp = _context.Categories.SingleOrDefault(e => e.Id == category.Id);
 
             if (temp != null)
             {
-               temp.Name = category.Name;
+                temp.Code = category.Code;
+                temp.Name = category.Name;
             }
 
             await _context.SaveChangesAsync();
@@ -95,6 +118,17 @@ namespace BackendWebApi.Repository
                     await _context.SaveChangesAsync();
                 }
             }
+        }
+
+        public class CategoryViewModel
+        {
+            public int Id { get; set; }
+            public string Code { get; set; }
+            public string Name { get; set; }
+            public int CompanyId { get; set; }
+            public string? TimeCreate { get; set; }
+            public bool? AllowDelete { get; set; }
+
         }
     }
 }

@@ -9,7 +9,7 @@ namespace BackendWebApi.Interfaces
         Task<List<string>> GetNationWarehouse();
         Task<List<string>> GetAreaWarehouse();
         Task Create (Warehouse_Info warehouse);
-        Task Update (Warehouse_Info warehouse, int id);
+        Task Update (Warehouse_Info warehouse);
         Task Delete (List<int> id);
     }
 }

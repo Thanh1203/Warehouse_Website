@@ -16,44 +16,67 @@ namespace BackendWebApi.Repository
 
         public async Task<object> GetClassifies()
         {
-            var dataList = await _context.Classifies.ToListAsync();
-            var total = await _context.Classifies.CountAsync();
+            var data = new List<ClassifyViewModel>();
+            var dataList = await _context.Classifies.Where(e => e.CompanyId == 1).ToListAsync();
+            var totalElement = await _context.Classifies.Where(e => e.CompanyId == 1).CountAsync();
 
             foreach (var item in dataList)
             {
                 bool allowDelete = await _context.Product_Infos.AnyAsync(p => p.ClassifyId == item.Id);
-
-                item.AllowDelete = !allowDelete;
+                var viewModel = new ClassifyViewModel
+                {
+                    Id = item.Id,
+                    Code = item.Code,
+                    Name = item.Name,
+                    CompanyId = item.CompanyId,
+                    TimeCreate = TimeZoneInfo.ConvertTimeToUtc(item.DateTime, TimeZoneInfo.Local).ToString("dd/MM/yyyy"),
+                    AllowDelete = !allowDelete,
+                };
+                data.Add(viewModel);
             }
 
-            var result = new
+            return new
             {
-                data = dataList,
-                totalElement = total,
-            };
-
-            return result;
+                data,
+                totalElement,
+            }; ;
         }
 
         public async Task<object> SearchCalassifies(string str)
         {
-            var total = await _context.Classifies.CountAsync();
-            var dataList = await _context.Classifies.Where(m => m.Name.Contains(str)).ToListAsync();
+            var data = new List<ClassifyViewModel>();
+            var query = _context.Classifies.Where(e => e.CompanyId == 1).AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(str))
+            {
+                query = query.Where(e => e.Name.Contains(str));
+            }
+
+
+            var dataList = await query.ToListAsync();
 
             foreach (var item in dataList)
             {
                 bool allowDelete = await _context.Product_Infos.AnyAsync(p => p.ClassifyId == item.Id);
-
-                item.AllowDelete = !allowDelete;
+                var viewModel = new ClassifyViewModel
+                {
+                    Id = item.Id,
+                    Code = item.Code,
+                    Name = item.Name,
+                    CompanyId = item.CompanyId,
+                    TimeCreate = TimeZoneInfo.ConvertTimeToUtc(item.DateTime, TimeZoneInfo.Local).ToString("dd/MM/yyyy"),
+                    AllowDelete = !allowDelete,
+                };
+                data.Add(viewModel);
             }
 
-            var result = new
-            {
-                data = dataList,
-                totalElement = total,
-            };
+            var totalElement = await query.CountAsync();
 
-            return result;
+            return new
+            {
+                data,
+                totalElement,
+            };
         }
 
         public async Task Create([FromBody] Classify classify)
@@ -63,18 +86,20 @@ namespace BackendWebApi.Repository
                 Code = classify.Code,
                 Name = classify.Name,
                 DateTime = DateTime.UtcNow,
+                CompanyId = 1,
             };
 
             _context.Classifies.Add(newClassify);
             await _context.SaveChangesAsync();
         }
 
-        public async Task Update([FromBody] Classify classify, int idUpdate)
+        public async Task Update([FromBody] Classify classify)
         {
-            var temp = _context.Classifies.SingleOrDefault(e => e.Id == idUpdate);
+            var temp = _context.Classifies.SingleOrDefault(e => e.Id == classify.Id);
 
             if (temp != null)
             {
+                temp.Code = classify.Code;
                 temp.Name = classify.Name;
             }
 
@@ -92,6 +117,16 @@ namespace BackendWebApi.Repository
                     await _context.SaveChangesAsync();
                 }
             }
+        }
+
+        public class ClassifyViewModel
+        {
+            public int Id { get; set; }
+            public string Code { get; set; }
+            public string Name { get; set; }
+            public int CompanyId { get; set; }
+            public string? TimeCreate { get; set; }
+            public bool? AllowDelete { get; set; }
         }
     }
 }

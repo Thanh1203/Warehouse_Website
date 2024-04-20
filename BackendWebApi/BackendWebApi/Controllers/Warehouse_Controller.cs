@@ -78,11 +78,11 @@ namespace BackendWebApi.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateWarehouse([FromBody] Warehouse_Info warehouse, int idUpdate)
+        public async Task<IActionResult> UpdateWarehouse([FromBody] Warehouse_Info warehouse)
         {
             try
             {
-                await _IWarehouse_Info.Update(warehouse, idUpdate);
+                await _IWarehouse_Info.Update(warehouse);
                 return Ok("Update successful!");
             }
             catch (Exception ex)

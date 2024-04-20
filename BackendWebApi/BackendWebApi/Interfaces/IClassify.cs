@@ -7,7 +7,7 @@ namespace BackendWebApi.Interfaces
         Task<object> GetClassifies();
         Task<object> SearchCalassifies(string name);
         Task Create (Classify classify);
-        Task Update (Classify classify, int id);
+        Task Update (Classify classify);
         Task Delete (List<int> ids);
     }
 }

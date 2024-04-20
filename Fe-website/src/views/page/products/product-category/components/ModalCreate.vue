@@ -16,15 +16,15 @@
       <div class="tw-w-full tw-flex tw-flex-col tw-items-start tw-mb-6">
         <span>{{ translate("DefaultProperties") }}:</span>
         <div class="tw-w-full tw-mt-2 tw-flex tw-items-center tw-justify-between">
-          <div v-for="(item, idx) in propsDefault" :key="idx" class="tw-w-[110px] tw-px-2 tw-py-1 tw-border tw-border-slate-950 tw-flex tw-justify-center tw-items-center">
+          <div v-for="(item, idx) in propsDefault" :key="idx" class="tw-max-w-[150px] tw-px-4 tw-py-2 tw-border tw-border-slate-700 tw-flex tw-justify-center tw-items-center tw-rounded-xl">
             <span>{{ item.label }}</span>
           </div>
         </div>
       </div>
-      <div class="tw-w-full tw-flex tw-flex-col tw-items-start">
+      <!-- <div class="tw-w-full tw-flex tw-flex-col tw-items-start">
         <span class="tw-mb-2">{{ translate("CustomProperties") }}:</span>
         <a-select mode="tags" class="tw-w-full" v-model:value="v$.propertyExtend.$model" :placeholder="translate('EnterProperty')" />
-      </div>
+      </div> -->
     </a-form>
     <template #footer>
       <AntdButton :type="'primary'" @click="handleSubmit()">
@@ -46,12 +46,6 @@ import { required, maxLength } from "@vuelidate/validators";
 import useVuelidate from "@vuelidate/core";
 import { DEFAULT_PROPERTY } from "@/constants";
 
-interface FormState {
-  code: string | number;
-  name: string;
-  propertyExtend: string[];
-}
-
 const emit = defineEmits(["closeModal", "handleSubmit"]);
 const props = defineProps({
   isVisible: {
@@ -72,10 +66,11 @@ const props = defineProps({
   },
 });
 
-const formState = reactive<FormState>({
-  code: props?.form?.code,
-  name: props?.form?.name,
-  propertyExtend: props?.form?.propertyExtend,
+const formState = reactive<any>({
+  id: props.form?.id,
+  code: props.form?.code,
+  name: props.form?.name,
+  allowDelete: props?.form?.allowDelete,
 });
 
 const rules = {
@@ -85,7 +80,6 @@ const rules = {
   name: {
     required,
   },
-  propertyExtend: {},
 };
 
 const v$ = useVuelidate(rules, formState);
@@ -108,7 +102,7 @@ watch(
   () => props.form,
   (val) => {
     v$.value.$reset();
-    (formState.name = val.name), (formState.code = val.code), (formState.propertyExtend = val.propertyExtend);
+    (formState.id = val.id), (formState.code = val.code), (formState.name = val.name), (formState.allowDelete = val.allowDelete);
   },
   {
     deep: true,

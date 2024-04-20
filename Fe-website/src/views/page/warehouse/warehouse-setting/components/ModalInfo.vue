@@ -12,7 +12,7 @@
         <span>:</span>
       </div>
       <div class="tw-pl-3 tw-basis-2/3 tw-flex tw-items-start">
-        <span>{{ state.warehouseName }}</span>
+        <span>{{ state.name }}</span>
       </div>
     </div>
     <div class="tw-mb-4 tw-w-full tw-flex">
@@ -21,7 +21,16 @@
         <span>:</span>
       </div>
       <div class="tw-pl-3 tw-basis-2/3 tw-flex tw-items-start">
-        <span>{{ state.Nation }}</span>
+        <span>{{ state.nation }}</span>
+      </div>
+    </div>
+    <div class="tw-mb-4 tw-w-full tw-flex">
+      <div class="tw-basis-1/3 tw-flex tw-items-start tw-justify-between tw-font-medium">
+        <span>{{ translate('Area') }}</span>
+        <span>:</span>
+      </div>
+      <div class="tw-pl-3 tw-basis-2/3 tw-flex tw-items-start">
+        <span>{{ state.area }}</span>
       </div>
     </div>
     <div class="tw-mb-4 tw-w-full tw-flex">
@@ -30,25 +39,16 @@
         <span>:</span>
       </div>
       <div class="tw-pl-3 tw-basis-2/3 tw-flex tw-items-start">
-        <span>{{ state.describe + ' ' + state.Area }}</span>
+        <span>{{ state.address }}</span>
       </div>
     </div>
     <div class="tw-mb-4 tw-w-full tw-flex">
       <div class="tw-basis-1/3 tw-flex tw-items-start tw-justify-between tw-font-medium">
-        <span>{{ translate('Acreage') }}</span>
+        <span>{{ translate('StaffCharge') }}</span>
         <span>:</span>
       </div>
       <div class="tw-pl-3 tw-basis-2/3 tw-flex tw-items-start">
-        <span>{{ state.Acreage }} (m<sup>2</sup>)</span>
-      </div>
-    </div>
-    <div class="tw-mb-4 tw-w-full tw-flex">
-      <div class="tw-basis-1/3 tw-flex tw-item-start tw-justify-between tw-font-medium">
-        <span>{{ translate('Tankage') }}</span>
-        <span>:</span>
-      </div>
-      <div class="tw-pl-3 tw-basis-2/3 tw-flex tw-item-start">
-        <span>{{ state.Tankage }} (m<sup>3</sup>)</span>
+        <span>{{ state.staffName }}</span>
       </div>
     </div>
     <div class="tw-mb-4 tw-w-full tw-flex">
@@ -57,7 +57,7 @@
         <span>:</span>
       </div>
       <div class="tw-pl-3 tw-basis-2/3 tw-flex tw-item-start">
-        <span>{{ state.DateCreated }}</span>
+        <span>{{ state.timeCreate }}</span>
       </div>
     </div>
   </BaseModal>
