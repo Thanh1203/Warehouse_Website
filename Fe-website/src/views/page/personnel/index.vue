@@ -257,7 +257,7 @@ const handleDelete = async (itemDelete: any) => {
         },
       });
     }
-
+    listSelect.value = [];
     notification["success"]({
       message: translate("noti.deleteSuccess")
     });

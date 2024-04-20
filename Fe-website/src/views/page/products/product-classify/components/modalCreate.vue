@@ -1,11 +1,11 @@
 <template>
   <BaseModal :visible="isVisible" :title="titleModal" :defaultFooter="false" @cancel="$emit('closeModal')">
     <a-form class="tw-mb-6">
-      <div class="tw-w-full tw-flex tw-items-center tw-mb-6">
+      <div class="tw-w-full tw-flex tw-items-start tw-mb-6">
         <div class="tw-basis-1/2 tw-mr-2 tw-flex tw-flex-col tw-justify-start tw-items-start">
           <span>{{ translate("ClassificationCode") }}<span class="required-star">*</span></span>
           <div class="tw-w-full tw-mt-2">
-            <a-input :placeholder="translate('ClassificationCode')" :status="v$.code.$error ? 'error' : ''" :disabled="isEdit" v-model:value="v$.code.$model"/>
+            <a-input :placeholder="translate('ClassificationCode')" :status="v$.code.$error ? 'error' : ''" v-model:value="v$.code.$model"/>
           </div>
           <ErrorMess :params="[64]" :title="translate('ClassificationCode')" :validator="v$.code.$errors[0]?.$validator" />
         </div>
@@ -61,6 +61,7 @@ const state = reactive({
   id: props.form?.id,
   code: props.form?.code,
   name: props.form?.name,
+  allowDelete: props?.form?.allowDelete,
 });
 
 const rules = {
@@ -86,7 +87,7 @@ watch(
   () => props.form,
   (val) => {
     v$.value.$reset();
-    (state.id = val.id), (state.code = val.code), (state.name = val.name);
+    (state.id = val.id), (state.code = val.code), (state.name = val.name), (state.allowDelete = val.allowDelete);
   },
   {
     deep: true,

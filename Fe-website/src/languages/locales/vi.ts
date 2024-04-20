@@ -95,8 +95,9 @@ export const vi = {
         updateSuccess: "Cập nhật thành công",
         updateFail: "Cập nhật thất bại",
         fail: "Thất bại",
-        deleteWarehouseFail: "Không thể xóa kho hàng còn sản phẩm! Vui lòng kiểm tra lại kho hàng",
-        deleteProducerFail: "Không thể xóa nhà sản xuất còn sản phẩm! Vui lòng kiểm tra lại nhà sản xuất",
+        deleteWarehouseFail: "Không thể xóa kho hàng còn sản phẩm! Vui lòng kiểm tra lại",
+        deleteProducerFail: "Không thể xóa nhà sản xuất còn sản phẩm! Vui lòng kiểm tra lại",
+        deleteClassifyFail: "Không thể xóa chủng phân loại còn sản phẩm! Vui lòng kiểm tra lại",
         
     },
     ManufacturerList: "Danh sách hãng sản xuất",

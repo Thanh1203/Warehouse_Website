@@ -244,6 +244,10 @@ const handleDelete = async (itemDelete: any) => {
         },
       });
     }
+    listSelect.value = [];
+    notification["success"]({
+      message: translate("noti.deleteSuccess")
+    });
   } else {
     notification["error"]({
       message: translate("noti.deleteProducerFail"),

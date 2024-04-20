@@ -16,7 +16,7 @@ export default {
         classifyData: (state) => state.classifyData,
         totalElement: (state) => state.totalElement,
     },
-    mutaions: {
+    mutations: {
         SET_CLASSIFY_DATA(state, payload) {
             state.classifyData = payload
         },
@@ -29,7 +29,8 @@ export default {
         async getClassify({ commit }, payload) {
             try {
                 const response: any = await DataService.callApi(ConstantAPI.classify.GET, null, payload);
-                await commit("")
+                await commit("SET_CLASSIFY_DATA", response?.data);
+                await commit("SET_TOTAL_CATEGORY", response?.totalElement);
             } catch (error) {
                 console.log(error);
             }
@@ -38,7 +39,7 @@ export default {
         async createClassify({ dispatch }, payload) {
             try {
                 const response: any = await DataService.callApi(ConstantAPI.classify.CREATE, payload.state, null);
-                await dispatch("getCategory", payload.params);
+                await dispatch("getClassify", payload.params);
                 return response;
             } catch (error) {
                 console.log(error);
@@ -48,7 +49,7 @@ export default {
         async updateClassify({ dispatch }, payload) {
             try {
                 const response: any = await DataService.callApi(ConstantAPI.classify.UPDATE, payload.state, null);
-                await dispatch("getCategory", payload.params);
+                await dispatch("getClassify", payload.params);
                 return response;
             } catch (error) {
                 console.log(error);
@@ -58,7 +59,7 @@ export default {
         async deleteClassify({ dispatch }, payload) {
             try {
                 const response: any = await DataService.callApi(ConstantAPI.classify.DELETE, payload.state, null);
-                await dispatch("getCategory", payload.params);
+                await dispatch("getClassify", payload.params);
                 return response;
             } catch (error) {
                 console.log(error);
