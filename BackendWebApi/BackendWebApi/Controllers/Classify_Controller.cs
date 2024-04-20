@@ -50,11 +50,11 @@ namespace BackendWebApi.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateClassify([FromBody] Classify classify, int idUPdate)
+        public async Task<IActionResult> UpdateClassify([FromBody] Classify classify)
         {
             try
             {
-                await _TClassify.Update(classify, idUPdate);
+                await _TClassify.Update(classify);
                 return Ok("Update successful!");
             }
             catch (Exception ex)

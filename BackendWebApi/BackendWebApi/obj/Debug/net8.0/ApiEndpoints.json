@@ -112,11 +112,6 @@
         "Name": "classify",
         "Type": "BackendWebApi.Models.Classify",
         "IsRequired": true
-      },
-      {
-        "Name": "idUPdate",
-        "Type": "System.Int32",
-        "IsRequired": false
       }
     ],
     "ReturnTypes": []
