@@ -21,7 +21,12 @@
       </AntdButton>
     </a-form-item>
   </a-form>
-  <Section :title="translate('PersonnelList')" :sub-title="translate('NumberOfPersonnel')" :number="String(totalPersonnel)">
+  <Section
+    :title="translate('PersonnelList')"
+    :sub-title="translate('NumberOfPersonnel')"
+    :number="String(totalPersonnel)"
+    class="tw-w-full tw-h-full tw-bg-white tw-overflow-hidden"
+  >
     <template #action>
       <AntdButton :type="'text'" danger class="tw-mr-2" :disabled="disableDeleteMany" @click="handleDeletePersonnel(listSelect, true)">
         <template #icon>
@@ -39,7 +44,17 @@
       </AntdButton>
     </template>
     <template #body>
-      <AntdTable ref="table" key-field="id" :index-column="true" :columns="columns" :data-source="personnelData" :has-checkbox="true" :no-sort="true" @onSelected="handleSelectRow">
+      <AntdTable
+        ref="table"
+        key-field="id"
+        :index-column="true"
+        :columns="columns"
+        :data-source="personnelData"
+        :has-checkbox="true"
+        :no-sort="true"
+        @onSelected="handleSelectRow"
+        class="tw-w-full tw-h-[calc(100vh-294px)] tw-overflow-hidden tw-overflow-y-auto"
+      >
         <template #custom-body="{ column, record }">
           <template v-if="column.key === 'action'">
             <div class="action">
@@ -57,7 +72,7 @@
   </Section>
 
   <!-- modal -->
-  <ModalCreate :title="titleModal" :isEdit="isEdit" :form="formState" :isVisible="isVisibleModalCreate" @closeModal="onCancel" @handleSubmit="handleSubmitForm"/>
+  <ModalCreate :title="titleModal" :isEdit="isEdit" :form="formState" :isVisible="isVisibleModalCreate" @closeModal="onCancel" @handleSubmit="handleSubmitForm" />
 </template>
 <script setup lang="ts">
 import Section from "@/components/section/index.vue";
@@ -78,7 +93,7 @@ interface FormState {
   role: string;
   address: string;
   companyId: number | null;
-  allowDelete?: boolean
+  allowDelete?: boolean;
 }
 
 const ModalCreate = defineAsyncComponent(() => import("./components/ModalCreate.vue"));
@@ -174,7 +189,7 @@ const handleEditRow = (data: any) => {
   formState.role = data?.role;
   formState.address = data?.address;
   formState.companyId = data?.companyId;
-  formState.allowDelete = data?.allowDeletes
+  formState.allowDelete = data?.allowDeletes;
   isVisibleModalCreate.value = true;
   isEdit.value = true;
   titleModal.value = translate("UpdateEmployee");
@@ -217,7 +232,7 @@ const handleSubmitForm = async (state: any) => {
       });
     }
   }
-}
+};
 
 const handleSelectRow = (rows: any) => {
   listSelect.value = rows.value.map((x: any) => ({ id: x?.id, allowDelete: x?.allowDelete }));
@@ -227,17 +242,17 @@ const disableDeleteMany = computed(() => listSelect?.value?.length === 0);
 
 const handleDeletePersonnel = (itemDelete: any, isMany: boolean) => {
   Modal.confirm({
-    title: translate(translate(isMany ? 'confirm.many' : 'confirm.one', "Personnel")),
-    content: translate('NoDataRestore'),
-    okText: translate('Agree'),
-    cancelText: translate('Cancel'),
+    title: translate(translate(isMany ? "confirm.many" : "confirm.one", "Personnel")),
+    content: translate("NoDataRestore"),
+    okText: translate("Agree"),
+    cancelText: translate("Cancel"),
     centered: true,
     async onOk() {
       handleDelete(itemDelete);
-    }, 
+    },
     onCancel() {},
-  })
-}
+  });
+};
 
 const handleDelete = async (itemDelete: any) => {
   if (checkDeleteItem(itemDelete)) {
@@ -259,17 +274,14 @@ const handleDelete = async (itemDelete: any) => {
     }
     listSelect.value = [];
     notification["success"]({
-      message: translate("noti.deleteSuccess")
+      message: translate("noti.deleteSuccess"),
     });
   } else {
     notification["error"]({
       message: translate("noti.deleteWarehouseFail"),
     });
   }
-}
-
-
-
+};
 
 // close modal
 const onCancel = () => {

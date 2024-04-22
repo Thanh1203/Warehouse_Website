@@ -22,7 +22,12 @@
       </AntdButton>
     </a-form-item>
   </a-form>
-  <Section :title="translate('ClassificationList')" :subTitle="translate('TotalClassification')" :number="String(totalClassify)">
+  <Section
+    :title="translate('ClassificationList')"
+    :subTitle="translate('TotalClassification')"
+    :number="String(totalClassify)"
+    class="tw-w-full tw-h-full tw-bg-white tw-overflow-hidden"
+  >
     <template #action>
       <AntdButton :type="'text'" danger :disabled="disableDeleteMany" class="tw-mr-2" @click="handleDeleteClassify(listSelect, true)">
         <template #icon>
@@ -41,7 +46,17 @@
     </template>
 
     <template #body>
-      <AntdTable ref="table" key-field="id" :index-column="true" :has-checkbox="true" :no-sort="true" :dataSource="classifyData" :columns="columns" @onSelected="handleSelectRow">
+      <AntdTable
+        ref="table"
+        key-field="id"
+        :index-column="true"
+        :has-checkbox="true"
+        :no-sort="true"
+        :dataSource="classifyData"
+        :columns="columns"
+        @onSelected="handleSelectRow"
+        class="tw-w-full tw-h-[calc(100vh-294px)] tw-overflow-hidden tw-overflow-y-auto"
+      >
         <template #custom-body="{ column, record }">
           <template v-if="column.key === 'action'">
             <div class="action">
@@ -233,7 +248,7 @@ const handleDelete = async (itemDelete: any) => {
     }
     listSelect.value = [];
     notification["success"]({
-      message: translate("noti.deleteSuccess")
+      message: translate("noti.deleteSuccess"),
     });
   } else {
     notification["error"]({
@@ -244,7 +259,7 @@ const handleDelete = async (itemDelete: any) => {
 
 const fetData = async (params) => {
   await store.dispatch("classify/getClassify", params);
-}
+};
 
 watch(
   () => filterSearching,
@@ -252,7 +267,7 @@ watch(
     const params = {
       name: filterSearching?.Keyword,
     };
-    fetData(removeNullObjects(params))
+    fetData(removeNullObjects(params));
   }, 500),
   { deep: true },
 );
@@ -260,5 +275,4 @@ watch(
 onMounted(async () => {
   fetData(null);
 });
-
 </script>

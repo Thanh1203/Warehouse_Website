@@ -12,7 +12,7 @@
         <div class="tw-basis-1/2 tw-ml-2 tw-flex tw-flex-col tw-justify-start tw-items-start">
           <span>{{ translate("ProductName") }}<span class="required-star">*</span></span>
           <div class="tw-w-full">
-            <a-input :placeholder="translate('ProductName')" class="tw-mt-2" v-model:value="v$.name.$model" :status="v$.name.$error ? 'error' : ''"/>
+            <a-input :placeholder="translate('ProductName')" class="tw-mt-2" v-model:value="v$.name.$model" :status="v$.name.$error ? 'error' : ''" />
           </div>
           <ErrorMess :params="[64]" :title="translate('ProductName')" :validator="v$.name.$errors[0]?.$validator" />
         </div>
@@ -24,19 +24,25 @@
             <a-select
               :placeholder="translate('ProductCategory')"
               class="tw-mt-2 tw-w-full"
-              v-model:value="v$.categoryCode.$model"
-              :options="dataFake2.map((x) => ({ value: x.id, label: x.name }))"
-              :status="v$.categoryCode.$error ? 'error' : ''"
+              v-model:value="v$.categoryId.$model"
+              :options="categoryData.map((x) => ({ value: x.id, label: x.name }))"
+              :status="v$.categoryId.$error ? 'error' : ''"
             />
           </div>
-          <ErrorMess :params="[64]" :title="translate('ProductCategory')" :validator="v$.categoryCode.$errors[0]?.$validator" />
+          <ErrorMess :params="[64]" :title="translate('ProductCategory')" :validator="v$.categoryId.$errors[0]?.$validator" />
         </div>
         <div class="tw-basis-1/2 tw-ml-2 tw-flex tw-flex-col tw-justify-start tw-items-start">
           <span>{{ translate("Classify") }}<span class="required-star">*</span></span>
           <div class="tw-w-full">
-            <a-select :placeholder="translate('Classify')" class="tw-mt-2 tw-w-full" v-model:value="v$.classifyCode.$model" :options="dataFake" :status="v$.classifyCode.$error ? 'error' : ''" />
+            <a-select
+              :placeholder="translate('Classify')"
+              class="tw-mt-2 tw-w-full"
+              v-model:value="v$.classifyId.$model"
+              :options="classifyData.map((x) => ({ value: x.id, label: x.name }))"
+              :status="v$.classifyId.$error ? 'error' : ''"
+            />
           </div>
-          <ErrorMess :params="[64]" :title="translate('Classify')" :validator="v$.classifyCode.$errors[0]?.$validator" />
+          <ErrorMess :params="[64]" :title="translate('Classify')" :validator="v$.classifyId.$errors[0]?.$validator" />
         </div>
       </div>
       <div class="tw-w-full tw-flex tw-items-start tw-mb-6">
@@ -46,12 +52,12 @@
             <a-select
               :placeholder="translate('Producer')"
               class="tw-mt-2 tw-w-full"
-              v-model:value="v$.producerCode.$model"
-              :options="dataFake3.map((x) => ({ value: x.id, label: x.name }))"
-              :status="v$.producerCode.$error ? 'error' : ''"
+              v-model:value="v$.producerId.$model"
+              :options="producerData.map((x) => ({ value: x.id, label: x.name }))"
+              :status="v$.producerId.$error ? 'error' : ''"
             />
           </div>
-          <ErrorMess :params="[64]" :title="translate('Producer')" :validator="v$.producerCode.$errors[0]?.$validator" />
+          <ErrorMess :params="[64]" :title="translate('Producer')" :validator="v$.producerId.$errors[0]?.$validator" />
         </div>
         <div class="tw-basis-1/2 tw-ml-2 tw-flex tw-flex-col tw-justify-start tw-items-start">
           <span>{{ translate("Size") }}</span>
@@ -111,8 +117,9 @@ import { translate } from "@/languages/i18n";
 import AntdButton from "@/components/antd-button/index.vue";
 import { required } from "@vuelidate/validators";
 import useVuelidate from "@vuelidate/core";
-import { reactive, watch } from "vue";
+import { computed, onMounted, reactive, watch } from "vue";
 import ErrorMess from "@/components/error-mess/index.vue";
+import { useStore } from "vuex";
 
 const emit = defineEmits(["closeModal", "handleSubmit"]);
 const props = defineProps({
@@ -141,13 +148,13 @@ const rules = {
   name: {
     required,
   },
-  categoryCode: {
+  categoryId: {
     required,
   },
-  classifyCode: {
+  classifyId: {
     required,
   },
-  producerCode: {
+  producerId: {
     required,
   },
   Size: {},
@@ -162,15 +169,16 @@ const state = reactive({
   id: props.form?.id,
   code: props.form?.code,
   name: props.form?.name,
-  categoryCode: props.form?.categoryCode,
-  classifyCode: props.form?.classifyCode,
-  producerCode: props.form?.producerCode,
-  Size: props.form?.Size,
-  Material: props.form?.Material,
-  ConnectionTypes: props.form?.ConnectionTypes,
-  Color: props.form?.Color,
-  Designs: props.form?.Designs,
-  Describe: props.form?.Describe,
+  categoryId: props.form?.categoryId,
+  classifyId: props.form?.classifyId,
+  producerId: props.form?.producerId,
+  Size: props.form?.size,
+  Material: props.form?.material,
+  ConnectionTypes: props.form?.connectionTypes,
+  Color: props.form?.color,
+  Designs: props.form?.designs,
+  Describe: props.form?.describe,
+  allowDelete: props?.form?.allowDelete,
 });
 
 const v$ = useVuelidate(rules, state);
@@ -187,73 +195,38 @@ const handleSubmit = () => {
   }
 };
 
+const store = useStore();
+
+const classifyData = computed(() => store.getters["classify/classifyData"]);
+const producerData = computed(() => store.getters["producer/producerData"]);
+const categoryData = computed(() => store.getters["category/categoryData"]);
+
+const fetchData = async () => {
+  await store.dispatch("category/getCategory", null);
+  await store.dispatch("classify/getClassify", null);
+  await store.dispatch("producer/getProducer", null);
+};
+
 watch(
   () => props.form,
   (val) => {
     v$.value.$reset();
     (state.code = val.code),
       (state.name = val.name),
-      (state.categoryCode = val.categoryCode),
-      (state.classifyCode = val.classifyCode),
-      (state.producerCode = val.producerCode),
-      (state.Size = val.Size),
-      (state.Material = val.Material),
-      (state.ConnectionTypes = val.ConnectionTypes),
-      (state.Color = val.Color),
-      (state.Designs = val.Designs),
-      (state.Describe = val.Describe);
+      (state.categoryId = val.categoryId),
+      (state.classifyId = val.classifyId),
+      (state.producerId = val.producerId),
+      (state.Size = val.size),
+      (state.Material = val.material),
+      (state.ConnectionTypes = val.connectionTypes),
+      (state.Color = val.color),
+      (state.Designs = val.designs),
+      (state.Describe = val.describe),
+      (state.allowDelete = val.allowDelete),
+      (state.id = val.id);
   },
   {
     deep: true,
   },
 );
-
-const dataFake = [
-  {
-    value: "PL1",
-    label: "Văn phòng",
-  },
-  {
-    value: "PL2",
-    label: "Gamming",
-  },
-  {
-    value: "PL3",
-    label: "Custom",
-  },
-  {
-    value: "PL4",
-    label: "Kiểm âm",
-  },
-];
-
-const dataFake2 = [
-  {
-    id: "CL01",
-    name: "Bàn phím",
-  },
-  {
-    id: "CL02",
-    name: "Chuột",
-  },
-  {
-    id: "CL03",
-    name: "Tai nghe",
-  },
-];
-
-const dataFake3 = [
-  {
-    id: "HgA",
-    name: "Hãng A",
-  },
-  {
-    id: "HgB",
-    name: "Hãng B",
-  },
-  {
-    id: "HgC",
-    name: "Hãng C",
-  },
-];
 </script>

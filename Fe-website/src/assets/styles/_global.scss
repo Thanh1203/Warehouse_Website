@@ -103,9 +103,8 @@
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                height: 16px;
                 min-width: 16px;
-                padding: 0;
+                padding: 8px;
             }
         }
         &:hover {
@@ -157,5 +156,34 @@
             visibility: visible;
         } 
     }
+}
 
+//scrollbar
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+background: #888;
+border-radius: 12px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+background: #555;
+}
+// view detail in column name
+.viewByName {
+    &:hover {
+        .viewByName_name {
+            text-decoration-line: underline;
+            color: #1677ff;
+        }
+    }
 }

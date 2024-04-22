@@ -3,22 +3,17 @@ using BackendWebApi.Interfaces;
 using BackendWebApi.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using static BackendWebApi.Repository.RWarehouse_Info;
+using BackendWebApi.DTOS;
 
 namespace BackendWebApi.Repository
 {
-    public class RWarehouse_Info : IWarehouse_Info
+    public class RWarehouse_Info(DataContext context) : IWarehouse_Info
     {
-        private readonly DataContext _context;
-
-        public RWarehouse_Info(DataContext context)
-        {
-            _context = context;
-        }
+        private readonly DataContext _context = context;
 
         public async Task<object> GetWarehouseInfos()
         {
-            var data = new List<WarehouseInfoViewModel>();
+            var data = new List<DTOWarehouse>();
             var dataList = await _context.Warehouse_Infos.Where(e => e.CompanyId == 1).ToListAsync();
             var totalElement = await _context.Warehouse_Infos.Where(e => e.CompanyId == 1).CountAsync();
 
@@ -26,13 +21,13 @@ namespace BackendWebApi.Repository
             {
                 bool allowDelete = await _context.Warehouse_Data.AnyAsync(p => p.Id == item.Id);
                 string? staffName = await _context.Personnels.Where( p => p.Id == item.StaffId).Select(p => p.Name).SingleOrDefaultAsync();
-                var viewModel = new WarehouseInfoViewModel
+                var viewModel = new DTOWarehouse
                 {
                     Id = item.Id,
                     Code = item.Code,
                     Name = item.Name,
                     Nation = item.Nation,
-                    StaffId = (int)(item?.StaffId),
+                    StaffId = item?.StaffId,
                     Area = item.Area,
                     Address = item.Address,
                     CompanyId = item.CompanyId,
@@ -43,18 +38,16 @@ namespace BackendWebApi.Repository
                 data.Add(viewModel);
             }
 
-            var result = new
+            return new
             {
                 data,
                 totalElement,
             };
-
-            return result;
         }
 
         public async Task<object> SearchWarehouseInfo(string strName, string strNation, string strArea)
         {
-            var data = new List<WarehouseInfoViewModel>();
+            var data = new List<DTOWarehouse>();
             var query = _context.Warehouse_Infos.Where(e => e.CompanyId == 1).AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(strName))
@@ -78,13 +71,13 @@ namespace BackendWebApi.Repository
             {
                 bool allowDelete = await _context.Warehouse_Data.AnyAsync(p => p.Id == item.Id);
                 string? staffName = await _context.Personnels.Where(p => p.Id == item.StaffId).Select(p => p.Name).SingleOrDefaultAsync();
-                var viewModel = new WarehouseInfoViewModel
+                var viewModel = new DTOWarehouse
                 {
                     Id = item.Id,
                     Code = item.Code,
                     Name = item.Name,
                     Nation = item.Nation,
-                    StaffId = (int)item.StaffId,
+                    StaffId = item.StaffId,
                     Area = item.Area,
                     Address = item.Address,
                     CompanyId = item.CompanyId,
@@ -160,21 +153,6 @@ namespace BackendWebApi.Repository
                     await _context.SaveChangesAsync();
                 }
             }
-        }
-
-        public class WarehouseInfoViewModel
-        {
-            public int Id { get; set; }
-            public string Code { get; set; }
-            public string Name { get; set; }
-            public string Nation { get; set; }
-            public int StaffId { get; set; }
-            public string Area { get; set; }
-            public string Address { get; set; }
-            public int CompanyId { get; set; }
-            public bool AllowDelete { get; set; }
-            public string? StaffName { get; set; }
-            public string? TimeCreate { get; set; }
         }
     }
 }

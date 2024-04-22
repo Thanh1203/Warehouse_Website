@@ -119,6 +119,18 @@ export default {
         GET: {
             url: "/api/productInfo",
             method: "GET"
+        },
+        CREATE: {
+            url: "/api/productInfo",
+            method: "POST"
+        },
+        UPDATE: {
+            url: "/api/productInfo",
+            method: "PUT"
+        },
+        DELETE: {
+            url: "/api/productInfo",
+            method: "DELETE"
         }
     }
 }

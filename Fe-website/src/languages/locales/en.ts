@@ -98,7 +98,7 @@ export const en = {
         deleteProducerFail: "Cannot delete producer that still have products! Please check again",
         deleteClassifyFail: "Cannot delete classify that still have products! Please check again",
         deleteCategoryFail: "Cannot delete category that still have products! Please check again",
-
+        deleteProductFail: "Cannot delete products that are in warehouse! Please check again"
     },
     ManufacturerList: 'Manufacturer list',
     ManufacturerCode: "Manufacturer code",
@@ -142,4 +142,5 @@ export const en = {
     UpdateEmployee: "Update employee",
     EnterProducerName: "Enter the producer name",
     DetailCategory: "Detail category",
+    All: "All",
 };

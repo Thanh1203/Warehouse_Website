@@ -11,5 +11,7 @@ namespace BackendWebApi.Models
         public int IdProduct { get; set; }
         public string CodeProduct { get; set; }
         public double Quantity { get; set; }
+        [ForeignKey("Admin_Account")]
+        public int CompanyId { get; set; }
     }
 }

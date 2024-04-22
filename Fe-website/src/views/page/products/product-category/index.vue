@@ -13,7 +13,7 @@
       </AntdButton>
     </a-form-item>
   </a-form>
-  <Section :title="translate('CategoryList')" :subTitle="translate('TotalCategories')" :number="String(totalCategory)">
+  <Section :title="translate('CategoryList')" :subTitle="translate('TotalCategories')" :number="String(totalCategory)" class="tw-w-full tw-h-full tw-bg-white tw-overflow-hidden">
     <template #action>
       <AntdButton :type="'text'" danger :disabled="disableDeleteMany" class="tw-mr-2" @click="handleDeleteCategory(listSelect, true)">
         <template #icon>
@@ -31,7 +31,17 @@
       </AntdButton>
     </template>
     <template #body>
-      <AntdTable ref="table" key-field="id" :index-column="true" :has-checkbox="true" :no-sort="true" :dataSource="categoryData" :columns="columns" @onSelected="handleSelectRow">
+      <AntdTable
+        ref="table"
+        key-field="id"
+        :index-column="true"
+        :has-checkbox="true"
+        :no-sort="true"
+        :dataSource="categoryData"
+        :columns="columns"
+        @onSelected="handleSelectRow"
+        class="tw-w-full tw-h-[calc(100vh-294px)] tw-overflow-hidden tw-overflow-y-auto"
+      >
         <template #custom-body="{ column, record }">
           <template v-if="column.key === 'action' && record">
             <div class="action">
@@ -253,7 +263,7 @@ const handleView = (item: any) => {
 
 const fetData = async (params) => {
   await store.dispatch("category/getCategory", params);
-}
+};
 
 watch(
   () => filterSearching,
@@ -261,7 +271,7 @@ watch(
     const params = {
       name: filterSearching?.keyword,
     };
-    fetData(removeNullObjects(params))
+    fetData(removeNullObjects(params));
   }, 500),
   { deep: true },
 );

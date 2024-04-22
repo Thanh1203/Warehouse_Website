@@ -3,6 +3,7 @@ using BackendWebApi.Interfaces;
 using BackendWebApi.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using BackendWebApi.DTOS;
 
 namespace BackendWebApi.Repository
 {
@@ -16,7 +17,7 @@ namespace BackendWebApi.Repository
 
         public async Task<object> GetProducers()
         {
-            var data = new List<ProducerViewModel>();
+            var data = new List<DTOProducer>();
             var totalElement = await _context.Producers.Where(e => e.CompanyId == 1).CountAsync();
             var dataList = await _context.Producers.Where(e => e.CompanyId == 1).ToListAsync();
 
@@ -24,7 +25,7 @@ namespace BackendWebApi.Repository
             {
                 bool allowDelete = await _context.Product_Infos.AnyAsync(p => p.ProducerId == item.Id);
                 item.AllowDelete = !allowDelete;
-                var viewModal = new ProducerViewModel
+                var viewModal = new DTOProducer
                 {
                     Id = item.Id,
                     Code = item.Code,
@@ -46,7 +47,7 @@ namespace BackendWebApi.Repository
 
         public async Task<object> SearchProducer(string str)
         {
-            var data = new List<ProducerViewModel>();
+            var data = new List<DTOProducer>();
             var query = _context.Producers.Where(e => e.CompanyId == 1).AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(str))
@@ -60,7 +61,7 @@ namespace BackendWebApi.Repository
             {
                 bool allowDelete = await _context.Product_Infos.AnyAsync(p => p.ProducerId == item.Id);
                 item.AllowDelete = !allowDelete;
-                var viewModal = new ProducerViewModel
+                var viewModal = new DTOProducer
                 {
                     Id = item.Id,
                     Code = item.Code,
@@ -121,18 +122,6 @@ namespace BackendWebApi.Repository
                     await _context.SaveChangesAsync();
                 }
             }
-        }
-
-        public class ProducerViewModel
-        {
-            public int Id { get; set; }
-            public string Code { get; set; }
-            public string Name { get; set; }
-            public string Origin { get; set; }
-            public int CompanyId { get; set; }
-            public string?  TimeCreate { get; set; }
-            public bool AllowDelete { get; set; }
-
         }
     }
 }

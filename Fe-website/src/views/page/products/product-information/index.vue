@@ -1,19 +1,19 @@
 <template>
   <a-form class="tw-flex tw-rounded-lg tw-bg-white tw-px-6 tw-py-5 tw-mb-6">
     <a-form-item class="tw-w-[300px] !tw-mr-3">
-      <span class="tw-opacity-70">{{ translate("Search") }}</span>
+      <span class="tw-opacity-70">{{ translate("ProductName") }}</span>
       <a-input :placeholder="translate('Search')" v-model:value="filterSearching.Keyword" class="tw-mt-2" />
     </a-form-item>
     <a-form-item class="tw-w-[250px] !tw-mr-3">
       <span class="tw-opacity-70">{{ translate("ProductClassify") }}</span>
-      <a-input :placeholder="translate('Classify')" v-model:value="filterSearching.Classify" class="tw-mt-2" />
+      <a-select :placeholder="translate('Classify')" v-model:value="filterSearching.classifyId" class="tw-mt-2" :options="classifyData.map((x) => ({value: x.id, label: x.name}))"/>
     </a-form-item>
     <a-form-item class="tw-w-[200px] !tw-mr-3">
       <span class="tw-opacity-70">{{ translate("Producer") }}</span>
       <a-select
         :placeholder="translate('Producer')"
-        v-model:value="filterSearching.producerCode"
-        :options="dataFake2.map((x) => ({ value: x.id, label: x.name }))"
+        v-model:value="filterSearching.producerId"
+        :options="producerData.map((x) => ({ value: x.id, label: x.name }))"
         class="tw-mt-2"
       />
     </a-form-item>
@@ -26,19 +26,19 @@
       </AntdButton>
     </a-form-item>
   </a-form>
-  <div class="tw-w-full tw-h-full tw-flex tw-bg-white tw-p-6 tw-rounded-lg product-Info">
+  <div class="tw-w-full tw-h-full tw-flex tw-bg-white tw-p-6 tw-rounded-lg product-Info tw-overflow-hidden">
     <Section
-      class="!tw-w-1/5 !tw-h-auto tw-bg-transparent tw-border tw-border-solid tw-mr-2"
+      class="!tw-w-[18%] !tw-h-auto tw-bg-transparent tw-border tw-border-solid tw-mr-2"
       :title="translate('CategoryList')"
       :subTitle="translate('TotalCategories')"
-      :number="String(dataFake3?.length)"
+      :number="String(totalCategory)"
     >
       <template #body>
         <a-menu
           mode="inline"
           @click="handleSelectCategory"
           :items="
-            dataFake3.map((x) => ({
+            categoryData.map((x) => ({
               key: x.id,
               label: x.name,
             }))
@@ -48,13 +48,13 @@
       </template>
     </Section>
     <Section
-      class="!tw-w-4/5 tw-bg-transparent tw-border tw-border-solid tw-ml-2"
+      class="!tw-w-[82%] tw-h-full tw-bg-transparent tw-border tw-border-solid tw-ml-2 tw-overflow-hidden"
       :title="translate('ListProducts')"
       :subTitle="translate('TotalProducts')"
-      :number="String(dataFake4?.length)"
+      :number="String(totalProduct)"
     >
       <template #action>
-        <AntdButton :type="'text'" danger class="tw-mr-2" :disabled="disableDeleteMany" @click="handleDeleteMany">
+        <AntdButton :type="'text'" danger class="tw-mr-2" :disabled="disableDeleteMany" @click="handleDeleteProduct(listSelect, true)">
           <template #icon>
             <font-awesome-icon :icon="['far', 'trash-can']" />
           </template>
@@ -70,17 +70,29 @@
         </AntdButton>
       </template>
       <template #body>
-        <AntdTable ref="table" key-field="id" :index-column="false" :has-checkbox="true" :no-sort="true" :dataSource="dataFake4" :columns="columns" @onSelected="handleSelectRow">
+        <AntdTable
+          ref="table"
+          key-field="id"
+          :index-column="false"
+          :has-checkbox="true"
+          :no-sort="true"
+          :dataSource="productData"
+          :columns="columns"
+          @onSelected="handleSelectRow"
+          class="tw-h-[calc(100vh-342px)] tw-w-full tw-overflow-hidden tw-overflow-y-auto"
+        >
           <template #custom-body="{ column, record }">
+            <template v-if="column.key === 'name'">
+              <div class="tw-w-full tw-py-4 tw-my-[-16px] tw-cursor-pointer viewByName" @click="handleView">
+                <span class="viewByName_name">{{ record.name }}</span>
+              </div>
+            </template>
             <template v-if="column.key === 'action'">
               <div class="action">
-                <AntdButton class="action-btn" :type="'light-hover'" shape="circle" @click="handleView(record)">
-                  <font-awesome-icon :icon="['fas', 'circle-info']" style="color: #4caf50" />
-                </AntdButton>
-                <AntdButton class="action-btn" :type="'light-hover'" shape="circle" @click="handleEdit(record)">
+                <AntdButton class="action-btn" type="text" shape="circle" @click="handleEdit(record)">
                   <font-awesome-icon :icon="['far', 'pen-to-square']" style="color: #001f3f" />
                 </AntdButton>
-                <AntdButton class="action-btn" :type="'light-hover'" shape="circle" @click="handleDeleteSingle(record.id)">
+                <AntdButton class="action-btn" type="text" shape="circle" @click="handleDeleteProduct(record, false)">
                   <font-awesome-icon :icon="['far', 'trash-can']" style="color: #ff0000" />
                 </AntdButton>
               </div>
@@ -93,26 +105,47 @@
   <!-- modal -->
   <ModalCreate :isVisible="isVisibleModalCreate" :form="formState" :isEdit="isEdit" :titleModal="titleModal" @closeModal="onCancel" @handleSubmit="handleSubmitForm" />
   <ModalInfo :isVisible="isVisibleModalInfo" :titleModal="titleModal" :idProduct="idProduct" @closeModal="onCancel" />
-  <ModalConfirm :isVisible="isVisibleModalConfirm" :titleModal="titleModal" :isMany="confirmMany" @closeModal="onCancel" @handleSubmit="handleDelete" />
 </template>
 <script setup lang="ts">
 import { translate } from "@/languages/i18n";
-import { computed, defineAsyncComponent, reactive, ref } from "vue";
+import { computed, defineAsyncComponent, onMounted, reactive, ref, watch } from "vue";
 import AntdButton from "@/components/antd-button/index.vue";
 import Section from "@/components/section/index.vue";
 import AntdTable from "@/components/antd-table/index.vue";
-import { notification } from "ant-design-vue";
+import { Modal, notification } from "ant-design-vue";
+import { useStore } from "vuex";
+import { useRoute, useRouter } from "vue-router";
+import { debounce } from "vue-debounce";
+import { checkDeleteItem, removeNullObjects } from "@/utils/common";
 
 const ModalCreate = defineAsyncComponent(() => import("./components/modalCreate.vue"));
 const ModalInfo = defineAsyncComponent(() => import("./components/modalInfo.vue"));
-const ModalConfirm = defineAsyncComponent(() => import("@/components/antd-modal-confirm/index.vue"));
+
+const store = useStore();
+const route = useRoute();
+const router = useRouter();
+
+const productData = computed(() => store.getters["product/productData"]);
+const classifyData = computed(() => store.getters["classify/classifyData"]);
+const producerData = computed(() => store.getters["producer/producerData"]);
+const categoryData = computed(() => {
+  const result = [...store.getters["category/categoryData"]];
+  result.unshift(
+    {
+      id: "ALL",
+      name: translate("All")
+    }
+  )
+  return result;
+});
+const totalProduct = computed(() => store.getters["product/totalElement"]);
+const totalCategory = computed(() => store.getters["category/totalElement"]);
 
 const listSelect = ref<Array<string | number>>([]);
 const idProduct = ref<string>("");
 const titleModal = ref<string>("");
 const selectedKeys = ref<string[]>(["ALL"]);
 const isVisibleModalCreate = ref<boolean>(false);
-const isVisibleModalConfirm = ref<boolean>(false);
 const isVisibleModalInfo = ref<boolean>(false);
 const confirmMany = ref<boolean>(false);
 const isEdit = ref<boolean>(false);
@@ -137,20 +170,26 @@ const columns = ref<Array<any>>([
   },
   {
     title: translate("Classify"),
-    dataIndex: "Classify",
-    key: "Classify",
+    dataIndex: "classifyName",
+    key: "classifyName",
     align: "left",
   },
   {
     title: translate("Producer"),
-    dataIndex: "Producer",
-    key: "Producer",
+    dataIndex: "producerName",
+    key: "producerName",
+    align: "left",
+  },
+  {
+    title: translate("DateCreated"),
+    dataIndex: "timeCreate",
+    key: "timeCreate",
     align: "left",
   },
   {
     dataIndex: "action",
     key: "action",
-    width: 100,
+    width: 80,
     align: "center",
     fixed: "right",
   },
@@ -158,49 +197,54 @@ const columns = ref<Array<any>>([
 
 const filterSearching = reactive({
   Keyword: "",
-  producerCode: null,
-  Classify: null,
+  producerId: null,
+  classifyId: null,
+  categoryId: null,
 });
-const formState = reactive({
+const formState = reactive<any>({
   id: "",
   code: "",
   name: "",
-  categoryCode: null,
-  classifyCode: null,
-  producerCode: null,
-  Size: "",
-  Material: "",
-  ConnectionTypes: "",
-  Color: "",
-  Designs: "",
-  Describe: "",
+  categoryId: null,
+  classifyId: null,
+  producerId: null,
+  size: "",
+  material: "",
+  connectionTypes: "",
+  color: "",
+  designs: "",
+  describe: "",
+  allowDelete: true,
 });
 
-// handle filter
-const disabledDeleteFilter = computed(() => filterSearching?.Keyword?.length === 0 && filterSearching?.producerCode === null && filterSearching?.Classify === null);
+const disabledDeleteFilter = computed(() => filterSearching?.Keyword?.length === 0 && filterSearching?.producerId === null && filterSearching?.classifyId === null);
+const disableDeleteMany = computed(() => listSelect?.value?.length === 0);
 
 const handleClearFilter = () => {
   filterSearching.Keyword = "";
-  filterSearching.producerCode = null;
-  filterSearching.Classify = null;
+  filterSearching.producerId = null;
+  filterSearching.classifyId = null;
 };
 
 //handle product category
 const handleSelectCategory = (item: any) => {
   selectedKeys.value = [item.key];
-  console.log(selectedKeys.value[0]);
+  if (selectedKeys.value[0] === "ALL") {
+    filterSearching.categoryId = "";
+  } else {
+    filterSearching.categoryId = selectedKeys.value[0];
+  }
 };
 
 // close modal
 const onCancel = () => {
   isVisibleModalCreate.value = false;
-  isVisibleModalConfirm.value = false;
   isVisibleModalInfo.value = false;
 };
 
 // handle data table
 const handleSelectRow = (rows: any) => {
-  listSelect.value = rows.value.map((x: any) => x?.id);
+  listSelect.value = rows.value.map((x: any) => ({ id: x?.id, allowDelete: x?.allowDelete }));
 };
 
 // create, delete product
@@ -208,18 +252,19 @@ const handleCreate = () => {
   isVisibleModalCreate.value = true;
   isEdit.value = false;
   titleModal.value = translate("AddProductInfo");
-  formState.id = "";
+  formState.id = 0;
   formState.code = "";
   formState.name = "";
-  formState.categoryCode = null;
-  formState.Size = "";
-  formState.Material = "";
-  formState.ConnectionTypes = "";
-  formState.Color = "";
-  formState.Designs = "";
-  formState.Describe = "";
-  formState.classifyCode = null;
-  formState.producerCode = null;
+  formState.categoryId = null;
+  formState.classifyId = null;
+  formState.producerId = null;
+  formState.size = "";
+  formState.material = "";
+  formState.connectionTypes = "";
+  formState.color = "";
+  formState.designs = "";
+  formState.describe = "";
+  formState.allowDelete = true;
 };
 
 const handleEdit = (item: any) => {
@@ -229,15 +274,16 @@ const handleEdit = (item: any) => {
   formState.id = item.id;
   formState.code = item.code;
   formState.name = item.name;
-  formState.categoryCode = item.categoryCode;
-  formState.Size = item.Size;
-  formState.Material = item.Material;
-  formState.ConnectionTypes = item.ConnectionTypes;
-  formState.Color = item.Color;
-  formState.Designs = item.Designs;
-  formState.Describe = item.Describe;
-  formState.classifyCode = item.classifyCode;
-  formState.producerCode = item.producerCode;
+  formState.categoryId = item.categoryId;
+  formState.size = item.size;
+  formState.material = item.material;
+  formState.connectionTypes = item.connectionTypes;
+  formState.color = item.color;
+  formState.designs = item.designs;
+  formState.describe = item.describe;
+  formState.classifyId = item.classifyId;
+  formState.producerId = item.producerId;
+  formState.allowDelete = item.allowDelete;
 };
 
 const handleView = (item: any) => {
@@ -247,186 +293,118 @@ const handleView = (item: any) => {
   idProduct.value = item.id;
 };
 
-const handleDeleteSingle = (id: string) => {
-  idProduct.value = id;
-  isVisibleModalConfirm.value = true;
-  titleModal.value = translate("Products");
-  confirmMany.value = false;
-};
+const handleSubmitForm = async (state: any) => {
+  if (isEdit.value && state.id !== 0) {
+    try {
+      await store.dispatch("product/updateProduct", {
+      state: state,
+      params: {
+        ...route.query,
+      },
+    });
 
-const disableDeleteMany = computed(() => listSelect?.value?.length === 0);
-
-const handleDeleteMany = () => {
-  isVisibleModalConfirm.value = true;
-  titleModal.value = translate("Products");
-  confirmMany.value = true;
-};
-
-const handleSubmitForm = (state: any) => {
-  try {
-    let temp: any = null;
-    const params = { page: 1, size: 20 };
-    if (state.id) {
-      console.log("create");
-      notification["success"]({
-        message: translate("noti.createSuccess"),
-      });
-    } else {
-      console.log("update");
       notification["success"]({
         message: translate("noti.updateSuccess"),
       });
+    } catch (error) {
+      console.log(error);
+      notification["error"]({
+        message: translate("noti.updateFail"),
+      });
     }
-  } catch (error) {
-    console.log(error);
-    notification["error"]({
-      message: translate("noti.fail"),
-    });
+  } else {
+    try {
+      await store.dispatch("product/createProduct", {
+        state: state,
+        params: {
+          ...route.query,
+        },
+      });
+
+      notification["success"]({
+        message: translate("noti.createSuccess"),
+      });
+    } catch (error) {
+      console.log(error);
+      notification["error"]({
+        message: translate("noti.createFail"),
+      });
+    }
   }
   onCancel();
 };
 
-const handleDelete = () => {};
+const handleDeleteProduct = async (itemDelete: any, isMany: boolean) => {
+  Modal.confirm({
+    title: translate(translate(isMany ? "confirm.many" : "confirm.one", "Products")),
+    content: translate("NoDataRestore"),
+    okText: translate("Agree"),
+    cancelText: translate("Cancel"),
+    centered: true,
+    async onOk() {
+      handleDelete(itemDelete);
+    },
+    onCancel() {},
+  });
+};
 
-//data fake
-const dataFake2 = [
-  {
-    id: "HgA",
-    name: "Hãng A",
-  },
-  {
-    id: "HgB",
-    name: "Hãng B",
-  },
-  {
-    id: "HgC",
-    name: "Hãng C",
-  },
-];
+const handleDelete = async (itemDelete: any) => {
+  if (checkDeleteItem(itemDelete)) {
+    if (itemDelete.length > 1) {
+      const temp = itemDelete.map((x: any) => x?.id);
+      await store.dispatch("product/deleteProduct", {
+        state: temp,
+        params: {
+          ...route.query,
+        },
+      });
+    } else {
+      await store.dispatch("product/deleteProduct", {
+        state: [itemDelete.id],
+        params: {
+          ...route.query,
+        },
+      });
+    }
+    listSelect.value = [];
+    notification["success"]({
+      message: translate("noti.deleteSuccess"),
+    });
+  } else {
+    notification["error"]({
+      message: translate("noti.deleteProductFail"),
+    });
+  }
+};
 
-const dataFake3 = [
-  {
-    id: "ALL",
-    name: "Tất cả",
-  },
-  {
-    id: "CL01",
-    name: "Bàn phím",
-  },
-  {
-    id: "CL02",
-    name: "Chuột",
-  },
-  {
-    id: "CL03",
-    name: "Tai nghe",
-  },
-];
+const fetchData = async () => {
+  await store.dispatch("category/getCategory", null);
+  await store.dispatch("classify/getClassify", null);
+  await store.dispatch("producer/getProducer", null);
+};
 
-const dataFake4 = [
-  {
-    id: "SP01",
-    code: "SP01",
-    categoryCode: "CL01",
-    categoryName: "Bàn phím",
-    name: "Bàn phím 1",
-    Color: "Trắng",
-    Classify: "Văn phòng",
-    Producer: "Hãng A",
-    Size: "30 x 30",
-    Material: "Nhựa, nhôm",
-    ConnectionTypes: "3 mode",
-    Designs: "TKL",
-    Describe: "Bàn phím cơ văn phòng",
-    classifyCode: "PL1",
-    producerCode: "HgA",
-  },
-  {
-    id: "SP02",
-    code: "SP01",
-    categoryCode: "CL01",
-    categoryName: "Bàn phím",
-    name: "Bàn phím 2",
-    Color: "Trắng",
-    Classify: "Gamming",
-    Producer: "Hãng A",
-    Size: "30 x 30",
-    Material: "Nhôm",
-    ConnectionTypes: "1 mode",
-    Designs: "layout 75%",
-    Describe: "Bàn phím cơ gamming",
-    classifyCode: "PL2",
-    producerCode: "HgA",
-  },
-  {
-    id: "SP03",
-    code: "SP01",
-    categoryCode: "CL01",
-    categoryName: "Bàn phím",
-    name: "Bàn phím 3",
-    Color: "Đen",
-    Classify: "Custom",
-    Producer: "Hãng A",
-    Size: "40 x 40",
-    Material: "Nhựa",
-    ConnectionTypes: "3 mode",
-    Designs: "full size",
-    Describe: "Bàn phím cơ custom có hostswap",
-    classifyCode: "PL3",
-    producerCode: "HgA",
-  },
-  {
-    id: "SP04",
-    code: "SP01",
-    categoryCode: "CL02",
-    categoryName: "Chuột",
-    name: "Chuột 1",
-    Color: "Đen",
-    Classify: "Gamming",
-    Producer: "Hãng B",
-    Size: "",
-    Material: "Nhựa",
-    ConnectionTypes: "2 mode",
-    Designs: "Đối xứng",
-    Describe: "Chuột gamming thiết kế đối xứng",
-    classifyCode: "PL2",
-    producerCode: "HgB",
-  },
-  {
-    id: "SP05",
-    code: "SP01",
-    categoryCode: "CL02",
-    categoryName: "Chuột",
-    name: "Chuột 2",
-    Color: "xám",
-    Classify: "Văn phòng",
-    Producer: "Hãng B",
-    Size: "",
-    Material: "Nhựa",
-    ConnectionTypes: "dây USB",
-    Designs: "Công thái học",
-    Describe: "Chuột văn phòng thiết kế công thái học ôm tay",
-    classifyCode: "PL1",
-    producerCode: "HgB",
-  },
-  {
-    id: "SP06",
-    code: "SP01",
-    categoryCode: "CL03",
-    categoryName: "Tai nghe",
-    name: "Tai nghe 1",
-    Color: "xám",
-    Classify: "Kiểm âm",
-    Producer: "Hãng C",
-    Size: "",
-    Material: "Nhựa",
-    ConnectionTypes: "2 mode",
-    Designs: "In ear",
-    Describe: "Tai nghe DJ kiểm âm",
-    classifyCode: "PL4",
-    producerCode: "HgC",
-  },
-];
+const handleFetchProduct = async (params: any) => {
+  await store.dispatch("product/getProduct", params);
+};
+
+watch(
+  () => filterSearching,
+  debounce(() => {
+    const params = {
+      categoryId: filterSearching.categoryId,
+      classifyId: filterSearching.classifyId,
+      producerId: filterSearching.producerId,
+      name: filterSearching.Keyword
+    };
+    handleFetchProduct(removeNullObjects(params));
+  }, 500),
+  {deep: true},
+);
+
+onMounted(async () => {
+  await fetchData();
+  await handleFetchProduct(null);
+});
 </script>
 <style lang="scss">
 .product-Info {

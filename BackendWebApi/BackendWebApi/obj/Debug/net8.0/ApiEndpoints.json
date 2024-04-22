@@ -320,18 +320,66 @@
       },
       {
         "Name": "categoryId",
-        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "Type": "System.String",
         "IsRequired": false
       },
       {
         "Name": "classifyId",
-        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "Type": "System.String",
         "IsRequired": false
       },
       {
         "Name": "producerId",
-        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "Type": "System.String",
         "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BackendWebApi.Controllers.Product_Info_Controller",
+    "Method": "CreateProductInfo",
+    "RelativePath": "api/productInfo",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "product_Info",
+        "Type": "BackendWebApi.Models.Product_Info",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BackendWebApi.Controllers.Product_Info_Controller",
+    "Method": "UpdateProductInfo",
+    "RelativePath": "api/productInfo",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "product_Info",
+        "Type": "BackendWebApi.Models.Product_Info",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BackendWebApi.Controllers.Product_Info_Controller",
+    "Method": "DeleteProductInfo",
+    "RelativePath": "api/productInfo",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idsDelete",
+        "Type": "System.Collections.Generic.List\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": true
       }
     ],
     "ReturnTypes": []

@@ -34,3 +34,5 @@ SELECT COUNT(*) AS total_rows FROM Personnel_Info;
 
 alter table Personnel_Info 
 alter column Address nvarchar(255) NULL 
+
+alter table WH_Data ADD CompanyId int not null
