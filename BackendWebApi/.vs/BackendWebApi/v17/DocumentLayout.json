@@ -3,12 +3,24 @@
   "WorkspaceRootPath": "D:\\My workspace data\\WebProgrammingProject\\BackendWebApi\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{84566015-E005-45DC-AC72-5CA8E6207C41}|BackendWebApi\\BackendWebApi.csproj|d:\\my workspace data\\webprogrammingproject\\backendwebapi\\backendwebapi\\repository\\rcategory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{84566015-E005-45DC-AC72-5CA8E6207C41}|BackendWebApi\\BackendWebApi.csproj|solutionrelative:backendwebapi\\repository\\rcategory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{84566015-E005-45DC-AC72-5CA8E6207C41}|BackendWebApi\\BackendWebApi.csproj|d:\\my workspace data\\webprogrammingproject\\backendwebapi\\backendwebapi\\interfaces\\iwarehouse_data.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{84566015-E005-45DC-AC72-5CA8E6207C41}|BackendWebApi\\BackendWebApi.csproj|solutionrelative:backendwebapi\\interfaces\\iwarehouse_data.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{84566015-E005-45DC-AC72-5CA8E6207C41}|BackendWebApi\\BackendWebApi.csproj|d:\\my workspace data\\webprogrammingproject\\backendwebapi\\backendwebapi\\repository\\rclassify.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{84566015-E005-45DC-AC72-5CA8E6207C41}|BackendWebApi\\BackendWebApi.csproj|solutionrelative:backendwebapi\\repository\\rclassify.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{84566015-E005-45DC-AC72-5CA8E6207C41}|BackendWebApi\\BackendWebApi.csproj|d:\\my workspace data\\webprogrammingproject\\backendwebapi\\backendwebapi\\repository\\rwarehouse_data.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{84566015-E005-45DC-AC72-5CA8E6207C41}|BackendWebApi\\BackendWebApi.csproj|solutionrelative:backendwebapi\\repository\\rwarehouse_data.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{84566015-E005-45DC-AC72-5CA8E6207C41}|BackendWebApi\\BackendWebApi.csproj|d:\\my workspace data\\webprogrammingproject\\backendwebapi\\backendwebapi\\dtos\\dtowarehouse_data.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{84566015-E005-45DC-AC72-5CA8E6207C41}|BackendWebApi\\BackendWebApi.csproj|solutionrelative:backendwebapi\\dtos\\dtowarehouse_data.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{84566015-E005-45DC-AC72-5CA8E6207C41}|BackendWebApi\\BackendWebApi.csproj|d:\\my workspace data\\webprogrammingproject\\backendwebapi\\backendwebapi\\repository\\rwarehouse_info.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{84566015-E005-45DC-AC72-5CA8E6207C41}|BackendWebApi\\BackendWebApi.csproj|solutionrelative:backendwebapi\\repository\\rwarehouse_info.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{84566015-E005-45DC-AC72-5CA8E6207C41}|BackendWebApi\\BackendWebApi.csproj|d:\\my workspace data\\webprogrammingproject\\backendwebapi\\backendwebapi\\models\\warehouse_data.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{84566015-E005-45DC-AC72-5CA8E6207C41}|BackendWebApi\\BackendWebApi.csproj|solutionrelative:backendwebapi\\models\\warehouse_data.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -18,38 +30,71 @@
       "DocumentGroups": [
         {
           "DockedWidth": 418,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "RCategory.cs",
-              "DocumentMoniker": "D:\\My workspace data\\WebProgrammingProject\\BackendWebApi\\BackendWebApi\\Repository\\RCategory.cs",
-              "RelativeDocumentMoniker": "BackendWebApi\\Repository\\RCategory.cs",
-              "ToolTip": "D:\\My workspace data\\WebProgrammingProject\\BackendWebApi\\BackendWebApi\\Repository\\RCategory.cs",
-              "RelativeToolTip": "BackendWebApi\\Repository\\RCategory.cs",
-              "ViewState": "AQIAACQAAAAAAAAAAAAYwDEAAAArAAAA",
+              "DocumentIndex": 3,
+              "Title": "RWarehouse_Info.cs",
+              "DocumentMoniker": "D:\\My workspace data\\WebProgrammingProject\\BackendWebApi\\BackendWebApi\\Repository\\RWarehouse_Info.cs",
+              "RelativeDocumentMoniker": "BackendWebApi\\Repository\\RWarehouse_Info.cs",
+              "ToolTip": "D:\\My workspace data\\WebProgrammingProject\\BackendWebApi\\BackendWebApi\\Repository\\RWarehouse_Info.cs",
+              "RelativeToolTip": "BackendWebApi\\Repository\\RWarehouse_Info.cs",
+              "ViewState": "AQIAAG8AAAAAAAAAAAAowA8AAAAwAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-20T17:01:28.013Z",
+              "WhenOpened": "2024-04-22T06:33:56.177Z",
               "EditorCaption": ""
-            }
-          ]
-        },
-        {
-          "DockedWidth": 382,
-          "SelectedChildIndex": 0,
-          "Children": [
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "DTOWarehouse_Data.cs",
+              "DocumentMoniker": "D:\\My workspace data\\WebProgrammingProject\\BackendWebApi\\BackendWebApi\\DTOS\\DTOWarehouse_Data.cs",
+              "RelativeDocumentMoniker": "BackendWebApi\\DTOS\\DTOWarehouse_Data.cs",
+              "ToolTip": "D:\\My workspace data\\WebProgrammingProject\\BackendWebApi\\BackendWebApi\\DTOS\\DTOWarehouse_Data.cs",
+              "RelativeToolTip": "BackendWebApi\\DTOS\\DTOWarehouse_Data.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAcAAAAWAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-22T06:31:31.261Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "RClassify.cs",
-              "DocumentMoniker": "D:\\My workspace data\\WebProgrammingProject\\BackendWebApi\\BackendWebApi\\Repository\\RClassify.cs",
-              "RelativeDocumentMoniker": "BackendWebApi\\Repository\\RClassify.cs",
-              "ToolTip": "D:\\My workspace data\\WebProgrammingProject\\BackendWebApi\\BackendWebApi\\Repository\\RClassify.cs",
-              "RelativeToolTip": "BackendWebApi\\Repository\\RClassify.cs",
-              "ViewState": "AQIAAFgAAAAAAAAAAAAkwCAAAAAvAAAA",
+              "Title": "RWarehouse_Data.cs",
+              "DocumentMoniker": "D:\\My workspace data\\WebProgrammingProject\\BackendWebApi\\BackendWebApi\\Repository\\RWarehouse_Data.cs",
+              "RelativeDocumentMoniker": "BackendWebApi\\Repository\\RWarehouse_Data.cs",
+              "ToolTip": "D:\\My workspace data\\WebProgrammingProject\\BackendWebApi\\BackendWebApi\\Repository\\RWarehouse_Data.cs",
+              "RelativeToolTip": "BackendWebApi\\Repository\\RWarehouse_Data.cs",
+              "ViewState": "AQIAAAYAAAAAAAAAAAAuwCcAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-20T17:20:15.725Z",
+              "WhenOpened": "2024-04-22T06:30:22.246Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "IWarehouse_Data.cs",
+              "DocumentMoniker": "D:\\My workspace data\\WebProgrammingProject\\BackendWebApi\\BackendWebApi\\Interfaces\\IWarehouse_Data.cs",
+              "RelativeDocumentMoniker": "BackendWebApi\\Interfaces\\IWarehouse_Data.cs",
+              "ToolTip": "D:\\My workspace data\\WebProgrammingProject\\BackendWebApi\\BackendWebApi\\Interfaces\\IWarehouse_Data.cs",
+              "RelativeToolTip": "BackendWebApi\\Interfaces\\IWarehouse_Data.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAQAAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-22T06:29:53.532Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Warehouse_Data.cs",
+              "DocumentMoniker": "D:\\My workspace data\\WebProgrammingProject\\BackendWebApi\\BackendWebApi\\Models\\Warehouse_Data.cs",
+              "RelativeDocumentMoniker": "BackendWebApi\\Models\\Warehouse_Data.cs",
+              "ToolTip": "D:\\My workspace data\\WebProgrammingProject\\BackendWebApi\\BackendWebApi\\Models\\Warehouse_Data.cs",
+              "RelativeToolTip": "BackendWebApi\\Models\\Warehouse_Data.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA0AAAAlAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-22T06:18:24.639Z",
               "EditorCaption": ""
             }
           ]

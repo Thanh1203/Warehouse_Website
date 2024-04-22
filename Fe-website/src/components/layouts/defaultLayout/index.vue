@@ -23,7 +23,7 @@ import SlideMenu from "@/components/slide-menu/index.vue"
     height: 100vh;
     width: 100%;
     padding: 24px;
-    overflow-y: scroll;
+    overflow: hidden;
   }
 }
 </style>

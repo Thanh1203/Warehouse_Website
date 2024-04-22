@@ -1,6 +1,6 @@
 <template>
   <a-form class="tw-flex tw-rounded-lg tw-bg-white tw-px-6 tw-py-5 tw-mb-6">
-    <a-form-item class="tw-w-[300px] !tw-mr-3">
+    <a-form-item class="tw-w-[300px] tw-h-[62px] !tw-mr-3">
       <span class="tw-opacity-70">{{ translate("ManufacturerName") }}</span>
       <a-input :placeholder="translate('Search')" v-model:value="filterSearching.Keyword" class="tw-mt-2" />
     </a-form-item>
@@ -22,7 +22,12 @@
       </AntdButton>
     </a-form-item>
   </a-form>
-  <Section :title="translate('ManufacturerList')" :subTitle="translate('TotalManufacturers')" :number="String(tottalProducer)">
+  <Section
+    :title="translate('ManufacturerList')"
+    :subTitle="translate('TotalManufacturers')"
+    :number="String(tottalProducer)"
+    class="tw-w-full tw-h-full tw-bg-white tw-overflow-hidden"
+  >
     <template #action>
       <AntdButton :type="'text'" danger :disabled="disableDeleteMany" class="tw-mr-2" @click="handleDeleteProducer(listSelect, true)">
         <template #icon>
@@ -40,7 +45,17 @@
       </AntdButton>
     </template>
     <template #body>
-      <AntdTable ref="table" key-field="id" :index-column="true" :has-checkbox="true" :no-sort="true" :columns="columns" :dataSource="producerData" @onSelected="handleSelectRow">
+      <AntdTable
+        ref="table"
+        key-field="id"
+        :index-column="true"
+        :has-checkbox="true"
+        :no-sort="true"
+        :columns="columns"
+        :dataSource="producerData"
+        @onSelected="handleSelectRow"
+        class="tw-w-full tw-h-[calc(100vh-294px)] tw-overflow-hidden tw-overflow-y-auto"
+      >
         <template #custom-body="{ column, record }">
           <template v-if="column.key === 'action' && record">
             <div class="action">
@@ -149,7 +164,7 @@ const handelCreate = () => {
   formState.id = 0;
   formState.name = "";
   formState.origin = "";
-  formState.code = "";  
+  formState.code = "";
   formState.allowDelete = true;
   formState.allowDelete = true;
   isVisibleModalCreate.value = true;
@@ -246,7 +261,7 @@ const handleDelete = async (itemDelete: any) => {
     }
     listSelect.value = [];
     notification["success"]({
-      message: translate("noti.deleteSuccess")
+      message: translate("noti.deleteSuccess"),
     });
   } else {
     notification["error"]({

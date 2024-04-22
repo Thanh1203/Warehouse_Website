@@ -5,6 +5,7 @@ import personnel from "./modules/personnel";
 import producer from "./modules/producer";
 import classify from "./modules/classify";
 import category from "./modules/category";
+import product from "./modules/product";
 
 const modules: ModuleTree<RootState> = {
     warehouse,
@@ -12,6 +13,7 @@ const modules: ModuleTree<RootState> = {
     producer,
     classify,
     category,
+    product,
 };
 
 const root: Module<RootState, RootState> = {

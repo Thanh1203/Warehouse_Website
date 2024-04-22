@@ -3,6 +3,7 @@ using BackendWebApi.Interfaces;
 using BackendWebApi.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using BackendWebApi.DTOS;
 
 namespace BackendWebApi.Repository
 {
@@ -16,14 +17,14 @@ namespace BackendWebApi.Repository
 
         public async Task<object> GetClassifies()
         {
-            var data = new List<ClassifyViewModel>();
+            var data = new List<DTOClassify>();
             var dataList = await _context.Classifies.Where(e => e.CompanyId == 1).ToListAsync();
             var totalElement = await _context.Classifies.Where(e => e.CompanyId == 1).CountAsync();
 
             foreach (var item in dataList)
             {
                 bool allowDelete = await _context.Product_Infos.AnyAsync(p => p.ClassifyId == item.Id);
-                var viewModel = new ClassifyViewModel
+                var viewModel = new DTOClassify
                 {
                     Id = item.Id,
                     Code = item.Code,
@@ -44,7 +45,7 @@ namespace BackendWebApi.Repository
 
         public async Task<object> SearchCalassifies(string str)
         {
-            var data = new List<ClassifyViewModel>();
+            var data = new List<DTOClassify>();
             var query = _context.Classifies.Where(e => e.CompanyId == 1).AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(str))
@@ -58,7 +59,7 @@ namespace BackendWebApi.Repository
             foreach (var item in dataList)
             {
                 bool allowDelete = await _context.Product_Infos.AnyAsync(p => p.ClassifyId == item.Id);
-                var viewModel = new ClassifyViewModel
+                var viewModel = new DTOClassify
                 {
                     Id = item.Id,
                     Code = item.Code,
@@ -117,16 +118,6 @@ namespace BackendWebApi.Repository
                     await _context.SaveChangesAsync();
                 }
             }
-        }
-
-        public class ClassifyViewModel
-        {
-            public int Id { get; set; }
-            public string Code { get; set; }
-            public string Name { get; set; }
-            public int CompanyId { get; set; }
-            public string? TimeCreate { get; set; }
-            public bool? AllowDelete { get; set; }
         }
     }
 }

@@ -27,7 +27,12 @@
       </AntdButton>
     </a-form-item>
   </a-form>
-  <Section :title="translate('WarehouseList')" :sub-title="translate('NumberOfWarehouses')" :number="String(totalWarehouse)">
+  <Section
+    :title="translate('WarehouseList')"
+    :sub-title="translate('NumberOfWarehouses')"
+    :number="String(totalWarehouse)"
+    class="tw-w-full tw-h-full tw-bg-white tw-overflow-hidden"
+  >
     <template #action>
       <AntdButton :type="'text'" danger class="tw-mr-2" :disabled="disableDeleteMany" @click="handleDeleteWarehouse(listSelect, true)">
         <template #icon>
@@ -45,7 +50,17 @@
       </AntdButton>
     </template>
     <template #body>
-      <AntdTable ref="table" key-field="id" :index-column="true" :columns="columns" :data-source="warehouseData" :has-checkbox="true" :no-sort="true" @onSelected="handleSelectRow">
+      <AntdTable
+        ref="table"
+        key-field="id"
+        :index-column="true"
+        :columns="columns"
+        :data-source="warehouseData"
+        :has-checkbox="true"
+        :no-sort="true"
+        @onSelected="handleSelectRow"
+        class="tw-w-full tw-h-[calc(100vh-294px)] tw-overflow-hidden tw-overflow-y-auto"
+      >
         <template #custom-body="{ column, record }">
           <template v-if="column.key === 'action' && record">
             <div class="action">
@@ -214,7 +229,6 @@ const handleEditRow = (data: any) => {
   formState.allowDelete = data?.allowDelete;
 };
 
-
 const handleSubmitForm = async (state: any) => {
   isVisibleModalCreate.value = false;
   if (isEdit.value && state.id !== 0) {
@@ -264,17 +278,17 @@ const disableDeleteMany = computed(() => listSelect?.value?.length === 0);
 
 const handleDeleteWarehouse = async (itemDelete: any, isMany: boolean) => {
   Modal.confirm({
-    title: translate(translate(isMany ? 'confirm.many' : 'confirm.one', "Warehouse")),
-    content: translate('NoDataRestore'),
-    okText: translate('Agree'),
-    cancelText: translate('Cancel'),
+    title: translate(translate(isMany ? "confirm.many" : "confirm.one", "Warehouse")),
+    content: translate("NoDataRestore"),
+    okText: translate("Agree"),
+    cancelText: translate("Cancel"),
     centered: true,
     async onOk() {
       handleDelete(itemDelete);
-    }, 
+    },
     onCancel() {},
-  })
-}
+  });
+};
 
 const handleDelete = async (itemDelete: any) => {
   if (checkDeleteItem(itemDelete)) {
@@ -296,7 +310,7 @@ const handleDelete = async (itemDelete: any) => {
     }
     listSelect.value = [];
     notification["success"]({
-      message: translate("noti.deleteSuccess")
+      message: translate("noti.deleteSuccess"),
     });
   } else {
     notification["error"]({

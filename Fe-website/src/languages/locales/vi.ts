@@ -99,6 +99,7 @@ export const vi = {
         deleteProducerFail: "Không thể xóa nhà sản xuất còn sản phẩm! Vui lòng kiểm tra lại",
         deleteClassifyFail: "Không thể xóa phân loại còn sản phẩm! Vui lòng kiểm tra lại",
         deleteCategoryFail: "Không thể xóa chủng loại sản phẩm! Vui lòng kiểm tra lại",
+        deleteProductFail: "Không thể xóa sản phẩm còn trong kho hàng! Vui lòng kiểm tra lại",
     },
     ManufacturerList: "Danh sách hãng sản xuất",
     ManufacturerCode: "Mã hãng sản xuất",
@@ -142,5 +143,5 @@ export const vi = {
     UpdateEmployee: "Cập nhật nhân viên",
     EnterProducerName: "Nhập tên hãng sản xuất",
     DetailCategory: "Chi tiết chủng loại",
-    
+    All: "Tất cả",
 };
