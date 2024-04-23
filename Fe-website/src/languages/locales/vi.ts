@@ -180,4 +180,15 @@ export const vi = {
     CustomerName: "Tên khách hàng",
     NumberPurchases: "Số lần mua hàng",
     TotalValueOrders: "Tổng giá trị các đơn hàng",
+    NumberCategories: "Số lượng chủng loại",
+    NumberManufacturers: "Số lượng hãng sản xuất",
+    NumberClassifications: "Số lượng phân loại",
+    CategoryStatistics: "Thống kê chủng loại",
+    ClassificationStatistics: "Thống kê phân loại",
+    ManufacturerStatistics: "Thống kê hãng sản xuất",
+    ProductQuantity: "Số lượng sản phẩm",
+    ListBestSellingProducts: "Danh sách sản phẩm bán chạy",
+    ListSlowSellingProducts: "Danh sách sản phẩm bán chậm",
+    Month: "Tháng",
+    Present: "Hiện tại"
 };

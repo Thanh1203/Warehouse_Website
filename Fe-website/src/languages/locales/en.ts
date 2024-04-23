@@ -178,4 +178,16 @@ export const en = {
     CustomerName: "Customer name",
     NumberPurchases: "Number of purchases",
     TotalValueOrders: "Total value of orders",
+    NumberCategories: "Number of categories",
+    NumberManufacturers: "Number of manufacturers",
+    NumberClassifications: "Number of classifications",
+    CategoryStatistics: "Category statistics",
+    ClassificationStatistics: "Classification statistics",
+    ManufacturerStatistics: "Manufacturer statistics",
+    ProductQuantity: "Product quantity",
+    ListBestSellingProducts: "List of best-selling products",
+    ListSlowSellingProducts: "List of slow selling products",
+    Month: "Month",
+    Present: "Present",
+    
 };

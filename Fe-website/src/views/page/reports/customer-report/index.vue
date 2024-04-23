@@ -90,6 +90,7 @@ import Chartline from "@/components/Chartline/index.vue";
 import { MONTH_IN_YEAR } from "@/constants";
 import Chartbar from "@/components/Chartbar/index.vue";
 import AntdTable from "@/components/antd-table/index.vue";
+import { getArrayRandColor } from "@/utils/common";
 
 const labelChart = computed(() => {
   const result = [];
@@ -105,7 +106,7 @@ const dataChartPie = ref({
   labels: ["1 lần", "2 lần", "3 lần trở lên"],
   datasets: [
     {
-      backgroundColor: ["#41B883", "#E46651", "#00D8FF"],
+      backgroundColor: getArrayRandColor(3),
       data: [30, 30, 40],
     },
   ],

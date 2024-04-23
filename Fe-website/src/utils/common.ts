@@ -39,4 +39,20 @@ const checkDeleteItem = (item: any) => {
   }
 };
 
-export { STR_UPPER_CASE, FLATTEN_OBJ, removeNullObjects, checkDeleteItem };
+const getArrayRandColor = (numOfColor: number) => {
+  var colors = [];
+
+  for (var j = 0; j < numOfColor; j++) {
+    var red = Math.floor(Math.random() * 150) + 100; // Giới hạn đỏ từ 100 đến 250
+    var green = Math.floor(Math.random() * 150) + 100; // Giới hạn xanh lá cây từ 100 đến 250
+    var blue = Math.floor(Math.random() * 150) + 100; // Giới hạn xanh lam từ 100 đến 250
+
+    var color = 'rgb(' + red + ',' + green + ',' + blue + ')';
+    colors.push(color);
+  }
+
+  return colors;
+
+}
+
+export { STR_UPPER_CASE, FLATTEN_OBJ, removeNullObjects, checkDeleteItem, getArrayRandColor };

@@ -80,6 +80,7 @@ import { MONTH_IN_YEAR } from "@/constants";
 import dayjs, { Dayjs } from "dayjs";
 import Chartpie from "@/components/Chartpie/index.vue";
 import Chartbar from "@/components/Chartbar/index.vue";
+import { getArrayRandColor } from "@/utils/common";
 
 const currentRevenue = computed(() => 1000000);
 
@@ -113,7 +114,7 @@ const dataChartPie = ref({
   labels: ["Bàn phím", "Chuột", "Tai nghe"],
   datasets: [
     {
-      backgroundColor: ["#41B883", "#E46651", "#00D8FF"],
+      backgroundColor: getArrayRandColor(3),
       data: [40, 40, 20],
     },
   ],
