@@ -19,12 +19,12 @@ import "./style.scss";
 import { i18n } from './languages/i18n';
 import { useI18n } from 'vue-i18n';
 // day week month
-import dayjs from 'dayjs';
-import weekday from 'dayjs/plugin/weekday';
+import dayjs from "dayjs";
+import weekday from "dayjs/plugin/weekday";
 import localeData from "dayjs/plugin/localeData";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import utc from "dayjs/plugin/utc";
-import timezone from "dayjs/plugin/timezone";
+import timezone  from "dayjs/plugin/timezone";
 import { far } from '@fortawesome/free-regular-svg-icons';
 import { store } from './store';
 

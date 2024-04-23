@@ -55,7 +55,7 @@
         :dataSource="classifyData"
         :columns="columns"
         @onSelected="handleSelectRow"
-        class="tw-w-full tw-h-[calc(100vh-294px)] tw-overflow-hidden tw-overflow-y-auto"
+        class="tw-w-full tw-h-[calc(100vh-290px)] tw-overflow-hidden tw-overflow-y-auto"
       >
         <template #custom-body="{ column, record }">
           <template v-if="column.key === 'action'">

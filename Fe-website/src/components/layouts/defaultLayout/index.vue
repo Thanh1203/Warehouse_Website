@@ -24,6 +24,7 @@ import SlideMenu from "@/components/slide-menu/index.vue"
     width: 100%;
     padding: 24px;
     overflow: hidden;
+    overflow-y: auto;
   }
 }
 </style>
