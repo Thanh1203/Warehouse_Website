@@ -168,5 +168,14 @@ export const en = {
     productCategoryRatio: "Product category ratio",
     NumberOfWarehouses2: "Number of warehouses",
     CurrentTotalRevenue: "Current total revenue",
-    BestSellingProduct: "Best - selling product"
+    BestSellingProduct: "Best - selling product",
+    TotalPurchases: "Total purchases",
+    StatisticsPurchases: "Statistics on purchases",
+    SelectYear: "Select year",
+    NewCustomersEachYear: "Number of new customers each year",
+    ListPotentialCustomers: "List of potential customers",
+    CustomerCode: "Customer code",
+    CustomerName: "Customer name",
+    NumberPurchases: "Number of purchases",
+    TotalValueOrders: "Total value of orders",
 };

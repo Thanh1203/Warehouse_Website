@@ -1,102 +1,170 @@
 <template>
-  <div class="tw-grid tw-w-full tw-gap-4 tw-grid-cols-2 lg:tw-gap-8 lg:tw-grid-cols-4">
-    <div class="tw-bg-[#fff] tw-rounded-xl tw-p-4 tw-flex">
-      <div class="tw-rounded-full tw-bg-[#bee6f9] tw-p-2">
-        <font-awesome-icon :icon="['fas', 'database']" size="2xl" style="color: #000000" />
+<div class="tw-flex tw-w-full tw-h-full tw-justify-between">
+  <div class="tw-basis-1/4 tw-grid tw-grid-cols-1 tw-gap-8 tw-h-full  ">
+    <div class="tw-bg-[#fff] tw-rounded-xl tw-p-4 tw-flex tw-gap-x-4">
+      <div class="tw-rounded-full tw-bg-[#bee6f9] tw-w-14 tw-h-14 tw-flex tw-items-center tw-justify-center">
+        <font-awesome-icon :icon="['fas', 'database']" size="xl" style="color: #FFFFFF;"/>
       </div>
       <div class="tw-overflow-hidden">
-        <div class="tw-truncate tw-font-600 tw-text-[14px]">{{ translate("TotalProducts2") }}</div>
-        <div class="tw-font-[700] tw-text-[24px]">
+        <div class="tw-truncate tw-font-600 tw-text-[14px]">{{ translate("TotalCustomer") }}</div>
+        <div class="tw-font-[700] tw-text-[24px] tw-text-[#001f3f]">
           <NumberAnimation :from="0" :to="100" :duration="1" autoplay easing="linear" :format="theFormat" />
         </div>
       </div>
     </div>
-    
-  </div>
-  <!-- <div class="tw-flex tw-justify-between tw-gap-3 tw-flex-wrap">
-    <div class="tw-bg-white tw-p-6 tw-rounded-lg tw-basis-1/5 tw-flex tw-items-center">
-      <font-awesome-icon :icon="['fas', 'users-rectangle']" size="2xl" style="color: #000000" />
-      <div class="tw-ml-4 tw-flex tw-flex-col tw-items-start">
-        <span>{{ translate("TotalCustomer") }}</span>
-        <div class="tw-w-full tw-flex tw-items-center tw-justify-center tw-mt-3 tw-text-[24px] tw-text-green-400">
-          <NumberAnimation :from="0" :to="100" :duration="1" autoplay easing="linear" :format="theFormat" class="tw-font-bold"/>
+
+    <div class="tw-bg-[#fff] tw-rounded-xl tw-p-4 tw-flex tw-gap-x-4">
+      <div class="tw-rounded-full tw-bg-[#bee6f9] tw-w-14 tw-h-14 tw-flex tw-items-center tw-justify-center">
+        <font-awesome-icon :icon="['fas', 'cart-shopping']" size="xl" style="color: #FFFFFF;"/>
+      </div>
+      <div class="tw-overflow-hidden">
+        <div class="tw-truncate tw-font-600 tw-text-[14px]">{{ translate("TotalPurchases") }}</div>
+        <div class="tw-font-[700] tw-text-[24px] tw-text-[#001f3f]">
+          <NumberAnimation :from="0" :to="100" :duration="1" autoplay easing="linear" :format="theFormat" />
         </div>
       </div>
     </div>
 
-    <div class="tw-bg-white tw-p-6 tw-rounded-lg tw-basis-1/5 tw-flex tw-items-center">
-      <font-awesome-icon :icon="['fas', 'users-rectangle']" size="2xl" style="color: #000000" />
-      <div class="tw-ml-4 tw-flex tw-flex-col tw-items-start">
-        <span>{{ translate("Age") }} 16 - 25</span>
-        <div class="tw-w-full tw-flex tw-items-center tw-justify-center tw-mt-3 tw-text-[24px] tw-text-green-400">
-          <NumberAnimation :from="0" :to="100" :duration="1" autoplay easing="linear" :format="theFormat" class="tw-font-bold"/>
+    <div class="tw-bg-[#fff] tw-rounded-xl tw-p-4 tw-flex tw-gap-x-4">
+      <div class="tw-rounded-full tw-bg-[#bee6f9] tw-w-14 tw-h-14 tw-flex tw-items-center tw-justify-center">
+        <font-awesome-icon :icon="['fas', 'percent']" size="xl" style="color: #FFFFFF;"/>
+      </div>
+      <div class="tw-overflow-hidden">
+        <div class="tw-truncate tw-font-600 tw-text-[14px]">{{ translate("ReturnCustomerRate") }}</div>
+        <div class="tw-font-[700] tw-text-[24px] tw-text-[#001f3f]">
+          <NumberAnimation :from="0" :to="100" :duration="1" autoplay easing="linear" :format="theFormat" />
         </div>
       </div>
     </div>
 
-    <div class="tw-bg-white tw-p-6 tw-rounded-lg tw-basis-1/5 tw-flex tw-items-center">
-      <font-awesome-icon :icon="['fas', 'users-rectangle']" size="2xl" style="color: #000000" />
-      <div class="tw-ml-4 tw-flex tw-flex-col tw-items-start">
-        <span>{{ translate("Age") }} 25 - 35</span>
-        <div class="tw-w-full tw-flex tw-items-center tw-justify-center tw-mt-3 tw-text-[24px] tw-text-green-400">
-          <NumberAnimation :from="0" :to="100" :duration="1" autoplay easing="linear" :format="theFormat" class="tw-font-bold"/>
-        </div>
-      </div>
-    </div>
-
-    <div class="tw-bg-white tw-p-6 tw-rounded-lg tw-basis-1/5 tw-flex tw-items-center">
-      <font-awesome-icon :icon="['fas', 'users-rectangle']" size="2xl" style="color: #000000" />
-      <div class="tw-ml-4 tw-flex tw-flex-col tw-items-start">
-        <span>{{ translate("Age") }} 35 +</span>
-        <div class="tw-w-full tw-flex tw-items-center tw-justify-center tw-mt-3 tw-text-[24px] tw-text-green-400">
-          <NumberAnimation :from="0" :to="100" :duration="1" autoplay easing="linear" :format="theFormat" class="tw-font-bold"/>
-        </div>
-      </div>
+    <div class="tw-bg-[#fff] tw-rounded-xl tw-p-4">
+      <div class="tw-mb-6 tw-font-[700] tw-text-[18px] tw-text-[#001f3f]">{{ translate('StatisticsPurchases') }}</div>
+      <Chartpie :data="dataChartPie"/>
     </div>
   </div>
 
-  <div class="tw-w-full tw-h-[calc(100vh-192px)] tw-overflow-hidden tw-flex tw-mt-6 tw-gap-x-6">
-    <div class="tw-basis-1/5 tw-bg-white tw-rounded-lg tw-flex tw-flex-col">
-      <div class="tw-basis-1/2">
-        <div class="tw-p-4">
-          <span>{{ translate('AgeRatioCustomers') }}</span>
-        </div>
-        <Chartpie :data="dataChart" :options="BASE_OPS_CHART_PIE" class="tw-w-full"/>
-      </div>
-      <div class="tw-shrink-0">
-        <div class="tw-p-4">
-          <span>{{ translate('ReturnCustomerRate') }}</span>
-        </div>
-        <div class="tw-flex tw-items-center tw-justify-center">
-          <span class="tw-text-[96px]">70<span>%</span></span>
-        </div>
+  <div class="tw-basis-[70%] tw-bg-white tw-p-6 tw-rounded-xl tw-flex tw-flex-col tw-gap-y-6">
+    <div class="tw-flex tw-flex-col tw-items-start tw-justify-start">
+      <div>
+        <span class="tw-mr-3 tw-text-[14px]">{{ translate('SelectYear') }}</span>
+        <a-date-picker v-model:value="yearSelected" picker="year" class="tw-max-w-[350px] tw-h-9"/>
       </div>
     </div>
-    <div class="tw-basis-4/5 tw-shrink tw-flex tw-flex-col tw-w-full tw-bg-white tw-rounded-lg">
-      <div class="tw-basis-1/2"></div>
-      <div class="tw-basis-1/2">
-
+    <div class="tw-w-full tw-grow tw-flex tw-flex-col">
+      <div class="tw-text-[20px] tw-grow tw-flex tw-items-center tw-mb-4">{{ translate('NumberNewCustomers') }}: <span class="tw-font-[700]">{{ numberNewCustomer }}</span></div>
+      <div class="tw-grow">
+        <Chartline :data="dataChartLine"/>
       </div>
     </div>
-  </div> -->
+    <div class="tw-w-full tw-grow tw-flex tw-flex-col">
+      <div class="tw-text-[20px] tw-mb-4">{{ translate("NewCustomersEachYear") }}</div>
+      <div class="tw-grow">
+        <Chartbar :data="dataChartBar"/>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="tw-mt-6 tw-p-6 tw-bg-white tw-rounded-xl">
+  <div class="tw-mb-6 tw-text-[18px]">{{ translate('ListPotentialCustomers') }}</div>
+  <div class="tw-max-h-screen tw-overflow-hidden tw-overflow-y-auto">
+    <AntdTable
+      ref="table"
+      key-field="id"
+      :index-column="false"
+      :columns="columns"
+      :has-checkbox="false"
+      :no-sort="true"
+    >
+  
+    </AntdTable>
+  </div>
+</div>
 </template>
 <script setup lang="ts">
 import { translate } from "@/languages/i18n";
 import NumberAnimation from "vue-number-animation";
-import { ref } from "vue";
+import { computed, ref } from "vue";
+import Chartpie from "@/components/Chartpie/index.vue";
+import dayjs, { Dayjs } from "dayjs";
+import Chartline from "@/components/Chartline/index.vue";
+import { MONTH_IN_YEAR } from "@/constants";
+import Chartbar from "@/components/Chartbar/index.vue";
+import AntdTable from "@/components/antd-table/index.vue";
+
+const labelChart = computed(() => {
+  const result = [];
+  MONTH_IN_YEAR.forEach((e) => {
+    result.push(translate(`datetime.${e}`));
+  });
+  return result;
+});
+
+const yearSelected = ref<Dayjs>(dayjs());
+const numberNewCustomer = ref(10000)
+const dataChartPie = ref({
+  labels: ["1 lần", "2 lần", "3 lần trở lên"],
+  datasets: [
+    {
+      backgroundColor: ["#41B883", "#E46651", "#00D8FF"],
+      data: [30, 30, 40],
+    },
+  ],
+});
+const dataChartLine = ref({
+  labels: labelChart.value,
+  datasets: [
+    {
+      backgroundColor: "#7df8be",
+      borderColor: "#7df8be",
+      data: [10, 80, 30, 50, 60, 20, 70, 90, 40, 55, 100, 120]
+    }
+  ]
+});
+const dataChartBar = ref({
+  labels: [2019, 2020, 2021, 2022, 2023, 2024],
+  datasets: [
+    {
+      backgroundColor: "#93bbff",
+      data: [10, 80, 30, 50, 60, 20],
+    },
+  ],
+});
+
+const columns = ref<Array<any>>([
+  {
+    title: translate("CustomerCode"),
+    dataIndex: "code",
+    key: "code",
+    align: "left",
+  },
+  {
+    title: translate("CustomerName"),
+    dataIndex: "name",
+    key: "name",
+    align: "left",
+  },
+  {
+    title: translate("Address"),
+    dataIndex: "address",
+    key: "address",
+    align: "left",
+  },
+  {
+    title: translate("NumberPurchases"),
+    dataIndex: "totalBuy",
+    key: "totalBuy",
+    align: "left",
+  },
+  {
+    title: translate("TotalValueOrders"),
+    dataIndex: "totalOrder",
+    key: "totalOrder",
+    align: "left",
+  }
+])
 
 const theFormat = (number) => {
   return number.toFixed(0);
 };
-
-const dataChart = ref({
-  labels: ["16-25", "25-35", "35+"],
-  datasets: [
-    {
-      backgroundColor: ["#41B883", "#E46651", "#00D8FF"],
-      data: [40, 40, 20],
-    },
-  ],
-});
 </script>
 <style scoped lang="scss"></style>
