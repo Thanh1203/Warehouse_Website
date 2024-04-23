@@ -42,8 +42,7 @@
               "RelativeToolTip": "BackendWebApi\\Repository\\RWarehouse_Info.cs",
               "ViewState": "AQIAAG8AAAAAAAAAAAAowA8AAAAwAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-22T06:33:56.177Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-04-22T06:33:56.177Z"
             },
             {
               "$type": "Document",
@@ -55,8 +54,7 @@
               "RelativeToolTip": "BackendWebApi\\DTOS\\DTOWarehouse_Data.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAcAAAAWAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-22T06:31:31.261Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-04-22T06:31:31.261Z"
             },
             {
               "$type": "Document",
@@ -68,8 +66,7 @@
               "RelativeToolTip": "BackendWebApi\\Repository\\RWarehouse_Data.cs",
               "ViewState": "AQIAAAYAAAAAAAAAAAAuwCcAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-22T06:30:22.246Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-04-22T06:30:22.246Z"
             },
             {
               "$type": "Document",
@@ -94,8 +91,7 @@
               "RelativeToolTip": "BackendWebApi\\Models\\Warehouse_Data.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAA0AAAAlAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-22T06:18:24.639Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-04-22T06:18:24.639Z"
             }
           ]
         }

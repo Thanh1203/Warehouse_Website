@@ -103,11 +103,11 @@
   <a-form class="tw-mt-6 tw-w-full tw-bg-white tw-rounded-xl tw-p-6 tw-flex">
     <a-form-item class="!tw-mr-3">
       <div class="tw-opacity-70 tw-mb-2">{{ translate("Month") }}</div>
-      <a-date-picker picker="month" :format="'MM'" :disabled="disabledMonthSelect"/>
+      <a-date-picker picker="month" :format="'MM'" :disabled="disabledMonthSelect" :placeholder="translate('SelectMonth')"/>
     </a-form-item>
     <a-form-item class="!tw-mr-3">
       <div class="tw-opacity-70 tw-mb-2">{{ translate("Year") }}</div>
-      <a-date-picker picker="year" :allowClear="false"/>
+      <a-date-picker picker="year" :allowClear="false" :placeholder="translate('SelectYear')"/>
     </a-form-item>
     <a-form-item class="tw-flex tw-items-end !tw-mr-3">
       <AntdButton :type="'primary'" ghost @click="handleSetTimePresent">

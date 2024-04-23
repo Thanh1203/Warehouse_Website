@@ -83,7 +83,7 @@
 <script setup lang="ts">
 import { translate } from "@/languages/i18n";
 import NumberAnimation from "vue-number-animation";
-import { computed, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 import Chartpie from "@/components/Chartpie/index.vue";
 import dayjs, { Dayjs } from "dayjs";
 import Chartline from "@/components/Chartline/index.vue";

@@ -190,5 +190,14 @@ export const vi = {
     ListBestSellingProducts: "Danh sách sản phẩm bán chạy",
     ListSlowSellingProducts: "Danh sách sản phẩm bán chậm",
     Month: "Tháng",
-    Present: "Hiện tại"
+    Present: "Hiện tại",
+    SelectMonth: "Chọn Tháng",
+    TotalRevenue: "Tổng doanh thu",
+    AverageDailyRevenue: "Doanh thu trung bình ngày",
+    AverageMonthlyRevenue: "Doanh thu trung bình tháng",
+    QuarterlyRevenue: "Doanh thu theo quý",
+    RevenueEachMonth: "Doanh thu từng tháng",
+    MonthlyRevenueDetails: "Chi tiết doanh thu tháng",
+    RevenuePerWarehouse: "Doanh thu từng kho hàng",
+    RevenueStatisticsRegion: "Thống kê doanh thu theo khu vực",
 };

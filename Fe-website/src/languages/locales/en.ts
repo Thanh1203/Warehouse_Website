@@ -189,5 +189,13 @@ export const en = {
     ListSlowSellingProducts: "List of slow selling products",
     Month: "Month",
     Present: "Present",
-    
+    SelectMonth: "Select month",
+    TotalRevenue: "Total revenue",
+    AverageDailyRevenue: "Average daily revenue",
+    AverageMonthlyRevenue: "Average monthly revenue",
+    QuarterlyRevenue: "Quarterly revenue",
+    RevenueEachMonth: "Revenue each month",
+    MonthlyRevenueDetails: "Monthly revenue details",
+    RevenuePerWarehouse: "Revenue per warehouse",
+    RevenueStatisticsRegion: "Revenue statistics by region",
 };
