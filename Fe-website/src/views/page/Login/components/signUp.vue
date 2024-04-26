@@ -8,14 +8,14 @@
                 <div class="tw-basis-1/2 tw-flex tw-flex-col tw-items-start tw-mr-3">
                     <span>{{ translate("Name") }}<span class="required-star">*</span></span>
                     <div class="tw-mt-2 tw-w-full">
-                        <a-input class="tw-rounded-lg" v-model:value="v$.name.$model" :status="v$.name.$error ? 'error' : ''" />
+                        <a-input class="tw-rounded-xl" v-model:value="v$.name.$model" :status="v$.name.$error ? 'error' : ''" />
                     </div>
                     <ErrorMess :title="translate('Name')" :validator="v$.name.$errors[0]?.$validator" :params="[64]"/>
                 </div>
                 <div class="tw-basis-1/2 tw-flex tw-flex-col tw-items-start tw-ml-3">
                     <span>{{ translate("LastName") }}<span class="required-star">*</span></span>
                     <div class="tw-mt-2 tw-w-full">
-                        <a-input class="tw-rounded-lg" v-model:value="v$.lastname.$model" :status="v$.lastname.$error ? 'error' : ''" />
+                        <a-input class="tw-rounded-xl" v-model:value="v$.lastname.$model" :status="v$.lastname.$error ? 'error' : ''" />
                     </div>
                     <ErrorMess :title="translate('LastName')" :validator="v$.lastname.$errors[0]?.$validator" :params="[64]"/>
                 </div>
@@ -24,14 +24,14 @@
                 <div class="tw-basis-1/2 tw-flex tw-flex-col tw-items-start tw-mr-3">
                     <span>{{ translate("UserName") }}<span class="required-star">*</span></span>
                     <div class="tw-mt-2 tw-w-full">
-                        <a-input class="tw-rounded-lg" v-model:value="v$.username.$model" :status="v$.username.$error ? 'error' : ''" />
+                        <a-input class="tw-rounded-xl" v-model:value="v$.username.$model" :status="v$.username.$error ? 'error' : ''" />
                     </div>
                     <ErrorMess :title="translate('UserName')" :validator="v$.username.$errors[0]?.$validator" />
                 </div>
                 <div class="tw-basis-1/2 tw-flex tw-flex-col tw-items-start tw-ml-3">
                     <span>{{ translate("PhoneNumber") }}<span class="required-star">*</span></span>
                     <div class="tw-mt-2 tw-w-full">
-                        <a-input class="tw-rounded-lg" v-model:value="v$.phoneNumber.$model" :status="v$.phoneNumber.$error ? 'error' : ''" />
+                        <a-input class="tw-rounded-xl" v-model:value="v$.phoneNumber.$model" :status="v$.phoneNumber.$error ? 'error' : ''" />
                     </div>
                     <ErrorMess :title="translate('PhoneNumber')" :validator="v$.phoneNumber.$errors[0]?.$validator" />
                 </div>
@@ -39,14 +39,14 @@
             <div class="tw-mb-6 tw-w-full tw-flex tw-flex-col tw-items-start">
                 <span>{{ translate("Email") }}<span class="required-star">*</span></span>
                 <div class="tw-mt-2 tw-w-full">
-                    <a-input class="tw-rounded-lg" v-model:value="v$.email.$model" :status="v$.email.$error ? 'error' : ''" />
+                    <a-input class="tw-rounded-xl" v-model:value="v$.email.$model" :status="v$.email.$error ? 'error' : ''" />
                 </div>
                 <ErrorMess :title="translate('Email')" :validator="v$.email.$errors[0]?.$validator" />
             </div>
             <div class="tw-mb-6 tw-w-full tw-flex tw-flex-col tw-items-start">
                 <span>{{ translate("PassWord") }}<span class="required-star">*</span></span>
                 <div class="tw-mt-2 tw-w-full">
-                    <a-input-password class="tw-rounded-lg" v-model:value="v$.password.$model" :status="v$.password.$error ? 'error' : ''" />
+                    <a-input-password class="tw-rounded-xl" v-model:value="v$.password.$model" :status="v$.password.$error ? 'error' : ''" />
                 </div>
                 <ErrorMess :title="translate('PassWord')" :validator="v$.password.$errors[0]?.$validator" />
             </div>

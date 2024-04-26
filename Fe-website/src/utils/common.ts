@@ -1,11 +1,11 @@
-const STR_UPPER_CASE = (str: string) => {
+export const STR_UPPER_CASE = (str: string) => {
   return str
     .split(" ")
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(" ");
 };
 
-const FLATTEN_OBJ = (obj: any) => {
+export const FLATTEN_OBJ = (obj: any) => {
   let result = {};
   for (const i in obj) {
     if (typeof obj[i] === "object" && !Array.isArray(obj[i])) {
@@ -21,11 +21,11 @@ const FLATTEN_OBJ = (obj: any) => {
   return result;
 };
 
-const removeNullObjects = (obj: any) => {
+export const removeNullObjects = (obj: any) => {
   return Object.entries(obj).reduce((a, [k, v]) => (v === undefined || v === null || v === "" || (Array.isArray(v) && !v?.length) ? a : ((a[k] = v), a)), {});
 };
 
-const checkDeleteItem = (item: any) => {
+export const checkDeleteItem = (item: any) => {
   if (item.length > 0) {
     if (!item.find((x: any) => x?.allowDelete === false)) {
       return true;
@@ -39,7 +39,7 @@ const checkDeleteItem = (item: any) => {
   }
 };
 
-const getArrayRandColor = (numOfColor: number) => {
+export const getArrayRandColor = (numOfColor: number) => {
   var colors = [];
 
   for (var j = 0; j < numOfColor; j++) {
@@ -47,12 +47,19 @@ const getArrayRandColor = (numOfColor: number) => {
     var green = Math.floor(Math.random() * 150) + 100; // Giới hạn xanh lá cây từ 100 đến 250
     var blue = Math.floor(Math.random() * 150) + 100; // Giới hạn xanh lam từ 100 đến 250
 
-    var color = 'rgb(' + red + ',' + green + ',' + blue + ')';
+    var color = "rgb(" + red + "," + green + "," + blue + ")";
     colors.push(color);
   }
 
   return colors;
+};
 
-}
+export const toUpperFirstLetter = (str) => str.charAt(0).toUpperCase() + str.substring(1).toLowerCase();
 
-export { STR_UPPER_CASE, FLATTEN_OBJ, removeNullObjects, checkDeleteItem, getArrayRandColor };
+export const formatIdProduct = (str: string) => {
+  const strSpkit = str.split(" | ");
+  return {
+    id: strSpkit[0],
+    code: strSpkit[1],
+  };
+};

@@ -1,5 +1,5 @@
 <template>
-  <a-form class="tw-flex tw-rounded-lg tw-bg-white tw-px-6 tw-py-5 tw-mb-6">
+  <a-form class="tw-flex tw-rounded-xl tw-bg-white tw-px-6 tw-py-5 tw-mb-6">
     <a-form-item class="tw-w-[300px] !tw-mr-3">
       <span class="tw-opacity-70">{{ translate("ProductName") }}</span>
       <a-input :placeholder="translate('Search')" v-model:value="filterSearching.Keyword" class="tw-mt-2" />
@@ -26,7 +26,7 @@
       </AntdButton>
     </a-form-item>
   </a-form>
-  <div class="tw-w-full tw-h-full tw-flex tw-bg-white tw-p-6 tw-rounded-lg product-Info tw-overflow-hidden">
+  <div class="tw-w-full tw-h-full tw-flex tw-bg-white tw-p-6 tw-rounded-xl product-Info tw-overflow-hidden">
     <Section
       class="!tw-w-[18%] !tw-h-auto tw-bg-transparent tw-border tw-border-solid tw-mr-2"
       :title="translate('CategoryList')"

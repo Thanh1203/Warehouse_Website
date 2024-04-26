@@ -1,5 +1,5 @@
 <template>
-  <a-form class="tw-flex tw-rounded-lg tw-bg-white tw-px-6 tw-py-5 tw-mb-6 tw-gap-6">
+  <a-form class="tw-flex tw-rounded-xl tw-bg-white tw-px-6 tw-py-5 tw-mb-6 tw-gap-6">
     <a-form-item>
       <span class="tw-opacity-70 tw-mr-4">{{ translate("Year") }}</span>
       <a-date-picker picker="year" :allowClear="false" :placeholder="translate('SelectYear')" />

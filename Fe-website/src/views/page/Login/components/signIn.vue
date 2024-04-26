@@ -7,14 +7,14 @@
       <div class="tw-mb-6 tw-w-3/5 tw-flex tw-flex-col tw-items-start">
         <span>{{ translate("UserName") }}</span>
         <div class="tw-mt-2 tw-w-full">
-          <a-input class="tw-rounded-lg" v-model:value="v$.username.$model" :status="v$.username.$error ? 'error' : ''" />
+          <a-input class="tw-rounded-xl" v-model:value="v$.username.$model" :status="v$.username.$error ? 'error' : ''" />
         </div>
         <ErrorMess :title="translate('UserName')" :validator="v$.username.$errors[0]?.$validator" />
       </div>
       <div class="tw-mb-6 tw-w-3/5 tw-flex tw-flex-col tw-items-start">
         <span>{{ translate("PassWord") }}</span>
         <div class="tw-mt-2 tw-w-full">
-          <a-input-password  class="tw-rounded-lg" v-model:value="v$.password.$model" :status="v$.password.$error ? 'error' : ''" />
+          <a-input-password  class="tw-rounded-xl" v-model:value="v$.password.$model" :status="v$.password.$error ? 'error' : ''" />
         </div>
         <ErrorMess :title="translate('PassWord')" :validator="v$.password.$errors[0]?.$validator" />
       </div>

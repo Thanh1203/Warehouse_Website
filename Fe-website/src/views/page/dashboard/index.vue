@@ -59,7 +59,7 @@
         <div class="tw-mb-3 tw-font-[700] tw-text-[18px] tw-text-[#001f3f]">{{ translate('BestSellingProduct') }}</div>
         <div class="tw-flex tw-flex-col">
           <div class="tw-mb-2 tw-truncate">{{ translate('ProductName') }}: Bàn phím gamming</div>
-          <div>{{ translate('Quantity') }} 1000000</div>
+          <div>{{ translate('Quantity') }}: 1000000</div>
         </div>
       </div>
     </div>

@@ -20,25 +20,6 @@
     background-color: #1677ff;
 }
 
-//filter section
-.filter-section {
-    .ant-form-item {
-        height: 60px;
-        margin-right: 12px;
-        .ant-input {
-            height: 30px;
-            margin-top: 8px;
-        }
-        .ant-select {
-            height: 30px;
-            margin-top: 8px;
-            .ant-select-selector {
-                height: 100%;
-            }
-        }
-    }
-}
-
 //antd btn
 .ant-btn {
     border-radius: 12px;

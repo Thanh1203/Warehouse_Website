@@ -44,6 +44,7 @@ export default {
                 const response: any = await DataService.callApi(ConstantAPI.warehouse.GET, null, payload);
                 await commit("SET_WAREHOUSE_INFO", response?.data);
                 await commit("SET_TOTAL_WAREHOUSE", response?.totalElement);
+                return response;
             } catch (error) {
                 console.log(error);
             }
