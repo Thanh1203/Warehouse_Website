@@ -164,6 +164,15 @@ export default (): RouteRecordRaw[] => {
         title: translate("ImportGoods"),
         layout: detailLayout,
       },
-    }
+    },
+    {
+      path: "/price-configuration",
+      name: "price configuuration",
+      component: () => import("./price-config/index.vue"),
+      meta: {
+        title: translate('PriceConfiguration'),
+        layout: defaultLayout,
+      }
+    },
   ];
 };

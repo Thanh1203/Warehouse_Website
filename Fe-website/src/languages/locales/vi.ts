@@ -227,4 +227,7 @@ export const vi = {
     English: "Tiếng Anh",
     SelectLanguage: "Chọn ngôn ngữ",
     Reload: "Làm mới(F5)",
+    PriceConfiguration: "Cấu hình giá bán",
+    UnitPrice: "Đơn giá",
+    EditUnitPrice: "Sửa đơn giá",
 };

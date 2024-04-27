@@ -1,6 +1,7 @@
 import { translate } from "@/languages/i18n";
+import { icon } from "@fortawesome/fontawesome-svg-core";
 import { faProductHunt } from "@fortawesome/free-brands-svg-icons";
-import { faAddressBook, faChartColumn, faChartLine, faChartPie, faChartSimple, faDatabase, faDownload, faGear, faGears, faIndustry, faInfo, faRightToBracket, faUpload, faUsers, faWarehouse } from "@fortawesome/free-solid-svg-icons";
+import { faAddressBook, faChartColumn, faChartLine, faChartPie, faChartSimple, faCoins, faDatabase, faDownload, faGear, faGears, faIndustry, faInfo, faRightToBracket, faUpload, faUsers, faWarehouse } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { h } from "vue";
 
@@ -87,6 +88,11 @@ const menuAdmin = [
             },
         ]
     },
+    {
+        key: "PRICECONFIG",
+        label: translate('PriceConfiguration'),
+        icon: () => h(FontAwesomeIcon, { icon: faCoins}),
+    }
 ];
 
 export { menuAdmin };

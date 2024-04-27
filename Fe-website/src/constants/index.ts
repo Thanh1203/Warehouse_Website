@@ -52,6 +52,10 @@ export const PC_MENU = [
     key: "PRODUCTPRODUCER",
     path: "/product-producer",
   },
+  {
+    key: "PRICECONFIG",
+    path: "/price-configuration"
+  },
 ];
 
 export const DEFAULT_PROPERTY = {

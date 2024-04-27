@@ -1,6 +1,6 @@
 <template>
   <div class="tw-mb-6 tw-p-6 tw-bg-white tw-rounded-xl">
-    <a-Tabs v-model:activeKey="activeKey" type="card">
+    <a-Tabs v-model:activeKey="activeKey" type="card" class="tw-h-[177px]">
       <a-tab-pane v-for="item in listWhInfo" :key="item.id" :tab="item.name">
         <TabWhInfo :data="item" />
       </a-tab-pane>
@@ -28,7 +28,7 @@
       </AntdButton>
     </div>
 
-    <div class="tw-grow tw-h-full">
+    <div class="tw-grow tw-h-full tw-w-full">
       <Section class="tw-w-full tw-bg-white tw-h-full" :title="translate('ImportHistory')">
         <template #action>
           <AntdButton type="primary" @click="goImportGodds">
@@ -52,8 +52,8 @@ import AntdTable from "@/components/antd-table/index.vue";
 import dayjs, { Dayjs } from "dayjs";
 import { removeNullObjects } from "@/utils/common";
 import { useRouter } from "vue-router";
+import TabWhInfo from "@/components/list-tab-warehouse/index.vue";
 
-const TabWhInfo = defineAsyncComponent(() => import("./components/TabWarehouse.vue"));
 
 const store = useStore();
 const router = useRouter();
