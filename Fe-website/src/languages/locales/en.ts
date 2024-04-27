@@ -225,4 +225,7 @@ export const en = {
     English: "English",
     SelectLanguage: "Select language",
     Reload: "Reload(F5)",
+    PriceConfiguration: "Price configuration",
+    UnitPrice: "Unit price",
+    EditUnitPrice: "Edit unit price",
 };
