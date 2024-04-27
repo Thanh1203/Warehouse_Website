@@ -221,5 +221,10 @@ export const vi = {
     ListProductsWarehouse: "Danh sách sản phẩm trong kho hàng",
     CurrentQuantity: "Số lượng hiện tại",
     ProductListUpdatedQuantity: "Danh sách sản phẩm cập nhật số lượng",
-    ImportGoods: "Nhập hàng"
+    ImportGoods: "Nhập hàng",
+    Language: "Ngôn ngữ",
+    Vietnamese: "Tiếng Việt",
+    English: "Tiếng Anh",
+    SelectLanguage: "Chọn ngôn ngữ",
+    Reload: "Làm mới(F5)",
 };

@@ -26,7 +26,7 @@
         <a-menu :items="menuAdmin" v-model:selectedKeys="selectedKeys" v-model:openKeys="openKeys" @click="handleClickMenu" :mode="'vertical'"/>
     </div>
     <div class="menu-footer">
-        <div class="tw-flex tw-items-center tw-justify-center" @click="handleOpenSetting">
+        <div class="tw-flex tw-items-center tw-justify-start tw-w-full" @click="handleOpenSetting">
             <font-awesome-icon :icon="['fas', 'gear']" style="color: #000;"/>
             <span class="tw-ml-[12px] tw-leading-6 tw-pt-1">
                 {{ translate("Setting") }}
