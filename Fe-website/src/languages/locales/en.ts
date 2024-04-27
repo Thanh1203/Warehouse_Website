@@ -220,4 +220,9 @@ export const en = {
     CurrentQuantity: "Current quantity",
     ProductListUpdatedQuantity: "Product list with updated quantity",
     ImportGoods: "Import goods",
+    Language: "Language",
+    Vietnamese: "Vietnamese",
+    English: "English",
+    SelectLanguage: "Select language",
+    Reload: "Reload(F5)",
 };
