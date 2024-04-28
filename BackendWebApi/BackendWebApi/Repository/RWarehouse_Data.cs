@@ -11,46 +11,117 @@ namespace BackendWebApi.Repository
     {
         private readonly DataContext _context = context;
 
-        public async Task<Object> Get()
+        public async Task UpdateUnitPrice(int idWarehouse, int productId, double unitPrice)
         {
-            var data = new List<DTOWarehouse_Data_List>();
-            var dataList = await _context.Warehouse_Data.Where(e => e.CompanyId == 1).ToListAsync();
+            var temp = _context.Warehouse_Data.SingleOrDefault(e => e.IdWarehouse== idWarehouse && e.IdProduct == productId);
 
-            foreach (var item in dataList)
+            if (temp != null)
             {
-                string? name = await _context.Warehouse_Infos.Where(e => e.Id == item.Id).Select(e => e.Name).SingleOrDefaultAsync();
-                var viewModel = new DTOWarehouse_Data_List
-                {
-                    Id = item.Id,
-                    NameProduct = name,
-                };
-                data.Add(viewModel);
+                temp.UnitPrice = unitPrice;
             }
 
-            return new
-            {
-                data,
-            };
-        }
-
-        public async Task Create([FromBody] Warehouse_Data warehouse_Data)
-        {
-            var newItem = new Warehouse_Data
-            {
-
-            };
-            _context.Warehouse_Data.Add(newItem);
             await _context.SaveChangesAsync();
         }
 
-        public async Task Update([FromBody] Warehouse_Data warehouse_Data)
+        public async Task InsertProduct(DTOWarehouseData_Create? data_Create)
         {
-            var newItem = new Warehouse_Data
+            foreach (var item in data_Create.DataInsert)
+            {
+                var newWarehouseData = new Warehouse_Data
+                {
+                    IdWarehouse = data_Create.IdWarehouse,
+                    IdProduct = item.Idroduct,
+                    CodeProduct = item.CodeProduct,
+                    CompanyId = 1,
+                    Quantity = item.Quantity,
+                    UnitPrice = 0,
+                };
+                _context.Warehouse_Data.Add(newWarehouseData);
+                await _context.SaveChangesAsync();
+            }
+
+            var newWarehouseImport = new Warehouse_Import
             {
 
+                WarehouseId = data_Create.IdWarehouse,
+                TotalProduct = data_Create.TotalProduct,
+                CompanyId = 1,
+                DateTime = DateTime.UtcNow,
+                Code = "GsI" + 1.ToString() + GenerateRandomString() + DateTimeOffset.UtcNow.ToString("yyyyHHddMMfffmmss")
             };
-            _context.Warehouse_Data.Add(newItem);
+            _context.Warehouse_Imports.Add(newWarehouseImport);
             await _context.SaveChangesAsync();
+        }
+
+        public async Task UpdateQuantityProduct(DTOWarehouseData_Update? data_Update)
+        {
+            foreach (var item in data_Update.DataUpdate)
+            {
+                var itemUpdate = _context.Warehouse_Data.SingleOrDefault(e => e.IdProduct == item.Idroduct && e.CompanyId == 1 && e.IdWarehouse == data_Update.IdWarehouse);
+                if (itemUpdate != null)
+                {
+                    itemUpdate.Quantity += item.Quantity;
+                }
+
+                await _context.SaveChangesAsync();
+            }
+
+            var newWarehouseImport = new Warehouse_Import
+            {
+
+                WarehouseId = data_Update.IdWarehouse,
+                TotalProduct = data_Update.TotalProduct,
+                CompanyId = 1,
+                DateTime = DateTime.UtcNow,
+                Code = "GsI" + 1.ToString() + GenerateRandomString() + DateTimeOffset.UtcNow.ToString("yyyyHHddMMfffmmss")
+            };
+            _context.Warehouse_Imports.Add(newWarehouseImport);
+            await _context.SaveChangesAsync();
+        }
+
+        public async  Task DecreaseQuantityProduct(DTOWarehouseData_Update? data_Update)
+        {
+            double totalValue = 0;
+            foreach (var item in data_Update.DataUpdate)
+            {
+                var itemUpdate = _context.Warehouse_Data.SingleOrDefault(e => e.IdProduct == item.Idroduct && e.CompanyId == 1 && e.IdWarehouse == data_Update.IdWarehouse);
+                if (itemUpdate != null)
+                {
+                    itemUpdate.Quantity -= item.Quantity;
+                    var value = item.Quantity * itemUpdate.UnitPrice;
+                    totalValue += value;
+                }
+
+                await _context.SaveChangesAsync();
+            }
+
+            var newWarehouseExport = new Warehouse_Export
+            {
+
+                WarehouseId = data_Update.IdWarehouse,
+                TotalProduct = data_Update.TotalProduct,
+                CompanyId = 1,
+                DateTime = DateTime.UtcNow,
+                Code = "GsI" + 1.ToString() + GenerateRandomString() + DateTimeOffset.UtcNow.ToString("yyyyHHddMMfffmmss"),
+                TotalValue = totalValue,
+            };
+            _context.Warehouse_Exports.Add(newWarehouseExport);
+            await _context.SaveChangesAsync();
+        }
+
+        static string GenerateRandomString()
+        {
+            Random random = new Random();
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+            char[] result = new char[3];
+
+            // Tạo chuỗi ngẫu nhiên có độ dài length ký tự
+            for (int i = 0; i < 3; i++)
+            {
+                result[i] = chars[random.Next(chars.Length)];
+            }
+
+            return new string(result);
         }
     }
 }

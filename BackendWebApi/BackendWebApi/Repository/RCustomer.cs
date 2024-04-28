@@ -37,48 +37,5 @@ namespace BackendWebApi.Repository
             return addressCounts.OrderByDescending(pair => pair.Value).ToList();
         }
 
-        public async Task<object> GetAgeCustomer()
-        {
-            var age16_25Count = await _context.Customers.CountAsync(e => e.Age >= 16 && e.Age <= 25);
-            var age25_35Count = await _context.Customers.CountAsync(e => e.Age > 25 && e.Age <= 35);
-            var ageOver35Count = await _context.Customers.CountAsync(e => e.Age > 35);
-            var totalCount = await _context.Customers.CountAsync();
-
-            double age16_25Percentage = 0;
-            double age25_35Percentage = 0;
-            double ageOver35Percentage = 0;
-
-            var result = new
-            {
-                age16_25 = age16_25Count,
-                age25_35 = age25_35Count,
-                ageOver35 = ageOver35Count,
-            };
-
-            if (totalCount != 0)
-            {
-                if (age16_25Count != 0)
-                {
-                    age16_25Percentage = (double)age16_25Count / totalCount * 100;
-                }
-
-                if (age25_35Count != 0)
-                {
-                    age25_35Percentage = (double)age25_35Count / totalCount * 100;
-                }
-
-                if (ageOver35Count != 0)
-                {
-                    ageOver35Percentage = (double)ageOver35Count / totalCount * 100;
-                }
-            }
-
-            return new
-            {
-                age16_25 = age16_25Percentage,
-                age25_35 = age25_35Percentage,
-                ageOver35 = ageOver35Percentage,
-            };
-        }
     }
 }

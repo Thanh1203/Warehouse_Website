@@ -131,6 +131,46 @@ export default {
         DELETE: {
             url: "/api/productInfo",
             method: "DELETE"
+        },
+        GET_IN_WH: {
+            url: "/api/productInfo/ProductInWarehouse",
+            method: "GET"
+        },
+        GET_OUTSIDE_WH: {
+            url: "/api/productInfo/ProductOutsideWarehouse",
+            method: "GET"
+        },
+        UPDATE_UNIT_PRICE: {
+            url: "/api/warehouseData",
+            method: "PUT"
+        },
+        GET_LIST_UNIT_PRICE: {
+            url: "api/productInfo/ProductConfigPrice",
+            method: "GET"
         }
+    },
+    warehouseImport: {
+        GET: {
+            url: "/api/WarehouseImport",
+            method: "GET"
+        },
+        POST: {
+            url: "/api/warehouseData",
+            method: "POST"
+        },
+        PUT_GOODS_IMPORT: {
+            url: "/api/warehouseData/GoodsImport",
+            method: "PUT"
+        },
+        PUT_GOODS_EXPORT: {
+            url: "/api/warehouseData/GoodsExport",
+            method: "PUT"
+        }
+    },
+    warehouseExport: {
+        GET: {
+            url: "api/WarehouseExport",
+            method: "GET"
+        },
     }
 }

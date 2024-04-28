@@ -42,19 +42,5 @@ namespace BackendWebApi.Controllers
             }
         }
 
-        [HttpGet("ReportAge")]
-        public async Task<IActionResult> FetchAgeCustomer()
-        {
-            try
-            {
-                var Ages = await _ICustomer.GetAgeCustomer();
-                return Ok(Ages);
-
-            }
-            catch (Exception ex)
-            {
-                return BadRequest($"Error: {ex.Message}");
-            }
-        }
     }
 }

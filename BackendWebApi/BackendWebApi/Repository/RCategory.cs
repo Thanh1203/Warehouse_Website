@@ -1,4 +1,5 @@
 ﻿using BackendWebApi.Data;
+using BackendWebApi.DTOS;
 using BackendWebApi.Interfaces;
 using BackendWebApi.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -6,32 +7,26 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BackendWebApi.Repository
 {
-    public class RCategory : ICategory
+    public class RCategory(DataContext context) : ICategory
     {
-        private readonly DataContext _context;
-        public RCategory(DataContext context)
-        {
-            _context = context;
-        }
-        
-        
+        private readonly DataContext _context = context;
 
         public async Task<object> GetCategories()
         {
-            var data = new List<CategoryViewModel>();
+            var data = new List<DTOCategory>();
             var datalist = await _context.Categories.Where(e => e.CompanyId == 1).ToListAsync();
             var totalElement = await _context.Categories.Where(e => e.CompanyId == 1).CountAsync();
 
             foreach (var item in datalist)
             {
                 bool allowDelete = await _context.Product_Infos.AnyAsync(p => p.CategoryId == item.Id);
-                var viewModel = new CategoryViewModel
+                var viewModel = new DTOCategory
                 {
                     Id = item.Id,
                     Name = item.Name,
                     Code = item.Code,
                     CompanyId = item.CompanyId,
-                    TimeCreate = TimeZoneInfo.ConvertTimeToUtc(item.DateTime, TimeZoneInfo.Local).ToString("dd/MM/yyyy"),
+                    TimeCreate = TimeZoneInfo.ConvertTimeFromUtc(item.DateTime, TimeZoneInfo.Local).ToString("dd/MM/yyyy"),
                     AllowDelete = !allowDelete,
                 };
                 data.Add(viewModel);
@@ -46,7 +41,7 @@ namespace BackendWebApi.Repository
 
         public async Task<object> SearchCategory(string str)
         {
-            var data = new List<CategoryViewModel>();
+            var data = new List<DTOCategory>();
             var query = _context.Categories.Where(e => e.CompanyId == 1).AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(str))
@@ -60,13 +55,13 @@ namespace BackendWebApi.Repository
             foreach (var item in dataList)
             {
                 bool allowDelete = await _context.Product_Infos.AnyAsync(p => p.CategoryId == item.Id);
-                var viewModel = new CategoryViewModel
+                var viewModel = new DTOCategory
                 {
                     Id = item.Id,
                     Code = item.Code,
                     Name = item.Name,
                     CompanyId = item.CompanyId,
-                    TimeCreate = TimeZoneInfo.ConvertTimeToUtc(item.DateTime, TimeZoneInfo.Local).ToString("dd/MM/yyyy"),
+                    TimeCreate = TimeZoneInfo.ConvertTimeFromUtc(item.DateTime, TimeZoneInfo.Local).ToString("dd/MM/yyyy"),
                     AllowDelete = !allowDelete,
                 };
                 data.Add(viewModel);
@@ -118,17 +113,6 @@ namespace BackendWebApi.Repository
                     await _context.SaveChangesAsync();
                 }
             }
-        }
-
-        public class CategoryViewModel
-        {
-            public int Id { get; set; }
-            public string Code { get; set; }
-            public string Name { get; set; }
-            public int CompanyId { get; set; }
-            public string? TimeCreate { get; set; }
-            public bool? AllowDelete { get; set; }
-
         }
     }
 }

@@ -9,5 +9,10 @@ namespace BackendWebApi.Interfaces
         Task Create(Product_Info product_info);
         Task Update(Product_Info product_info);
         Task Delete(List<int> ids);
+        Task<object> GetProductOutsideWH(int warehouseId);
+        Task<object> GetProductInsideWH(int warehouseId);
+        Task<object> SearchProductInsideWH(int warehouseId, string code);
+        Task<object> GetProductConfigUnitPrice(int warehouseId);
+        Task<object> SearchProductConfigUnitPrice(int warehouseId, string code, string name);
     }
 }
