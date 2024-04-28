@@ -148,16 +148,6 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "BackendWebApi.Controllers.Customer_Controller",
-    "Method": "FetchAgeCustomer",
-    "RelativePath": "api/Customer/ReportAge",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": []
-  },
-  {
     "ContainingType": "BackendWebApi.Controllers.Personnel_Controller",
     "Method": "FetchPersonnels",
     "RelativePath": "api/personnel",
@@ -385,6 +375,69 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "BackendWebApi.Controllers.Product_Info_Controller",
+    "Method": "GetProductIConfigPrice",
+    "RelativePath": "api/productInfo/ProductConfigPrice/{warehouseId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "warehouseId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "code",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "name",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BackendWebApi.Controllers.Product_Info_Controller",
+    "Method": "GetProductInWarehouse",
+    "RelativePath": "api/productInfo/ProductInWarehouse/{warehouseId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "warehouseId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "code",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BackendWebApi.Controllers.Product_Info_Controller",
+    "Method": "GetProductOutsideWarehouse",
+    "RelativePath": "api/productInfo/ProductOutsideWarehouse/{warehouseId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "warehouseId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "BackendWebApi.Controllers.Warehouse_Controller",
     "Method": "FetchWarehousesInfo",
     "RelativePath": "api/Warehouse",
@@ -476,6 +529,137 @@
     "IsController": true,
     "Order": 0,
     "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BackendWebApi.Controllers.Warehouse_Data_Controller",
+    "Method": "InsertData",
+    "RelativePath": "api/warehouseData",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "data_Create",
+        "Type": "BackendWebApi.DTOS.DTOWarehouseData_Create",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BackendWebApi.Controllers.Warehouse_Data_Controller",
+    "Method": "UpdateWarehouseData",
+    "RelativePath": "api/warehouseData/{warehouseId}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "warehouseId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "value",
+        "Type": "BackendWebApi.DTOS.DTOWarehouse_Update_UnitPrice",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BackendWebApi.Controllers.Warehouse_Data_Controller",
+    "Method": "DecreaseData",
+    "RelativePath": "api/warehouseData/GoodsExport",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "data_Update",
+        "Type": "BackendWebApi.DTOS.DTOWarehouseData_Update",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BackendWebApi.Controllers.Warehouse_Data_Controller",
+    "Method": "UpdateData",
+    "RelativePath": "api/warehouseData/GoodsImport",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "data_Update",
+        "Type": "BackendWebApi.DTOS.DTOWarehouseData_Update",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BackendWebApi.Controllers.Warehouse_Export_Controller",
+    "Method": "FetchWarehouseExport",
+    "RelativePath": "api/WarehouseExport/{warehouseId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "warehouseId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "day",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "month",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "year",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BackendWebApi.Controllers.Warehouse_Import_Controller",
+    "Method": "FetchHistoryImpor",
+    "RelativePath": "api/WarehouseImport/{warehouseId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "warehouseId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "day",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "month",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "year",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
     "ReturnTypes": []
   }
 ]

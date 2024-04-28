@@ -28,8 +28,8 @@
     </a-form-item>
   </a-form>
 
-  <Section :title="translate('ListProducts')" :subTitle="translate('TotalProducts')" :number="String(totalProduct)">
-    <template #body> 
+  <Section :title="translate('ListProducts')" :subTitle="translate('TotalProducts')" :number="String(productConfigUnitPrice?.length)">
+    <template #body>
       <AntdTable
         class="tw-h-[50vh] tw-w-full tw-overflow-hidden tw-overflow-y-auto"
         :columns="columns"
@@ -38,12 +38,15 @@
         :index-column="true"
         :has-checkbox="false"
         :no-sort="true"
-        :dataSource="dataFake"
+        :dataSource="productConfigUnitPrice"
       >
         <template #custom-body="{ column, record }">
           <template v-if="column.key === 'unitPrice' && record">
             <div>
-              <a-input v-if="checkRowUpdate(record.id)" v-model:value="untiPriceState"/>
+              <div v-if="checkRowUpdate(record.id)">
+                <a-input v-model:value="v$.valUnitPrice.$model" class="tw-mb-2" />
+                <ErrorMess :params="[64]" :title="translate('UnitPrice')" :validator="v$.valUnitPrice.$errors[0]?.$validator" />
+              </div>
               <template v-else>
                 {{ record.unitPrice }}
               </template>
@@ -52,17 +55,17 @@
 
           <template v-if="column.key === 'action' && record">
             <div v-if="!checkRowUpdate(record.id)">
-              <AntdButton type="link" @click="handleEditUnitPrice(record.id)">
-                {{ translate('EditUnitPrice') }}
+              <AntdButton type="link" @click="handleEditUnitPrice(record)">
+                {{ translate("EditUnitPrice") }}
               </AntdButton>
             </div>
             <div v-else class="tw-flex tw-gap-4">
               <AntdButton danger ghost @click="cancelEdit">
-                {{ translate('Cancel') }}
+                {{ translate("Cancel") }}
               </AntdButton>
-              
+
               <AntdButton type="primary" ghost @click="submitEdit">
-                {{ translate('Save') }}
+                {{ translate("Save") }}
               </AntdButton>
             </div>
           </template>
@@ -72,20 +75,28 @@
   </Section>
 </template>
 <script setup lang="ts">
-import { computed, onMounted, reactive, ref } from "vue";
+import { computed, onMounted, reactive, ref, watch } from "vue";
 import { useStore } from "vuex";
 import TabWhInfo from "@/components/list-tab-warehouse/index.vue";
 import { translate } from "@/languages/i18n";
 import AntdButton from "@/components/antd-button/index.vue";
 import Section from "@/components/section/index.vue";
 import AntdTable from "@/components/antd-table/index.vue";
+import { debounce } from "vue-debounce";
+import { removeNullObjects } from "@/utils/common";
+import { useRoute, useRouter } from "vue-router";
+import { REGEX_POSITIVE_INTERGER } from "@/constants";
+import useVuelidate from "@vuelidate/core";
+import ErrorMess from "@/components/error-mess/index.vue";
 
 const store = useStore();
+const route = useRoute();
+const router = useRouter();
 
 const listWhInfo = computed(() => store.getters["warehouse/warehouseInfo"]);
-const totalProduct = computed(() => 100);
+const productConfigUnitPrice = computed(() => store.getters["product/productConfigUnitPrice"]);
 
-const editUnitPrice = ref<number|null>(null);
+const editUnitPrice = ref<number | null>(null);
 const activeKey = ref<number>(0);
 const columns = ref<Array<any>>([
   {
@@ -114,12 +125,27 @@ const columns = ref<Array<any>>([
     fixed: "right",
   },
 ]);
-const untiPriceState = ref<number | null>(100);
+const unitPriceSate = reactive<any>({
+  valUnitPrice: 0,
+});
 
 const filterSearching = reactive<any>({
   name: "",
   code: "",
 });
+
+const rules = {
+  valUnitPrice: {
+    positiveInteger: (value) => {
+      if (value === undefined || value === null || value === "") {
+        return true;
+      }
+      return REGEX_POSITIVE_INTERGER.test(value);
+    },
+  },
+};
+
+const v$ = useVuelidate(rules, unitPriceSate);
 
 const disabledDeleteFilter = computed(() => filterSearching?.name?.length === 0 && filterSearching?.code?.length === 0);
 
@@ -130,62 +156,65 @@ const handleClearFilter = () => {
 
 const checkRowUpdate = (id) => {
   return id === editUnitPrice.value;
-}
+};
 
-const handleEditUnitPrice = (id) => {
-  editUnitPrice.value = id;
+const handleEditUnitPrice = (item) => {
+  editUnitPrice.value = item.id;
+  unitPriceSate.valUnitPrice = item.unitPrice;
 };
 
 const cancelEdit = () => {
   editUnitPrice.value = null;
-  untiPriceState.value = null;
+  unitPriceSate.valUnitPrice = null;
 };
 
-const submitEdit = () => {
+const submitEdit = async () => {
+  if (unitPriceSate.valUnitPrice) {
+    const payload = {
+      id: activeKey.value,
+      params: {
+        ...route.query,
+      },
+      state: {
+        productId: editUnitPrice.value,
+        untiPirce: unitPriceSate.valUnitPrice,
+      },
+    };
+    await store.dispatch("product/updateUnitPrice", removeNullObjects(payload));
+  }
   editUnitPrice.value = null;
+  unitPriceSate.valUnitPrice = null;
 };
+
+const fetchProductInWh = async (params) => {
+  await store.dispatch("product/getProductConfigUnitPrice", params);
+};
+
+watch(
+  () => filterSearching,
+  debounce(() => {
+    const params = {
+      code: filterSearching?.code,
+      name: filterSearching?.name,
+    };
+    const payload = {
+      id: activeKey.value,
+      params: removeNullObjects(params),
+    };
+    fetchProductInWh(payload);
+  }, 500),
+  { deep: true },
+);
+
+watch(
+  () => activeKey.value,
+  (val) => {
+    fetchProductInWh({ id: val });
+  },
+);
 
 onMounted(async () => {
   const temp = await store.dispatch("warehouse/getWarehouse", null);
   activeKey.value = temp?.data[0].id;
 });
-
-const dataFake = [
-  {
-    id: 1,
-    code: "sp01",
-    name: "spp01",
-    unitPrice: 100,
-  },
-  {
-    id: 2,
-    code: "sp02",
-    name: "spp02",
-    unitPrice: 100,
-  },
-  {
-    id: 3,
-    code: "sp03",
-    name: "spp03",
-    unitPrice: 100,
-  },
-  {
-    id: 4,
-    code: "sp04",
-    name: "spp04",
-    unitPrice: 100,
-  },
-  {
-    id: 5,
-    code: "sp05",
-    name: "spp05",
-    unitPrice: 100,
-  },
-  {
-    id: 6,
-    code: "sp06",
-    name: "spp05",
-    unitPrice: 100,
-  },
-]
 </script>

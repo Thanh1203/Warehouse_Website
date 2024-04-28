@@ -1,6 +1,7 @@
 <template>
-  <div class="tw-mb-6 tw-font-semibold tw-text-[20px]">
-    {{ translate("UpdateProductQuantity") }}
+  <div class="tw-mb-6 tw-flex tw-gap-6 tw-items-center tw-justify-between">
+    <span class="tw-font-semibold tw-text-[20px]">{{ translate("UpdateProductQuantity") }}</span>
+    <a-alert type="error" :message="translate('ErrorNotConfigPrice')" banner v-if="!allHasUntiPrice" class="tw-rounded-xl tw-font-medium"/>
   </div>
 
   <a-form class="tw-flex tw-items-end tw-gap-x-6 tw-mb-6">
@@ -22,14 +23,13 @@
     <div class="tw-basis-1/2 tw-p-4 tw-border tw-rounded-xl tw-shadow tw-shadow-blue-100">
       <div class="tw-mb-6 tw-font-semibold tw-flex tw-justify-between tw-gap-2 tw-flex-wrap">
         <span>{{ translate("ListProductsWarehouse") }}</span>
-        <span class="tw-font-normal">{{ translate("ProductQuantity") }}: {{ datafake?.length }}</span>
       </div>
       <AntdTable
         ref="table"
         key-field="id"
         :index-column="true"
         :columns="columnDataCurrent"
-        :data-source="datafake"
+        :data-source="productInWh"
         class="tw-w-full tw-h-[calc(100vh-330px)] tw-overflow-hidden tw-overflow-y-auto"
       >
         <template #custom-body="{ column, record }">
@@ -45,7 +45,6 @@
     <div class="tw-basis-1/2 tw-p-4 tw-border tw-rounded-xl tw-shadow tw-shadow-blue-100">
       <div class="tw-mb-6 tw-font-semibold tw-flex tw-justify-between tw-gap-2 tw-flex-wrap">
         <span>{{ translate("ProductListUpdatedQuantity") }}</span>
-        <span class="tw-font-normal">{{ translate("ProductQuantity") }}: {{ dataList?.length }}</span>
       </div>
       <AntdTable
         ref="table"
@@ -79,15 +78,27 @@
 </template>
 <script setup lang="ts">
 import { translate } from "@/languages/i18n";
-import { computed, defineAsyncComponent, reactive, ref } from "vue";
+import { computed, defineAsyncComponent, onMounted, reactive, ref, watch } from "vue";
 import AntdButton from "@/components/antd-button/index.vue";
 import AntdTable from "@/components/antd-table/index.vue";
+import { useStore } from "vuex";
+import { useRoute, useRouter } from "vue-router";
+import { notification } from "ant-design-vue";
+import { debounce } from "vue-debounce";
+import { removeNullObjects } from "@/utils/common";
+
+const store = useStore();
+const router = useRouter();
+const route = useRoute();
 
 const ModalImport = defineAsyncComponent(() => import("./ModalAdd.vue"));
 
+const productInWh = computed(() => store.getters["product/productInWh"]);
+
+const dataList = ref<Array<any>>([]);
 const filterSearching = ref<string>("");
 const isVisibleModalQuantity = ref<boolean>(false);
-const dataList = ref<Array<any>>([]);
+const allHasUntiPrice = ref<boolean>(true);
 
 const state = reactive<any>({
   id: null,
@@ -164,8 +175,8 @@ const checkData = (item) => {
 
 const handleAddProduct = (data) => {
   const value = {
-    id: data.id,
-    code: data.code,
+    idroduct: data.id,
+    codeProduct: data.code,
     quantity: Number(data.quantity),
   };
   if (checkData(data)) {
@@ -181,44 +192,63 @@ const handleAddProduct = (data) => {
 };
 
 const handleDelete = (idItem) => {
-  dataList.value = dataList.value.filter(ele => ele?.id !== idItem);
+  dataList.value = dataList.value.filter((ele) => ele?.id !== idItem);
 };
 
 const disabledHandleSubmit = computed(() => dataList.value?.length === 0);
-const handleSubmit = () => {
 
+const totalProductImport = (data) => {
+  let restult = 0;
+  data?.forEach(ele => {
+    restult += ele?.quantity;
+  });
+  return restult;
 };
 
-const datafake = [
-  {
-    id: 0,
-    code: "code01",
-    quantity: 100,
-  },
-  {
-    id: 1,
-    code: "code02",
-    quantity: 50,
-  },
-  {
-    id: 2,
-    code: "code03",
-    quantity: 150,
-  },
-  {
-    id: 3,
-    code: "code04",
-    quantity: 100,
-  },
-  {
-    id: 4,
-    code: "code05",
-    quantity: 50,
-  },
-  {
-    id: 5,
-    code: "code06",
-    quantity: 150,
-  },
-];
+const handleSubmit = async () => {
+  const payload = {
+    idWarehouse: Number(route.params?.id),
+    DataUpdate: dataList.value,
+    totalProduct: totalProductImport(dataList.value)
+  }
+
+  try {
+    await store.dispatch("warehouse/updateGoods", payload);
+    fetchProduct({ id: Number(route.params?.id) });
+    notification["success"]({
+      message: translate("noti.insertSuccess"),
+      description: translate("PleaseConfigureSellingPrice"),
+    });
+  } catch (error) {
+    console.log(error);
+    notification["error"]({
+      message: translate("noti.insertFail"),
+    });
+  }
+  dataList.value = [];
+};
+
+
+watch(
+  () => filterSearching.value,
+  debounce(() => {
+    const params = {
+      code: filterSearching.value
+    }
+    const payload = {
+      id: Number(route.params?.id),
+      params: removeNullObjects(params)
+    };
+    fetchProduct(payload);
+  }, 500)
+)
+
+const fetchProduct = async (params) => {
+  const res = await store.dispatch("product/getProductInWh", params);
+  allHasUntiPrice.value = res.allHasUntiPrice;
+};
+
+onMounted(async () => {
+  await fetchProduct({id: route.params?.id});
+});
 </script>

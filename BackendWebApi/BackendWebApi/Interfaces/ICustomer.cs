@@ -6,6 +6,5 @@ namespace BackendWebApi.Interfaces
     {
         Task<object> GetCustomers();
         Task<List<KeyValuePair<string, int>>> GetCustomerAdress();
-        Task<object> GetAgeCustomer();
     }
 }

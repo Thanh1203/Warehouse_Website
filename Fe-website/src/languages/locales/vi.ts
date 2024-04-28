@@ -101,6 +101,8 @@ export const vi = {
         deleteClassifyFail: "Không thể xóa phân loại còn sản phẩm! Vui lòng kiểm tra lại",
         deleteCategoryFail: "Không thể xóa chủng loại sản phẩm! Vui lòng kiểm tra lại",
         deleteProductFail: "Không thể xóa sản phẩm còn trong kho hàng! Vui lòng kiểm tra lại",
+        insertSuccess: "Thêm mới thành công",
+        insertFail: "Thêm mới thất bại",
     },
     ManufacturerList: "Danh sách hãng sản xuất",
     ManufacturerCode: "Mã hãng sản xuất",
@@ -230,4 +232,7 @@ export const vi = {
     PriceConfiguration: "Cấu hình giá bán",
     UnitPrice: "Đơn giá",
     EditUnitPrice: "Sửa đơn giá",
+    ClientInformation: "Thông tin khách hàng",
+    PleaseConfigureSellingPrice: "Vui lòng cấu hình giá bán",
+    ErrorNotConfigPrice: "Một số sản phẩm không hiển thị do chưa thiết lập đơn gián",
 };

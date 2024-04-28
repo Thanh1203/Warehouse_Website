@@ -36,3 +36,11 @@ alter table Personnel_Info
 alter column Address nvarchar(255) NULL 
 
 alter table WH_Data ADD CompanyId int not null
+
+select * from Warehouse_Import
+WHERE DATEPART(DAY, DateTime) = '20'
+
+select * from WH_Data
+
+ALTER TABLE WH_Data
+ADD Id INT IDENTITY(1,1) PRIMARY KEY;

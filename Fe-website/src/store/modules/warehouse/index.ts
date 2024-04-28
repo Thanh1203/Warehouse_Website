@@ -7,6 +7,10 @@ export interface warehouse {
     totalWarehouse: number | null,
     nationData: any,
     areaData: any,
+    warehouseImport: any,
+    warehouseExport: any,
+
+
 }
 
 export default {
@@ -16,12 +20,20 @@ export default {
         totalWarehouse: 0,
         nationData: [],
         areaData: [],
+        warehouseImport: [],
+        warehouseExport: [],    
+
+        
     } as warehouse,
     getters: {
         warehouseInfo: (state) => state.warehouseInfo,
         totalWarehouse: (state) => state.totalWarehouse,
         nationData: (state) => state.nationData,
         areaData: (state) => state.areaData,
+        warehouseImport: (state) => state.warehouseImport,
+        warehouseExport: (state) => state.warehouseExport,
+
+
     },
     mutations: {
         SET_WAREHOUSE_INFO(state, payload) {
@@ -36,6 +48,14 @@ export default {
         SET_AREA_DATA(state, payload) {
             state.areaData = payload
         },
+        SET_WAREHOUSE_IMPORT(state, payload) {
+            state.warehouseImport = payload
+        },
+        SET_WAREHOUSE_EXPORT(state, payload) {
+            state.warehouseExport = payload
+        },
+
+
     },
     actions: {
         //get
@@ -94,6 +114,56 @@ export default {
             } catch (error) {
                 console.log(error);
             }
-        }
+        },
+
+        //warehouse import
+        //get 
+        async getHistoryImport({ commit }, payload) {
+            try {
+                const response: any = await DataService.get(`${ConstantAPI.warehouseImport.GET.url}/${payload.id}`, payload?.params, null);
+                await commit("SET_WAREHOUSE_IMPORT", response);
+                return response;
+            } catch (error) {
+                console.log(error);
+                
+            }
+        },
+        //create
+        async insertGoods({ dispatch }, payload) {
+            try {
+                const response: any = await DataService.callApi(ConstantAPI.warehouseImport.POST, payload, null);
+                return response;      
+            } catch (error) {
+                console.log(error);
+            }
+        },
+        async updateGoods({ dispatch }, payload) {
+            try {
+                const response: any = await DataService.callApi(ConstantAPI.warehouseImport.PUT_GOODS_IMPORT, payload, null);
+                return response;
+            } catch (error) {
+                console.log(error);
+            }
+        },
+        //warehouse export
+        //get
+        async getWarehouseExport({ commit }, payload) {
+            try {
+                const response: any = await DataService.get(`${ConstantAPI.warehouseExport.GET.url}/${payload.id}`, payload?.params, null);
+                await commit("SET_WAREHOUSE_EXPORT", response);
+                return response;
+            } catch (error) {
+                console.log(error);
+                
+            }
+        },
+        async goodsExport({ dispatch }, payload) {
+            try {
+                const response: any = await DataService.callApi(ConstantAPI.warehouseImport.PUT_GOODS_EXPORT, payload, null);
+                return response;
+            } catch (error) {
+                console.log(error);
+            }
+        },
     }
 }

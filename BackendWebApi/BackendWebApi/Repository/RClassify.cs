@@ -30,7 +30,7 @@ namespace BackendWebApi.Repository
                     Code = item.Code,
                     Name = item.Name,
                     CompanyId = item.CompanyId,
-                    TimeCreate = TimeZoneInfo.ConvertTimeToUtc(item.DateTime, TimeZoneInfo.Local).ToString("dd/MM/yyyy"),
+                    TimeCreate = TimeZoneInfo.ConvertTimeFromUtc(item.DateTime, TimeZoneInfo.Local).ToString("dd/MM/yyyy"),
                     AllowDelete = !allowDelete,
                 };
                 data.Add(viewModel);
@@ -65,7 +65,7 @@ namespace BackendWebApi.Repository
                     Code = item.Code,
                     Name = item.Name,
                     CompanyId = item.CompanyId,
-                    TimeCreate = TimeZoneInfo.ConvertTimeToUtc(item.DateTime, TimeZoneInfo.Local).ToString("dd/MM/yyyy"),
+                    TimeCreate = TimeZoneInfo.ConvertTimeFromUtc(item.DateTime, TimeZoneInfo.Local).ToString("dd/MM/yyyy"),
                     AllowDelete = !allowDelete,
                 };
                 data.Add(viewModel);

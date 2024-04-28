@@ -26,5 +26,9 @@ namespace BackendWebApi.Models
         public virtual Admin_Account? Admin_Account { get; set; }
         [NotMapped]
         public bool AllowDelete { get; set; }
+        [JsonIgnore]
+        public virtual ICollection<Warehouse_Import>? Warehouse_Imports { get; set; }
+        [JsonIgnore]
+        public virtual ICollection<Warehouse_Export>? Warehouse_Exports { get; set; }
     }
 }

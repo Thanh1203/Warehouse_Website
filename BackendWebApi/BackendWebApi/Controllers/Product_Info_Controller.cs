@@ -6,14 +6,9 @@ namespace BackendWebApi.Controllers
 {
     [Route("api/productInfo")]
     [ApiController]
-    public class Product_Info_Controller : Controller
+    public class Product_Info_Controller(IProduct_Info IProduct_Info) : Controller
     {
-        private readonly IProduct_Info _IProduct_Info;
-
-        public Product_Info_Controller(IProduct_Info IProduct_Info)
-        {
-            _IProduct_Info = IProduct_Info;
-        }
+        private readonly IProduct_Info _IProduct_Info = IProduct_Info;
 
         [HttpGet]
         public async Task<IActionResult> FetchProductInfos(string? name, string? categoryId, string? classifyId, string? producerId)
@@ -76,5 +71,59 @@ namespace BackendWebApi.Controllers
                 return BadRequest($"Error: {ex.Message}");
             }
         }
+
+        [HttpGet("ProductOutsideWarehouse/{warehouseId}")]
+        public async Task<IActionResult> GetProductOutsideWarehouse( int warehouseId)
+        {
+            try
+            {
+                return Ok(await _IProduct_Info.GetProductOutsideWH(warehouseId));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Error: {ex.Message}");
+            }
+        }
+
+        [HttpGet("ProductInWarehouse/{warehouseId}")]
+        public async Task<IActionResult> GetProductInWarehouse(int warehouseId, string? code)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(code))
+                {
+                    return Ok(await _IProduct_Info.GetProductInsideWH(warehouseId));
+                }
+                else
+                {
+                    return Ok(await _IProduct_Info.SearchProductInsideWH(warehouseId, code));
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Error: {ex.Message}");
+            }
+        }
+
+        [HttpGet("ProductConfigPrice/{warehouseId}")]
+        public async Task<IActionResult> GetProductIConfigPrice(int warehouseId, string? code, string? name)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(code) && string.IsNullOrWhiteSpace(name))
+                {
+                    return Ok(await _IProduct_Info.GetProductConfigUnitPrice(warehouseId));
+                }
+                else
+                {
+                    return Ok(await _IProduct_Info.SearchProductConfigUnitPrice(warehouseId, code, name));
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Error: {ex.Message}");
+            }
+        }
+
     }
 }

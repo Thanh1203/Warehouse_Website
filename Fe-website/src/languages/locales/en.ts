@@ -99,7 +99,9 @@ export const en = {
         deleteProducerFail: "Cannot delete producer that still have products! Please check again",
         deleteClassifyFail: "Cannot delete classify that still have products! Please check again",
         deleteCategoryFail: "Cannot delete category that still have products! Please check again",
-        deleteProductFail: "Cannot delete products that are in warehouse! Please check again"
+        deleteProductFail: "Cannot delete products that are in warehouse! Please check again",
+        insertSuccess: "Insert success",
+        insertFail: "Insert fail"
     },
     ManufacturerList: 'Manufacturer list',
     ManufacturerCode: "Manufacturer code",
@@ -228,4 +230,7 @@ export const en = {
     PriceConfiguration: "Price configuration",
     UnitPrice: "Unit price",
     EditUnitPrice: "Edit unit price",
+    ClientInformation: "Client information",
+    PleaseConfigureSellingPrice: "Please configure the selling price",
+    ErrorNotConfigPrice: "Some products are not displayed because the order has not been set up yet",
 };

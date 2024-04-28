@@ -9,11 +9,12 @@
         <div class="tw-opacity-70 tw-mb-2">{{ translate("ProductCode") }}</div>
         <a-select
           v-model:value="v$.id.$model"
-          :options="options"
+          :options="options.map((e) => ({ value: e.id, label: e.code }))"
           class="tw-w-full"
           :allowClear="false"
           :placeholder="translate('ProductCode')"
           :status="v$.id.$error ? 'error' : ''"
+          show-search
         />
         <ErrorMess :params="[64]" :title="translate('ProductCode')" :validator="v$.id.$errors[0]?.$validator" />
       </div>
@@ -41,7 +42,7 @@
       </template>
     </AntdTable>
   </div>
-  
+
   <div class="tw-w-full tw-flex tw-items-center tw-justify-end">
     <AntdButton :type="'primary'" @click="handleSubmit()" :disabled="disabledHandleSubmit">
       <template #icon>
@@ -55,20 +56,21 @@
 import { translate } from "@/languages/i18n";
 import useVuelidate from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
-import { computed, reactive, ref } from "vue";
+import { computed, onMounted, reactive, ref } from "vue";
 import AntdButton from "@/components/antd-button/index.vue";
 import ErrorMess from "@/components/error-mess/index.vue";
 import { REGEX_POSITIVE_INTERGER } from "@/constants";
 import { formatIdProduct } from "@/utils/common";
 import AntdTable from "@/components/antd-table/index.vue";
+import { useStore } from "vuex";
+import { useRoute, useRouter } from "vue-router";
+import { notification } from "ant-design-vue";
 
-const emit = defineEmits(["closeModal", "handleSubmit"]);
+const store = useStore();
+const router = useRouter();
+const route = useRoute();
 
-const options = computed(() => [
-  { value: "jack | JackL", label: "JackL" },
-  { value: "lucy | LucyL", label: "LucyL" },
-  { value: "tom | TomL", label: "TomL" },
-]);
+const options = computed(() => store.getters["product/productOutWh"]);
 
 const data = ref<Array<any>>([]);
 const columns = ref<Array<any>>([
@@ -125,20 +127,20 @@ const handleAddProduct = () => {
   }
   const temp = formatIdProduct(state.id);
   const value = {
-    id: temp.id,
-    code: temp.code,
+    idroduct: Number(temp.id),
+    codeProduct: temp.code,
     quantity: Number(state.quantity),
   };
   if (checkData(value)) {
     data.value.map((item) => {
-      if (item.id === value.id) {
+      if (item.id === value.idroduct) {
         item.quantity += value.quantity;
       }
     });
   } else {
     data.value.push(value);
   }
-    // data.value.push(value);
+  // data.value.push(value);
   v$.value.$reset();
   (state.id = null), (state.quantity = null);
 };
@@ -149,8 +151,43 @@ const handleDelete = (id) => {
 
 const disabledHandleSubmit = computed(() => data.value?.length === 0);
 
-const handleSubmit = async () => {
-  emit("handleSubmit", data);
+const totalProductImport = (data) => {
+  let restult = 0;
+  data?.forEach((ele) => {
+    restult += ele?.quantity;
+  });
+  return restult;
 };
+
+const handleSubmit = async () => {
+  const payload = {
+    idWarehouse: Number(route.params?.id),
+    dataInsert: data.value,
+    totalProduct: totalProductImport(data.value),
+  };
+
+  try {
+    await store.dispatch("warehouse/insertGoods", payload);
+    notification["success"]({
+      message: translate("noti.insertSuccess"),
+      description: translate("PleaseConfigureSellingPrice"),
+    });
+
+    router.push("/price-configuration");
+  } catch (error) {
+    console.log(error);
+    notification["error"]({
+      message: translate("noti.insertFail"),
+    });
+  }
+};
+
+const fetchProduct = async (params) => {
+  await store.dispatch("product/getProductOutsideWh", params);
+};
+
+onMounted(async () => {
+  await fetchProduct(route.params?.id);
+});
 </script>
 <style lang="scss"></style>
