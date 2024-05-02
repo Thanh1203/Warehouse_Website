@@ -6,13 +6,9 @@ namespace BackendWebApi.Controllers
 {
     [Route("api/Customer")]
     [ApiController]
-    public class Customer_Controller : Controller
+    public class Customer_Controller(ICustomer customer) : Controller
     {
-        private readonly ICustomer _ICustomer;
-        public Customer_Controller(ICustomer customer) 
-        {
-            _ICustomer = customer;
-        }
+        private readonly ICustomer _ICustomer = customer;
 
         [HttpGet]
         public async Task<IActionResult> FetchCustomer()

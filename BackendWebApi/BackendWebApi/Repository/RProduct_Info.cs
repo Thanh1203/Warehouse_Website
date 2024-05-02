@@ -14,7 +14,7 @@ namespace BackendWebApi.Repository
         public async Task<object> GetProduct_Infos()
         {
             var data = new List<DTOProduct>();
-            var dataList = await _context.Product_Infos.Where(e => e.CompanyId == 1).ToListAsync();
+            var dataList = await _context.Product_Infos.Where(e => e.CompanyId == 1).OrderByDescending(e => e.DateTime).ToListAsync();
             var totalElement = await _context.Product_Infos.Where(e => e.CompanyId == 1).CountAsync();
             
             foreach (var item in dataList)
@@ -57,7 +57,7 @@ namespace BackendWebApi.Repository
         public async Task<object> SearchProductInfo(string strName, string categoryId, string classifyId, string producerId)
         {
             var data = new List<DTOProduct>();
-            var query = _context.Product_Infos.Where(e => e.CompanyId == 1).AsQueryable();
+            var query = _context.Product_Infos.Where(e => e.CompanyId == 1).OrderByDescending(e => e.DateTime).AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(strName))
             {

@@ -4,6 +4,7 @@ import { DataService } from "@/services/request";
 export interface category {
     categoryData: any,
     totalElement: number,
+    loading: boolean,
 }
 
 export default {
@@ -11,10 +12,12 @@ export default {
     state: {
         categoryData: [],
         totalElement: 0,
+        loading: true,
     } as category,
     getters: {
         categoryData: (state) => state.categoryData,
         totalElement: (state) => state.totalElement,
+        loading: (state) => state.loading,
     },
     mutations: {
         SET_CATEGORY_DATA(state, payload) {
@@ -22,6 +25,9 @@ export default {
         },
         SET_TOTAL_CATEGORY(state, payload) {
             state.totalElement = payload
+        },
+        SET_LOADING(state, payload) {
+            state.loading = payload;
         },
     },
     actions: {

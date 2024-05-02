@@ -12,7 +12,7 @@ namespace BackendWebApi.Repository
         public async Task<object> GetHistoryImport(int warehouseId)
         {
             var data = new List<DTOWarehouse_Import>();
-            var dataList = await _context.Warehouse_Imports.Where(e => e.CompanyId == 1 && e.WarehouseId == warehouseId).ToListAsync();
+            var dataList = await _context.Warehouse_Imports.Where(e => e.CompanyId == 1 && e.WarehouseId == warehouseId).OrderByDescending(e => e.DateTime).ToListAsync();
             foreach (var item in dataList)
             {
                 var viewModel = new DTOWarehouse_Import
@@ -29,7 +29,7 @@ namespace BackendWebApi.Repository
 
         public async Task<object> SearHistoryImport(string day, string month, string year, int warehouseId)
         {
-            var query = _context.Warehouse_Imports.Where(e => e.CompanyId == 1 && e.WarehouseId == warehouseId).AsQueryable();
+            var query = _context.Warehouse_Imports.Where(e => e.CompanyId == 1 && e.WarehouseId == warehouseId).OrderByDescending(e => e.DateTime).AsQueryable();
             var datadto = new List<DTOWarehouse_Import>();
             var dataList = await query.ToListAsync();
 

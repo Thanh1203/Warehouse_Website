@@ -6,6 +6,7 @@ import producer from "./modules/producer";
 import classify from "./modules/classify";
 import category from "./modules/category";
 import product from "./modules/product";
+import dashboard from "./modules/dashboard";
 
 const modules: ModuleTree<RootState> = {
     warehouse,
@@ -14,6 +15,7 @@ const modules: ModuleTree<RootState> = {
     classify,
     category,
     product,
+    dashboard,
 };
 
 const root: Module<RootState, RootState> = {

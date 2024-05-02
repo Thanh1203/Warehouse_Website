@@ -19,7 +19,7 @@ namespace BackendWebApi.Repository
         {
             var data = new List<DTOProducer>();
             var totalElement = await _context.Producers.Where(e => e.CompanyId == 1).CountAsync();
-            var dataList = await _context.Producers.Where(e => e.CompanyId == 1).ToListAsync();
+            var dataList = await _context.Producers.Where(e => e.CompanyId == 1).OrderByDescending(e => e.DateTime).ToListAsync();
 
             foreach (var item in dataList)
             {
@@ -48,7 +48,7 @@ namespace BackendWebApi.Repository
         public async Task<object> SearchProducer(string str)
         {
             var data = new List<DTOProducer>();
-            var query = _context.Producers.Where(e => e.CompanyId == 1).AsQueryable();
+            var query = _context.Producers.Where(e => e.CompanyId == 1).OrderByDescending(e => e.DateTime).AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(str))
             {

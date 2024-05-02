@@ -14,7 +14,7 @@ namespace BackendWebApi.Repository
         public async Task<object> GetCategories()
         {
             var data = new List<DTOCategory>();
-            var datalist = await _context.Categories.Where(e => e.CompanyId == 1).ToListAsync();
+            var datalist = await _context.Categories.Where(e => e.CompanyId == 1).OrderByDescending(e=> e.DateTime).ToListAsync();
             var totalElement = await _context.Categories.Where(e => e.CompanyId == 1).CountAsync();
 
             foreach (var item in datalist)
@@ -42,7 +42,7 @@ namespace BackendWebApi.Repository
         public async Task<object> SearchCategory(string str)
         {
             var data = new List<DTOCategory>();
-            var query = _context.Categories.Where(e => e.CompanyId == 1).AsQueryable();
+            var query = _context.Categories.Where(e => e.CompanyId == 1).OrderByDescending(e => e.DateTime).AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(str))
             {
