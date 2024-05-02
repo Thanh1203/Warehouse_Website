@@ -6,13 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BackendWebApi.Repository
 {
-    public class RPersonnel : IPersonnel
+    public class RPersonnel(DataContext context) : IPersonnel
     {
-        private readonly DataContext _context;
-        public RPersonnel(DataContext context)
-        {
-            _context = context;
-        }
+        private readonly DataContext _context = context;
 
         public async Task<object> GetPersonnels()
         {

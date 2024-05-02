@@ -2,6 +2,7 @@
 using BackendWebApi.DTOS;
 using BackendWebApi.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace BackendWebApi.Repository
 {
@@ -12,7 +13,7 @@ namespace BackendWebApi.Repository
         public async Task<object> GetWeareHouseExport(int warehouseId)
         {
             var data = new List<DTOWarehouse_Export>();
-            var dataList = await _context.Warehouse_Exports.Where(e => e.CompanyId == 1 && e.WarehouseId == warehouseId).ToListAsync();
+            var dataList = await _context.Warehouse_Exports.Where(e => e.CompanyId == 1 && e.WarehouseId == warehouseId).OrderByDescending(e => e.DateTime).ToListAsync();
             foreach (var item in dataList)
             {
                 var viewModel = new DTOWarehouse_Export
@@ -29,27 +30,10 @@ namespace BackendWebApi.Repository
 
         public async Task<object> SearchWarehouseExport(string day, string month, string year, int warehouseId)
         {
-            var data = new List<DTOWarehouse_Export>();
-            var query = _context.Warehouse_Exports.Where(e => e.CompanyId == 1 && e.WarehouseId == warehouseId).AsQueryable();
+            var datadto = new List<DTOWarehouse_Export>();
+            var query = await _context.Warehouse_Exports.Where(e => e.CompanyId == 1 && e.WarehouseId == warehouseId).OrderByDescending(e => e.DateTime).ToListAsync();
 
-            if (!string.IsNullOrWhiteSpace(day))
-            {
-                query = query.Where(e => e.DateTime.Day == int.Parse(day));
-            }
-
-            if (!string.IsNullOrWhiteSpace(month))
-            {
-                query = query.Where(e => e.DateTime.Month == int.Parse(month));
-            }
-
-            if (!string.IsNullOrWhiteSpace(year))
-            {
-                query = query.Where(e => e.DateTime.Year == int.Parse(year));
-            }
-
-            var dataList = await query.ToListAsync();
-
-            foreach (var item in dataList)
+            foreach (var item in query)
             {
                 var viewModel = new DTOWarehouse_Export
                 {
@@ -58,7 +42,23 @@ namespace BackendWebApi.Repository
                     TimeCreate = TimeZoneInfo.ConvertTimeFromUtc(item.DateTime, TimeZoneInfo.Local).ToString("dd/MM/yyyy"),
                     TotalValue = item.TotalValue,
                 };
-                data.Add(viewModel);
+                datadto.Add(viewModel);
+            }
+
+            var data = datadto.AsQueryable();
+            if (!string.IsNullOrWhiteSpace(day))
+            {
+                data = data.Where(e => e.TimeCreate.Contains(day));
+            }
+
+            if (!string.IsNullOrWhiteSpace(month))
+            {
+                data = data.Where(e => e.TimeCreate.Contains(month));
+            }
+
+            if (!string.IsNullOrWhiteSpace(year))
+            {
+                data = data.Where(e => e.TimeCreate.Contains(year));
             }
 
             return data;

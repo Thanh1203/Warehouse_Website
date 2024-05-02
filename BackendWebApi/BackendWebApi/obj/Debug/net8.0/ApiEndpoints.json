@@ -148,6 +148,16 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "BackendWebApi.Controllers.Dashboard_Controller",
+    "Method": "FetchDataDashboard",
+    "RelativePath": "api/dashboard",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "BackendWebApi.Controllers.Personnel_Controller",
     "Method": "FetchPersonnels",
     "RelativePath": "api/personnel",

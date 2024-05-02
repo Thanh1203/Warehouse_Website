@@ -18,7 +18,7 @@ namespace BackendWebApi.Repository
         public async Task<object> GetClassifies()
         {
             var data = new List<DTOClassify>();
-            var dataList = await _context.Classifies.Where(e => e.CompanyId == 1).ToListAsync();
+            var dataList = await _context.Classifies.Where(e => e.CompanyId == 1).OrderByDescending(e => e.DateTime).ToListAsync();
             var totalElement = await _context.Classifies.Where(e => e.CompanyId == 1).CountAsync();
 
             foreach (var item in dataList)
@@ -46,7 +46,7 @@ namespace BackendWebApi.Repository
         public async Task<object> SearchCalassifies(string str)
         {
             var data = new List<DTOClassify>();
-            var query = _context.Classifies.Where(e => e.CompanyId == 1).AsQueryable();
+            var query = _context.Classifies.Where(e => e.CompanyId == 1).OrderByDescending(e => e.DateTime).AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(str))
             {

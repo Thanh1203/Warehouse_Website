@@ -172,5 +172,11 @@ export default {
             url: "api/WarehouseExport",
             method: "GET"
         },
-    }
+    },
+    dashboard: {
+        GET: {
+            url: "/api/dashboard",
+            method: "GET"
+        },
+    },
 }
