@@ -56,6 +56,7 @@
         :columns="columns"
         @onSelected="handleSelectRow"
         class="tw-w-full tw-h-[calc(100vh-290px)] tw-overflow-hidden tw-overflow-y-auto"
+        v-if="!loading"
       >
         <template #custom-body="{ column, record }">
           <template v-if="column.key === 'action'">
@@ -70,6 +71,8 @@
           </template>
         </template>
       </AntdTable>
+
+      <a-skeleton v-else active />
     </template>
   </Section>
 
@@ -96,6 +99,7 @@ const router = useRouter();
 
 const classifyData = computed(() => store.getters["classify/classifyData"]);
 const totalClassify = computed(() => store.getters["classify/totalElement"]);
+const loading = computed(() => store.getters["classify/loading"]);
 
 const listSelect = ref<any>([]);
 const isVisibleModalCreate = ref<boolean>(false);

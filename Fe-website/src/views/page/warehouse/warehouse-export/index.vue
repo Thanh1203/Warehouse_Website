@@ -1,20 +1,21 @@
 <template>
   <div class="tw-mb-6 tw-p-6 tw-bg-white tw-rounded-xl">
-    <a-Tabs v-model:activeKey="activeKey" type="card" class="tw-h-[177px]">
+    <a-Tabs v-model:activeKey="activeKey" type="card" class="tw-h-[177px]" v-if="!loading">
       <a-tab-pane v-for="item in listWhInfo" :key="item.id" :tab="item.name">
         <TabWhInfo :data="item" />
       </a-tab-pane>
     </a-Tabs>
+    <a-skeleton v-else active />
   </div>
 
   <div class="tw-w-full tw-flex tw-gap-6 tw-justify-between">
     <div class="tw-bg-white tw-rounded-xl tw-p-6 tw-basis-1/4">
       <div class="tw-opacity-70 tw-mb-2">{{ translate("SelectDay") }}</div>
-      <a-date-picker class="tw-mb-6" :placeholder="translate('SelectDay')" v-model:value="searchingDay" :allowClear="false"/>
+      <a-date-picker class="tw-mb-6" :placeholder="translate('SelectDay')" v-model:value="searchingDay" :allowClear="false" />
       <div class="tw-opacity-70 tw-mb-2">{{ translate("SelectMonth") }}</div>
-      <a-date-picker class="tw-mb-6" picker="month" :placeholder="translate('SelectMonth')" v-model:value="searchingMonth" :allowClear="false"/>
+      <a-date-picker class="tw-mb-6" picker="month" :placeholder="translate('SelectMonth')" v-model:value="searchingMonth" :allowClear="false" />
       <div class="tw-opacity-70 tw-mb-2">{{ translate("SelectYear") }}</div>
-      <a-date-picker class="tw-mb-6" picker="year" :placeholder="translate('SelectYear')" v-model:value="searchingYear" :allowClear="false"/>
+      <a-date-picker class="tw-mb-6" picker="year" :placeholder="translate('SelectYear')" v-model:value="searchingYear" :allowClear="false" />
       <AntdButton type="primary" class="tw-mb-6 tw-w-[200px]" @click="handleSubmitFilter">
         <span class="tw-text-sm tw-ml-2">{{ translate("LookUpExportHistory") }}</span>
       </AntdButton>
@@ -26,7 +27,7 @@
       </AntdButton>
     </div>
 
-    <div class="tw-grow tw-h-full">
+    <div class="tw-grow tw-min-h-[calc(100vh-240px)]">
       <Section class="tw-w-full tw-bg-white tw-h-full" :title="translate('ExportHistory')">
         <template #action>
           <AntdButton type="primary" @click="goToExportGoods">
@@ -34,7 +35,18 @@
           </AntdButton>
         </template>
         <template #body>
-          <AntdTable ref="table" key-field="id" :index-column="true" :columns="columns" :data-source="listWHExport" class="tw-w-full tw-h-[60vh] tw-overflow-hidden tw-overflow-y-auto"> </AntdTable>
+          <AntdTable
+            ref="table"
+            key-field="id"
+            :index-column="true"
+            :columns="columns"
+            :data-source="listWHExport"
+            class="tw-w-full tw-h-[60vh] tw-overflow-hidden tw-overflow-y-auto"
+            v-if="!loading"
+          >
+          </AntdTable>
+
+          <a-skeleton v-else active />
         </template>
       </Section>
     </div>
@@ -52,14 +64,13 @@ import { removeNullObjects } from "@/utils/common";
 import { useRoute, useRouter } from "vue-router";
 import TabWhInfo from "@/components/list-tab-warehouse/index.vue";
 
-
 const store = useStore();
 const router = useRouter();
 const route = useRoute();
 
 const listWhInfo = computed(() => store.getters["warehouse/warehouseInfo"]);
 const listWHExport = computed(() => store.getters["warehouse/warehouseExport"]);
-
+const loading = computed(() => store.getters["warehouse/loading"]);
 
 const activeKey = ref<number>(0);
 const columns = ref<Array<any>>([
@@ -98,7 +109,7 @@ const handleClearFilter = () => {
   searchingDay.value = null;
   searchingMonth.value = null;
   searchingYear.value = null;
-  fetchData({id: activeKey.value, params: null});
+  fetchData({ id: activeKey.value, params: null });
 };
 
 const handleSubmitFilter = () => {
@@ -127,8 +138,8 @@ const handleSubmitFilter = () => {
   }
   const payload = {
     id: activeKey.value,
-    params: removeNullObjects(params)
-  }
+    params: removeNullObjects(params),
+  };
 
   fetchData(payload);
 };
@@ -174,9 +185,9 @@ watch(
 watch(
   () => activeKey.value,
   (val) => {
-    fetchData({id: val, params: null});
-  }
-)
+    fetchData({ id: val, params: null });
+  },
+);
 
 onMounted(async () => {
   const temp = await store.dispatch("warehouse/getWarehouse", null);

@@ -54,6 +54,7 @@
         :no-sort="true"
         @onSelected="handleSelectRow"
         class="tw-w-full tw-h-[calc(100vh-290px)] tw-overflow-hidden tw-overflow-y-auto"
+        v-if="!loading"
       >
         <template #custom-body="{ column, record }">
           <template v-if="column.key === 'action'">
@@ -68,6 +69,8 @@
           </template>
         </template>
       </AntdTable>
+
+      <a-skeleton v-else active />
     </template>
   </Section>
 
@@ -105,6 +108,7 @@ const router = useRouter();
 const personnelData = computed(() => store.getters["personnel/personnelData"]);
 const totalPersonnel = computed(() => store.getters["personnel/totalPersonnel"]);
 const personnelAddress = computed(() => store.getters["personnel/addressData"]);
+const loading = computed(() => store.getters["personnel/loading"]);
 
 const isVisibleModalCreate = ref<boolean>(false);
 const isEdit = ref<boolean>(false);

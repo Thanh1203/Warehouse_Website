@@ -2,8 +2,8 @@ import ConstantAPI from "@/services/ConstantAPI";
 import { DataService } from "@/services/request";
 
 export interface dashboard {
-  loading: boolean,
-  dashboardData: any,
+  loading: boolean;
+  dashboardData: any;
 }
 
 export default {
@@ -35,6 +35,6 @@ export default {
       } catch (error) {
         console.log(error);
       }
-    }
-  }
-}
+    },
+  },
+};
