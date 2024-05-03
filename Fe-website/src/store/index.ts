@@ -7,6 +7,7 @@ import classify from "./modules/classify";
 import category from "./modules/category";
 import product from "./modules/product";
 import dashboard from "./modules/dashboard";
+import report from "./modules/report";
 
 const modules: ModuleTree<RootState> = {
     warehouse,
@@ -16,6 +17,7 @@ const modules: ModuleTree<RootState> = {
     category,
     product,
     dashboard,
+    report,
 };
 
 const root: Module<RootState, RootState> = {

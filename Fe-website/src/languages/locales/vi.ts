@@ -238,4 +238,9 @@ export const vi = {
     ClientInformation: "Thông tin khách hàng",
     PleaseConfigureSellingPrice: "Vui lòng cấu hình giá bán",
     ErrorNotConfigPrice: "Một số sản phẩm không hiển thị do chưa thiết lập đơn gián",
+    pruchaseTimes: {
+        OneTime: "1 Lần",
+        TwoTime: "2 Lần",
+        ThreeOrMore: "3 lần trở lên",
+    }
 };

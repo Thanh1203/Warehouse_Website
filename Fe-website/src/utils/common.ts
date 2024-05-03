@@ -63,3 +63,13 @@ export const formatIdProduct = (str: string) => {
     code: strSpkit[1],
   };
 };
+
+export const setColor = (value: number) => {
+  if (value < 40) {
+    return "#dc3545";
+  } else if (value >= 40 && value < 80) {
+    return "#FAAD14";
+  } else {
+    return "#52C41B"
+  }
+}

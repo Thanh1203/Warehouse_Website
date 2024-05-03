@@ -168,4 +168,14 @@ export default {
             method: "GET"
         },
     },
+    report: {
+        GET_CUSTOMER: {
+            url: "/api/report_customer",
+            method: "GET",
+        },
+        GET_NEW_CUSTOMER_YEAR: {
+            url: "/api/report_customer",
+            method: "GET",
+        }
+    }
 }

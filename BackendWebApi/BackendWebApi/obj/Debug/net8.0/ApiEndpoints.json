@@ -444,6 +444,32 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "BackendWebApi.Controllers.Report_Customer_Controller",
+    "Method": "FetchDataReportCustomer",
+    "RelativePath": "api/report_customer",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BackendWebApi.Controllers.Report_Customer_Controller",
+    "Method": "FetchDataReportNewCustomer",
+    "RelativePath": "api/report_customer/{currentYear}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "currentYear",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "BackendWebApi.Controllers.Warehouse_Controller",
     "Method": "FetchWarehousesInfo",
     "RelativePath": "api/Warehouse",
