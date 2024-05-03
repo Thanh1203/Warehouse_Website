@@ -16,12 +16,12 @@
           :status="v$.id.$error ? 'error' : ''"
           show-search
         />
-        <ErrorMess :params="[64]" :title="translate('ProductCode')" :validator="v$.id.$errors[0]?.$validator" />
+        <ErrorMess :params="[64]" title="ProductCode" :validator="v$.id.$errors[0]?.$validator" />
       </div>
       <div class="tw-w-1/4">
         <div class="tw-opacity-70 tw-mb-2">{{ translate("Quantity") }}</div>
         <a-input class="tw-w-full" v-model:value="v$.quantity.$model" :placeholder="translate('Quantity')" />
-        <ErrorMess :params="[64]" :title="translate('Quantity')" :validator="v$.quantity.$errors[0]?.$validator" />
+        <ErrorMess :params="[64]" title="Quantity" :validator="v$.quantity.$errors[0]?.$validator" />
       </div>
       <div class="tw-w-1/4 tw-h-[62px] tw-flex tw-justify-center tw-items-end">
         <AntdButton type="primary" ghost @click="handleAddProduct">

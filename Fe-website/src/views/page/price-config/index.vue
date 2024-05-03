@@ -47,7 +47,7 @@
             <div>
               <div v-if="checkRowUpdate(record.id)">
                 <a-input v-model:value="v$.valUnitPrice.$model" class="tw-mb-2" />
-                <ErrorMess :params="[64]" :title="translate('UnitPrice')" :validator="v$.valUnitPrice.$errors[0]?.$validator" />
+                <ErrorMess :params="[64]" title="UnitPrice" :validator="v$.valUnitPrice.$errors[0]?.$validator" />
               </div>
               <template v-else>
                 {{ record.unitPrice }}

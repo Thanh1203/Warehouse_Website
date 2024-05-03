@@ -17,6 +17,9 @@
   <data v-if="validator === 'positiveInteger'" class="invalid-feedback">
     {{ toUpperFirstLetter(translate("validate.positiveInteger", title, params)) }}
   </data>
+  <data v-if="validator === 'maxValue'" class="invalid-feedback">
+    {{ toUpperFirstLetter(translate("validate.maxValue", title, params)) }}
+  </data>
 </template>
 <script lang="ts" setup>
 import { translate } from "@/languages/i18n";

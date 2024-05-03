@@ -134,17 +134,13 @@
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "BackendWebApi.Controllers.Customer_Controller",
-    "Method": "FetchCustomerAdress",
-    "RelativePath": "api/Customer/ReportAddress",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
+    "Parameters": [
+      {
+        "Name": "phoneNumber",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
     "ReturnTypes": []
   },
   {
@@ -587,9 +583,9 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "data_Update",
-        "Type": "BackendWebApi.DTOS.DTOWarehouseData_Update",
-        "IsRequired": false
+        "Name": "dtoData",
+        "Type": "BackendWebApi.DTOS.DTOWh_Cus",
+        "IsRequired": true
       }
     ],
     "ReturnTypes": []

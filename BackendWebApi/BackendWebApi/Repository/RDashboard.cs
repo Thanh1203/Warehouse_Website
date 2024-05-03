@@ -14,7 +14,7 @@ namespace BackendWebApi.Repository
             var totalProduct = await _context.Product_Infos.Where(e => e.CompanyId == companyid).CountAsync();
             var totalCustomer = await _context.Customers.Where(e => e.CompanyId == companyid).CountAsync();
             var totalWarehouse = await _context.Warehouse_Infos.Where(e => e.CompanyId == companyid).CountAsync();
-            var secondBuy = await _context.Customers.Where(e => e.CompanyId == companyid && e.TotalBuy >= 2).CountAsync();
+            var secondBuy = await _context.Customers.Where(e => e.CompanyId == companyid && e.PurchaseCount >= 2).CountAsync();
 
             double rateReturn = 0;
             if (totalCustomer > 0)

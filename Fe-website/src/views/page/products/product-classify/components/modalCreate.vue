@@ -7,14 +7,14 @@
           <div class="tw-w-full tw-mt-2">
             <a-input :placeholder="translate('ClassificationCode')" :status="v$.code.$error ? 'error' : ''" v-model:value="v$.code.$model"/>
           </div>
-          <ErrorMess :params="[64]" :title="translate('ClassificationCode')" :validator="v$.code.$errors[0]?.$validator" />
+          <ErrorMess :params="[64]" title="ClassificationCode" :validator="v$.code.$errors[0]?.$validator" />
         </div>
         <div class="tw-basis-1/2 tw-ml-2 tw-flex tw-flex-col tw-justify-start tw-items-start">
           <span>{{ translate("ClassificationName") }}<span class="required-star">*</span></span>
           <div class="tw-w-full tw-mt-2">
             <a-input :placeholder="translate('ClassificationName')" :status="v$.name.$error ? 'error' : ''" v-model:value="v$.name.$model"/>
           </div>
-          <ErrorMess :params="[64]" :title="translate('ClassificationName')" :validator="v$.name.$errors[0]?.$validator" />
+          <ErrorMess :params="[64]" title="ClassificationName" :validator="v$.name.$errors[0]?.$validator" />
         </div>
       </div>
     </a-form>

@@ -6,13 +6,13 @@
           <span class="tw-mb-2">{{ translate("WarehouseCode") }}<span class="required-star">*</span></span>
           <div class="tw-w-full">
             <a-input :placeholder="translate('WarehouseCode')" class="tw-w-full" :status="v$.code.$error ? 'error' : ''" v-model:value="v$.code.$model" :disabled="isEdit"/>
-            <ErrorMess :params="[64]" :title="translate('WarehouseCode')" :validator="v$.code.$errors[0]?.$validator" />
+            <ErrorMess :params="[64]" title="WarehouseCode" :validator="v$.code.$errors[0]?.$validator" />
           </div>
         </div>
         <div class="tw-basis-1/2 tw-flex tw-flex-col tw-items-start tw-justify-start">
           <span class="tw-mb-2">{{ translate("Name") }}<span class="required-star">*</span></span>
           <a-input :placeholder="translate('Name')" class="tw-w-full" :status="v$.name.$error ? 'error' : ''" v-model:value="v$.name.$model" />
-          <ErrorMess :params="[64]" :title="translate('Name')" :validator="v$.name.$errors[0]?.$validator" />
+          <ErrorMess :params="[64]" title="Name" :validator="v$.name.$errors[0]?.$validator" />
         </div>
       </div>
       <div class="tw-w-full tw-flex tw-flex-col tw-items-start tw-justify-start tw-mb-6">
@@ -24,13 +24,13 @@
             <div class="tw-basis-1/2 tw-flex tw-flex-col tw-items-start tw-justify-start tw-mr-4">
               <span class="tw-mb-2">{{ translate("Nation") }}<span class="required-star">*</span></span>
               <a-input class="tw-w-full" :placeholder="translate('Nation')" :status="v$.nation.$error ? 'error' : ''" v-model:value="v$.nation.$model" />
-              <ErrorMess :params="[64]" :title="translate('Nation')" :validator="v$.nation.$errors[0]?.$validator" />
+              <ErrorMess :params="[64]" title="Nation" :validator="v$.nation.$errors[0]?.$validator" />
             </div>
 
             <div class="tw-basis-1/2 tw-flex tw-flex-col tw-items-start tw-justify-start tw-mr-4">
               <span class="tw-mb-2">{{ translate("Area") }}<span class="required-star">*</span></span>
               <a-input class="tw-w-full" :status="v$.area.$error ? 'error' : ''" v-model:value="v$.area.$model" :placeholder="translate('Area')" />
-              <ErrorMess :params="[64]" :title="translate('Area')" :validator="v$.area.$errors[0]?.$validator" />
+              <ErrorMess :params="[64]" title="Area" :validator="v$.area.$errors[0]?.$validator" />
             </div>
 
           </div>
@@ -38,7 +38,7 @@
           <div class="tw-w-full tw-flex tw-flex-col tw-items-start tw-justify-start tw-mr-4">
             <span class="tw-mb-2">{{ translate("Address") }}<span class="required-star">*</span></span>
             <a-input :placeholder="translate('Address')" class="tw-w-full" :status="v$.address.$error ? 'error' : ''" v-model:value="v$.address.$model" />
-            <ErrorMess :params="[64]" :title="translate('Address')" :validator="v$.address.$errors[0]?.$validator" />
+            <ErrorMess :params="[64]" title="Address" :validator="v$.address.$errors[0]?.$validator" />
           </div>
         </div>
       </div>

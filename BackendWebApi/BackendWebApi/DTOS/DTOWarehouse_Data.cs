@@ -30,4 +30,10 @@ namespace BackendWebApi.DTOS
         public int TotalProduct { get; set; }
         public List<DTOWarehouseData_DataUpdate> DataUpdate { get; set; }
     }
+
+    public class DTOWh_Cus
+    {
+        public DTOWarehouseData_Update DataUpdate { get; set; }
+        public DTOCustomer Customer { get; set; }
+    }
 }

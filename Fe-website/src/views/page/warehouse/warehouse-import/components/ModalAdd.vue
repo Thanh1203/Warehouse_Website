@@ -4,7 +4,7 @@
       <a-form-item>
         <span class="tw-opacity-70">{{ translate('Quantity') }}</span>
         <a-input class="tw-w-full tw-mt-2" v-model:value="v$.quantity.$model" :placeholder="translate('ProductQuantity')"/>
-        <ErrorMess :params="[64]" :title="translate('Quantity')" :validator="v$.quantity.$errors[0]?.$validator" />
+        <ErrorMess :params="[64]" title="Quantity" :validator="v$.quantity.$errors[0]?.$validator" />
       </a-form-item>
     </a-form>
 

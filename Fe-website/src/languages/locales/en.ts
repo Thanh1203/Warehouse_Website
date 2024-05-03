@@ -35,6 +35,7 @@ export const en = {
         vi: "%s special characters cannot be entered",
         validateEmail: "Wrong email format",
         positiveInteger: "%s can only enter positive integers",
+        maxValue: "The quantity of products in stock is not enough",
     },
     Delete: "Delete",
     SelectNation: "Select Nation",
@@ -101,7 +102,9 @@ export const en = {
         deleteCategoryFail: "Cannot delete category that still have products! Please check again",
         deleteProductFail: "Cannot delete products that are in warehouse! Please check again",
         insertSuccess: "Insert success",
-        insertFail: "Insert fail"
+        insertFail: "Insert fail",
+        SuccessfulExport: "Exported goods successfully",
+        FaildExport: "Export failed",
     },
     ManufacturerList: 'Manufacturer list',
     ManufacturerCode: "Manufacturer code",
