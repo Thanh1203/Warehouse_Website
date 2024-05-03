@@ -8,14 +8,14 @@
           <div class="tw-mt-2 tw-w-full">
             <a-input :disabled="isEdit" :placeholder="translate('EmployeeCode')" v-model:value="v$.code.$model" :status="v$.code.$error ? 'error' : ''" />
           </div>
-          <ErrorMess :params="[64]" :title="translate('EmployeeCode')" :validator="v$.code.$errors[0]?.$validator" />
+          <ErrorMess :params="[64]" title="EmployeeCode" :validator="v$.code.$errors[0]?.$validator" />
         </div>
         <div class="tw-basis-1/2 tw-flex tw-flex-col tw-items-start tw-justify-start tw-ml-4">
           <span>{{ translate("EmployeeName") }}<span class="required-star">*</span></span>
           <div class="tw-mt-2 tw-w-full">
             <a-input :placeholder="translate('EmployeeName')" v-model:value="v$.name.$model" :status="v$.name.$error ? 'error' : ''" />
           </div>
-          <ErrorMess :title="translate('EmployeeName')" :validator="v$.name.$errors[0]?.$validator" />
+          <ErrorMess title="EmployeeName" :validator="v$.name.$errors[0]?.$validator" />
         </div>
       </div>
 
@@ -25,7 +25,7 @@
           <div class="tw-w-full tw-mt-2">
             <a-input :placeholder="translate('Role')" v-model:value="v$.role.$model" :status="v$.role.$error ? 'error' : ''" />
           </div>
-          <ErrorMess :title="translate('Role')" :validator="v$.role.$errors[0]?.$validator" />
+          <ErrorMess title="Role" :validator="v$.role.$errors[0]?.$validator" />
         </div>
 
         <div class="tw-basis-1/2 tw-flex tw-flex-col tw-items-start tw-justify-start tw-ml-4">

@@ -1,10 +1,13 @@
 <template>
   <BaseModal :width="'500px'" :visible="isVisible" :title="translate('ProductQuantity')" centered  @cancel="$emit('closeModal')" :defaultFooter="false" :maskClosable="false">
+    <div class="tw-mb-6">
+      {{ translate('ProductQuantity') }}: {{ maxQuantity }}
+    </div>
     <a-form @submit.prevent="handleSubmit" class="tw-mb-6">
       <a-form-item>
         <span class="tw-opacity-70">{{ translate('Quantity') }}</span>
         <a-input class="tw-w-full tw-mt-2" v-model:value="v$.quantity.$model" :placeholder="translate('ProductQuantity')"/>
-        <ErrorMess :params="[64]" :title="translate('Quantity')" :validator="v$.quantity.$errors[0]?.$validator" />
+        <ErrorMess :params="[64]" title="Quantity" :validator="v$.quantity.$errors[0]?.$validator" />
       </a-form-item>
     </a-form>
 
@@ -22,8 +25,8 @@
 import BaseModal from "@/components/antd-modal/index.vue";
 import { translate } from "@/languages/i18n";
 import AntdButton from "@/components/antd-button/index.vue";
-import { reactive, watch } from "vue";
-import { required } from "@vuelidate/validators";
+import { computed, reactive, watch } from "vue";
+import { maxValue, required } from "@vuelidate/validators";
 import { REGEX_POSITIVE_INTERGER } from "@/constants";
 import useVuelidate from "@vuelidate/core";
 import ErrorMess from "@/components/error-mess/index.vue";
@@ -37,6 +40,10 @@ const props = defineProps({
     type: Object,
     required: true,
   },
+  maxQuantity: {
+    type: Number,
+    required: true,
+  }
 });
 
 const emit = defineEmits(["closeModal", "handleSubmit"]);
@@ -47,17 +54,20 @@ const state = reactive({
   quantity: props?.form?.quantity,
 });
 
-const rules = {
-  quantity: {
-    required,
-    positiveInteger: (value) => {
-      if (value === undefined || value === null || value === "") {
-        return true;
-      }
-      return REGEX_POSITIVE_INTERGER.test(value);
+const rules = computed(() => {
+  return {
+    quantity: {
+      required,
+      positiveInteger: (value) => {
+        if (value === undefined || value === null || value === "") {
+          return true;
+        }
+        return REGEX_POSITIVE_INTERGER.test(value);
+      },
+      maxValue: maxValue(props?.maxQuantity),
     },
-  },
-};
+  }
+});
 
 const v$ = useVuelidate(rules, state);
 

@@ -11,8 +11,9 @@ namespace BackendWebApi.Models
         public string? PhoneNumber { get; set; }
         public string? CustomerName { get; set; }
         public double SalePoint { get; set; }
-        public int TotalBuy { get; set; }
+        public int PurchaseCount { get; set; }
         public string? Address { get; set; }
+        public double TotalValueOrders { get; set; }
         public DateTime DateTime { get; set; }
         [ForeignKey("Admin_Account")]
         public int CompanyId { get; set; }

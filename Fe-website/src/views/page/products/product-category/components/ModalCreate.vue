@@ -5,12 +5,12 @@
         <div class="tw-basis-1/2 tw-flex tw-flex-col tw-items-start tw-justify-start tw-mr-3">
           <span class="tw-mb-2">{{ translate("CategoryCode") }}<span class="required-star">*</span></span>
           <a-input v-model:value="v$.code.$model" :status="v$.code.$error ? 'error' : ''" :placeholder="translate('CategoryCode')" :disabled="isEdit" />
-          <ErrorMess :params="[64]" :title="translate('CategoryCode')" :validator="v$.code.$errors[0]?.$validator" />
+          <ErrorMess :params="[64]" title="CategoryCode" :validator="v$.code.$errors[0]?.$validator" />
         </div>
         <div class="tw-basis-1/2 tw-flex tw-flex-col tw-items-start tw-justify-start">
           <span class="tw-mb-2">{{ translate("CategoryName") }}<span class="required-star">*</span></span>
           <a-input v-model:value="v$.name.$model" :status="v$.name.$error ? 'error' : ''" :placeholder="translate('CategoryName')" />
-          <ErrorMess :params="[64]" :title="translate('CategoryName')" :validator="v$.name.$errors[0]?.$validator" />
+          <ErrorMess :params="[64]" title="CategoryName" :validator="v$.name.$errors[0]?.$validator" />
         </div>
       </div>
       <div class="tw-w-full tw-flex tw-flex-col tw-items-start tw-mb-6">

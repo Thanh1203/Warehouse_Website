@@ -79,7 +79,7 @@ namespace BackendWebApi.Repository
             await _context.SaveChangesAsync();
         }
 
-        public async  Task DecreaseQuantityProduct(DTOWarehouseData_Update? data_Update)
+        public async  Task DecreaseQuantityProduct(DTOWarehouseData_Update? data_Update, DTOCustomer? customer)
         {
             double totalValue = 0;
             foreach (var item in data_Update.DataUpdate)
@@ -107,6 +107,38 @@ namespace BackendWebApi.Repository
             };
             _context.Warehouse_Exports.Add(newWarehouseExport);
             await _context.SaveChangesAsync();
+
+            if (string.IsNullOrWhiteSpace(customer.PhoneNumber))
+            {
+                return;
+            } 
+            else
+            {
+                var currentCustomer = await _context.Customers.SingleOrDefaultAsync(e => e.CompanyId == 1 && e.PhoneNumber.Contains(customer.PhoneNumber));
+                if (currentCustomer != null)
+                {
+                    currentCustomer.TotalValueOrders += totalValue;
+                    currentCustomer.PurchaseCount++;
+                    currentCustomer.SalePoint += (totalValue >= 100000) ? (int)Math.Floor(totalValue / 1000 * 0.03) : 0;
+                    await _context.SaveChangesAsync();
+                }
+                else
+                {
+                    var newCustomer = new Customer
+                    {
+                        PhoneNumber = customer.PhoneNumber,
+                        CustomerName = customer.Name,
+                        SalePoint = (totalValue >= 100000) ? (int)Math.Floor(totalValue / 1000 * 0.03) : 10,
+                        PurchaseCount = 1,
+                        Address = customer.Address,
+                        DateTime = DateTime.UtcNow,
+                        CompanyId = 1,
+                        TotalValueOrders = totalValue,
+                    };
+                    _context.Customers.Add(newCustomer);
+                    await _context.SaveChangesAsync();
+                }
+            }
         }
 
         static string GenerateRandomString()

@@ -11,32 +11,16 @@ namespace BackendWebApi.Controllers
         private readonly ICustomer _ICustomer = customer;
 
         [HttpGet]
-        public async Task<IActionResult> FetchCustomer()
+        public async Task<IActionResult> FetchCustomer(string? phoneNumber)
         {
             try
             {
-                var customers = await _ICustomer.GetCustomers();
-                return Ok(customers);
+                return Ok(await _ICustomer.SearchCustomer(phoneNumber));
             }
             catch (Exception ex)
             {
                 return BadRequest($"Error: {ex.Message}");
             }
         }
-
-        [HttpGet("ReportAddress")]
-        public async Task<IActionResult> FetchCustomerAdress()
-        {
-            try
-            {
-                var Address = await _ICustomer.GetCustomerAdress();
-                return Ok(Address);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest($"Error: {ex.Message}");
-            }
-        }
-
     }
 }

@@ -9,6 +9,6 @@ namespace BackendWebApi.Interfaces
         Task UpdateUnitPrice(int idWarehouse, int productId, double unitPrice);
         Task InsertProduct(DTOWarehouseData_Create data_Create);
         Task UpdateQuantityProduct(DTOWarehouseData_Update data_Update);
-        Task DecreaseQuantityProduct(DTOWarehouseData_Update data_Update);
+        Task DecreaseQuantityProduct(DTOWarehouseData_Update data_Update, DTOCustomer customer);
     }
 }

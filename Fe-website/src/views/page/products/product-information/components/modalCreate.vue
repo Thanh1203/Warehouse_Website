@@ -7,14 +7,14 @@
           <div class="tw-w-full">
             <a-input :placeholder="translate('ProductCode')" :status="v$.code.$error ? 'error' : ''" :disabled="isEdit" class="tw-mt-2" v-model:value="v$.code.$model" />
           </div>
-          <ErrorMess :params="[64]" :title="translate('ProductCode')" :validator="v$.code.$errors[0]?.$validator" />
+          <ErrorMess :params="[64]" title="ProductCode" :validator="v$.code.$errors[0]?.$validator" />
         </div>
         <div class="tw-basis-1/2 tw-ml-2 tw-flex tw-flex-col tw-justify-start tw-items-start">
           <span>{{ translate("ProductName") }}<span class="required-star">*</span></span>
           <div class="tw-w-full">
             <a-input :placeholder="translate('ProductName')" class="tw-mt-2" v-model:value="v$.name.$model" :status="v$.name.$error ? 'error' : ''" />
           </div>
-          <ErrorMess :params="[64]" :title="translate('ProductName')" :validator="v$.name.$errors[0]?.$validator" />
+          <ErrorMess :params="[64]" title="ProductName" :validator="v$.name.$errors[0]?.$validator" />
         </div>
       </div>
       <div class="tw-w-full tw-flex tw-items-start tw-mb-6">
@@ -29,7 +29,7 @@
               :status="v$.categoryId.$error ? 'error' : ''"
             />
           </div>
-          <ErrorMess :params="[64]" :title="translate('ProductCategory')" :validator="v$.categoryId.$errors[0]?.$validator" />
+          <ErrorMess :params="[64]" title="ProductCategory" :validator="v$.categoryId.$errors[0]?.$validator" />
         </div>
         <div class="tw-basis-1/2 tw-ml-2 tw-flex tw-flex-col tw-justify-start tw-items-start">
           <span>{{ translate("Classify") }}<span class="required-star">*</span></span>
@@ -42,7 +42,7 @@
               :status="v$.classifyId.$error ? 'error' : ''"
             />
           </div>
-          <ErrorMess :params="[64]" :title="translate('Classify')" :validator="v$.classifyId.$errors[0]?.$validator" />
+          <ErrorMess :params="[64]" title="Classify" :validator="v$.classifyId.$errors[0]?.$validator" />
         </div>
       </div>
       <div class="tw-w-full tw-flex tw-items-start tw-mb-6">
@@ -57,7 +57,7 @@
               :status="v$.producerId.$error ? 'error' : ''"
             />
           </div>
-          <ErrorMess :params="[64]" :title="translate('Producer')" :validator="v$.producerId.$errors[0]?.$validator" />
+          <ErrorMess :params="[64]" title="Producer" :validator="v$.producerId.$errors[0]?.$validator" />
         </div>
         <div class="tw-basis-1/2 tw-ml-2 tw-flex tw-flex-col tw-justify-start tw-items-start">
           <span>{{ translate("Size") }}</span>

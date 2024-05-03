@@ -1,41 +1,32 @@
 ﻿using BackendWebApi.Data;
+using BackendWebApi.DTOS;
 using BackendWebApi.Interfaces;
 using BackendWebApi.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace BackendWebApi.Repository
 {
-    public class RCustomer : ICustomer
+    public class RCustomer(DataContext context) : ICustomer
     {
-        private readonly DataContext _context;
-        public RCustomer(DataContext context)
-        {
-            _context = context;
-        }
+        private readonly DataContext _context = context;
 
-        public async Task<object> GetCustomers()
+        public async Task<object> SearchCustomer(string phoneNumber)
         {
-            var dataList = await _context.Customers.ToListAsync();
-            var total = await _context.Customers.CountAsync();
+            var data = new List<DTOCustomer>();
+            var dataList = await _context.Customers.Where(e => e.CompanyId == 1 && e.PhoneNumber.Contains(phoneNumber)).ToListAsync();
 
-            var result = new
+            foreach (var item in dataList)
             {
-                data = dataList,
-                totalElement = total
-            };
+                var viewModel = new DTOCustomer
+                {
+                    PhoneNumber = item.PhoneNumber,
+                    Name = item.CustomerName,
+                    Address = item.Address
+                };
+                data.Add(viewModel);
+            }
 
-            return result;
+            return data;
         }
-
-        public async Task<List<KeyValuePair<string, int>>> GetCustomerAdress()
-        {
-            var addressCounts = await _context.Customers
-            .GroupBy(c => c.Address)
-            .Select(g => new KeyValuePair<string, int>(g.Key, g.Count()))
-            .ToListAsync();
-
-            return addressCounts.OrderByDescending(pair => pair.Value).ToList();
-        }
-
     }
 }

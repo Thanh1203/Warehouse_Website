@@ -115,7 +115,7 @@
     </div>
   </div>
   <!-- modal -->
-  <ModalExport :is-visible="isVisibleModalQuantity" :form="state" @close-modal="cancelAdd" @handle-submit="handleAddProduct" />
+  <ModalExport :is-visible="isVisibleModalQuantity" :form="state" :max-quantity="maxQuantity" @close-modal="cancelAdd" @handle-submit="handleAddProduct" />
 </template>
 <script setup lang="ts">
 import { translate } from "@/languages/i18n";
@@ -140,14 +140,14 @@ const dataList = ref<Array<any>>([]);
 const filterSearching = ref<string>("");
 const isVisibleModalQuantity = ref<boolean>(false);
 const allHasUntiPrice = ref<boolean>(true);
-
+const maxQuantity = ref<number>(0);
 const state = reactive<any>({
   id: null,
   code: null,
   quantity: null,
 });
 const clientState = reactive<any>({
-  phoneNumber: null,
+  phoneNumber: "",
   name: "",
   address: "",
 });
@@ -205,6 +205,7 @@ const handleAdd = (item) => {
   state.id = item?.id;
   state.code = item?.code;
   state.quantity = null;
+  maxQuantity.value = item.quantity;
   isVisibleModalQuantity.value = true;
 };
 
@@ -254,25 +255,34 @@ const totalProductImport = (data) => {
 
 const handleSubmit = async () => {
   const payload = {
-    idWarehouse: Number(route.params?.id),
-    DataUpdate: dataList.value,
-    totalProduct: totalProductImport(dataList.value)
+    dataUpdate: {
+      idWarehouse: Number(route.params?.id),
+      DataUpdate: dataList.value,
+      totalProduct: totalProductImport(dataList.value)
+    },
+    customer: {
+      phoneNumber: clientState.phoneNumber,
+      name: clientState.name,
+      address: clientState.address
+    }
   }
 
   try {
     await store.dispatch("warehouse/goodsExport", payload);
     fetchProduct({ id: Number(route.params?.id) });
     notification["success"]({
-      message: translate("noti.insertSuccess"),
-      description: translate("PleaseConfigureSellingPrice"),
+      message: translate("noti.SuccessfulExport"),
     });
   } catch (error) {
     console.log(error);
     notification["error"]({
-      message: translate("noti.insertFail"),
+      message: translate("noti.FaildExport"),
     });
   }
   dataList.value = [];
+  clientState.phoneNumber = "";
+  clientState.name = "";
+  clientState.address = "";
 };
 
 watch(

@@ -62,18 +62,7 @@ export default {
         }
     },
     customer: {
-        GET: {
-            url: "/api/Customer",
-            method: "GET"
-        },
-        GET_ADDRESS: {
-            url: "/api/Customer/ReportAddress",
-            method: "GET"
-        },
-        GET_AGE: {
-            url: "/api/Customer/ReportAge",
-            method: "GET"
-        }
+
     },
     personnel: {
         GET: {

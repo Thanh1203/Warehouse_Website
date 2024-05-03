@@ -56,11 +56,11 @@ namespace BackendWebApi.Controllers
         }
 
         [HttpPut("GoodsExport")]
-        public async Task<IActionResult> DecreaseData([FromBody] DTOWarehouseData_Update? data_Update)
+        public async Task<IActionResult> DecreaseData([FromBody] DTOWh_Cus dtoData)
         {
             try
             {
-                await _IWarehouse_Data.DecreaseQuantityProduct(data_Update);
+                await _IWarehouse_Data.DecreaseQuantityProduct(dtoData.DataUpdate, dtoData.Customer);
                 return Ok("Update successful!");
             }
             catch (Exception ex)
