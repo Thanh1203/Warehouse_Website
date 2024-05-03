@@ -70,7 +70,7 @@
 
       <div class="tw-w-full tw-h-full tw-rounded-xl tw-p-4 tw-flex tw-flex-col tw-bg-white tw-grow">
         <div class="tw-mb-6 tw-font-[700] tw-text-[18px] tw-text-[#001f3f]">{{ translate('productCategoryRatio') }}</div>
-        <div class="tw-grow tw-flex tw-items-center">
+        <div class="tw-grow tw-flex" :class="!loading ? 'tw-items-center' : 'tw-items-start'">
           <Chartpie v-if="!loading" :data="chartPie"/>
           <a-skeleton v-else :loading="loading" active />
         </div>

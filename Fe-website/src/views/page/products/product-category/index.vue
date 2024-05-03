@@ -41,6 +41,7 @@
         :columns="columns"
         @onSelected="handleSelectRow"
         class="tw-w-full tw-h-[calc(100vh-290px)] tw-overflow-hidden tw-overflow-y-auto"
+        v-if="!loading"
       >
         <template #custom-body="{ column, record }">
           <template v-if="column.key === 'action' && record">
@@ -58,6 +59,8 @@
           </template>
         </template>
       </AntdTable>
+      
+      <a-skeleton v-else active />
     </template>
   </Section>
   <!-- modal -->
@@ -86,6 +89,7 @@ const router = useRouter();
 
 const categoryData = computed(() => store.getters["category/categoryData"]);
 const totalCategory = computed(() => store.getters["category/totalElement"]);
+const loading = computed(() => store.getters["category/loading"]);
 
 const listSelect = ref<any>([]);
 const isVisibleModalCreate = ref<boolean>(false);

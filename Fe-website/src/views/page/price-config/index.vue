@@ -1,10 +1,11 @@
 <template>
   <div class="tw-mb-6 tw-p-6 tw-bg-white tw-rounded-xl">
-    <a-Tabs v-model:activeKey="activeKey" type="card" class="tw-h-[177px]">
+    <a-Tabs v-model:activeKey="activeKey" type="card" class="tw-h-[177px]" v-if="!loading">
       <a-tab-pane v-for="item in listWhInfo" :key="item.id" :tab="item.name">
-        <TabWhInfo :data="item" />
+        <TabWhInfo  :data="item" />
       </a-tab-pane>
     </a-Tabs>
+    <a-skeleton v-else active />
   </div>
 
   <a-form class="tw-mb-6 tw-px-6 tw-py-5 tw-bg-white tw-rounded-xl tw-flex">
@@ -39,6 +40,7 @@
         :has-checkbox="false"
         :no-sort="true"
         :dataSource="productConfigUnitPrice"
+        v-if="!loading"
       >
         <template #custom-body="{ column, record }">
           <template v-if="column.key === 'unitPrice' && record">
@@ -71,6 +73,8 @@
           </template>
         </template>
       </AntdTable>
+
+      <a-skeleton v-else active />
     </template>
   </Section>
 </template>
@@ -94,8 +98,9 @@ const route = useRoute();
 const router = useRouter();
 
 const listWhInfo = computed(() => store.getters["warehouse/warehouseInfo"]);
-const productConfigUnitPrice = computed(() => store.getters["product/productConfigUnitPrice"]);
+const loading = computed(() => store.getters["warehouse/loading"]);
 
+const productConfigUnitPrice = computed(() => store.getters["product/productConfigUnitPrice"]);
 const editUnitPrice = ref<number | null>(null);
 const activeKey = ref<number>(0);
 const columns = ref<Array<any>>([
@@ -181,6 +186,7 @@ const submitEdit = async () => {
       },
     };
     await store.dispatch("product/updateUnitPrice", removeNullObjects(payload));
+    await fetchProductInWh({ id: activeKey.value });
   }
   editUnitPrice.value = null;
   unitPriceSate.valUnitPrice = null;

@@ -60,6 +60,7 @@
         :no-sort="true"
         @onSelected="handleSelectRow"
         class="tw-w-full tw-h-[calc(100vh-290px)] tw-overflow-hidden tw-overflow-y-auto"
+        v-if="!loading"
       >
         <template #custom-body="{ column, record }">
           <template v-if="column.key === 'action' && record">
@@ -77,6 +78,8 @@
           </template>
         </template>
       </AntdTable>
+
+      <a-skeleton v-else active />
     </template>
   </Section>
   <!-- modal -->
@@ -118,6 +121,7 @@ const warehouseData = computed(() => store.getters["warehouse/warehouseInfo"]);
 const totalWarehouse = computed(() => store.getters["warehouse/totalWarehouse"]);
 const nationOption = computed(() => store.getters["warehouse/nationData"]);
 const areaOption = computed(() => store.getters["warehouse/areaData"]);
+const loading = computed(() => store.getters["warehouse/loading"]);
 
 const isVisibleModalCreate = ref<boolean>(false);
 const isVisibleModalInfo = ref<boolean>(false);

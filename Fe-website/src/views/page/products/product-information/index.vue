@@ -44,11 +44,14 @@
             }))
           "
           v-model:selectedKeys="selectedKeys"
+          v-if="!loadingCategory"
         />
+
+        <a-skeleton v-else active />
       </template>
     </Section>
     <Section
-      class="!tw-w-[82%] tw-h-full tw-bg-transparent tw-border tw-border-solid tw-ml-2 tw-overflow-hidden"
+      class="!tw-w-[82%] tw-h-[calc(100vh-223px)] tw-bg-transparent tw-border tw-border-solid tw-ml-2 tw-overflow-hidden"
       :title="translate('ListProducts')"
       :subTitle="translate('TotalProducts')"
       :number="String(totalProduct)"
@@ -80,6 +83,7 @@
           :columns="columns"
           @onSelected="handleSelectRow"
           class="tw-h-[calc(100vh-342px)] tw-w-full tw-overflow-hidden tw-overflow-y-auto"
+          v-if="!loadingProduct"
         >
           <template #custom-body="{ column, record }">
             <template v-if="column.key === 'name'">
@@ -99,6 +103,8 @@
             </template>
           </template>
         </AntdTable>
+
+        <a-skeleton v-else active />
       </template>
     </Section>
   </div>
@@ -140,6 +146,8 @@ const categoryData = computed(() => {
 });
 const totalProduct = computed(() => store.getters["product/totalElement"]);
 const totalCategory = computed(() => store.getters["category/totalElement"]);
+const loadingCategory = computed(() => store.getters["category/loading"]);
+const loadingProduct = computed(() => store.getters["product/loading"]);
 
 const listSelect = ref<Array<string | number>>([]);
 const idProduct = ref<string>("");

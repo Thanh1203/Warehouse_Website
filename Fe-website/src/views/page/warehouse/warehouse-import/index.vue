@@ -1,10 +1,12 @@
 <template>
   <div class="tw-mb-6 tw-p-6 tw-bg-white tw-rounded-xl">
-    <a-Tabs v-model:activeKey="activeKey" type="card" class="tw-h-[177px]">
+    <a-Tabs v-model:activeKey="activeKey" type="card" class="tw-h-[177px]" v-if="!loading">
       <a-tab-pane v-for="item in listWhInfo" :key="item.id" :tab="item.name">
         <TabWhInfo :data="item" />
       </a-tab-pane>
     </a-Tabs>
+
+    <a-skeleton v-else active />
   </div>
 
   <div class="tw-w-full tw-flex tw-gap-6 tw-justify-between">
@@ -26,7 +28,7 @@
       </AntdButton>
     </div>
 
-    <div class="tw-grow tw-h-full">
+    <div class="tw-grow tw-min-h-[calc(100vh-240px)]">
       <Section class="tw-w-full tw-bg-white tw-h-full" :title="translate('ImportHistory')">
         <template #action>
           <AntdButton type="primary" @click="goImportGodds">
@@ -41,8 +43,11 @@
             :columns="columns"
             :dataSource="listWHImport"
             class="tw-w-full tw-h-[60vh] tw-overflow-hidden tw-overflow-y-auto"
+            v-if="!loading"
           >
           </AntdTable>
+          
+          <a-skeleton v-else active />
         </template>
       </Section>
     </div>
@@ -66,6 +71,7 @@ const route = useRoute();
 
 const listWhInfo = computed(() => store.getters["warehouse/warehouseInfo"]);
 const listWHImport = computed(() => store.getters["warehouse/warehouseImport"]);
+const loading = computed(() => store.getters["warehouse/loading"]);
 
 const activeKey = ref<number>(0);
 const columns = ref<Array<any>>([
