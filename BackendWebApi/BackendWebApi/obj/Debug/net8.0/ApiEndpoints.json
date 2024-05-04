@@ -480,6 +480,22 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "BackendWebApi.Controllers.ReportSale_Controller",
+    "Method": "FetchData",
+    "RelativePath": "api/report_product/{curreantYear}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "curreantYear",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "BackendWebApi.Controllers.Report_Product_Controller",
     "Method": "FetchDataReportSaleProduct",
     "RelativePath": "api/report_product/excess_inventory",

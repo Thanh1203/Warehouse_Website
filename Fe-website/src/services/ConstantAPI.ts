@@ -184,6 +184,10 @@ export default {
         GET_PRODUCT_SALE: {
             url: "/api/report_product/excess_inventory",
             method: "GET",
+        },
+        GET_SALE: {
+            url: "/api/report_product",
+            method: "GET",
         }
     }
 }

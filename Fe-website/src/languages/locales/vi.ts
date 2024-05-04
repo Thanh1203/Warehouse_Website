@@ -242,5 +242,6 @@ export const vi = {
         OneTime: "1 Lần",
         TwoTime: "2 Lần",
         ThreeOrMore: "3 lần trở lên",
-    }
+    },
+    RevenueEachWarehouse: "Doanh thu từng kho hàng",
 };

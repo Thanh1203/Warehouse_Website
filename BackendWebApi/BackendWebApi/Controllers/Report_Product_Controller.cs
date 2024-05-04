@@ -1,5 +1,4 @@
-﻿using BackendWebApi.DTOS;
-using BackendWebApi.Interfaces;
+﻿using BackendWebApi.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BackendWebApi.Controllers

@@ -9,6 +9,7 @@ export interface report {
  reportNewCustomerYear: any;
  reportProduct: any;
  reportSaleProduct: any;
+ reportRevenue: any;
 }
 
 export default {
@@ -21,6 +22,7 @@ export default {
   reportNewCustomerYear: null,
   reportProduct: null,
   reportSaleProduct: null,
+  reportRevenue: null,
  } as report,
  getters: {
   loading: (state) => state.loading,
@@ -30,6 +32,7 @@ export default {
   reportNewCustomerYear: (state) => state.reportNewCustomerYear,
   reportProduct: (state) => state.reportProduct,
   reportSaleProduct: (state) => state.reportSaleProduct,
+  reportRevenue: (state) => state.reportRevenue,
  },
  mutations: {
   SET_LOADING(state, payload) {
@@ -57,6 +60,10 @@ export default {
    state.loadingSaleProduct = false;
    state.reportSaleProduct = payload;
   },
+  SET_DATA_REPORT_REVENUE(state, payload) {
+   state.loading = false;
+   state.reportRevenue = payload;
+  }
  },
  actions: {
   // report customer
@@ -104,5 +111,17 @@ export default {
     console.log(error);
    }
   },
+
+  // report renenue
+  async fetchDataReportRevenue({ commit }, payload) {
+   try {
+    commit("SET_LOADING", true);
+    const response: any = await DataService.get(`${ConstantAPI.report.GET_SALE.url}/${payload}`,null, null);
+    await commit("SET_DATA_REPORT_REVENUE", response);
+    return response;
+   } catch (error) {
+    console.log(error);
+   }
+  }
  }
 }

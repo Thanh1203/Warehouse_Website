@@ -137,6 +137,7 @@ import { useStore } from "vuex";
 import dayjs, { Dayjs } from "dayjs";
 
 const store = useStore();
+
 const dataReportProduct = computed(() => store.getters["report/reportProduct"]);
 const loading = computed(() => store.getters["report/loading"]);
 const loadingSaleProduct = computed(() => store.getters["report/loadingSaleProduct"]);

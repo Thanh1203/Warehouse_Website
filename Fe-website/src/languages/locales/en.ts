@@ -240,5 +240,6 @@ export const en = {
         OneTime: "1 times",
         TwoTime: "2 times",
         ThreeOrMore: "3 times or more",
-    }
+    },
+    RevenueEachWarehouse: "Revenue of each warehouse",
 };
