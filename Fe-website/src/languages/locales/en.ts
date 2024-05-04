@@ -236,4 +236,10 @@ export const en = {
     ClientInformation: "Client information",
     PleaseConfigureSellingPrice: "Please configure the selling price",
     ErrorNotConfigPrice: "Some products are not displayed because the order has not been set up yet",
+    pruchaseTimes: {
+        OneTime: "1 times",
+        TwoTime: "2 times",
+        ThreeOrMore: "3 times or more",
+    },
+    RevenueEachWarehouse: "Revenue of each warehouse",
 };

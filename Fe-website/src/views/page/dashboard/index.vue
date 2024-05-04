@@ -45,8 +45,8 @@
       </div>
       <div class="tw-overflow-hidden">
         <div class="tw-truncate tw-font-600 tw-text-[14px]">{{ translate("ReturnCustomerRate") }}</div>
-        <div class="tw-font-[700] tw-text-[24px] tw-text-[#001f3f]">
-          <NumberAnimation v-if="!loading" :from="0" :to="dataDashboard?.rateReturn" :duration="1" autoplay easing="linear" :format="theFormat" />
+        <div class="tw-font-[700] tw-text-[24px]">
+          <NumberAnimation v-if="!loading" :from="0" :to="dataDashboard?.rateReturn" :duration="1" autoplay easing="linear" :format="theFormat" :class="`tw-text-[${setColor(dataDashboard?.rateReturn)}]`"/>
           <a-skeleton-input v-else :loading="loading" :paragraph="{ rows: 0 }" active size="small"/>
         </div>
       </div>
@@ -100,7 +100,7 @@ import { MONTH_IN_YEAR } from "@/constants";
 import dayjs, { Dayjs } from "dayjs";
 import Chartpie from "@/components/Chartpie/index.vue";
 import Chartbar from "@/components/Chartbar/index.vue";
-import { getArrayRandColor } from "@/utils/common";
+import { getArrayRandColor, setColor } from "@/utils/common";
 import { useStore } from "vuex";
 
 const store = useStore();

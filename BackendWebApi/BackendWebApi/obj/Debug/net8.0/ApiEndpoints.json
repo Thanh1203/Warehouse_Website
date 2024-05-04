@@ -444,6 +444,79 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "BackendWebApi.Controllers.Report_Customer_Controller",
+    "Method": "FetchDataReportCustomer",
+    "RelativePath": "api/report_customer",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BackendWebApi.Controllers.Report_Customer_Controller",
+    "Method": "FetchDataReportNewCustomer",
+    "RelativePath": "api/report_customer/{currentYear}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "currentYear",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BackendWebApi.Controllers.Report_Product_Controller",
+    "Method": "FetchDataReportProduct",
+    "RelativePath": "api/report_product",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BackendWebApi.Controllers.ReportSale_Controller",
+    "Method": "FetchData",
+    "RelativePath": "api/report_product/{curreantYear}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "curreantYear",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BackendWebApi.Controllers.Report_Product_Controller",
+    "Method": "FetchDataReportSaleProduct",
+    "RelativePath": "api/report_product/excess_inventory",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "year",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "month",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "BackendWebApi.Controllers.Warehouse_Controller",
     "Method": "FetchWarehousesInfo",
     "RelativePath": "api/Warehouse",

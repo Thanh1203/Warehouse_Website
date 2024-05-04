@@ -19,7 +19,7 @@ namespace BackendWebApi.Repository
             double rateReturn = 0;
             if (totalCustomer > 0)
             {
-                rateReturn = (double)secondBuy / totalCustomer;
+                rateReturn = (double)secondBuy / totalCustomer * 100;
             }
 
             var categoryRatios = await _context.Categories

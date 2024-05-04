@@ -168,4 +168,26 @@ export default {
             method: "GET"
         },
     },
+    report: {
+        GET_CUSTOMER: {
+            url: "/api/report_customer",
+            method: "GET",
+        },
+        GET_NEW_CUSTOMER_YEAR: {
+            url: "/api/report_customer",
+            method: "GET",
+        },
+        GET_PRODUCT: {
+            url: "/api/report_product",
+            method: "GET",
+        },
+        GET_PRODUCT_SALE: {
+            url: "/api/report_product/excess_inventory",
+            method: "GET",
+        },
+        GET_SALE: {
+            url: "/api/report_product",
+            method: "GET",
+        }
+    }
 }

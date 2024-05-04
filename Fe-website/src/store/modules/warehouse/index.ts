@@ -9,6 +9,8 @@ export interface warehouse {
   warehouseImport: any;
   warehouseExport: any;
   loading: boolean;
+  loadingImport: boolean;
+  loadingExport: boolean;
 }
 
 export default {
@@ -21,6 +23,8 @@ export default {
     warehouseImport: [],
     warehouseExport: [],
     loading: true,
+    loadingExport: true,
+    loadingImport: true
   } as warehouse,
   getters: {
     warehouseInfo: (state) => state.warehouseInfo,
@@ -30,6 +34,8 @@ export default {
     warehouseImport: (state) => state.warehouseImport,
     warehouseExport: (state) => state.warehouseExport,
     loading: (state) => state.loading,
+    loadingExport: (state) => state.loadingExport,
+    loadingImport: (state) => state.loadingImport,
   },
   mutations: {
     SET_WAREHOUSE_INFO(state, payload) {
@@ -49,15 +55,21 @@ export default {
       state.areaData = payload;
     },
     SET_WAREHOUSE_IMPORT(state, payload) {
-      state.loading = false;
+      state.loadingImport = false;
       state.warehouseImport = payload;
     },
     SET_WAREHOUSE_EXPORT(state, payload) {
-      state.loading = false;
+      state.loadingExport = false;
       state.warehouseExport = payload;
     },
     SET_LOADING(state, payload) {
       state.loading = payload;
+    },
+    SET_LOADING_IMPORT(state, payload) {
+      state.loadingImport = payload;
+    },
+    SET_LOADING_EXPORT(state, payload) {
+      state.loadingExport = payload;
     },
   },
   actions: {
@@ -126,7 +138,7 @@ export default {
     //get
     async getHistoryImport({ commit }, payload) {
       try {
-        commit("SET_LOADING", true);
+        commit("SET_LOADING_IMPORT", true);
         const response: any = await DataService.get(`${ConstantAPI.warehouseImport.GET.url}/${payload.id}`, payload?.params, null);
         await commit("SET_WAREHOUSE_IMPORT", response);
         return response;
@@ -155,7 +167,7 @@ export default {
     //get
     async getWarehouseExport({ commit }, payload) {
       try {
-        commit("SET_LOADING", true);
+        commit("SET_LOADING_EXPORT", true);
         const response: any = await DataService.get(`${ConstantAPI.warehouseExport.GET.url}/${payload.id}`, payload?.params, null);
         await commit("SET_WAREHOUSE_EXPORT", response);
         return response;

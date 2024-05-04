@@ -3,44 +3,28 @@
   "WorkspaceRootPath": "D:\\My workspace data\\WebProgrammingProject\\BackendWebApi\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{84566015-E005-45DC-AC72-5CA8E6207C41}|BackendWebApi\\BackendWebApi.csproj|d:\\my workspace data\\webprogrammingproject\\backendwebapi\\backendwebapi\\dtos\\dtocustomer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{84566015-E005-45DC-AC72-5CA8E6207C41}|BackendWebApi\\BackendWebApi.csproj|solutionrelative:backendwebapi\\dtos\\dtocustomer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{84566015-E005-45DC-AC72-5CA8E6207C41}|BackendWebApi\\BackendWebApi.csproj|d:\\my workspace data\\webprogrammingproject\\backendwebapi\\backendwebapi\\repository\\rreportsale.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{84566015-E005-45DC-AC72-5CA8E6207C41}|BackendWebApi\\BackendWebApi.csproj|solutionrelative:backendwebapi\\repository\\rreportsale.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{84566015-E005-45DC-AC72-5CA8E6207C41}|BackendWebApi\\BackendWebApi.csproj|d:\\my workspace data\\webprogrammingproject\\backendwebapi\\backendwebapi\\repository\\rwarehouse_data.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{84566015-E005-45DC-AC72-5CA8E6207C41}|BackendWebApi\\BackendWebApi.csproj|solutionrelative:backendwebapi\\repository\\rwarehouse_data.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{84566015-E005-45DC-AC72-5CA8E6207C41}|BackendWebApi\\BackendWebApi.csproj|d:\\my workspace data\\webprogrammingproject\\backendwebapi\\backendwebapi\\dtos\\dtoreportsale.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{84566015-E005-45DC-AC72-5CA8E6207C41}|BackendWebApi\\BackendWebApi.csproj|solutionrelative:backendwebapi\\dtos\\dtoreportsale.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{84566015-E005-45DC-AC72-5CA8E6207C41}|BackendWebApi\\BackendWebApi.csproj|d:\\my workspace data\\webprogrammingproject\\backendwebapi\\backendwebapi\\interfaces\\iwarehouse_data.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{84566015-E005-45DC-AC72-5CA8E6207C41}|BackendWebApi\\BackendWebApi.csproj|solutionrelative:backendwebapi\\interfaces\\iwarehouse_data.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{84566015-E005-45DC-AC72-5CA8E6207C41}|BackendWebApi\\BackendWebApi.csproj|d:\\my workspace data\\webprogrammingproject\\backendwebapi\\backendwebapi\\interfaces\\ireportsale.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{84566015-E005-45DC-AC72-5CA8E6207C41}|BackendWebApi\\BackendWebApi.csproj|solutionrelative:backendwebapi\\interfaces\\ireportsale.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{84566015-E005-45DC-AC72-5CA8E6207C41}|BackendWebApi\\BackendWebApi.csproj|d:\\my workspace data\\webprogrammingproject\\backendwebapi\\backendwebapi\\dtos\\dtowarehouse_data.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{84566015-E005-45DC-AC72-5CA8E6207C41}|BackendWebApi\\BackendWebApi.csproj|solutionrelative:backendwebapi\\dtos\\dtowarehouse_data.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{84566015-E005-45DC-AC72-5CA8E6207C41}|BackendWebApi\\BackendWebApi.csproj|d:\\my workspace data\\webprogrammingproject\\backendwebapi\\backendwebapi\\repository\\rreportproduct.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{84566015-E005-45DC-AC72-5CA8E6207C41}|BackendWebApi\\BackendWebApi.csproj|solutionrelative:backendwebapi\\repository\\rreportproduct.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{84566015-E005-45DC-AC72-5CA8E6207C41}|BackendWebApi\\BackendWebApi.csproj|d:\\my workspace data\\webprogrammingproject\\backendwebapi\\backendwebapi\\controllers\\warehouse_data_controller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{84566015-E005-45DC-AC72-5CA8E6207C41}|BackendWebApi\\BackendWebApi.csproj|solutionrelative:backendwebapi\\controllers\\warehouse_data_controller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{84566015-E005-45DC-AC72-5CA8E6207C41}|BackendWebApi\\BackendWebApi.csproj|d:\\my workspace data\\webprogrammingproject\\backendwebapi\\backendwebapi\\repository\\rreportcustomer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{84566015-E005-45DC-AC72-5CA8E6207C41}|BackendWebApi\\BackendWebApi.csproj|solutionrelative:backendwebapi\\repository\\rreportcustomer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{84566015-E005-45DC-AC72-5CA8E6207C41}|BackendWebApi\\BackendWebApi.csproj|d:\\my workspace data\\webprogrammingproject\\backendwebapi\\backendwebapi\\controllers\\customer_controller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{84566015-E005-45DC-AC72-5CA8E6207C41}|BackendWebApi\\BackendWebApi.csproj|solutionrelative:backendwebapi\\controllers\\customer_controller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{84566015-E005-45DC-AC72-5CA8E6207C41}|BackendWebApi\\BackendWebApi.csproj|d:\\my workspace data\\webprogrammingproject\\backendwebapi\\backendwebapi\\repository\\rdashboard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{84566015-E005-45DC-AC72-5CA8E6207C41}|BackendWebApi\\BackendWebApi.csproj|solutionrelative:backendwebapi\\repository\\rdashboard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{84566015-E005-45DC-AC72-5CA8E6207C41}|BackendWebApi\\BackendWebApi.csproj|d:\\my workspace data\\webprogrammingproject\\backendwebapi\\backendwebapi\\interfaces\\icustomer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{84566015-E005-45DC-AC72-5CA8E6207C41}|BackendWebApi\\BackendWebApi.csproj|solutionrelative:backendwebapi\\interfaces\\icustomer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{84566015-E005-45DC-AC72-5CA8E6207C41}|BackendWebApi\\BackendWebApi.csproj|d:\\my workspace data\\webprogrammingproject\\backendwebapi\\backendwebapi\\models\\customer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{84566015-E005-45DC-AC72-5CA8E6207C41}|BackendWebApi\\BackendWebApi.csproj|solutionrelative:backendwebapi\\models\\customer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{84566015-E005-45DC-AC72-5CA8E6207C41}|BackendWebApi\\BackendWebApi.csproj|d:\\my workspace data\\webprogrammingproject\\backendwebapi\\backendwebapi\\repository\\rcustomer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{84566015-E005-45DC-AC72-5CA8E6207C41}|BackendWebApi\\BackendWebApi.csproj|solutionrelative:backendwebapi\\repository\\rcustomer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{84566015-E005-45DC-AC72-5CA8E6207C41}|BackendWebApi\\BackendWebApi.csproj|d:\\my workspace data\\webprogrammingproject\\backendwebapi\\backendwebapi\\repository\\rwarehouse_info.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{84566015-E005-45DC-AC72-5CA8E6207C41}|BackendWebApi\\BackendWebApi.csproj|solutionrelative:backendwebapi\\repository\\rwarehouse_info.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -49,8 +33,8 @@
       "VerticalTabListWidth": 256,
       "DocumentGroups": [
         {
-          "DockedWidth": 418,
-          "SelectedChildIndex": 4,
+          "DockedWidth": 541,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Bookmark",
@@ -58,138 +42,86 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "RDashboard.cs",
-              "DocumentMoniker": "D:\\My workspace data\\WebProgrammingProject\\BackendWebApi\\BackendWebApi\\Repository\\RDashboard.cs",
-              "RelativeDocumentMoniker": "BackendWebApi\\Repository\\RDashboard.cs",
-              "ToolTip": "D:\\My workspace data\\WebProgrammingProject\\BackendWebApi\\BackendWebApi\\Repository\\RDashboard.cs",
-              "RelativeToolTip": "BackendWebApi\\Repository\\RDashboard.cs",
-              "ViewState": "AQIAAAsAAAAAAAAAAAAQwB8AAAANAAAA",
+              "DocumentIndex": 1,
+              "Title": "DTOReportSale.cs",
+              "DocumentMoniker": "D:\\My workspace data\\WebProgrammingProject\\BackendWebApi\\BackendWebApi\\DTOS\\DTOReportSale.cs",
+              "RelativeDocumentMoniker": "BackendWebApi\\DTOS\\DTOReportSale.cs",
+              "ToolTip": "D:\\My workspace data\\WebProgrammingProject\\BackendWebApi\\BackendWebApi\\DTOS\\DTOReportSale.cs",
+              "RelativeToolTip": "BackendWebApi\\DTOS\\DTOReportSale.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAAaAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-03T08:40:22.515Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "Customer_Controller.cs",
-              "DocumentMoniker": "D:\\My workspace data\\WebProgrammingProject\\BackendWebApi\\BackendWebApi\\Controllers\\Customer_Controller.cs",
-              "RelativeDocumentMoniker": "BackendWebApi\\Controllers\\Customer_Controller.cs",
-              "ToolTip": "D:\\My workspace data\\WebProgrammingProject\\BackendWebApi\\BackendWebApi\\Controllers\\Customer_Controller.cs",
-              "RelativeToolTip": "BackendWebApi\\Controllers\\Customer_Controller.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA8AAAAPAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-03T08:17:31.993Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "ICustomer.cs",
-              "DocumentMoniker": "D:\\My workspace data\\WebProgrammingProject\\BackendWebApi\\BackendWebApi\\Interfaces\\ICustomer.cs",
-              "RelativeDocumentMoniker": "BackendWebApi\\Interfaces\\ICustomer.cs",
-              "ToolTip": "D:\\My workspace data\\WebProgrammingProject\\BackendWebApi\\BackendWebApi\\Interfaces\\ICustomer.cs",
-              "RelativeToolTip": "BackendWebApi\\Interfaces\\ICustomer.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAcAAAATAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-03T07:46:57.973Z",
+              "WhenOpened": "2024-05-04T18:45:57.783Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "DTOCustomer.cs",
-              "DocumentMoniker": "D:\\My workspace data\\WebProgrammingProject\\BackendWebApi\\BackendWebApi\\DTOS\\DTOCustomer.cs",
-              "RelativeDocumentMoniker": "BackendWebApi\\DTOS\\DTOCustomer.cs",
-              "ToolTip": "D:\\My workspace data\\WebProgrammingProject\\BackendWebApi\\BackendWebApi\\DTOS\\DTOCustomer.cs",
-              "RelativeToolTip": "BackendWebApi\\DTOS\\DTOCustomer.cs",
-              "ViewState": "AQIAAAIAAAAAAAAAAAAxwAsAAAAAAAAA",
+              "Title": "RReportSale.cs",
+              "DocumentMoniker": "D:\\My workspace data\\WebProgrammingProject\\BackendWebApi\\BackendWebApi\\Repository\\RReportSale.cs",
+              "RelativeDocumentMoniker": "BackendWebApi\\Repository\\RReportSale.cs",
+              "ToolTip": "D:\\My workspace data\\WebProgrammingProject\\BackendWebApi\\BackendWebApi\\Repository\\RReportSale.cs",
+              "RelativeToolTip": "BackendWebApi\\Repository\\RReportSale.cs",
+              "ViewState": "AQIAAA0AAAAAAAAAAAAUwBkAAABgAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-03T07:50:15.908Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "RCustomer.cs",
-              "DocumentMoniker": "D:\\My workspace data\\WebProgrammingProject\\BackendWebApi\\BackendWebApi\\Repository\\RCustomer.cs",
-              "RelativeDocumentMoniker": "BackendWebApi\\Repository\\RCustomer.cs",
-              "ToolTip": "D:\\My workspace data\\WebProgrammingProject\\BackendWebApi\\BackendWebApi\\Repository\\RCustomer.cs",
-              "RelativeToolTip": "BackendWebApi\\Repository\\RCustomer.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABMAAAAvAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-03T07:46:42.172Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "Customer.cs",
-              "DocumentMoniker": "D:\\My workspace data\\WebProgrammingProject\\BackendWebApi\\BackendWebApi\\Models\\Customer.cs",
-              "RelativeDocumentMoniker": "BackendWebApi\\Models\\Customer.cs",
-              "ToolTip": "D:\\My workspace data\\WebProgrammingProject\\BackendWebApi\\BackendWebApi\\Models\\Customer.cs",
-              "RelativeToolTip": "BackendWebApi\\Models\\Customer.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA0AAAAuAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-03T07:39:00.652Z",
-              "EditorCaption": ""
-            }
-          ]
-        },
-        {
-          "DockedWidth": 418,
-          "SelectedChildIndex": 3,
-          "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "DTOWarehouse_Data.cs",
-              "DocumentMoniker": "D:\\My workspace data\\WebProgrammingProject\\BackendWebApi\\BackendWebApi\\DTOS\\DTOWarehouse_Data.cs",
-              "RelativeDocumentMoniker": "BackendWebApi\\DTOS\\DTOWarehouse_Data.cs",
-              "ToolTip": "D:\\My workspace data\\WebProgrammingProject\\BackendWebApi\\BackendWebApi\\DTOS\\DTOWarehouse_Data.cs",
-              "RelativeToolTip": "BackendWebApi\\DTOS\\DTOWarehouse_Data.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAACQAAAAaAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-03T09:15:21.872Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "Warehouse_Data_Controller.cs",
-              "DocumentMoniker": "D:\\My workspace data\\WebProgrammingProject\\BackendWebApi\\BackendWebApi\\Controllers\\Warehouse_Data_Controller.cs",
-              "RelativeDocumentMoniker": "BackendWebApi\\Controllers\\Warehouse_Data_Controller.cs",
-              "ToolTip": "D:\\My workspace data\\WebProgrammingProject\\BackendWebApi\\BackendWebApi\\Controllers\\Warehouse_Data_Controller.cs",
-              "RelativeToolTip": "BackendWebApi\\Controllers\\Warehouse_Data_Controller.cs",
-              "ViewState": "AQIAACEAAAAAAAAAAAAtwEcAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-03T08:47:32.885Z",
+              "WhenOpened": "2024-05-04T17:44:57.075Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "IWarehouse_Data.cs",
-              "DocumentMoniker": "D:\\My workspace data\\WebProgrammingProject\\BackendWebApi\\BackendWebApi\\Interfaces\\IWarehouse_Data.cs",
-              "RelativeDocumentMoniker": "BackendWebApi\\Interfaces\\IWarehouse_Data.cs",
-              "ToolTip": "D:\\My workspace data\\WebProgrammingProject\\BackendWebApi\\BackendWebApi\\Interfaces\\IWarehouse_Data.cs",
-              "RelativeToolTip": "BackendWebApi\\Interfaces\\IWarehouse_Data.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAqwAsAAABVAAAA",
+              "Title": "IReportSale.cs",
+              "DocumentMoniker": "D:\\My workspace data\\WebProgrammingProject\\BackendWebApi\\BackendWebApi\\Interfaces\\IReportSale.cs",
+              "RelativeDocumentMoniker": "BackendWebApi\\Interfaces\\IReportSale.cs",
+              "ToolTip": "D:\\My workspace data\\WebProgrammingProject\\BackendWebApi\\BackendWebApi\\Interfaces\\IReportSale.cs",
+              "RelativeToolTip": "BackendWebApi\\Interfaces\\IReportSale.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAQAAABGAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-03T08:46:51.902Z",
+              "WhenOpened": "2024-05-04T17:43:53.711Z",
+              "EditorCaption": ""
+            }
+          ]
+        },
+        {
+          "DockedWidth": 295,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "RReportCustomer.cs",
+              "DocumentMoniker": "D:\\My workspace data\\WebProgrammingProject\\BackendWebApi\\BackendWebApi\\Repository\\RReportCustomer.cs",
+              "RelativeDocumentMoniker": "BackendWebApi\\Repository\\RReportCustomer.cs",
+              "ToolTip": "D:\\My workspace data\\WebProgrammingProject\\BackendWebApi\\BackendWebApi\\Repository\\RReportCustomer.cs",
+              "RelativeToolTip": "BackendWebApi\\Repository\\RReportCustomer.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAACYAAAAnAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-04T17:55:34.838Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "RWarehouse_Data.cs",
-              "DocumentMoniker": "D:\\My workspace data\\WebProgrammingProject\\BackendWebApi\\BackendWebApi\\Repository\\RWarehouse_Data.cs",
-              "RelativeDocumentMoniker": "BackendWebApi\\Repository\\RWarehouse_Data.cs",
-              "ToolTip": "D:\\My workspace data\\WebProgrammingProject\\BackendWebApi\\BackendWebApi\\Repository\\RWarehouse_Data.cs",
-              "RelativeToolTip": "BackendWebApi\\Repository\\RWarehouse_Data.cs",
-              "ViewState": "AQIAAF4AAAAAAAAAAAAAAIoAAAA2AAAA",
+              "DocumentIndex": 5,
+              "Title": "RWarehouse_Info.cs",
+              "DocumentMoniker": "D:\\My workspace data\\WebProgrammingProject\\BackendWebApi\\BackendWebApi\\Repository\\RWarehouse_Info.cs",
+              "RelativeDocumentMoniker": "BackendWebApi\\Repository\\RWarehouse_Info.cs",
+              "ToolTip": "D:\\My workspace data\\WebProgrammingProject\\BackendWebApi\\BackendWebApi\\Repository\\RWarehouse_Info.cs",
+              "RelativeToolTip": "BackendWebApi\\Repository\\RWarehouse_Info.cs",
+              "ViewState": "AQIAAAkAAAAAAAAAAAAAAGsAAAB8AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-03T07:56:57.028Z",
+              "WhenOpened": "2024-05-04T18:36:15.935Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "RReportProduct.cs",
+              "DocumentMoniker": "D:\\My workspace data\\WebProgrammingProject\\BackendWebApi\\BackendWebApi\\Repository\\RReportProduct.cs",
+              "RelativeDocumentMoniker": "BackendWebApi\\Repository\\RReportProduct.cs",
+              "ToolTip": "D:\\My workspace data\\WebProgrammingProject\\BackendWebApi\\BackendWebApi\\Repository\\RReportProduct.cs",
+              "RelativeToolTip": "BackendWebApi\\Repository\\RReportProduct.cs",
+              "ViewState": "AQIAACgAAAAAAAAAAAAgwAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-04T18:38:15.706Z",
               "EditorCaption": ""
             }
           ]

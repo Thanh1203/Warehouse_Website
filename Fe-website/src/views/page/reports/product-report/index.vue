@@ -7,7 +7,8 @@
       <div class="tw-overflow-hidden">
         <div class="tw-truncate tw-font-600 tw-text-[14px]">{{ translate("TotalProducts2") }}</div>
         <div class="tw-font-[700] tw-text-[24px] tw-text-[#001f3f]">
-          <NumberAnimation :from="0" :to="100" :duration="1" autoplay easing="linear" :format="theFormat" />
+          <NumberAnimation v-if="!loading" :from="0" :to="dataReportProduct?.totalProduct" :duration="1" autoplay easing="linear" :format="theFormat" />
+          <a-skeleton-input v-else :loading="loading" :paragraph="{ rows: 0 }" active size="small" />
         </div>
       </div>
     </div>
@@ -19,7 +20,8 @@
       <div class="tw-overflow-hidden">
         <div class="tw-truncate tw-font-600 tw-text-[14px]">{{ translate("NumberCategories") }}</div>
         <div class="tw-font-[700] tw-text-[24px] tw-text-[#001f3f]">
-          <NumberAnimation :from="0" :to="100" :duration="1" autoplay easing="linear" :format="theFormat" />
+          <NumberAnimation v-if="!loading" :from="0" :to="dataReportProduct?.totalCategory" :duration="1" autoplay easing="linear" :format="theFormat" />
+          <a-skeleton-input v-else :loading="loading" :paragraph="{ rows: 0 }" active size="small" />
         </div>
       </div>
     </div>
@@ -31,7 +33,8 @@
       <div class="tw-overflow-hidden">
         <div class="tw-truncate tw-font-600 tw-text-[14px]">{{ translate("NumberClassifications") }}</div>
         <div class="tw-font-[700] tw-text-[24px] tw-text-[#001f3f]">
-          <NumberAnimation :from="0" :to="100" :duration="1" autoplay easing="linear" :format="theFormat" />
+          <NumberAnimation v-if="!loading" :from="0" :to="dataReportProduct?.totalClassifies" :duration="1" autoplay easing="linear" :format="theFormat" />
+          <a-skeleton-input v-else :loading="loading" :paragraph="{ rows: 0 }" active size="small" />
         </div>
       </div>
     </div>
@@ -43,7 +46,8 @@
       <div class="tw-overflow-hidden">
         <div class="tw-truncate tw-font-600 tw-text-[14px]">{{ translate("NumberManufacturers") }}</div>
         <div class="tw-font-[700] tw-text-[24px] tw-text-[#001f3f]">
-          <NumberAnimation :from="0" :to="100" :duration="1" autoplay easing="linear" :format="theFormat" />
+          <NumberAnimation v-if="!loading" :from="0" :to="dataReportProduct?.totalProducer" :duration="1" autoplay easing="linear" :format="theFormat" />
+          <a-skeleton-input v-else :loading="loading" :paragraph="{ rows: 0 }" active size="small" />
         </div>
       </div>
     </div>
@@ -53,106 +57,71 @@
     <div class="tw-bg-white tw-rounded-xl tw-p-6">
       <div class="tw-font-[700]">{{ translate("CategoryStatistics") }}</div>
       <div class="tw-mt-6 tw-flex tw-justify-center">
-        <Chartpie :data="dataCategory" :show-legend="false" />
+        <Chartpie :data="dataCategory" :show-legend="false" v-if="!loading" />
+        <a-skeleton v-else :loading="loading" active />
       </div>
-      <div class="tw-mt-6 tw-max-h-[400px] tw-overflow-hidden tw-overflow-y-auto">
-        <AntdTable
-            ref="table"
-            key-field="id"
-            :index-column="false"
-            :columns="categoryColumns"
-            :has-checkbox="false"
-            :no-sort="true"      
-        > </AntdTable>
+      <div class="tw-mt-6 tw-max-h-[50vh] tw-overflow-hidden tw-overflow-y-auto">
+        <AntdTable ref="table" key-field="id" :index-column="false" :columns="categoryColumns" :has-checkbox="false" :no-sort="true" :dataSource="dataReportProduct?.categoryList" v-if="!loading"> </AntdTable>
+        <a-skeleton v-else :loading="loading" active />
       </div>
     </div>
     <div class="tw-bg-white tw-rounded-xl tw-p-6">
       <div class="tw-font-[700]">{{ translate("ClassificationStatistics") }}</div>
       <div class="tw-mt-6 tw-flex tw-justify-center">
-        <Chartpie :data="dataClassify" :show-legend="false" />
+        <Chartpie :data="dataClassify" :show-legend="false" v-if="!loading"/>
+        <a-skeleton v-else :loading="loading" active />
       </div>
-      <div class="tw-mt-6 tw-max-h-[400px] tw-overflow-hidden tw-overflow-y-auto">
-        <AntdTable
-            ref="table"
-            key-field="id"
-            :index-column="false"
-            :columns="classifyColumns"
-            :has-checkbox="false"
-            :no-sort="true"        
-        > </AntdTable>
+      <div class="tw-mt-6 tw-max-h-[50vh] tw-overflow-hidden tw-overflow-y-auto">
+        <AntdTable ref="table" key-field="id" :index-column="false" :columns="classifyColumns" :has-checkbox="false" :no-sort="true" :dataSource="dataReportProduct?.classifyList" v-if="!loading"> </AntdTable>
+        <a-skeleton v-else :loading="loading" active />
       </div>
     </div>
     <div class="tw-bg-white tw-rounded-xl tw-p-6">
       <div class="tw-font-[700]">{{ translate("ManufacturerStatistics") }}</div>
       <div class="tw-mt-6 tw-flex tw-justify-center">
-        <Chartpie :data="dataProducer" :show-legend="false" />
+        <Chartpie :data="dataProducer" :show-legend="false" v-if="!loading"/>
+        <a-skeleton v-else :loading="loading" active />
       </div>
-      <div class="tw-mt-6 tw-max-h-[400px] tw-overflow-hidden tw-overflow-y-auto">
-        <AntdTable
-            ref="table"
-            key-field="id"
-            :index-column="false"
-            :columns="producerColumns"
-            :has-checkbox="false"
-            :no-sort="true"        
-        > </AntdTable>
+      <div class="tw-mt-6 tw-max-h-[50vh] tw-overflow-hidden tw-overflow-y-auto">
+        <AntdTable ref="table" key-field="id" :index-column="false" :columns="producerColumns" :has-checkbox="false" :no-sort="true" :dataSource="dataReportProduct?.producerList" v-if="!loading"> </AntdTable>
+        <a-skeleton v-else :loading="loading" active />
       </div>
     </div>
   </div>
 
-  <a-form class="tw-mt-6 tw-w-full tw-bg-white tw-rounded-xl tw-p-6 tw-flex">
-    <a-form-item class="!tw-mr-3">
+  <a-form class="tw-mt-6 tw-w-full tw-bg-white tw-rounded-xl tw-p-6 tw-flex tw-gap-4">
+    <a-form-item class="">
       <div class="tw-opacity-70 tw-mb-2">{{ translate("Month") }}</div>
-      <a-date-picker picker="month" :format="'MM'" :disabled="disabledMonthSelect" :placeholder="translate('SelectMonth')"/>
+      <a-date-picker picker="month" :format="'MM'" :placeholder="translate('SelectMonth')" v-model:value="filterSearching.monthSelect"/>
     </a-form-item>
-    <a-form-item class="!tw-mr-3">
+    <a-form-item class="">
       <div class="tw-opacity-70 tw-mb-2">{{ translate("Year") }}</div>
-      <a-date-picker picker="year" :allowClear="false" :placeholder="translate('SelectYear')"/>
+      <a-date-picker picker="year" :allowClear="false" :placeholder="translate('SelectYear')" v-model:value="filterSearching.yearSelect"/>
     </a-form-item>
     <a-form-item class="tw-flex tw-items-end !tw-mr-3">
-      <AntdButton :type="'primary'" ghost @click="handleSetTimePresent">
+      <AntdButton :type="'primary'" ghost @click="handleSetTimePresent" :disabled="disableSetTime">
         <template #icon>
-            <font-awesome-icon :icon="['far', 'clock']" />
+          <font-awesome-icon :icon="['far', 'clock']" />
         </template>
         <span class="tw-ml-2">{{ translate("Present") }}</span>
       </AntdButton>
     </a-form-item>
-    <a-form-item class="tw-flex tw-items-end">
-      <AntdButton :type="'text'" danger :disabled="disabledDeleteFilter" @click="handleClearFilter">
-        <template #icon>
-          <font-awesome-icon :icon="['far', 'trash-can']" />
-        </template>
-        <span class="tw-ml-2">{{ translate("Delete") }}</span>
-      </AntdButton>
-    </a-form-item>
   </a-form>
 
-  <div class="tw-mt-6 tw-grid tw-grid-cols-1 lg:tw-grid-cols-2 tw-gap-20">
+  <div class="tw-mt-6 tw-grid tw-grid-cols-1 lg:tw-grid-cols-2 tw-gap-10">
     <div class="tw-bg-white tw-rounded-xl tw-p-6">
-        <div class="tw-font-[700]">{{ translate('ListBestSellingProducts') }}</div>
-        <div class="tw-mt-6 tw-max-h-[400px] tw-overflow-hidden tw-overflow-y-auto">
-            <AntdTable
-                ref="table"
-                key-field="id"
-                :index-column="false"
-                :columns="sellProductColumns"
-                :has-checkbox="false"
-                :no-sort="true"        
-            ></AntdTable>
-        </div>
+      <div class="tw-font-[700]">{{ translate("ListBestSellingProducts") }}</div>
+      <div class="tw-mt-6 tw-h-screen tw-overflow-hidden tw-overflow-y-auto">
+        <AntdTable ref="table" key-field="id" :index-column="true" :columns="sellProductColumns" :has-checkbox="false" :no-sort="true" :dataSource="dataReportSaleProduct?.topSaleProduct" v-if="!loadingSaleProduct"></AntdTable>
+        <a-skeleton v-else :loading="loadingSaleProduct" active />
+      </div>
     </div>
     <div class="tw-bg-white tw-rounded-xl tw-p-6">
-        <div class="tw-font-[700]">{{ translate('ListSlowSellingProducts') }}</div>
-        <div class="tw-mt-6 tw-max-h-[400px] tw-overflow-hidden tw-overflow-y-auto">
-            <AntdTable
-                ref="table"
-                key-field="id"
-                :index-column="false"
-                :columns="sellProductColumns"
-                :has-checkbox="false"
-                :no-sort="true"        
-            ></AntdTable>
-        </div>
+      <div class="tw-font-[700]">{{ translate("ListSlowSellingProducts") }}</div>
+      <div class="tw-mt-6 tw-h-screen tw-overflow-hidden tw-overflow-y-auto">
+        <AntdTable ref="table" key-field="id" :index-column="true" :columns="sellProductColumns" :has-checkbox="false" :no-sort="true" :dataSource="dataReportSaleProduct?.excessInventory" v-if="!loadingSaleProduct"></AntdTable>
+        <a-skeleton v-else :loading="loadingSaleProduct" active />
+      </div>
     </div>
   </div>
 </template>
@@ -160,110 +129,157 @@
 import { translate } from "@/languages/i18n";
 import NumberAnimation from "vue-number-animation";
 import Chartpie from "@/components/Chartpie/index.vue";
-import { ref } from "vue";
+import { computed, onMounted, reactive, ref, watch } from "vue";
 import { getArrayRandColor } from "@/utils/common";
 import AntdTable from "@/components/antd-table/index.vue";
 import AntdButton from "@/components/antd-button/index.vue";
+import { useStore } from "vuex";
+import dayjs, { Dayjs } from "dayjs";
 
-const dataCategory = ref({
-    labels: ["Bàn phím", "Chuột", "Tai nghe"],
-    datasets: [
-        {
-            backgroundColor: getArrayRandColor(3),
-            data: [40, 40, 20],
-        },
-    ],
-});
-const dataClassify = ref({
-    labels: ["Văn phòng", "Gamming", "Custom", "Kiểm âm"],
-    datasets: [
-        {
-            backgroundColor: getArrayRandColor(4),
-            data: [20, 50, 20, 10],
-        },
-    ],
-});
-const dataProducer = ref({
-    labels: ["ASUS", "AKKO", "E-DRA", "FUHLEN", "MSI", "RAZER", "CORSAIR", "LOGITECH"],
-    datasets: [
-        {
-            backgroundColor: getArrayRandColor(9),
-            data: [20, 50, 20, 10, 30, 60, 100, 80, 70],
-        },
-    ],
-});
-const categoryColumns = ref<Array<any>>([
+const store = useStore();
+
+const dataReportProduct = computed(() => store.getters["report/reportProduct"]);
+const loading = computed(() => store.getters["report/loading"]);
+const loadingSaleProduct = computed(() => store.getters["report/loadingSaleProduct"]);
+const dataReportSaleProduct = computed(() => store.getters["report/reportSaleProduct"]);
+const dataCategory = computed(() => ({
+  labels: dataReportProduct.value?.dataCategoryRatio?.names,
+  datasets: [
     {
-        title: translate("CategoryName"),
-        dataIndex: "name",
-        key: "name",
-        align: "left",
+      backgroundColor: getArrayRandColor(3),
+      data: dataReportProduct.value?.dataCategoryRatio?.ratios,
     },
+  ],
+}));
+const dataClassify = computed(() => ({
+  labels: dataReportProduct.value?.dataClassifyRatio?.names,
+  datasets: [
     {
-        title: translate("ProductQuantity"),
-        dataIndex: "productQuantity",
-        key: "productQuantity",
-        align: "left",
-    }
+      backgroundColor: getArrayRandColor(4),
+      data: dataReportProduct.value?.dataClassifyRatio?.ratios,
+    },
+  ],
+}));
+const dataProducer = computed(() => ({
+  labels: dataReportProduct.value?.dataProducerRatio?.names,
+  datasets: [
+    {
+      backgroundColor: getArrayRandColor(9),
+      data: dataReportProduct.value?.dataProducerRatio?.ratios,
+    },
+  ],
+}));
+const categoryColumns = ref<Array<any>>([
+  {
+    title: translate("CategoryName"),
+    dataIndex: "name",
+    key: "name",
+    align: "left",
+  },
+  {
+    title: translate("ProductQuantity"),
+    dataIndex: "quantity",
+    key: "quantity",
+    align: "center",
+  },
 ]);
 const classifyColumns = ref<Array<any>>([
-    {
-        title: translate("ClassificationName"),
-        dataIndex: "name",
-        key: "name",
-        align: "left",
-    },
-    {
-        title: translate("ProductQuantity"),
-        dataIndex: "productQuantity",
-        key: "productQuantity",
-        align: "left",
-    }
+  {
+    title: translate("ClassificationName"),
+    dataIndex: "name",
+    key: "name",
+    align: "left",
+  },
+  {
+    title: translate("ProductQuantity"),
+    dataIndex: "quantity",
+    key: "quantity",
+    align: "center",
+  },
 ]);
 const producerColumns = ref<Array<any>>([
-    {
-        title: translate("ManufacturerName"),
-        dataIndex: "name",
-        key: "name",
-        align: "left",
-    },
-    {
-        title: translate("ProductQuantity"),
-        dataIndex: "productQuantity",
-        key: "productQuantity",
-        align: "left",
-    }
+  {
+    title: translate("ManufacturerName"),
+    dataIndex: "name",
+    key: "name",
+    align: "left",
+  },
+  {
+    title: translate("ProductQuantity"),
+    dataIndex: "quantity",
+    key: "quantity",
+    align: "center",
+  },
 ]);
 const sellProductColumns = ref<Array<any>>([
-    {
-        title: translate("ProductName"),
-        dataIndex: "name",
-        key: "name",
-        align: "left",
-    },
-    {
-        title: translate("ProductQuantity"),
-        dataIndex: "productQuantity",
-        key: "productQuantity",
-        align: "left",
-    }
-])
+  {
+    title: translate("ProductName"),
+    dataIndex: "name",
+    key: "name",
+    align: "left",
+  },
+  {
+    title: translate("ProductQuantity"),
+    dataIndex: "quantity",
+    key: "quantity",
+    align: "center",
+  },
+]);
 
+const filterSearching = reactive<{
+  monthSelect: Dayjs | null
+  yearSelect: Dayjs
+}>({
+  monthSelect: null,
+  yearSelect: dayjs(),
+}); 
 
 const theFormat = (number) => {
   return number.toFixed(0);
 };
 
-const disabledMonthSelect = true;
-
-const disabledDeleteFilter = false;
-
-const handleClearFilter = () => {
-
-};
+const disableSetTime = computed(() => filterSearching.yearSelect.year() === dayjs().year() && filterSearching.monthSelect == null);
 
 const handleSetTimePresent = () => {
-
+  filterSearching.yearSelect = dayjs();
+  filterSearching.monthSelect = null
 };
+
+const fetchData = async () => {
+  await store.dispatch("report/fetchDataReportProduct");
+};
+
+const fecthDataSaleProduct = async (params) => {
+  await store.dispatch("report/fetchSaleProduct", params);
+}
+
+watch(
+  () => filterSearching.yearSelect,
+  (val) => {
+    filterSearching.monthSelect = null;
+    const params = {
+      year: val.year()
+    };
+    fecthDataSaleProduct(params);
+  }, { deep: true }
+);
+
+watch(
+  () => filterSearching.monthSelect,
+  (val) => {
+    if (val !== null) {
+      const params = {
+        year: val.year(),
+        month: val.month() + 1,
+      };
+      fecthDataSaleProduct(params);
+    }
+  }, {deep: true}
+)
+
+onMounted(async () => {
+  await fetchData();
+  await fecthDataSaleProduct({year: dayjs().year()})
+});
 </script>
 <style scoped lang="scss"></style>
