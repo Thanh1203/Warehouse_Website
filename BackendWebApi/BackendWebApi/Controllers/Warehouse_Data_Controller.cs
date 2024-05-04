@@ -60,7 +60,7 @@ namespace BackendWebApi.Controllers
         {
             try
             {
-                await _IWarehouse_Data.DecreaseQuantityProduct(dtoData.DataUpdate, dtoData.Customer);
+                await _IWarehouse_Data.DecreaseQuantityProduct(dtoData.DataUpdate, dtoData?.Customer);
                 return Ok("Update successful!");
             }
             catch (Exception ex)

@@ -76,8 +76,8 @@ const data = ref<Array<any>>([]);
 const columns = ref<Array<any>>([
   {
     title: translate("ProductCode"),
-    dataIndex: "code",
-    key: "code",
+    dataIndex: "codeProduct",
+    key: "codeProduct",
     align: "left",
   },
   {
@@ -117,7 +117,7 @@ const rules = {
 const v$ = useVuelidate(rules, state);
 
 const checkData = (item) => {
-  return data.value.find((e) => e.id === item.id);
+  return data.value.find((e) => e.id === item.idProduct);
 };
 
 const handleAddProduct = () => {
@@ -127,13 +127,13 @@ const handleAddProduct = () => {
   }
   const temp = formatIdProduct(state.id);
   const value = {
-    idroduct: Number(temp.id),
+    idProduct: Number(temp.id),
     codeProduct: temp.code,
     quantity: Number(state.quantity),
   };
   if (checkData(value)) {
     data.value.map((item) => {
-      if (item.id === value.idroduct) {
+      if (item.id === value.idProduct) {
         item.quantity += value.quantity;
       }
     });

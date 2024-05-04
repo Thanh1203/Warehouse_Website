@@ -175,7 +175,7 @@ const checkData = (item) => {
 
 const handleAddProduct = (data) => {
   const value = {
-    idroduct: data.id,
+    idProduct: data.id,
     codeProduct: data.code,
     quantity: Number(data.quantity),
   };

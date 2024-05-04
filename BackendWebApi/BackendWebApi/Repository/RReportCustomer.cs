@@ -3,7 +3,6 @@ using BackendWebApi.DTOS;
 using BackendWebApi.Interfaces;
 using BackendWebApi.Models;
 using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.Design;
 
 namespace BackendWebApi.Repository
 {
@@ -15,18 +14,18 @@ namespace BackendWebApi.Repository
         {
             var tempQueryList = await _context.Customers.Where(e => e.CompanyId == companyid).ToListAsync();
             var tempQueryable =  _context.Customers.Where(e => e.CompanyId == companyid).AsQueryable();
-            //Số lượng khách hàng
+            /// Số lượng khách hàng
             var totalCustomer = await tempQueryable.CountAsync();
-            // Số lượt mua hàng
+            /// Số lượt mua hàng
             int totalPurchase = tempQueryable.Sum(e => e.PurchaseCount);
-            // Tỉ lệ khách quay lại
+            /// Tỉ lệ khách quay lại
             var secondBuy = await tempQueryable.Where(e => e.PurchaseCount >= 2).CountAsync();
             double rateReturn = 0;
             if (totalCustomer > 0)
             {
                 rateReturn = (double)secondBuy / totalCustomer * 100;
             }
-            // Số lượng khách hàng mới 5 năm đổ lại
+            /// Số lượng khách hàng mới 5 năm đổ lại
             List<int> dataNewCustomerYear = [];
             int yearPass = currentYear - 5;
             while (yearPass <= currentYear)
@@ -35,7 +34,7 @@ namespace BackendWebApi.Repository
                 dataNewCustomerYear.Add(item);
                 yearPass++;
             }
-            // Tỉ lệ số lần mua hàng trên số khách
+            /// Tỉ lệ số lần mua hàng trên số khách
             List<double> dataRatioPurchase = [];
             int countRatioPurchase = 1;
             while (countRatioPurchase <=3)
@@ -53,7 +52,7 @@ namespace BackendWebApi.Repository
                 dataRatioPurchase.Add(ratioBuyOneTime);
                 countRatioPurchase++;
             }
-            // Danh sách khách hàng tiềm năng
+            /// Danh sách khách hàng tiềm năng
             var dataPotentialCustomers = new List<DTOReportCustomer>();
             var listPotentialCustomers = await tempQueryable.OrderByDescending(e => e.TotalValueOrders).Take(20).ToListAsync();
             foreach ( var item in listPotentialCustomers)
@@ -83,7 +82,7 @@ namespace BackendWebApi.Repository
         public async Task<object> FetchReportNewCustomer(int year, int companyid)
         {
             var tempQueryList = await _context.Customers.Where(e => e.CompanyId == companyid).ToListAsync();
-            // Số lượng khách hàng mới theo tháng trong năm
+            /// Số lượng khách hàng mới theo tháng trong năm
 
             int totalNewCustomer = 0;
             List<int> dataNewCustomer = [];

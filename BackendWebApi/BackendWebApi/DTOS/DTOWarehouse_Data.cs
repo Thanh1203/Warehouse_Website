@@ -8,7 +8,7 @@ namespace BackendWebApi.DTOS
     }
     public class DTOWarehouseData_DataInsert
     {
-        public int Idroduct { get; set; }
+        public int IdProduct { get; set; }
         public string? CodeProduct { get; set; }
         public int Quantity { get; set; }
     }
@@ -20,7 +20,7 @@ namespace BackendWebApi.DTOS
     }
     public class DTOWarehouseData_DataUpdate
     {
-        public int Idroduct { get; set; }
+        public int IdProduct { get; set; }
         public int Quantity { get; set; }
     }
 

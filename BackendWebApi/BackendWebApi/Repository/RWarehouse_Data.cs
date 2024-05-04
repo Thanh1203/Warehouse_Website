@@ -11,6 +11,8 @@ namespace BackendWebApi.Repository
     {
         private readonly DataContext _context = context;
 
+        public readonly string codeImport = "GsI" + 1.ToString() + GenerateRandomString() + DateTimeOffset.UtcNow.ToString("yyyyHHddMMfffmmss");
+        public readonly string codeExport = "GsE" + 2.ToString() + GenerateRandomString() + DateTimeOffset.UtcNow.ToString("yyyyHHddMMfffmmss");
         public async Task UpdateUnitPrice(int idWarehouse, int productId, double unitPrice)
         {
             var temp = _context.Warehouse_Data.SingleOrDefault(e => e.IdWarehouse== idWarehouse && e.IdProduct == productId);
@@ -30,7 +32,7 @@ namespace BackendWebApi.Repository
                 var newWarehouseData = new Warehouse_Data
                 {
                     IdWarehouse = data_Create.IdWarehouse,
-                    IdProduct = item.Idroduct,
+                    IdProduct = item.IdProduct,
                     CodeProduct = item.CodeProduct,
                     CompanyId = 1,
                     Quantity = item.Quantity,
@@ -47,17 +49,31 @@ namespace BackendWebApi.Repository
                 TotalProduct = data_Create.TotalProduct,
                 CompanyId = 1,
                 DateTime = DateTime.UtcNow,
-                Code = "GsI" + 1.ToString() + GenerateRandomString() + DateTimeOffset.UtcNow.ToString("yyyyHHddMMfffmmss")
+                Code = codeImport
             };
             _context.Warehouse_Imports.Add(newWarehouseImport);
             await _context.SaveChangesAsync();
+
+            foreach (var item in data_Create.DataInsert)
+            {
+                var importData = new WH_Import_Data
+                {
+                    Code = codeImport,
+                    ProductId = item.IdProduct,
+                    Quantity = item.Quantity,
+                    DateTime = DateTime.UtcNow,
+                    CompanyId = 1
+                };
+                _context.WH_IM_Datas.Add(importData);
+                await _context.SaveChangesAsync();
+            }
         }
 
         public async Task UpdateQuantityProduct(DTOWarehouseData_Update? data_Update)
         {
             foreach (var item in data_Update.DataUpdate)
             {
-                var itemUpdate = _context.Warehouse_Data.SingleOrDefault(e => e.IdProduct == item.Idroduct && e.CompanyId == 1 && e.IdWarehouse == data_Update.IdWarehouse);
+                var itemUpdate = _context.Warehouse_Data.SingleOrDefault(e => e.IdProduct == item.IdProduct && e.CompanyId == 1 && e.IdWarehouse == data_Update.IdWarehouse);
                 if (itemUpdate != null)
                 {
                     itemUpdate.Quantity += item.Quantity;
@@ -73,18 +89,32 @@ namespace BackendWebApi.Repository
                 TotalProduct = data_Update.TotalProduct,
                 CompanyId = 1,
                 DateTime = DateTime.UtcNow,
-                Code = "GsI" + 1.ToString() + GenerateRandomString() + DateTimeOffset.UtcNow.ToString("yyyyHHddMMfffmmss")
+                Code = codeImport
             };
             _context.Warehouse_Imports.Add(newWarehouseImport);
             await _context.SaveChangesAsync();
+
+            foreach (var item in data_Update.DataUpdate)
+            {
+                var importData = new WH_Import_Data
+                {
+                    Code = codeImport,
+                    ProductId = item.IdProduct,
+                    Quantity = item.Quantity,
+                    DateTime = DateTime.UtcNow,
+                    CompanyId = 1
+                };
+                _context.WH_IM_Datas.Add(importData);
+                await _context.SaveChangesAsync();
+            }
         }
 
-        public async  Task DecreaseQuantityProduct(DTOWarehouseData_Update? data_Update, DTOCustomer? customer)
+        public async Task DecreaseQuantityProduct(DTOWarehouseData_Update? data_Update, DTOCustomer? customer)
         {
             double totalValue = 0;
             foreach (var item in data_Update.DataUpdate)
             {
-                var itemUpdate = _context.Warehouse_Data.SingleOrDefault(e => e.IdProduct == item.Idroduct && e.CompanyId == 1 && e.IdWarehouse == data_Update.IdWarehouse);
+                var itemUpdate = _context.Warehouse_Data.SingleOrDefault(e => e.IdProduct == item.IdProduct && e.CompanyId == 1 && e.IdWarehouse == data_Update.IdWarehouse);
                 if (itemUpdate != null)
                 {
                     itemUpdate.Quantity -= item.Quantity;
@@ -102,17 +132,28 @@ namespace BackendWebApi.Repository
                 TotalProduct = data_Update.TotalProduct,
                 CompanyId = 1,
                 DateTime = DateTime.UtcNow,
-                Code = "GsI" + 1.ToString() + GenerateRandomString() + DateTimeOffset.UtcNow.ToString("yyyyHHddMMfffmmss"),
+                Code = codeExport,
                 TotalValue = totalValue,
             };
             _context.Warehouse_Exports.Add(newWarehouseExport);
             await _context.SaveChangesAsync();
 
-            if (string.IsNullOrWhiteSpace(customer.PhoneNumber))
+            foreach (var item in data_Update.DataUpdate)
             {
-                return;
-            } 
-            else
+                var exportData = new WH_Export_Data
+                {
+                    Code = codeExport,
+                    ProductId = item.IdProduct,
+                    Quantity = item.Quantity,
+                    DateTime = DateTime.UtcNow,
+                    CompanyId = 1
+                };
+
+                _context.WH_EX_Datas.Add(exportData);
+                await _context.SaveChangesAsync();
+            }
+
+            if (!string.IsNullOrWhiteSpace(customer.PhoneNumber))
             {
                 var currentCustomer = await _context.Customers.SingleOrDefaultAsync(e => e.CompanyId == 1 && e.PhoneNumber.Contains(customer.PhoneNumber));
                 if (currentCustomer != null)
@@ -138,7 +179,7 @@ namespace BackendWebApi.Repository
                     _context.Customers.Add(newCustomer);
                     await _context.SaveChangesAsync();
                 }
-            }
+            } 
         }
 
         static string GenerateRandomString()

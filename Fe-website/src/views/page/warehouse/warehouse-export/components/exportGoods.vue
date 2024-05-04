@@ -217,13 +217,13 @@ const cancelAdd = () => {
 };
 
 const checkData = (item) => {
-  return dataList.value.find((e) => e.id === item.id);
+  return dataList.value.find((e) => e.id === item.idProduct);
 };
 
 const handleAddProduct = (data) => {
   const value = {
-    idroduct: data.id,
-    cocodeProductde: data.code,
+    idProduct: data.id,
+    codeProduct: data.code,
     quantity: Number(data.quantity),
   };
   if (checkData(data)) {

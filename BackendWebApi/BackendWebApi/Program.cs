@@ -19,7 +19,7 @@ builder.Services.AddScoped<IWarehouse_Export, RWarehouse_Export>();
 builder.Services.AddScoped<IWarehouse_Data, RWarehouse_Data>();
 builder.Services.AddScoped<IDashboard, RDashboard>();
 builder.Services.AddScoped<IReportCustomer, RReportCustomer>();
-
+builder.Services.AddScoped<IReportProduct, RReportProduct>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

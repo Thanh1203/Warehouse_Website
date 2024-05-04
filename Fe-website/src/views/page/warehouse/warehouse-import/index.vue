@@ -43,7 +43,7 @@
             :columns="columns"
             :dataSource="listWHImport"
             class="tw-w-full tw-h-[60vh] tw-overflow-hidden tw-overflow-y-auto"
-            v-if="!loading"
+            v-if="!loadingImport"
           >
           </AntdTable>
           
@@ -72,7 +72,7 @@ const route = useRoute();
 const listWhInfo = computed(() => store.getters["warehouse/warehouseInfo"]);
 const listWHImport = computed(() => store.getters["warehouse/warehouseImport"]);
 const loading = computed(() => store.getters["warehouse/loading"]);
-
+const loadingImport = computed(() => store.getters["warehouse/loadingImport"]);
 const activeKey = ref<number>(0);
 const columns = ref<Array<any>>([
   {

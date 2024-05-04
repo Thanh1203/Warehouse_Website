@@ -42,7 +42,7 @@
             :columns="columns"
             :data-source="listWHExport"
             class="tw-w-full tw-h-[60vh] tw-overflow-hidden tw-overflow-y-auto"
-            v-if="!loading"
+            v-if="!loadingExport"
           >
           </AntdTable>
 
@@ -71,6 +71,7 @@ const route = useRoute();
 const listWhInfo = computed(() => store.getters["warehouse/warehouseInfo"]);
 const listWHExport = computed(() => store.getters["warehouse/warehouseExport"]);
 const loading = computed(() => store.getters["warehouse/loading"]);
+const loadingExport = computed(() => store.getters["warehouse/loadingExport"]);
 
 const activeKey = ref<number>(0);
 const columns = ref<Array<any>>([
