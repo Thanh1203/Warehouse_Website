@@ -4,10 +4,10 @@ namespace BackendWebApi.Interfaces
 {
     public interface ICategory
     {
-        Task<object> GetCategories();
-        Task<object> SearchCategory(string name);
-        Task Create (Category category);
-        Task Update (Category category);
-        Task Delete(List<int> ids);
+        Task<object> GetCategories(int companyId);
+        Task<object> SearchCategory(string name, int companyId);
+        Task Create (Category category, int companyId);
+        Task Update (Category category, int companyId);
+        Task Delete(List<int> ids, int companyId);
     }
 }

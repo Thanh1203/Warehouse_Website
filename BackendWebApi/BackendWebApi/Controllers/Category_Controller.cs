@@ -1,4 +1,5 @@
-﻿using BackendWebApi.Interfaces;
+﻿using BackendWebApi.Helpers;
+using BackendWebApi.Interfaces;
 using BackendWebApi.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,15 +7,10 @@ namespace BackendWebApi.Controllers
 {
     [Route("api/category")]
     [ApiController]
-    public class Category_Controller : Controller
+    public class Category_Controller(ICategory ICategory) : Controller
     {
-        private readonly ICategory _ICategory;
-
-        public Category_Controller(ICategory ICategory)
-        {
-            _ICategory = ICategory;
-        }
-
+        private readonly ICategory _ICategory = ICategory;
+        private readonly int companyId = GlobalConstant.CompanyId;
         [HttpGet]
         public async Task<IActionResult> FetchCategories(string? name)
         {
@@ -22,11 +18,11 @@ namespace BackendWebApi.Controllers
             {
                 if (string.IsNullOrWhiteSpace(name))
                 {
-                    return Ok(await _ICategory.GetCategories());
+                    return Ok(await _ICategory.GetCategories(companyId));
                 }
                 else
                 {
-                    return Ok(await _ICategory.SearchCategory(name));
+                    return Ok(await _ICategory.SearchCategory(name, companyId));
                 }
             }
             catch (Exception ex)
@@ -40,7 +36,7 @@ namespace BackendWebApi.Controllers
         {
             try
             {
-                await _ICategory.Create(category);
+                await _ICategory.Create(category, companyId);
                 return Ok("Create successful!");
             }
             catch (Exception ex)
@@ -54,7 +50,7 @@ namespace BackendWebApi.Controllers
         {
             try
             {
-                await _ICategory.Update(category);
+                await _ICategory.Update(category, companyId);
                 return Ok("Update successful!");
             }
             catch (Exception ex)
@@ -68,7 +64,7 @@ namespace BackendWebApi.Controllers
         {
             try
             {
-                await _ICategory.Delete(idsDelete);
+                await _ICategory.Delete(idsDelete, companyId);
                 return Ok("Delete successful!");
             }
             catch (Exception ex)

@@ -5,6 +5,6 @@ namespace BackendWebApi.Interfaces
 {
     public interface ICustomer
     {
-        Task<object> SearchCustomer(string PhoneNumber);
+        Task<object> SearchCustomer(string PhoneNumber, int companyId);
     }
 }

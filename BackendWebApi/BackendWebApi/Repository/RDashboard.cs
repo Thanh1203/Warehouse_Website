@@ -22,7 +22,7 @@ namespace BackendWebApi.Repository
                 rateReturn = (double)secondBuy / totalCustomer * 100;
             }
 
-            var categoryRatios = await _context.Categories
+            var categoryRatios = await _context.Categories.Where(e => e.CompanyId == companyid)
                 .Select(e => new
                 {
                     e.Name,

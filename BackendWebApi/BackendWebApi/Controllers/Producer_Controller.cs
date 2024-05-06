@@ -1,4 +1,5 @@
-﻿using BackendWebApi.Interfaces;
+﻿using BackendWebApi.Helpers;
+using BackendWebApi.Interfaces;
 using BackendWebApi.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,14 +7,10 @@ namespace BackendWebApi.Controllers
 {
     [Route("api/producer")]
     [ApiController]
-    public class Producer_Controller : Controller
+    public class Producer_Controller(IProducer IProducer) : Controller
     {
-        private readonly IProducer _IProducer;
-
-        public Producer_Controller(IProducer IProducer) 
-        {
-            _IProducer = IProducer;
-        }
+        private readonly IProducer _IProducer = IProducer;
+        private readonly int companyId = GlobalConstant.CompanyId;
 
         [HttpGet]
         public async Task<IActionResult> FetchProducer(string? name)
@@ -22,11 +19,11 @@ namespace BackendWebApi.Controllers
             {
                 if (string.IsNullOrWhiteSpace(name))
                 {
-                    return Ok(await _IProducer.GetProducers());
+                    return Ok(await _IProducer.GetProducers(companyId));
                 }
                 else
                 {
-                    return Ok(await _IProducer.SearchProducer(name));
+                    return Ok(await _IProducer.SearchProducer(name, companyId));
                 }
             }
             catch (Exception ex)
@@ -40,7 +37,7 @@ namespace BackendWebApi.Controllers
         {
             try
             {
-                await _IProducer.Create(producer);
+                await _IProducer.Create(producer, companyId);
                 return Ok("Create successful!");
             }
             catch (Exception ex)
@@ -54,7 +51,7 @@ namespace BackendWebApi.Controllers
         {
             try
             {
-                await _IProducer.Update(producer);
+                await _IProducer.Update(producer, companyId);
                 return Ok("Update successful!");
             }
             catch (Exception ex)
@@ -68,7 +65,7 @@ namespace BackendWebApi.Controllers
         {
             try
             {
-                await _IProducer.Delete(idsDelete);
+                await _IProducer.Delete(idsDelete, companyId);
                 return Ok("Delete successful!");
             }
             catch (Exception ex)

@@ -1,4 +1,5 @@
-﻿using BackendWebApi.Interfaces;
+﻿using BackendWebApi.Helpers;
+using BackendWebApi.Interfaces;
 using BackendWebApi.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,14 +7,10 @@ namespace BackendWebApi.Controllers
 {
     [Route("api/personnel")]
     [ApiController]
-    public class Personnel_Controller : Controller
+    public class Personnel_Controller(IPersonnel IPersonnel) : Controller
     {
-        private readonly IPersonnel _IPersonnel;
-        
-        public Personnel_Controller(IPersonnel IPersonnel)
-        {
-            _IPersonnel = IPersonnel;
-        }
+        private readonly IPersonnel _IPersonnel = IPersonnel;
+        private readonly int companyId = GlobalConstant.CompanyId;
 
         [HttpGet]
         public async Task<IActionResult> FetchPersonnels(string? code, string? name, string? address) 
@@ -22,11 +19,11 @@ namespace BackendWebApi.Controllers
             {
                 if (string.IsNullOrWhiteSpace(code) && string.IsNullOrWhiteSpace(name) && string.IsNullOrWhiteSpace(address))
                 {
-                    return Ok(await _IPersonnel.GetPersonnels()); 
+                    return Ok(await _IPersonnel.GetPersonnels(companyId)); 
                 }
                 else
                 {
-                    return Ok(await _IPersonnel.SearchPersonnel(code, name, address));
+                    return Ok(await _IPersonnel.SearchPersonnel(code, name, address, companyId));
                 }
             }
             catch (Exception ex)
@@ -40,7 +37,7 @@ namespace BackendWebApi.Controllers
         {
             try
             {
-                await _IPersonnel.Create(personnel);
+                await _IPersonnel.Create(personnel, companyId);
                 return Ok("Create successful!");
             }
             catch (Exception ex)
@@ -54,7 +51,7 @@ namespace BackendWebApi.Controllers
         {
             try
             {
-                await _IPersonnel.Update(personnel);
+                await _IPersonnel.Update(personnel, companyId);
                 return Ok("Update successful!");
             }
             catch (Exception ex)
@@ -68,7 +65,7 @@ namespace BackendWebApi.Controllers
         {
             try
             {
-                await _IPersonnel.Delete(idsDelete);
+                await _IPersonnel.Delete(idsDelete, companyId);
                 return Ok("Delete successful!");
             }
             catch (Exception ex)
@@ -82,7 +79,7 @@ namespace BackendWebApi.Controllers
         {
             try
             {
-                var address = await _IPersonnel.GetAddressPersonnel();
+                var address = await _IPersonnel.GetAddressPersonnel(companyId);
                 return Ok(address);
             }
             catch (Exception ex)

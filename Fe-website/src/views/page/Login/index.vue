@@ -1,6 +1,6 @@
 <template>
-    <div class="tw-w-full tw-min-h-screen tw-bg-[#e7e7e7] tw-py-10 tw-flex tw-items-center tw-justify-center">
-        <div class="tw-bg-white tw-w-[1200px] tw-h-[700px] tw-rounded-xl tw-overflow-hidden tw-flex tw-relative">
+    <div class="tw-w-full tw-h-screen tw-bg-[#e7e7e7] tw-py-10 tw-flex tw-items-center tw-justify-center">
+        <div class="tw-bg-white tw-w-[75vw] tw-h-[75vh] tw-rounded-xl tw-overflow-hidden tw-flex tw-relative">
             <SignUp @handleSwap="handleSwap" :class="!isSignUp ? '' : 'active-sign'"/>
             <Overlay class="overlay-signin" :class="isSignUp ? '' : 'active-overlay'" :isLogin="isSignUp"/>
             <SignIn @handleSwap="handleSwap" :class="isSignUp ? '' : 'active-sign'"/>

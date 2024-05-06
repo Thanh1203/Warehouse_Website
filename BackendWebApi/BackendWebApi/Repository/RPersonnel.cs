@@ -10,10 +10,10 @@ namespace BackendWebApi.Repository
     {
         private readonly DataContext _context = context;
 
-        public async Task<object> GetPersonnels()
+        public async Task<object> GetPersonnels(int companyid)
         {
-            var totalElement = await _context.Personnels.Where(e => e.CompanyId == 1).CountAsync();
-            var data = await _context.Personnels.Where(e => e.CompanyId == 1).ToListAsync();
+            var totalElement = await _context.Personnels.Where(e => e.CompanyId == companyid).CountAsync();
+            var data = await _context.Personnels.Where(e => e.CompanyId == companyid).ToListAsync();
 
             foreach (var item in data)
             {
@@ -30,9 +30,9 @@ namespace BackendWebApi.Repository
             return result;
         }
 
-        public async Task<object> SearchPersonnel(string strCode, string strName, string strAddress)
+        public async Task<object> SearchPersonnel(string strCode, string strName, string strAddress, int companyid)
         {
-            var query = _context.Personnels.Where(e => e.CompanyId == 1).AsQueryable();
+            var query = _context.Personnels.Where(e => e.CompanyId == companyid).AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(strCode))
             {
@@ -69,7 +69,7 @@ namespace BackendWebApi.Repository
             return result;
         }
 
-        public async Task Create([FromBody] Personnel personnel)
+        public async Task Create(Personnel personnel, int companyid)
         {
             var newPersonnel = new Personnel
             {
@@ -77,16 +77,16 @@ namespace BackendWebApi.Repository
                 Name = personnel.Name,
                 Address = personnel.Address,
                 Role = personnel.Role,
-                CompanyId = 1,
+                CompanyId = companyid,
             };
 
             _context.Personnels.Add(newPersonnel);
             await _context.SaveChangesAsync();
         }
 
-        public async Task Update([FromBody] Personnel personnel)
+        public async Task Update(Personnel personnel, int companyid)
         {
-            var temp = _context.Personnels.SingleOrDefault(p => p.Id == personnel.Id);
+            var temp = _context.Personnels.SingleOrDefault(p => p.Id == personnel.Id && p.CompanyId == companyid);
 
             if (temp != null)
             {
@@ -99,11 +99,11 @@ namespace BackendWebApi.Repository
             await _context.SaveChangesAsync();
         }
 
-        public async Task Delete([FromBody] List<int> ids)
+        public async Task Delete(List<int> ids, int companyid)
         {
             foreach (var id in ids)
             {
-                var temp = _context.Personnels.SingleOrDefault(e => e.Id == id);
+                var temp = _context.Personnels.SingleOrDefault(e => e.Id == id && e.CompanyId == companyid);
 
                 if (temp != null)
                 {
@@ -113,6 +113,6 @@ namespace BackendWebApi.Repository
             }
         }
 
-        public async Task<List<string>> GetAddressPersonnel() => await _context.Personnels.Where(e => e.CompanyId == 1).Select(e => e.Address).Distinct().ToListAsync();
+        public async Task<List<string>> GetAddressPersonnel(int companyid) => await _context.Personnels.Where(e => e.CompanyId == companyid).Select(e => e.Address).Distinct().ToListAsync();
     }
 }

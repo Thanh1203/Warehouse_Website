@@ -1,4 +1,5 @@
-﻿using BackendWebApi.Interfaces;
+﻿using BackendWebApi.Helpers;
+using BackendWebApi.Interfaces;
 using BackendWebApi.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,14 +7,10 @@ namespace BackendWebApi.Controllers
 {
     [Route("api/classify")]
     [ApiController]
-    public class Classify_Controller : Controller
+    public class Classify_Controller(IClassify IClassify) : Controller
     {
-        private readonly IClassify _TClassify;
-        
-        public Classify_Controller(IClassify IClassify)
-        {
-            _TClassify = IClassify;
-        }
+        private readonly IClassify _TClassify = IClassify;
+        private readonly int companyId = GlobalConstant.CompanyId;
 
         [HttpGet]
         public async Task<IActionResult> FetchClassifies(string? name)
@@ -22,11 +19,11 @@ namespace BackendWebApi.Controllers
             {
                 if (string.IsNullOrWhiteSpace(name))
                 {
-                    return Ok(await _TClassify.GetClassifies());
+                    return Ok(await _TClassify.GetClassifies(companyId));
                 }
                 else
                 {
-                    return Ok(await _TClassify.SearchCalassifies(name));
+                    return Ok(await _TClassify.SearchCalassifies(name, companyId));
                 }
             }
             catch (Exception ex)
@@ -40,7 +37,7 @@ namespace BackendWebApi.Controllers
         {
             try
             {
-                await _TClassify.Create(classify);
+                await _TClassify.Create(classify, companyId);
                 return Ok("Create successful!");
             }
             catch (Exception ex)
@@ -54,7 +51,7 @@ namespace BackendWebApi.Controllers
         {
             try
             {
-                await _TClassify.Update(classify);
+                await _TClassify.Update(classify, companyId);
                 return Ok("Update successful!");
             }
             catch (Exception ex)
@@ -68,7 +65,7 @@ namespace BackendWebApi.Controllers
         {
             try
             {
-                await _TClassify.Delete(idsDelete);
+                await _TClassify.Delete(idsDelete, companyId);
                 return Ok("Delete successful!");
             }
             catch (Exception ex)

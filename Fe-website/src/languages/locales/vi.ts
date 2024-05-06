@@ -244,4 +244,8 @@ export const vi = {
         ThreeOrMore: "3 lần trở lên",
     },
     RevenueEachWarehouse: "Doanh thu từng kho hàng",
+    FirstLastName: "Họ và tên",
+    InvalidAccount: "Tên đăng nhập hoặc mật khẩu không đúng",
+    LoginSuccessful: "Đăng nhập thành công",
+    RegisterFailed: "Đăng ký không thành công",
 };

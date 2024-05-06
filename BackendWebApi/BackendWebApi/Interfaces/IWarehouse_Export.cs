@@ -2,7 +2,7 @@
 {
     public interface IWarehouse_Export
     {
-        Task<object> GetWeareHouseExport(int warehouseId);
-        Task<object> SearchWarehouseExport(string day, string month, string year, int warehouseId);
+        Task<object> GetWeareHouseExport(int warehouseId, int companyId);
+        Task<object> SearchWarehouseExport(string day, string month, string year, int warehouseId, int companyId);
     }
 }

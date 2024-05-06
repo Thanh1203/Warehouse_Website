@@ -18,7 +18,7 @@
         </div>
         <ErrorMess title="PassWord" :validator="v$.password.$errors[0]?.$validator" />
       </div>
-      <div class="tw-w-3/5 tw-mb-6 tw-flex tw-items-center tw-justify-between">
+      <div class="tw-w-3/5 tw-mb-6 tw-flex tw-items-center tw-justify-between tw-flex-wrap">
         <AntdButton :type="'link'" danger class="tw-p-0" @click="handleForgot">
           <span>{{ translate("ForgotPassword") }}</span>
         </AntdButton>
@@ -42,7 +42,10 @@ import { reactive } from "vue";
 import useVuelidate from "@vuelidate/core";
 import AntdButton from "@/components/antd-button/index.vue";
 import { useRouter } from "vue-router";
-import { notification } from "ant-design-vue";
+import { message, notification } from "ant-design-vue";
+import { DataService } from "@/services/request";
+import ConstantAPI from "@/services/ConstantAPI";
+import { setAdminSession } from "@/utils";
 
 interface State {
   username: string;
@@ -81,10 +84,23 @@ const handleForgot = () => {
   // router.push({ name: 'forgot password' });
 };
 
-const handleSubmit = () => {
+const handleSubmit = async () => {
   v$.value.$touch();
   if (v$.value.$invalid) {
     return false;
+  }
+
+  const response: any = await DataService.callApi(ConstantAPI.login.SIGN_IN, state, null);
+  if (response && response === "invalid account") {
+    notification["error"]({
+      message: translate('InvalidAccount')
+    })
+  } else {
+    notification["success"]({
+      message: translate('LoginSuccessful')
+    })
+    setAdminSession(response);
+    router.push("/");
   }
 };
 </script>

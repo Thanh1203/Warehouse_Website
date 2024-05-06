@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace BackendWebApi.Models
 {
@@ -17,5 +18,7 @@ namespace BackendWebApi.Models
         public double UnitPrice { get; set; }
         [ForeignKey("Admin_Account")]
         public int CompanyId { get; set; }
+        [JsonIgnore]
+        public virtual Admin_Account? Admin_Account { get; set; }
     }
 }

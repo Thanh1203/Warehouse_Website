@@ -6,9 +6,9 @@ namespace BackendWebApi.Interfaces
 {
     public interface IWarehouse_Data
     {
-        Task UpdateUnitPrice(int idWarehouse, int productId, double unitPrice);
-        Task InsertProduct(DTOWarehouseData_Create data_Create);
-        Task UpdateQuantityProduct(DTOWarehouseData_Update data_Update);
-        Task DecreaseQuantityProduct(DTOWarehouseData_Update data_Update, DTOCustomer customer);
+        Task UpdateUnitPrice(int idWarehouse, int productId, double unitPrice, int companyId);
+        Task InsertProduct(DTOWarehouseData_Create data_Create, int companyId);
+        Task UpdateQuantityProduct(DTOWarehouseData_Update data_Update, int companyId);
+        Task DecreaseQuantityProduct(DTOWarehouseData_Update data_Update, DTOCustomer customer, int companyId);
     }
 }

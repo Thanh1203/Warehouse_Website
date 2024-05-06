@@ -3,7 +3,7 @@
     <div class="menu-header">
         <a-dropdown class="tw-w-full tw-h-full tw-px-[12px]" :trigger="['click']" :placement="'rightTop'">
             <div class="tw-w-full tw-h-full tw-flex tw-items-center tw-justify-between">
-                <h3 class="tw-font-[400]">Nguyễn Đức Thành</h3> 
+                <h3 class="tw-font-[400]">{{ adminInfo.name }}</h3> 
                 <font-awesome-icon :icon="['fas', 'bars']" style="color: #000;"/>
             </div>
             <template #overlay>
@@ -38,13 +38,18 @@
 <script setup lang="ts">
 import { translate } from '@/languages/i18n';
 import { useRoute, useRouter } from 'vue-router';
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { menuAdmin } from '@/constants/pcMenu';
 import { PC_MENU } from '@/constants/index';
 
 const router = useRouter();
 const route = useRoute();
+
+const adminInfo = computed(() => {
+    const info = window.sessionStorage.getItem("adminInfo");
+    return JSON.parse(info);
+});
 
 const selectedKeys = ref<string[]>(['DASHBOARD']);
 const openKeys = ref<string[]>([]);
@@ -57,6 +62,8 @@ const handleClickMenu = (ev: any) => {
 }
 
 const handleLogOut = () => {
+    window.sessionStorage.removeItem("token");
+    window.sessionStorage.removeItem("adminInfo");
     router.push({name: "signIn"});
 };
 

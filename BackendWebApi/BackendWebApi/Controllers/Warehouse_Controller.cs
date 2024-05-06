@@ -1,4 +1,5 @@
-﻿using BackendWebApi.Interfaces;
+﻿using BackendWebApi.Helpers;
+using BackendWebApi.Interfaces;
 using BackendWebApi.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,14 +7,10 @@ namespace BackendWebApi.Controllers
 {
     [Route("api/Warehouse")]
     [ApiController]
-    public class Warehouse_Controller : Controller
+    public class Warehouse_Controller(IWarehouse_Info IWarehouse_Info) : Controller
     {
-        private readonly IWarehouse_Info _IWarehouse_Info;
-        
-        public Warehouse_Controller(IWarehouse_Info IWarehouse_Info)
-        {
-            _IWarehouse_Info = IWarehouse_Info;   
-        }
+        private readonly IWarehouse_Info _IWarehouse_Info = IWarehouse_Info;
+        private readonly int companyId = GlobalConstant.CompanyId;
 
         [HttpGet]
         public async Task<IActionResult> FetchWarehousesInfo(string? name, string? nation, string? area)
@@ -22,11 +19,11 @@ namespace BackendWebApi.Controllers
             {
                 if (string.IsNullOrWhiteSpace(name) && string.IsNullOrWhiteSpace(nation) && string.IsNullOrWhiteSpace(area))
                 {
-                    return Ok(await _IWarehouse_Info.GetWarehouseInfos());                    
+                    return Ok(await _IWarehouse_Info.GetWarehouseInfos(companyId));                    
                 }
                 else
                 {
-                   return Ok(await _IWarehouse_Info.SearchWarehouseInfo(name, nation, area));
+                   return Ok(await _IWarehouse_Info.SearchWarehouseInfo(name, nation, area, companyId));
                 }
             }
             catch (Exception ex)
@@ -40,7 +37,7 @@ namespace BackendWebApi.Controllers
         {
             try
             {
-                var Nations = await _IWarehouse_Info.GetNationWarehouse();
+                var Nations = await _IWarehouse_Info.GetNationWarehouse(companyId);
                 return Ok(Nations);
             }
             catch (Exception ex)
@@ -54,7 +51,7 @@ namespace BackendWebApi.Controllers
         {
             try
             {
-                var Areas = await _IWarehouse_Info.GetAreaWarehouse();
+                var Areas = await _IWarehouse_Info.GetAreaWarehouse(companyId);
                 return Ok(Areas);
             }
             catch (Exception ex)
@@ -68,7 +65,7 @@ namespace BackendWebApi.Controllers
         {
             try
             { 
-                await _IWarehouse_Info.Create(warehouse);
+                await _IWarehouse_Info.Create(warehouse, companyId);
                 return Ok("Create successful!");
             }
             catch (Exception ex)
@@ -82,7 +79,7 @@ namespace BackendWebApi.Controllers
         {
             try
             {
-                await _IWarehouse_Info.Update(warehouse);
+                await _IWarehouse_Info.Update(warehouse, companyId);
                 return Ok("Update successful!");
             }
             catch (Exception ex)
@@ -96,7 +93,7 @@ namespace BackendWebApi.Controllers
         {
             try
             {
-                await _IWarehouse_Info.Delete(idsDelete);
+                await _IWarehouse_Info.Delete(idsDelete, companyId);
                 return Ok("Delete successful!");
             }
             catch (Exception ex)

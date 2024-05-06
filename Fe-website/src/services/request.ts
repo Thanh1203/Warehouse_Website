@@ -9,7 +9,6 @@ const httpClient = axios.create({
 })
 
 httpClient.interceptors.response.use((response) => response.data);
-
 class DataService {
     static callApi(api: any, data?: any, params?: any, headers?: any) {
         return httpClient({

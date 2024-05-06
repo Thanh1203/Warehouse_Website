@@ -1,25 +1,20 @@
 ﻿using BackendWebApi.Data;
 using BackendWebApi.Interfaces;
 using BackendWebApi.Models;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using BackendWebApi.DTOS;
 
 namespace BackendWebApi.Repository
 {
-    public class RProducer : IProducer
+    public class RProducer(DataContext context) : IProducer
     {
-        private readonly DataContext _context;
-        public RProducer(DataContext context)
-        {
-            _context = context;
-        }
+        private readonly DataContext _context = context;
 
-        public async Task<object> GetProducers()
+        public async Task<object> GetProducers(int companyid)
         {
             var data = new List<DTOProducer>();
-            var totalElement = await _context.Producers.Where(e => e.CompanyId == 1).CountAsync();
-            var dataList = await _context.Producers.Where(e => e.CompanyId == 1).OrderByDescending(e => e.DateTime).ToListAsync();
+            var totalElement = await _context.Producers.Where(e => e.CompanyId == companyid).CountAsync();
+            var dataList = await _context.Producers.Where(e => e.CompanyId == companyid).OrderByDescending(e => e.DateTime).ToListAsync();
 
             foreach (var item in dataList)
             {
@@ -45,10 +40,10 @@ namespace BackendWebApi.Repository
             }; ;
         }
 
-        public async Task<object> SearchProducer(string str)
+        public async Task<object> SearchProducer(string str, int companyid)
         {
             var data = new List<DTOProducer>();
-            var query = _context.Producers.Where(e => e.CompanyId == 1).OrderByDescending(e => e.DateTime).AsQueryable();
+            var query = _context.Producers.Where(e => e.CompanyId == companyid).OrderByDescending(e => e.DateTime).AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(str))
             {
@@ -82,7 +77,7 @@ namespace BackendWebApi.Repository
             };
         }
 
-        public async Task Create([FromBody] Producer producer)
+        public async Task Create(Producer producer, int companyid)
         {
             var newProducer = new Producer
             {
@@ -90,15 +85,15 @@ namespace BackendWebApi.Repository
                 Name = producer.Name,
                 Origin = producer.Origin,
                 DateTime = DateTime.UtcNow,
-                CompanyId = 1
+                CompanyId = companyid
             };
             _context.Producers.Add(newProducer);
             await _context.SaveChangesAsync();
         }
 
-        public async Task Update([FromBody] Producer producer)
+        public async Task Update(Producer producer, int companyid)
         {
-            var temp = _context.Producers.SingleOrDefault(e => e.Id == producer.Id);
+            var temp = _context.Producers.SingleOrDefault(e => e.Id == producer.Id && e.CompanyId == companyid);
 
             if (temp != null)
             {
@@ -110,11 +105,11 @@ namespace BackendWebApi.Repository
             await _context.SaveChangesAsync();
         }
 
-        public async Task Delete([FromBody] List<int> ids)
+        public async Task Delete(List<int> ids, int companyid)
         {
             foreach (var id in ids)
             {
-                var temp = _context.Producers.SingleOrDefault(e => e.Id == id);
+                var temp = _context.Producers.SingleOrDefault(e => e.Id == id && e.CompanyId == companyid);
 
                 if (temp != null)
                 {

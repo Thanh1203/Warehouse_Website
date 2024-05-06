@@ -19,6 +19,7 @@
 import { translate } from '@/languages/i18n';
 import { ref, watch } from 'vue';
 import AntdButton from "@/components/antd-button/index.vue";
+import { setLanguage } from '@/utils';
 
 const currentLanguage = ref<string>(localStorage.getItem("language") || "vi");
 const isSelectLanguage = ref<boolean>(false);
@@ -43,7 +44,7 @@ watch(
   (newVal, oldVal) => {
     if (newVal !== oldVal) {
       isSelectLanguage.value = !isSelectLanguage.value;
-      localStorage.setItem("language", newVal);
+      setLanguage(newVal);
     }
   }
 )
