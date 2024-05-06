@@ -1,4 +1,5 @@
 using BackendWebApi.Data;
+using BackendWebApi.Helpers;
 using BackendWebApi.Interfaces;
 using BackendWebApi.Repository;
 using Microsoft.EntityFrameworkCore;
@@ -21,7 +22,8 @@ builder.Services.AddScoped<IDashboard, RDashboard>();
 builder.Services.AddScoped<IReportCustomer, RReportCustomer>();
 builder.Services.AddScoped<IReportProduct, RReportProduct>();
 builder.Services.AddScoped<IReportSale, RReportSale>();
-
+builder.Services.AddScoped<IAdmin_Account, RAdmin_Account>();
+builder.Services.AddScoped<JwtService>();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

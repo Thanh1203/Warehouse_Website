@@ -7,15 +7,11 @@ using BackendWebApi.DTOS;
 
 namespace BackendWebApi.Repository
 {
-    public class RClassify : IClassify
+    public class RClassify(DataContext context) : IClassify
     {
-        private readonly DataContext _context;
-        public RClassify(DataContext context)
-        {
-            _context = context;
-        }
+        private readonly DataContext _context = context;
 
-        public async Task<object> GetClassifies()
+        public async Task<object> GetClassifies(int companyId)
         {
             var data = new List<DTOClassify>();
             var dataList = await _context.Classifies.Where(e => e.CompanyId == 1).OrderByDescending(e => e.DateTime).ToListAsync();
@@ -43,10 +39,10 @@ namespace BackendWebApi.Repository
             }; ;
         }
 
-        public async Task<object> SearchCalassifies(string str)
+        public async Task<object> SearchCalassifies(string str, int companyId)
         {
             var data = new List<DTOClassify>();
-            var query = _context.Classifies.Where(e => e.CompanyId == 1).OrderByDescending(e => e.DateTime).AsQueryable();
+            var query = _context.Classifies.Where(e => e.CompanyId == companyId).OrderByDescending(e => e.DateTime).AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(str))
             {
@@ -80,23 +76,23 @@ namespace BackendWebApi.Repository
             };
         }
 
-        public async Task Create([FromBody] Classify classify)
+        public async Task Create(Classify classify, int companyId)
         {
             var newClassify = new Classify
             {
                 Code = classify.Code,
                 Name = classify.Name,
                 DateTime = DateTime.UtcNow,
-                CompanyId = 1,
+                CompanyId = companyId,
             };
 
             _context.Classifies.Add(newClassify);
             await _context.SaveChangesAsync();
         }
 
-        public async Task Update([FromBody] Classify classify)
+        public async Task Update(Classify classify, int companyId)
         {
-            var temp = _context.Classifies.SingleOrDefault(e => e.Id == classify.Id);
+            var temp = _context.Classifies.SingleOrDefault(e => e.Id == classify.Id && e.CompanyId == companyId);
 
             if (temp != null)
             {
@@ -107,11 +103,11 @@ namespace BackendWebApi.Repository
             await _context.SaveChangesAsync();
         }
 
-        public async Task Delete([FromBody] List<int> ids)
+        public async Task Delete(List<int> ids, int companyId)
         {
             foreach (var id in ids)
             {
-                var temp = _context.Classifies.SingleOrDefault(e => e.Id ==id);
+                var temp = _context.Classifies.SingleOrDefault(e => e.Id ==id && e.CompanyId == companyId);
                 if (temp != null)
                 {
                     _context.Classifies.Remove(temp);

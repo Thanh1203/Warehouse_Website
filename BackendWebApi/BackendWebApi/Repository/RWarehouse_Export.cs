@@ -2,7 +2,6 @@
 using BackendWebApi.DTOS;
 using BackendWebApi.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace BackendWebApi.Repository
 {
@@ -10,10 +9,10 @@ namespace BackendWebApi.Repository
     {
         private readonly DataContext _context = context;
 
-        public async Task<object> GetWeareHouseExport(int warehouseId)
+        public async Task<object> GetWeareHouseExport(int warehouseId, int companyid)
         {
             var data = new List<DTOWarehouse_Export>();
-            var dataList = await _context.Warehouse_Exports.Where(e => e.CompanyId == 1 && e.WarehouseId == warehouseId).OrderByDescending(e => e.DateTime).ToListAsync();
+            var dataList = await _context.Warehouse_Exports.Where(e => e.CompanyId == companyid && e.WarehouseId == warehouseId).OrderByDescending(e => e.DateTime).ToListAsync();
             foreach (var item in dataList)
             {
                 var viewModel = new DTOWarehouse_Export
@@ -28,10 +27,10 @@ namespace BackendWebApi.Repository
             return data;
         }
 
-        public async Task<object> SearchWarehouseExport(string day, string month, string year, int warehouseId)
+        public async Task<object> SearchWarehouseExport(string day, string month, string year, int warehouseId, int companyid)
         {
             var datadto = new List<DTOWarehouse_Export>();
-            var query = await _context.Warehouse_Exports.Where(e => e.CompanyId == 1 && e.WarehouseId == warehouseId).OrderByDescending(e => e.DateTime).ToListAsync();
+            var query = await _context.Warehouse_Exports.Where(e => e.CompanyId == companyid && e.WarehouseId == warehouseId).OrderByDescending(e => e.DateTime).ToListAsync();
 
             foreach (var item in query)
             {

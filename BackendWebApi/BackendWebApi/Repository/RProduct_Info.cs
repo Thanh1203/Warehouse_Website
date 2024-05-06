@@ -11,11 +11,11 @@ namespace BackendWebApi.Repository
     {
         private readonly DataContext _context = context;
 
-        public async Task<object> GetProduct_Infos()
+        public async Task<object> GetProduct_Infos(int companyid)
         {
             var data = new List<DTOProduct>();
-            var dataList = await _context.Product_Infos.Where(e => e.CompanyId == 1).OrderByDescending(e => e.DateTime).ToListAsync();
-            var totalElement = await _context.Product_Infos.Where(e => e.CompanyId == 1).CountAsync();
+            var dataList = await _context.Product_Infos.Where(e => e.CompanyId == companyid).OrderByDescending(e => e.DateTime).ToListAsync();
+            var totalElement = await _context.Product_Infos.Where(e => e.CompanyId == companyid).CountAsync();
             
             foreach (var item in dataList)
             {
@@ -43,6 +43,7 @@ namespace BackendWebApi.Repository
                     CategoryName = categoryName,
                     ClassifyName = classifyName,
                     ProducerName = producerName,
+                    CompanyId = companyid
                 };
                 data.Add(viewModel);
             }
@@ -54,10 +55,10 @@ namespace BackendWebApi.Repository
             }; ;
         }
 
-        public async Task<object> SearchProductInfo(string strName, string categoryId, string classifyId, string producerId)
+        public async Task<object> SearchProductInfo(string strName, string categoryId, string classifyId, string producerId, int companyid)
         {
             var data = new List<DTOProduct>();
-            var query = _context.Product_Infos.Where(e => e.CompanyId == 1).OrderByDescending(e => e.DateTime).AsQueryable();
+            var query = _context.Product_Infos.Where(e => e.CompanyId == companyid).OrderByDescending(e => e.DateTime).AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(strName))
             {
@@ -107,6 +108,7 @@ namespace BackendWebApi.Repository
                     CategoryName = categoryName,
                     ClassifyName = classifyName,
                     ProducerName = producerName,
+                    CompanyId = companyid,
                 };
                 data.Add(viewModel);
             }
@@ -118,7 +120,7 @@ namespace BackendWebApi.Repository
             };
         }
 
-        public async Task Create([FromBody] Product_Info product)
+        public async Task Create(Product_Info product, int companyid)
         {
             var newProduct = new Product_Info
             {
@@ -134,15 +136,15 @@ namespace BackendWebApi.Repository
                 Designs = product.Designs,
                 Describe = product.Describe,
                 DateTime = DateTime.UtcNow,
-                CompanyId = 1,
+                CompanyId = companyid,
             };
             _context.Product_Infos.Add(newProduct);
             await _context.SaveChangesAsync();
         }
 
-        public async Task Update([FromBody] Product_Info product)
+        public async Task Update(Product_Info product, int companyid)
         {
-            var temp = _context.Product_Infos.SingleOrDefault(e => e.Id == product.Id);
+            var temp = _context.Product_Infos.SingleOrDefault(e => e.Id == product.Id && e.CompanyId == companyid);
             if (temp != null)
             {
                 temp.Name = product.Name;
@@ -159,11 +161,11 @@ namespace BackendWebApi.Repository
             await _context.SaveChangesAsync();
         }
 
-        public async Task Delete([FromBody] List<int> ids)
+        public async Task Delete(List<int> ids, int companyid)
         {
             foreach (var id in ids)
             {
-                var itemDelete = _context.Product_Infos.SingleOrDefault(c => c.Id == id);
+                var itemDelete = _context.Product_Infos.SingleOrDefault(c => c.Id == id && c.CompanyId == companyid);
 
                 if (itemDelete != null)
                 {
@@ -173,10 +175,10 @@ namespace BackendWebApi.Repository
             }
         }
 
-        public async Task<object> GetProductOutsideWH(int warehouseId)
+        public async Task<object> GetProductOutsideWH(int warehouseId, int companyid)
         {
-            var productInWh = await _context.Warehouse_Data.Where(e => e.CompanyId == 1 && e.IdWarehouse == warehouseId).Select(e => new { e.IdProduct, e.CodeProduct }).ToListAsync();
-            var productData = await _context.Product_Infos.Where(e => e.CompanyId == 1).Select(e => new { e.Id, e.Code }).ToListAsync();
+            var productInWh = await _context.Warehouse_Data.Where(e => e.CompanyId == companyid && e.IdWarehouse == warehouseId).Select(e => new { e.IdProduct, e.CodeProduct }).ToListAsync();
+            var productData = await _context.Product_Infos.Where(e => e.CompanyId == companyid).Select(e => new { e.Id, e.Code }).ToListAsync();
 
             var dataList = productData.Where(p => !productInWh.Any(pwh => pwh.IdProduct == p.Id));
 
@@ -193,9 +195,9 @@ namespace BackendWebApi.Repository
             return data;
         }
 
-        public async Task<object> GetProductInsideWH(int warehouseId)
+        public async Task<object> GetProductInsideWH(int warehouseId, int companyid)
         {
-            var dataList = await _context.Warehouse_Data.Where(e => e.CompanyId == 1 && e.IdWarehouse == warehouseId && e.UnitPrice > 0).ToListAsync();
+            var dataList = await _context.Warehouse_Data.Where(e => e.CompanyId == companyid && e.IdWarehouse == warehouseId && e.UnitPrice > 0).ToListAsync();
             bool allHasUntiPrice = !await _context.Warehouse_Data.AnyAsync(e => e.CompanyId == 1 && e.IdWarehouse == warehouseId && e.UnitPrice == 0);
             var data = new List<DTOProductInWH>();
             foreach (var item in dataList)
@@ -218,10 +220,10 @@ namespace BackendWebApi.Repository
             };
         }
 
-        public async Task<object> SearchProductInsideWH(int warehouseId, string code)
+        public async Task<object> SearchProductInsideWH(int warehouseId, string code, int companyid)
         {
-            var query =  _context.Warehouse_Data.Where(e => e.CompanyId == 1 && e.IdWarehouse == warehouseId && e.UnitPrice > 0).AsQueryable();
-            bool allHasUntiPrice = !await _context.Warehouse_Data.AnyAsync(e => e.CompanyId == 1 && e.IdWarehouse == warehouseId && e.UnitPrice == 0);
+            var query =  _context.Warehouse_Data.Where(e => e.CompanyId == companyid && e.IdWarehouse == warehouseId && e.UnitPrice > 0).AsQueryable();
+            bool allHasUntiPrice = !await _context.Warehouse_Data.AnyAsync(e => e.CompanyId == companyid && e.IdWarehouse == warehouseId && e.UnitPrice == 0);
             if (!string.IsNullOrWhiteSpace(code))
             {
                 query = query.Where(e => e.CodeProduct.Contains(code));
@@ -249,9 +251,9 @@ namespace BackendWebApi.Repository
             };
         }
 
-        public async Task<object> GetProductConfigUnitPrice(int warehouseId)
+        public async Task<object> GetProductConfigUnitPrice(int warehouseId, int companyid)
         {
-            var dataList = await _context.Warehouse_Data.Where(e => e.CompanyId == 1 && e.IdWarehouse == warehouseId).OrderBy(item => item.UnitPrice == 0 ? 0 : 1).ToListAsync();
+            var dataList = await _context.Warehouse_Data.Where(e => e.CompanyId == companyid && e.IdWarehouse == warehouseId).OrderBy(item => item.UnitPrice == 0 ? 0 : 1).ToListAsync();
             var data = new List<DTOProductInWH>();
             foreach (var item in dataList)
             {
@@ -269,9 +271,9 @@ namespace BackendWebApi.Repository
             return data;
         }
 
-        public async Task<object> SearchProductConfigUnitPrice(int warehouseId, string code, string name)
+        public async Task<object> SearchProductConfigUnitPrice(int warehouseId, string code, string name, int companyid)
         {
-            var query = _context.Warehouse_Data.Where(e => e.CompanyId == 1 && e.IdWarehouse == warehouseId).OrderBy(item => item.UnitPrice == 0 ? 0 : 1).AsQueryable();
+            var query = _context.Warehouse_Data.Where(e => e.CompanyId == companyid && e.IdWarehouse == warehouseId).OrderBy(item => item.UnitPrice == 0 ? 0 : 1).AsQueryable();
             if (!string.IsNullOrWhiteSpace(code))
             {
                 query = query.Where(e => e.CodeProduct.Contains(code));

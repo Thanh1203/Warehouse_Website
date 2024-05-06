@@ -2,6 +2,6 @@
 {
     public interface IDashboard
     {
-       Task<object> GetInfoDashboard(int idWarehouse);
+       Task<object> GetInfoDashboard(int companyId);
     }
 }

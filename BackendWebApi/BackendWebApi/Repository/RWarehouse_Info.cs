@@ -1,7 +1,6 @@
 ﻿using BackendWebApi.Data;
 using BackendWebApi.Interfaces;
 using BackendWebApi.Models;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using BackendWebApi.DTOS;
 
@@ -11,11 +10,11 @@ namespace BackendWebApi.Repository
     {
         private readonly DataContext _context = context;
 
-        public async Task<object> GetWarehouseInfos()
+        public async Task<object> GetWarehouseInfos(int companyid)
         {
             var data = new List<DTOWarehouse>();
-            var dataList = await _context.Warehouse_Infos.Where(e => e.CompanyId == 1).ToListAsync();
-            var totalElement = await _context.Warehouse_Infos.Where(e => e.CompanyId == 1).CountAsync();
+            var dataList = await _context.Warehouse_Infos.Where(e => e.CompanyId == companyid).ToListAsync();
+            var totalElement = await _context.Warehouse_Infos.Where(e => e.CompanyId == companyid).CountAsync();
 
             foreach (var item in dataList)
             {
@@ -45,10 +44,10 @@ namespace BackendWebApi.Repository
             };
         }
 
-        public async Task<object> SearchWarehouseInfo(string strName, string strNation, string strArea)
+        public async Task<object> SearchWarehouseInfo(string strName, string strNation, string strArea, int companyid)
         {
             var data = new List<DTOWarehouse>();
-            var query = _context.Warehouse_Infos.Where(e => e.CompanyId == 1).AsQueryable();
+            var query = _context.Warehouse_Infos.Where(e => e.CompanyId == companyid).AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(strName))
             {
@@ -98,17 +97,17 @@ namespace BackendWebApi.Repository
             };
         }
 
-        public async Task<List<string>> GetNationWarehouse()
+        public async Task<List<string>> GetNationWarehouse(int companyid)
         {
-            return await _context.Warehouse_Infos.Where(e => e.CompanyId == 1).Select(w => w.Nation).Distinct().ToListAsync();
+            return await _context.Warehouse_Infos.Where(e => e.CompanyId == companyid).Select(w => w.Nation).Distinct().ToListAsync();
         }
 
-        public async Task<List<string>> GetAreaWarehouse()
+        public async Task<List<string>> GetAreaWarehouse(int companyid)
         {
-            return await _context.Warehouse_Infos.Where(e => e.CompanyId == 1).Select(w => w.Area).Distinct().ToListAsync();
+            return await _context.Warehouse_Infos.Where(e => e.CompanyId == companyid).Select(w => w.Area).Distinct().ToListAsync();
         }
 
-        public async Task Create([FromBody] Warehouse_Info warehouse)
+        public async Task Create(Warehouse_Info warehouse, int companyid)
         {
             var newWH = new Warehouse_Info
             {
@@ -126,9 +125,9 @@ namespace BackendWebApi.Repository
             await _context.SaveChangesAsync();
         }
 
-        public async Task Update([FromBody] Warehouse_Info warehouse)
+        public async Task Update(Warehouse_Info warehouse, int companyid)
         {
-            var temp = _context.Warehouse_Infos.SingleOrDefault(e => e.Id == warehouse.Id);
+            var temp = _context.Warehouse_Infos.SingleOrDefault(e => e.Id == warehouse.Id && e.CompanyId == companyid);
             
             if (temp != null)
             {
@@ -141,11 +140,11 @@ namespace BackendWebApi.Repository
             await _context.SaveChangesAsync();
         }
 
-        public async Task Delete([FromBody] List<int> ids)
+        public async Task Delete(List<int> ids, int companyid)
         {
             foreach (int id in ids)
             {
-                var temp = _context.Warehouse_Infos.SingleOrDefault(c => c.Id == id);
+                var temp = _context.Warehouse_Infos.SingleOrDefault(c => c.Id == id && c.CompanyId == companyid);
 
                 if (temp != null)
                 {

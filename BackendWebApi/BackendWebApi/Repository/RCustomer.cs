@@ -10,10 +10,10 @@ namespace BackendWebApi.Repository
     {
         private readonly DataContext _context = context;
 
-        public async Task<object> SearchCustomer(string phoneNumber)
+        public async Task<object> SearchCustomer(string phoneNumber, int companyId)
         {
             var data = new List<DTOCustomer>();
-            var dataList = await _context.Customers.Where(e => e.CompanyId == 1 && e.PhoneNumber.Contains(phoneNumber)).ToListAsync();
+            var dataList = await _context.Customers.Where(e => e.CompanyId == companyId && e.PhoneNumber.Contains(phoneNumber)).ToListAsync();
 
             foreach (var item in dataList)
             {

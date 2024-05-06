@@ -1,7 +1,5 @@
-﻿using BackendWebApi.DTOS;
+﻿using BackendWebApi.Helpers;
 using BackendWebApi.Interfaces;
-using BackendWebApi.Models;
-using BackendWebApi.Repository;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BackendWebApi.Controllers
@@ -11,6 +9,7 @@ namespace BackendWebApi.Controllers
     public class Warehouse_Import_Controller(IWarehouse_Import warehouse_Import) : Controller
     {
         private readonly IWarehouse_Import _warehouse_Import = warehouse_Import;
+        private readonly int companyId = GlobalConstant.CompanyId;
 
         [HttpGet("{warehouseId}")]
         public async Task<IActionResult> FetchHistoryImpor(int warehouseId, string? day, string? month, string? year)
@@ -19,11 +18,11 @@ namespace BackendWebApi.Controllers
             {
                 if (string.IsNullOrWhiteSpace(day) && string.IsNullOrWhiteSpace(month) && string.IsNullOrWhiteSpace(year))
                 {
-                    return Ok(await _warehouse_Import.GetHistoryImport(warehouseId));
+                    return Ok(await _warehouse_Import.GetHistoryImport(warehouseId, companyId));
                 }
                 else
                 {
-                    return Ok(await _warehouse_Import.SearHistoryImport(day, month, year, warehouseId));
+                    return Ok(await _warehouse_Import.SearHistoryImport(day, month, year, warehouseId, companyId));
                 }
             }
             catch (Exception ex)

@@ -135,3 +135,5 @@ D:\My workspace data\WebProgrammingProject\BackendWebApi\BackendWebApi\obj\Debug
 D:\My workspace data\WebProgrammingProject\BackendWebApi\BackendWebApi\obj\Debug\net8.0\BackendWebApi.pdb
 D:\My workspace data\WebProgrammingProject\BackendWebApi\BackendWebApi\obj\Debug\net8.0\BackendWebApi.genruntimeconfig.cache
 D:\My workspace data\WebProgrammingProject\BackendWebApi\BackendWebApi\obj\Debug\net8.0\ref\BackendWebApi.dll
+D:\My workspace data\WebProgrammingProject\BackendWebApi\BackendWebApi\bin\Debug\net8.0\JWT.dll
+D:\My workspace data\WebProgrammingProject\BackendWebApi\BackendWebApi\bin\Debug\net8.0\Newtonsoft.Json.dll

@@ -2,7 +2,6 @@
 using BackendWebApi.DTOS;
 using BackendWebApi.Interfaces;
 using BackendWebApi.Models;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace BackendWebApi.Repository
@@ -13,9 +12,9 @@ namespace BackendWebApi.Repository
 
         public readonly string codeImport = "GsI" + 1.ToString() + GenerateRandomString() + DateTimeOffset.UtcNow.ToString("yyyyHHddMMfffmmss");
         public readonly string codeExport = "GsE" + 2.ToString() + GenerateRandomString() + DateTimeOffset.UtcNow.ToString("yyyyHHddMMfffmmss");
-        public async Task UpdateUnitPrice(int idWarehouse, int productId, double unitPrice)
+        public async Task UpdateUnitPrice(int idWarehouse, int productId, double unitPrice, int companyid)
         {
-            var temp = _context.Warehouse_Data.SingleOrDefault(e => e.IdWarehouse== idWarehouse && e.IdProduct == productId);
+            var temp = _context.Warehouse_Data.SingleOrDefault(e => e.IdWarehouse== idWarehouse && e.IdProduct == productId && e.CompanyId == companyid);
 
             if (temp != null)
             {
@@ -25,7 +24,7 @@ namespace BackendWebApi.Repository
             await _context.SaveChangesAsync();
         }
 
-        public async Task InsertProduct(DTOWarehouseData_Create? data_Create)
+        public async Task InsertProduct(DTOWarehouseData_Create? data_Create, int companyid)
         {
             foreach (var item in data_Create.DataInsert)
             {
@@ -34,7 +33,7 @@ namespace BackendWebApi.Repository
                     IdWarehouse = data_Create.IdWarehouse,
                     IdProduct = item.IdProduct,
                     CodeProduct = item.CodeProduct,
-                    CompanyId = 1,
+                    CompanyId = companyid,
                     Quantity = item.Quantity,
                     UnitPrice = 0,
                 };
@@ -47,7 +46,7 @@ namespace BackendWebApi.Repository
 
                 WarehouseId = data_Create.IdWarehouse,
                 TotalProduct = data_Create.TotalProduct,
-                CompanyId = 1,
+                CompanyId = companyid,
                 DateTime = DateTime.UtcNow,
                 Code = codeImport
             };
@@ -62,18 +61,18 @@ namespace BackendWebApi.Repository
                     ProductId = item.IdProduct,
                     Quantity = item.Quantity,
                     DateTime = DateTime.UtcNow,
-                    CompanyId = 1
+                    CompanyId = companyid
                 };
                 _context.WH_IM_Datas.Add(importData);
                 await _context.SaveChangesAsync();
             }
         }
 
-        public async Task UpdateQuantityProduct(DTOWarehouseData_Update? data_Update)
+        public async Task UpdateQuantityProduct(DTOWarehouseData_Update? data_Update, int companyid)
         {
             foreach (var item in data_Update.DataUpdate)
             {
-                var itemUpdate = _context.Warehouse_Data.SingleOrDefault(e => e.IdProduct == item.IdProduct && e.CompanyId == 1 && e.IdWarehouse == data_Update.IdWarehouse);
+                var itemUpdate = _context.Warehouse_Data.SingleOrDefault(e => e.IdProduct == item.IdProduct && e.CompanyId == companyid && e.IdWarehouse == data_Update.IdWarehouse);
                 if (itemUpdate != null)
                 {
                     itemUpdate.Quantity += item.Quantity;
@@ -87,7 +86,7 @@ namespace BackendWebApi.Repository
 
                 WarehouseId = data_Update.IdWarehouse,
                 TotalProduct = data_Update.TotalProduct,
-                CompanyId = 1,
+                CompanyId = companyid,
                 DateTime = DateTime.UtcNow,
                 Code = codeImport
             };
@@ -102,19 +101,19 @@ namespace BackendWebApi.Repository
                     ProductId = item.IdProduct,
                     Quantity = item.Quantity,
                     DateTime = DateTime.UtcNow,
-                    CompanyId = 1
+                    CompanyId = companyid
                 };
                 _context.WH_IM_Datas.Add(importData);
                 await _context.SaveChangesAsync();
             }
         }
 
-        public async Task DecreaseQuantityProduct(DTOWarehouseData_Update? data_Update, DTOCustomer? customer)
+        public async Task DecreaseQuantityProduct(DTOWarehouseData_Update? data_Update, DTOCustomer? customer, int companyid)
         {
             double totalValue = 0;
             foreach (var item in data_Update.DataUpdate)
             {
-                var itemUpdate = _context.Warehouse_Data.SingleOrDefault(e => e.IdProduct == item.IdProduct && e.CompanyId == 1 && e.IdWarehouse == data_Update.IdWarehouse);
+                var itemUpdate = _context.Warehouse_Data.SingleOrDefault(e => e.IdProduct == item.IdProduct && e.CompanyId == companyid && e.IdWarehouse == data_Update.IdWarehouse);
                 if (itemUpdate != null)
                 {
                     itemUpdate.Quantity -= item.Quantity;
@@ -130,7 +129,7 @@ namespace BackendWebApi.Repository
 
                 WarehouseId = data_Update.IdWarehouse,
                 TotalProduct = data_Update.TotalProduct,
-                CompanyId = 1,
+                CompanyId = companyid,
                 DateTime = DateTime.UtcNow,
                 Code = codeExport,
                 TotalValue = totalValue,
@@ -146,7 +145,7 @@ namespace BackendWebApi.Repository
                     ProductId = item.IdProduct,
                     Quantity = item.Quantity,
                     DateTime = DateTime.UtcNow,
-                    CompanyId = 1
+                    CompanyId = companyid
                 };
 
                 _context.WH_EX_Datas.Add(exportData);
@@ -155,7 +154,7 @@ namespace BackendWebApi.Repository
 
             if (!string.IsNullOrWhiteSpace(customer.PhoneNumber))
             {
-                var currentCustomer = await _context.Customers.SingleOrDefaultAsync(e => e.CompanyId == 1 && e.PhoneNumber.Contains(customer.PhoneNumber));
+                var currentCustomer = await _context.Customers.SingleOrDefaultAsync(e => e.CompanyId == companyid && e.PhoneNumber.Contains(customer.PhoneNumber));
                 if (currentCustomer != null)
                 {
                     currentCustomer.TotalValueOrders += totalValue;
@@ -173,7 +172,7 @@ namespace BackendWebApi.Repository
                         PurchaseCount = 1,
                         Address = customer.Address,
                         DateTime = DateTime.UtcNow,
-                        CompanyId = 1,
+                        CompanyId = companyid,
                         TotalValueOrders = totalValue,
                     };
                     _context.Customers.Add(newCustomer);

@@ -1,4 +1,5 @@
-﻿using BackendWebApi.Interfaces;
+﻿using BackendWebApi.Helpers;
+using BackendWebApi.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BackendWebApi.Controllers
@@ -8,13 +9,14 @@ namespace BackendWebApi.Controllers
     public class ReportSale_Controller(IReportSale reportSale) : Controller
     {
         private readonly IReportSale _reportSale = reportSale;
+        private readonly int companyId = GlobalConstant.CompanyId;
 
         [HttpGet("{curreantYear}")]
         public async Task<IActionResult> FetchData(int curreantYear)
         {
             try
             {
-                var data = await _reportSale.GetDataReportSale(1, curreantYear);
+                var data = await _reportSale.GetDataReportSale(companyId, curreantYear);
                 return Ok(data);
             }
             catch (Exception ex)

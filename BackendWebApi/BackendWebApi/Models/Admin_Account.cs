@@ -10,7 +10,7 @@ namespace BackendWebApi.Models
         [Key]
         public int Id { get; set; }
         public string? Name { get; set; }
-        public string? Username { get; set; }
+        [JsonIgnore]
         public string? Password { get; set; }
         public string? Phone {  get; set; }
         public string? Email { get; set; }
@@ -30,5 +30,13 @@ namespace BackendWebApi.Models
         public virtual ICollection<Producer>? Producers { get; set; }
         [JsonIgnore]
         public virtual ICollection<Warehouse_Export>? Warehouse_Exports { get; set; }
+        [JsonIgnore]
+        public virtual ICollection<Customer>? Customer_Infos { get; set;}
+        [JsonIgnore]
+        public virtual ICollection<Warehouse_Data>? Warehouse_Datas { get; set; }
+        [JsonIgnore]
+        public virtual ICollection<WH_Import_Data>? WWH_Imports { get; set; }
+        [JsonIgnore]
+        public virtual ICollection<WH_Export_Data>? WH_Exports { get; set; }
     }
 }

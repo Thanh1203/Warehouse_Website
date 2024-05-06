@@ -242,4 +242,8 @@ export const en = {
         ThreeOrMore: "3 times or more",
     },
     RevenueEachWarehouse: "Revenue of each warehouse",
+    FirstLastName: "First and last name",
+    InvalidAccount: "Username or password is incorrect",
+    LoginSuccessful: "Login successful",
+    RegisterFailed: "Sign up failed"
 };

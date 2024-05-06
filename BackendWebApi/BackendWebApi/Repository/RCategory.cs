@@ -2,7 +2,6 @@
 using BackendWebApi.DTOS;
 using BackendWebApi.Interfaces;
 using BackendWebApi.Models;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace BackendWebApi.Repository
@@ -11,11 +10,11 @@ namespace BackendWebApi.Repository
     {
         private readonly DataContext _context = context;
 
-        public async Task<object> GetCategories()
+        public async Task<object> GetCategories(int companyid)
         {
             var data = new List<DTOCategory>();
-            var datalist = await _context.Categories.Where(e => e.CompanyId == 1).OrderByDescending(e=> e.DateTime).ToListAsync();
-            var totalElement = await _context.Categories.Where(e => e.CompanyId == 1).CountAsync();
+            var datalist = await _context.Categories.Where(e => e.CompanyId == companyid).OrderByDescending(e=> e.DateTime).ToListAsync();
+            var totalElement = await _context.Categories.Where(e => e.CompanyId == companyid).CountAsync();
 
             foreach (var item in datalist)
             {
@@ -39,10 +38,10 @@ namespace BackendWebApi.Repository
             };
         }
 
-        public async Task<object> SearchCategory(string str)
+        public async Task<object> SearchCategory(string str, int companyId)
         {
             var data = new List<DTOCategory>();
-            var query = _context.Categories.Where(e => e.CompanyId == 1).OrderByDescending(e => e.DateTime).AsQueryable();
+            var query = _context.Categories.Where(e => e.CompanyId == companyId).OrderByDescending(e => e.DateTime).AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(str))
             {
@@ -74,23 +73,23 @@ namespace BackendWebApi.Repository
             };
         }
 
-        public async Task Create([FromBody] Category category)
+        public async Task Create(Category category, int companyId)
         {
             var newCategory = new Category
             {
                 Code = category.Code,
                 Name = category.Name,
                 DateTime = DateTime.UtcNow,
-                CompanyId = 1,
+                CompanyId = companyId,
             };
 
             _context.Categories.Add(newCategory);
             await _context.SaveChangesAsync();
         }
 
-        public async Task Update([FromBody] Category category)
+        public async Task Update(Category category, int companyId)
         {
-           var temp = _context.Categories.SingleOrDefault(e => e.Id == category.Id);
+           var temp = _context.Categories.SingleOrDefault(e => e.Id == category.Id && e.CompanyId == companyId);
 
             if (temp != null)
             {
@@ -101,11 +100,11 @@ namespace BackendWebApi.Repository
             await _context.SaveChangesAsync();
         }
 
-        public async Task Delete([FromBody] List<int> ids)
+        public async Task Delete(List<int> ids, int companyId)
         {
             foreach (var id in ids)
             {
-                var temp = _context.Categories.SingleOrDefault(e => e.Id == id);
+                var temp = _context.Categories.SingleOrDefault(e => e.Id == id && e.CompanyId == companyId);
 
                 if (temp != null)
                 {

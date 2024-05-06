@@ -154,6 +154,38 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "BackendWebApi.Controllers.AuthController",
+    "Method": "SignInAdmin",
+    "RelativePath": "api/Login/signIn",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "account_SignIn",
+        "Type": "BackendWebApi.DTOS.DTOAdmin_Account_SignIn",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BackendWebApi.Controllers.AuthController",
+    "Method": "SignUpAdmin",
+    "RelativePath": "api/Login/signUp",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "account_SignUp",
+        "Type": "BackendWebApi.DTOS.DTOAdmin_Account_SignUp",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "BackendWebApi.Controllers.Personnel_Controller",
     "Method": "FetchPersonnels",
     "RelativePath": "api/personnel",

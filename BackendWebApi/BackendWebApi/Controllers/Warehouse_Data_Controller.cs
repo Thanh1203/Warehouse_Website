@@ -1,7 +1,6 @@
 ﻿using BackendWebApi.DTOS;
+using BackendWebApi.Helpers;
 using BackendWebApi.Interfaces;
-using BackendWebApi.Models;
-using BackendWebApi.Repository;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -12,13 +11,15 @@ namespace BackendWebApi.Controllers
     public class Warehouse_Data_Controller(IWarehouse_Data IWarehouse_Data) : Controller
     {
         private readonly IWarehouse_Data _IWarehouse_Data  = IWarehouse_Data;
-        
+        private readonly int companyId = GlobalConstant.CompanyId;
+
+
         [HttpPut("{warehouseId}")]
         public async Task<IActionResult> UpdateWarehouseData(int warehouseId, [FromBody] DTOWarehouse_Update_UnitPrice value)
         {
             try
             {
-                await _IWarehouse_Data.UpdateUnitPrice(warehouseId, value.ProductId, value.UntiPirce);
+                await _IWarehouse_Data.UpdateUnitPrice(warehouseId, value.ProductId, value.UntiPirce, companyId);
                 return Ok("Update successful!");
             }
             catch (Exception ex)
@@ -32,7 +33,7 @@ namespace BackendWebApi.Controllers
         {
             try
             {
-                await _IWarehouse_Data.InsertProduct(data_Create);
+                await _IWarehouse_Data.InsertProduct(data_Create, companyId);
                 return Ok("Create successful!");
             }
             catch (Exception ex)
@@ -46,7 +47,7 @@ namespace BackendWebApi.Controllers
         {
             try
             {
-                await _IWarehouse_Data.UpdateQuantityProduct(data_Update);
+                await _IWarehouse_Data.UpdateQuantityProduct(data_Update, companyId);
                 return Ok("Update successful!");
             }
             catch (Exception ex)
@@ -60,7 +61,7 @@ namespace BackendWebApi.Controllers
         {
             try
             {
-                await _IWarehouse_Data.DecreaseQuantityProduct(dtoData.DataUpdate, dtoData?.Customer);
+                await _IWarehouse_Data.DecreaseQuantityProduct(dtoData.DataUpdate, dtoData?.Customer, companyId);
                 return Ok("Update successful!");
             }
             catch (Exception ex)

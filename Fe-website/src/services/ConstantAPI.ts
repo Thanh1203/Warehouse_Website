@@ -189,5 +189,15 @@ export default {
             url: "/api/report_product",
             method: "GET",
         }
+    },
+    login: {
+        SIGN_IN: {
+            url: "/api/Login/signIn",
+            method: "POST"
+        },
+        SIGN_UP: {
+            url: "/api/Login/signUp",
+            method: "POST"
+        }
     }
 }
