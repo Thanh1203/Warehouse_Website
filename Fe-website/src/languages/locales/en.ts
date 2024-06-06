@@ -245,5 +245,7 @@ export const en = {
     FirstLastName: "First and last name",
     InvalidAccount: "Username or password is incorrect",
     LoginSuccessful: "Login successful",
-    RegisterFailed: "Sign up failed"
+    RegisterFailed: "Sign up failed",
+    ImportAndExport: "Import and Export",
+    
 };
