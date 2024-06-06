@@ -9,7 +9,7 @@ export const vi = {
     Personnel: "Nhân sự",
     Warehouse: "Kho hàng",
     Products: "Sản phẩm",
-    StatisticsReports: "Báo cáo thống kê",
+    StatisticsReports: "Báo cáo",
     ProductCategory: "Chủng loại sản phẩm",
     ProductInformation: "Thông tin sản phẩm",
     CustomerReport: "Báo cáo khách hàng",
@@ -248,4 +248,6 @@ export const vi = {
     InvalidAccount: "Tên đăng nhập hoặc mật khẩu không đúng",
     LoginSuccessful: "Đăng nhập thành công",
     RegisterFailed: "Đăng ký không thành công",
+    ImportAndExport: "Xuất nhập",
+
 };
