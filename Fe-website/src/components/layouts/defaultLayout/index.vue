@@ -3,7 +3,7 @@
   <SlideMenu/>
   <div class="body-layout">
     <HeaderPage/>
-    <div class="tw-p-4">
+    <div class="tw-p-4 tw-overflow-hidden tw-overflow-y-auto tw-w-full tw-h-[calc(100vh-70px)]">
       <slot></slot>
     </div>
   </div>
@@ -22,10 +22,8 @@ import HeaderPage from "@/components/header/index.vue";
   .body-layout {
     flex-grow: 1;
     background-color: #F5F7FE;
-    height: 100dvh;
-    width: 100%;
-    overflow: hidden;
-    overflow-y: auto;
+    // height: 100dvh;
+    // width: 100%;
   }
 }
 </style>
