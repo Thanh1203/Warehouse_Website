@@ -2,38 +2,45 @@ import { translate } from "@/languages/i18n";
 import { faAddressBook, faBoxesStacked, faChartColumn, faChartLine, faCoins, faDiagramProject, faDownload, faHome, faIndustry, faInfo, faServer, faShareNodes, faUpload, faUsers, faWarehouse } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { h } from "vue";
+import iconHome from "@/components/icon-menu/iconHome.vue";
+import iconCustomer from "@/components/icon-menu/iconReport/iconCustomer.vue";
+import iconProduct from "@/components/icon-menu/iconReport/iconProduct.vue";
+import iconRevenue from "@/components/icon-menu/iconReport/iconRevenue.vue";
+import iconUsers from "@/components/icon-menu/iconUsers.vue";
+import iconWarehouse from "@/components/icon-menu/iconWarehouse.vue";
+import iconProductCtn from "@/components/icon-menu/iconProduct/iconProductCtn.vue";
+import iconCoin from "@/components/icon-menu/iconProduct/iconCoin.vue";
+import iconLogistics from "@/components/icon-menu/iconLogistics/iconLogisticsCtn.vue";
 
 const menuAdmin = [
     {
         key: 'DASHBOARD',
         label: translate("Dashboard"),
-        icon: () => h(FontAwesomeIcon, { icon: faHome }),
+        icon: h(iconHome),
     },
     {
-        key: 'REPORT',
         label: translate("StatisticsReports"),
         type: "group",
         children: [
             {
                 key: 'CUSTOMERREPORT',
                 label: translate("CustomerReport"),
-                icon: () => h(FontAwesomeIcon, { icon: faAddressBook }),
+                icon: h(iconCustomer),
             },
             {
                 key: 'PRODUCTSREPORT',
                 label: translate("ProductReport"),
-                icon: () => h(FontAwesomeIcon, { icon: faChartLine }),
+                icon: h(iconProduct),
             },
             {
                 key: 'SALESREPORT',
                 label: translate("SalesReport"),
-                icon: () => h(FontAwesomeIcon, { icon: faChartColumn }),
+                icon: h(iconRevenue),
 
             }
         ]
     },
-    {
-        key: 'PERSONNELCTN',
+    {        
         label: translate("Personnel"),
         type: "group",
         icon: null,
@@ -41,34 +48,31 @@ const menuAdmin = [
             {
                 key: 'PERSONNEL',
                 label: translate("Personnel"),
-                icon: () => h(FontAwesomeIcon, { icon: faUsers }),
+                icon: h(iconUsers),
             },
         ]
     },
     {
-        key: 'WAREHOUSE',
         label: translate("Warehouse"),
         type: "group",
         icon: null,
         children: [
             {
-                key: "WAREHOUSECONFIGURATION",
-                label: translate("WarehouseConfiguration"),
-                icon: () => h(FontAwesomeIcon, { icon: faWarehouse }),
+                key: "WAREHOUSECONFIG",
+                label: translate("WarehouseConfig"),
+                icon: h(iconWarehouse),
 
             },
         ]
     },
     {
-        key: 'PRODUCTS',
         label: translate("Products"),
         type: "group",
         icon: null,
         children: [
             {
-                key: 'PRODUCTSCTN',
-                label: translate("Products"),
-                icon: () => h(FontAwesomeIcon, { icon: faBoxesStacked }),
+                key: "PRODUCT",
+                icon: h(iconProductCtn),
                 children: [
                     {
                         key: 'PRODUCTPRODUCER',
@@ -95,20 +99,18 @@ const menuAdmin = [
             {
                 key: "PRICECONFIG",
                 label: translate('PriceConfiguration'),
-                icon: () => h(FontAwesomeIcon, { icon: faCoins}),
+                icon: h(iconCoin),
             },
         ]
     },
     {
-        key: 'LOGISTICS',
         label: translate("ImportAndExport"),
         type: "group",
         icon: null,
         children: [
             {
-                key: 'IMPORTEXPORT',
-                label: translate(''),
-                icon: () => h(FontAwesomeIcon, { icon: faServer }),
+                key: 'LOGISTICS',
+                icon: h(iconLogistics),
                 children: [
                     {
                         key: "ENTERWAREHOUSE",

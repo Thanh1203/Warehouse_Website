@@ -7,24 +7,16 @@
     </div>
 </template>
 <script setup lang="ts">
-import { translate } from "@/languages/i18n";
 import { useRoute, useRouter } from "vue-router";
-import { ref, onMounted, computed } from "vue";
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { ref, onMounted } from "vue"
 import { menuAdmin } from "@/constants/pcMenu";
 import { PC_MENU } from "@/constants/index";
 
 const router = useRouter();
 const route = useRoute();
 
-// const adminInfo = computed(() => {
-//   const info = window.sessionStorage.getItem("adminInfo");
-//   return JSON.parse(info);
-// });
-
 const selectedKeys = ref<string[]>(["DASHBOARD"]);
 const openKeys = ref<string[]>([]);
-
 const menuPath = structuredClone(PC_MENU);
 
 const handleClickMenu = (ev: any) => {
@@ -32,15 +24,6 @@ const handleClickMenu = (ev: any) => {
   router.push(path?.path || "/");
 };
 
-// const handleLogOut = () => {
-//   window.sessionStorage.removeItem("token");
-//   window.sessionStorage.removeItem("adminInfo");
-//   router.push({ name: "signIn" });
-// };
-
-// const handleOpenSetting = () => {
-//   router.push("/setting");
-// };
 
 const handleSelectMenu = (value: string) => {
   const path: any = menuPath.find((i) => i.path == value);
@@ -59,6 +42,20 @@ onMounted(() => {
                 font-weight: 600;
                 color: #000;
             }
+            .ant-menu-item {
+                padding: 0 32px;
+                margin: 10px 4px;
+            }
+            .ant-menu-submenu {
+                .ant-menu-submenu-title {
+                    padding: 0 32px;
+                    margin: 10px 4px;
+                }
+            }
+        }
+        .ant-menu-item {
+            padding: 0 32px;
+            margin: 10px 4px;
         }
     }
 }
