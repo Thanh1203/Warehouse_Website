@@ -1,9 +1,9 @@
 <template>
-    <div class="slide-menu">
-        <div class="tw-flex tw-items-center tw-justify-center tw-border-[#EAF0FF] tw-border-0 tw-border-solid tw-border-b-[1px]">
-            <img src="/logo.jpg" alt="logo" class="tw-w-20">
+    <div class="slide-menu tw-h-[calc(100vh-70px)] tw-bg-[#001529]">
+        <div class="tw-flex tw-items-center tw-justify-center">
+            <Logo class="tw-h-[70px]"/>
         </div>
-        <a-menu :items="menuAdmin" v-model:selectedKeys="selectedKeys" v-model:openKeys="openKeys" @click="handleClickMenu" :mode="'vertical'" :inline-collapsed="true" class="tw-w-[100px] tw-text-[14px]"/>
+        <a-menu :items="menuAdmin" v-model:selectedKeys="selectedKeys" v-model:openKeys="openKeys" @click="handleClickMenu" :mode="'vertical'" :inline-collapsed="true" class="tw-text-[14px] tw-w-[90px] tw-h-full" theme="dark"/>
     </div>
 </template>
 <script setup lang="ts">
@@ -11,7 +11,7 @@ import { useRoute, useRouter } from "vue-router";
 import { ref, onMounted } from "vue"
 import { menuAdmin } from "@/constants/pcMenu";
 import { PC_MENU } from "@/constants/index";
-
+import Logo from "@/components/icon-menu/logoIcon.vue";
 const router = useRouter();
 const route = useRoute();
 
@@ -40,22 +40,7 @@ onMounted(() => {
         .ant-menu-item-group{
             .ant-menu-item-group-title {
                 font-weight: 600;
-                color: #000;
             }
-            .ant-menu-item {
-                padding: 0 32px;
-                margin: 10px 4px;
-            }
-            .ant-menu-submenu {
-                .ant-menu-submenu-title {
-                    padding: 0 32px;
-                    margin: 10px 4px;
-                }
-            }
-        }
-        .ant-menu-item {
-            padding: 0 32px;
-            margin: 10px 4px;
         }
     }
 }

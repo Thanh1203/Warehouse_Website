@@ -1,22 +1,13 @@
 import { translate } from "@/languages/i18n";
-import { faAddressBook, faBoxesStacked, faChartColumn, faChartLine, faCoins, faDiagramProject, faDownload, faHome, faIndustry, faInfo, faServer, faShareNodes, faUpload, faUsers, faWarehouse } from "@fortawesome/free-solid-svg-icons";
+import { faAddressBook, faBoxesStacked, faChartLine, faChartSimple, faCoins, faDiagramProject, faDownload, faHome, faIndustry, faInfo, faServer, faShareNodes, faUpload, faUsers, faWarehouse } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { h } from "vue";
-import iconHome from "@/components/icon-menu/iconHome.vue";
-import iconCustomer from "@/components/icon-menu/iconReport/iconCustomer.vue";
-import iconProduct from "@/components/icon-menu/iconReport/iconProduct.vue";
-import iconRevenue from "@/components/icon-menu/iconReport/iconRevenue.vue";
-import iconUsers from "@/components/icon-menu/iconUsers.vue";
-import iconWarehouse from "@/components/icon-menu/iconWarehouse.vue";
-import iconProductCtn from "@/components/icon-menu/iconProduct/iconProductCtn.vue";
-import iconCoin from "@/components/icon-menu/iconProduct/iconCoin.vue";
-import iconLogistics from "@/components/icon-menu/iconLogistics/iconLogisticsCtn.vue";
 
 const menuAdmin = [
     {
         key: 'DASHBOARD',
         label: translate("Dashboard"),
-        icon: h(iconHome),
+        icon: h(FontAwesomeIcon, {icon: faHome })
     },
     {
         label: translate("StatisticsReports"),
@@ -25,18 +16,17 @@ const menuAdmin = [
             {
                 key: 'CUSTOMERREPORT',
                 label: translate("CustomerReport"),
-                icon: h(iconCustomer),
+                icon: h(FontAwesomeIcon, {icon: faAddressBook })
             },
             {
                 key: 'PRODUCTSREPORT',
                 label: translate("ProductReport"),
-                icon: h(iconProduct),
+                icon: h(FontAwesomeIcon, {icon: faChartSimple })
             },
             {
                 key: 'SALESREPORT',
                 label: translate("SalesReport"),
-                icon: h(iconRevenue),
-
+                icon: h(FontAwesomeIcon, {icon: faChartLine })
             }
         ]
     },
@@ -48,7 +38,7 @@ const menuAdmin = [
             {
                 key: 'PERSONNEL',
                 label: translate("Personnel"),
-                icon: h(iconUsers),
+                icon: h(FontAwesomeIcon, {icon: faUsers })
             },
         ]
     },
@@ -60,8 +50,7 @@ const menuAdmin = [
             {
                 key: "WAREHOUSECONFIG",
                 label: translate("WarehouseConfig"),
-                icon: h(iconWarehouse),
-
+                icon: h(FontAwesomeIcon, {icon: faWarehouse })
             },
         ]
     },
@@ -72,34 +61,34 @@ const menuAdmin = [
         children: [
             {
                 key: "PRODUCT",
-                icon: h(iconProductCtn),
+                icon: h(FontAwesomeIcon, { icon: faBoxesStacked }),
                 children: [
                     {
                         key: 'PRODUCTPRODUCER',
                         label: translate('Producer'),
-                        icon: () => h(FontAwesomeIcon, {icon: faIndustry })
+                        icon: h(FontAwesomeIcon, {icon: faIndustry })
                     },
                     {
                         key: 'PRODUCTCATEGORY',
                         label: translate("ProductCategory"),
-                        icon: () => h(FontAwesomeIcon, { icon: faDiagramProject }),
+                        icon: h(FontAwesomeIcon, { icon: faDiagramProject }),
                     },
                     {
                         key: 'PRODUCTCLASSIFY',
                         label: translate('ProductClassify'),
-                        icon: () => h(FontAwesomeIcon, { icon: faShareNodes }),
+                        icon: h(FontAwesomeIcon, { icon: faShareNodes }),
                     },
                     {
                         key: 'PRODUCTINFORMATION',
                         label: translate("ProductInformation"),
-                        icon: () => h(FontAwesomeIcon, { icon: faInfo }),
+                        icon: h(FontAwesomeIcon, { icon: faInfo }),
                     },
                 ]
             },
             {
                 key: "PRICECONFIG",
                 label: translate('PriceConfiguration'),
-                icon: h(iconCoin),
+                icon: h(FontAwesomeIcon, { icon: faCoins }),
             },
         ]
     },
@@ -110,17 +99,17 @@ const menuAdmin = [
         children: [
             {
                 key: 'LOGISTICS',
-                icon: h(iconLogistics),
+                icon: h(FontAwesomeIcon, { icon: faServer }),
                 children: [
                     {
                         key: "ENTERWAREHOUSE",
                         label: translate("EnterWarehouse"),
-                        icon: () => h(FontAwesomeIcon, { icon: faDownload }),
+                        icon: h(FontAwesomeIcon, { icon: faDownload }),
                     },
                     {
                         key: "EXPORTWAREHOUSE",
                         label: translate("ExportWarehouse"),
-                        icon: () => h(FontAwesomeIcon, { icon: faUpload }),
+                        icon: h(FontAwesomeIcon, { icon: faUpload }),
                     }
                 ]
             },
