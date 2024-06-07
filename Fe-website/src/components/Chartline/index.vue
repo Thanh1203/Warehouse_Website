@@ -6,7 +6,7 @@ import { CategoryScale, Chart, ChartOptions, Legend, LinearScale, LineElement, P
 import { Line } from 'vue-chartjs';
 
 Chart.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
-
+Chart.defaults.color = "#fff"
 defineProps({
     data: {
         type: null as any,
@@ -20,6 +20,9 @@ const options: ChartOptions<"line"> = {
         legend: {
             position: "bottom",
             display: false,
+            // labels: {
+            //     color: "#fff",
+            // }
         },
     },
 };

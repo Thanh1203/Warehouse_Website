@@ -97,3 +97,15 @@
 .is-invalid {
     border: 1px solid $base-red-400;
 }
+
+.date-picker-shedule {
+    .ant-picker-input {
+        width: 80px;
+        input {
+            text-align: end;
+            color:#aab8c5!important;
+            font-size: 20px!important;
+            font-weight: 600;
+        }
+    }
+}

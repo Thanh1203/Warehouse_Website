@@ -6,7 +6,7 @@ import { BarElement, CategoryScale, Chart, ChartOptions, Legend, LinearScale, Ti
 import { Bar } from 'vue-chartjs';
 
 Chart.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
-
+Chart.defaults.color = "#fff"
 defineProps({
     data: {
         type: null as any,

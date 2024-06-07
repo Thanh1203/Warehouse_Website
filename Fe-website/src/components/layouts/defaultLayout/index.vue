@@ -1,9 +1,9 @@
 <template>
-<div class="default-layout">
+<div class="tw-flex">
   <SlideMenu/>
-  <div class="body-layout">
+  <div class="tw-grow">
     <HeaderPage/>
-    <div class="tw-p-4 tw-overflow-hidden tw-overflow-y-auto tw-w-full tw-h-[calc(100vh-70px)]">
+    <div class="tw-bg-[#2E3A45] tw-p-4 tw-overflow-hidden tw-overflow-y-auto tw-min-h-[calc(100dvh-70px)]">
       <slot></slot>
     </div>
   </div>
@@ -13,17 +13,3 @@
 import SlideMenu from "@/components/slide-menu/index.vue"
 import HeaderPage from "@/components/header/index.vue";
 </script>
-<style scoped lang="scss">
-.default-layout {
-  height: 100vh;
-  width: 100%;
-  overflow: auto;
-  display: flex;
-  .body-layout {
-    flex-grow: 1;
-    background-color: #F5F7FE;
-    // height: 100dvh;
-    // width: 100%;
-  }
-}
-</style>

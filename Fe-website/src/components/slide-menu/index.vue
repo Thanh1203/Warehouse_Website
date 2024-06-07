@@ -1,9 +1,9 @@
 <template>
-    <div class="slide-menu tw-h-[calc(100vh-70px)] tw-bg-[#001529]">
+    <div class="slide-menu tw-bg-[#001529] tw-min-h-dvh">
         <div class="tw-flex tw-items-center tw-justify-center">
             <Logo class="tw-h-[70px]"/>
         </div>
-        <a-menu :items="menuAdmin" v-model:selectedKeys="selectedKeys" v-model:openKeys="openKeys" @click="handleClickMenu" :mode="'vertical'" :inline-collapsed="true" class="tw-text-[14px] tw-w-[90px] tw-h-full" theme="dark"/>
+        <a-menu :items="menuAdmin" v-model:selectedKeys="selectedKeys" v-model:openKeys="openKeys" @click="handleClickMenu" mode="inline" :inline-collapsed="true" class="tw-text-[14px] tw-w-[90px]" theme="dark"/>
     </div>
 </template>
 <script setup lang="ts">
