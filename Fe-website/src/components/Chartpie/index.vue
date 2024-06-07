@@ -8,6 +8,8 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js'
 import VueTypes from 'vue-types';
 
 ChartJS.register(ArcElement, Tooltip, Legend)
+ChartJS.defaults.color = "#fff"
+
 const props = defineProps({
   data: {
     type: null as any,

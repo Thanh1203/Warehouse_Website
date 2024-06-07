@@ -42,7 +42,7 @@
               autoplay
               easing="linear"
               :format="theFormat"
-              :class="`tw-text-[${setColor(100)}]`"
+              :class="`tw-text-[${setTextColor(100)}]`"
             />
             <a-skeleton-input v-else :loading="loading" :paragraph="{ rows: 0 }" active size="small" />
           </div>
@@ -118,7 +118,7 @@ import Chartline from "@/components/Chartline/index.vue";
 import { MONTH_IN_YEAR, PURCHASETIMES } from "@/constants";
 import Chartbar from "@/components/Chartbar/index.vue";
 import AntdTable from "@/components/antd-table/index.vue";
-import { getArrayRandColor, setColor } from "@/utils/common";
+import { getArrayRandColor, setTextColor } from "@/utils/common";
 import { useStore } from "vuex";
 import { debounce } from "vue-debounce";
 

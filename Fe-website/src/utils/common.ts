@@ -39,20 +39,19 @@ export const checkDeleteItem = (item: any) => {
   }
 };
 
-export const getArrayRandColor = (numOfColor: number) => {
-  var colors = [];
+export const getArrayRandColor = (numOfColor) => {
+  const availableColors = ['#C9CBCF', '#FFCD56', '#9966FF', '#FF9F40', '#4BC0C0', '#FF6384', '#36A2EB'];
+  let colors = [];
 
-  for (var j = 0; j < numOfColor; j++) {
-    var red = Math.floor(Math.random() * 150) + 100; // Giới hạn đỏ từ 100 đến 250
-    var green = Math.floor(Math.random() * 150) + 100; // Giới hạn xanh lá cây từ 100 đến 250
-    var blue = Math.floor(Math.random() * 150) + 100; // Giới hạn xanh lam từ 100 đến 250
-
-    var color = "rgb(" + red + "," + green + "," + blue + ")";
-    colors.push(color);
+  for (let i = 0; i < numOfColor; i++) {
+    const randomIndex = Math.floor(Math.random() * availableColors.length);
+    const selectedColor = availableColors.splice(randomIndex, 1)[0]; // Lấy màu ngẫu nhiên và loại bỏ khỏi mảng
+    colors.push(selectedColor);
   }
 
   return colors;
 };
+
 
 export const toUpperFirstLetter = (str) => str.charAt(0).toUpperCase() + str.substring(1).toLowerCase();
 
@@ -64,12 +63,26 @@ export const formatIdProduct = (str: string) => {
   };
 };
 
-export const setColor = (value: number) => {
-  if (value < 40) {
-    return "#dc3545";
-  } else if (value >= 40 && value < 80) {
-    return "#FAAD14";
+export const setTextColor = (value: number) => {
+  if (value <= 25) {
+    return "tw-text-[#FF0000]";
+  } else if (value > 25 && value <=50) {
+    return "tw-text-[#FFA500]";
+  } else if (value > 50 && value <= 75) {
+    return "tw-text-[#FFFF00]";
   } else {
-    return "#52C41B"
+    return "tw-text-[#29fe1d]";
+  }
+}
+
+export const setBgColor = (value: number) => {
+  if (value <= 25) {
+    return "tw-bg-[#FF0000]";
+  } else if (value > 25 && value <=50) {
+    return "tw-bg-[#FFA500]";
+  } else if (value > 50 && value <= 75) {
+    return "tw-bg-[#FFFF00]";
+  } else {
+    return "tw-bg-[#07e500]";
   }
 }
