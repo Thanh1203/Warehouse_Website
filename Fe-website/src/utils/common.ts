@@ -75,7 +75,7 @@ export const setTextColor = (value: number) => {
   }
 }
 
-export const setBgColor = (value: number) => {
+export const setBgColorChart = (value: number) => {
   if (value <= 25) {
     return "tw-bg-[#FF0000]";
   } else if (value > 25 && value <=50) {
