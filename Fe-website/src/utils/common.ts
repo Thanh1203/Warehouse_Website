@@ -40,13 +40,11 @@ export const checkDeleteItem = (item: any) => {
 };
 
 export const getArrayRandColor = (numOfColor) => {
-  const availableColors = ['#C9CBCF', '#FFCD56', '#9966FF', '#FF9F40', '#4BC0C0', '#FF6384', '#36A2EB'];
+  const availableColors = ['#36A2EB', '#FF6384', '#4BC0C0', '#FF9F40', '#9966FF', '#FFCD56'];
   let colors = [];
 
   for (let i = 0; i < numOfColor; i++) {
-    const randomIndex = Math.floor(Math.random() * availableColors.length);
-    const selectedColor = availableColors.splice(randomIndex, 1)[0]; // Lấy màu ngẫu nhiên và loại bỏ khỏi mảng
-    colors.push(selectedColor);
+    colors.push(availableColors[i % availableColors.length]);
   }
 
   return colors;
@@ -75,14 +73,26 @@ export const setTextColor = (value: number) => {
   }
 }
 
-export const setBgColorChart = (value: number) => {
+export const setBgColor = (value: number) => {
   if (value <= 25) {
     return "tw-bg-[#FF0000]";
-  } else if (value > 25 && value <=50) {
+  } else if (value > 25 && value <= 50) {
     return "tw-bg-[#FFA500]";
   } else if (value > 50 && value <= 75) {
     return "tw-bg-[#FFFF00]";
   } else {
     return "tw-bg-[#07e500]";
+  }
+}
+
+export const setBgColorChart = (value: number) => {
+  if (value <= 25) {
+    return "#FF0000";
+  } else if (value > 25 && value <=50) {
+    return "#FFA500";
+  } else if (value > 50 && value <= 75) {
+    return "#FFFF00";
+  } else {
+    return "#07e500";
   }
 }
