@@ -1,5 +1,5 @@
 <template>
-  <div class="tw-h-[70px] tw-w-full tw-flex tw-justify-end tw-items-center tw-px-4 tw-bg-[#001529] tw-text-[#A5B4BF]">
+  <div class="tw-h-[70px] tw-w-full tw-flex tw-justify-end tw-items-center tw-px-4 tw-bg-[#3a444e] tw-text-[#A5B4BF]">
     <font-awesome-icon :icon="['fas', 'circle-user']" size="2xl" />
 
     <h1 class="tw-font-[500] tw-mx-3">{{ adminInfo.name }}</h1>

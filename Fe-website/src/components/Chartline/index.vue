@@ -4,13 +4,15 @@
 <script setup lang="ts">
 import { CategoryScale, Chart, ChartOptions, Legend, LinearScale, LineElement, PointElement, Title, Tooltip } from 'chart.js';
 import { Line } from 'vue-chartjs';
+import VueTypes from 'vue-types';
 
 Chart.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 Chart.defaults.color = "#fff"
-defineProps({
+const props = defineProps({
     data: {
         type: null as any,
     },
+    showLegend: VueTypes.bool.def(false),
 });
 
 const options: ChartOptions<"line"> = {
@@ -19,10 +21,7 @@ const options: ChartOptions<"line"> = {
     plugins: {
         legend: {
             position: "bottom",
-            display: false,
-            // labels: {
-            //     color: "#fff",
-            // }
+            display: props.showLegend,
         },
     },
 };
