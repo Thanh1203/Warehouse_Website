@@ -4,10 +4,10 @@
       <ChartCustomerYears />
     </div>
     <div class="tw-bg-[#37404a] tw-p-4 tw-rounded-lg tw-h-[600px]">
-      <div class="tw-w-full tw-h-[56px] tw-mb-6">
+      <div class="tw-w-full tw-h-[28px] tw-mb-6">
         <div class="tw-text-xl tw-text-[#aab8c5] tw-font-semibold">{{ translate("reportCustomer.ListPotentialCustomers") }}</div>
       </div>
-      <div class="tw-h-[calc(100%-80px)] tw-overflow-hidden tw-overflow-y-auto">
+      <div class="tw-h-[calc(100%-52px)] tw-overflow-hidden tw-overflow-y-auto">
         <AntdTable
           ref="table"
           key-field="id"

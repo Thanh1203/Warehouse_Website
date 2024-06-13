@@ -1,8 +1,8 @@
 <template>
-  <div class="tw-w-full tw-h-[56px] tw-mb-6 tw-px-4">
+  <div class="tw-w-full tw-h-[28px] tw-mb-6 tw-px-4">
     <div class="tw-text-xl tw-text-[#aab8c5] tw-font-semibold ">{{ translate("reportCustomer.NumberNewCustomersYear") }}</div>
   </div>
-  <div class="tw-h-[calc(100%-80px)] tw-grid tw-grid-cols-12">
+  <div class="tw-h-[calc(100%-52px)] tw-grid tw-grid-cols-12">
     <div class="tw-flex tw-items-center tw-justify-center">
       <a-button @click="prevfiveYear" class="tw-flex tw-items-center tw-justify-center tw-text-white tw-border-none">
         <font-awesome-icon :icon="['fas', 'chevron-left']" size="2xl"/>

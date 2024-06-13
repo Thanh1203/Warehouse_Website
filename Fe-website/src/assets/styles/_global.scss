@@ -121,6 +121,17 @@
             }
         }
     }
+    .ant-table-tbody {
+        .ant-table-placeholder {
+            .ant-table-cell {
+                border: none !important;
+                background: #404954 !important;
+                .ant-empty-description {
+                    color: #fff;
+                }
+            }
+        }
+    }
 }
 
 // antd steps

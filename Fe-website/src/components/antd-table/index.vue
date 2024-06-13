@@ -1,31 +1,24 @@
 <template>
-  <a-table 
-  :columns="tableColumns" 
-  :data-source="dataSource" 
-  :pagination="pagination"
-  :rowSelection="rowSelection"
-  :sticky="sticky"
-  :customRow="customRow"
-  :rowKey="keyField"
-  >
-    <template #bodyCell="{column, record}">
+  <a-table :columns="tableColumns" :data-source="dataSource" :pagination="pagination" :rowSelection="rowSelection" :sticky="sticky" :customRow="customRow" :rowKey="keyField">
+    <template #bodyCell="{ column, record }">
       <slot name="custom-body" :column="column" :record="record"></slot>
     </template>
-  <!-- <template v-if="title" #title>{{ title }}</template>
+    <!-- <template v-if="title" #title>{{ title }}</template>
     <template #headerCell="{ column }">
       <slot name="custom-header" :column="column">
         <div>{{ column.title }}</div>
       </slot>
-    </template>
-    <slot name="custom-column"></slot>
-    <template #emptyText>
-      <slot name="emptyText"></slot>
     </template> -->
+    <!-- <slot name="custom-column"></slot> -->
+    <template #emptyText>
+      <a-empty :description="translate('noData')" />
+    </template>
   </a-table>
 </template>
 <script setup lang="ts">
 import { computed, ref, watch } from "vue";
 import VueTypes from "vue-types";
+import { translate } from "@/languages/i18n";
 
 const emit = defineEmits(["onSelected", "onRowClicked"]);
 
@@ -41,7 +34,6 @@ const props = defineProps({
   pageSize: VueTypes.number.def(10),
   checkStrictly: VueTypes.bool.def(true),
   sticky: VueTypes.bool.def(true),
-
 });
 
 const page = ref(1);
@@ -67,8 +59,8 @@ const tableColumns = computed(() => {
 
 const rowSelection = props.hasCheckbox
   ? ref({
-    checkStrictly: props.checkStrictly,
-    onSelect: (record :any, selected: any , row: Array<any>) => {
+      checkStrictly: props.checkStrictly,
+      onSelect: (record: any, selected: any, row: Array<any>) => {
         selectedRows.value = row;
         emit("onSelected", selectedRows);
       },
