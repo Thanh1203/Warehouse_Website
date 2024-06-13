@@ -11,7 +11,7 @@
 
         <div class="tw-flex tw-items-center tw-h-[calc(100%-49px)]">
           <div class="tw-text-[#aab8c5] tw-truncate">
-            <NumberAnimation v-if="!loading" :from="0" :to="10000000" :duration="1" autoplay easing="linear" :format="theFormat" class="tw-text-4xl" />
+            <NumberAnimation v-if="!loading" :from="0" :to="100000000" :duration="1" autoplay easing="linear" :format="theFormat" class="tw-text-4xl" />
             <a-skeleton-input v-else :loading="loading" :paragraph="{ rows: 0 }" active size="small" />
           </div>
         </div>

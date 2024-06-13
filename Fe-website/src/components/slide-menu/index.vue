@@ -1,5 +1,5 @@
 <template>
-    <div class="slide-menu tw-bg-[#3a444e] tw-min-h-dvh">
+    <div class="slide-menu tw-bg-[#3a444e] tw-h-dvh">
         <div class="tw-flex tw-items-center tw-justify-center">
             <Logo class="tw-h-[70px]"/>
         </div>

@@ -15,7 +15,7 @@ const menuAdmin = [
         children: [
             {
                 key: 'CUSTOMERREPORT',
-                label: translate("CustomerReport"),
+                label: translate("reportCustomer.title"),
                 icon: h(FontAwesomeIcon, {icon: faAddressBook })
             },
             {
