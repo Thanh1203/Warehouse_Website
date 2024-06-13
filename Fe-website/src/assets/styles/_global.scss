@@ -66,8 +66,29 @@
 
 // action table
 .ant-table {
+    background: transparent !important;
+    .ant-table-header {
+        background: #313a46 !important;
+        .ant-table-thead {
+            tr {
+                .ant-table-cell{
+                  background: transparent !important;
+                  border-bottom: 1px solid #464f5b;
+                  color: #fff;
+                  &::before {
+                    visibility: hidden;
+                  }
+                }
+            }
+        }
+    }
     .ant-table-row {
         position: relative;
+        color: #fff;
+        .ant-table-cell {
+            border: none !important;
+            background: transparent !important;
+        }
         .action{
             display: flex;
             justify-content: space-around;
@@ -90,6 +111,7 @@
             }
         }
         &:hover {
+            background: #404954 !important;
             .action {
                 width: 100%;
                 opacity: 1;

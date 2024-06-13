@@ -24,5 +24,10 @@ const options: ChartOptions<"line"> = {
             display: props.showLegend,
         },
     },
+    interaction: {
+      intersect: false,
+      axis: 'x'
+    },
+
 };
 </script>

@@ -45,7 +45,7 @@ export default (): RouteRecordRaw[] => {
       name: "customer report",
       component: () => import("./reports/customer-report/index.vue"),
       meta: {
-        title: translate("CustomerReport"),
+        title: translate("reportCustomer.title"),
         layout: defaultLayout,
       },
     },

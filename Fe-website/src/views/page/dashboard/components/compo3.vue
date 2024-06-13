@@ -31,7 +31,7 @@
       <div class="tw-text-[#aab8c5] tw-h-8 tw-mb-6 tw-font-semibold">
         <div class="tw-text-xl tw-truncate">{{ translate("ProductDistributionCategory") }}</div>
       </div>
-      <div class="tw-h-[50vh] tw-flex tw-justify-center">
+      <div class="tw-h-[430px] tw-flex tw-justify-center tw-items-center">
         <Chartpie v-if="!loading" :data="chartPie" />
         <a-skeleton v-else :loading="loading" active />
       </div>
