@@ -51,7 +51,7 @@
 import { translate } from "@/languages/i18n";
 import ErrorMess from "@/components/error-mess/index.vue";
 import { email, maxLength, minLength, required } from "@vuelidate/validators";
-import { reactive, ref } from "vue";
+import { onMounted, onUnmounted, reactive, ref } from "vue";
 import useVuelidate from "@vuelidate/core";
 import AntdButton from "@/components/antd-button/index.vue";
 import { REGEX_TEL } from "@/constants/index";
@@ -130,4 +130,20 @@ const handleSubmit = async () => {
     router.push("/");
   }
 };
+
+const handleKeydown = (event) => {
+  if (event.key === 'Enter') {
+    handleSubmit();
+  }
+};
+
+// Use onMounted to add the event listener
+onMounted(() => {
+  window.addEventListener('keydown', handleKeydown);
+});
+
+// Use onUnmounted to remove the event listener
+onUnmounted(() => {
+  window.removeEventListener('keydown', handleKeydown);
+});
 </script>
