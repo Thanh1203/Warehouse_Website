@@ -12,7 +12,6 @@ export const vi = {
     StatisticsReports: "Báo cáo",
     ProductCategory: "Chủng loại sản phẩm",
     ProductInformation: "Thông tin sản phẩm",
-    ProductReport: "Báo cáo sản phẩm",
     SalesReport: "Báo cáo doanh thu",
     WarehouseConfig: "Cấu hình kho",
     EnterWarehouse: "Nhập kho",
@@ -153,7 +152,6 @@ export const vi = {
     Age: "Độ tuổi",
     AgeRatioCustomers: "Tỉ lệ độ tuổi khách hàng",
     ReturnCustomerRate: "Tỉ lệ khách quay lại",
-    TotalProducts2: "Tổng số sản phẩm", 
     datetime: {
         January: "Tháng 1",
         February: "Tháng 2",
@@ -269,4 +267,8 @@ export const vi = {
         NumberNewCustomersYear: "Số lượng khách hàng mới theo từng năm",
         ListPotentialCustomers: "Danh sách khách hàng tiềm năng",
     },
+    reportProduct: {
+        title: "Báo cáo sản phẩm",
+        total: "Tổng số sản phẩm",
+    }
 };

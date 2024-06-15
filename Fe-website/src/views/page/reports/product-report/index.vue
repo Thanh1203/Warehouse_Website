@@ -1,57 +1,9 @@
 <template>
-  <div class="tw-grid tw-w-full tw-gap-4 tw-grid-cols-2 lg:tw-gap-8 lg:tw-grid-cols-4">
-    <div class="tw-bg-[#fff] tw-rounded-xl tw-p-4 tw-flex tw-gap-x-4">
-      <div class="tw-rounded-full tw-bg-[#bee6f9] tw-w-14 tw-h-14 tw-flex tw-items-center tw-justify-center">
-        <font-awesome-icon :icon="['fas', 'database']" size="xl" style="color: #ffffff" />
-      </div>
-      <div class="tw-overflow-hidden">
-        <div class="tw-truncate tw-font-600 tw-text-[14px]">{{ translate("TotalProducts2") }}</div>
-        <div class="tw-font-[700] tw-text-[24px] tw-text-[#001f3f]">
-          <NumberAnimation v-if="!loading" :from="0" :to="dataReportProduct?.totalProduct" :duration="1" autoplay easing="linear" :format="theFormat" />
-          <a-skeleton-input v-else :loading="loading" :paragraph="{ rows: 0 }" active size="small" />
-        </div>
-      </div>
-    </div>
-
-    <div class="tw-bg-[#fff] tw-rounded-xl tw-p-4 tw-flex tw-gap-x-4">
-      <div class="tw-rounded-full tw-bg-[#bee6f9] tw-w-14 tw-h-14 tw-flex tw-items-center tw-justify-center">
-        <font-awesome-icon :icon="['fas', 'database']" size="xl" style="color: #ffffff" />
-      </div>
-      <div class="tw-overflow-hidden">
-        <div class="tw-truncate tw-font-600 tw-text-[14px]">{{ translate("NumberCategories") }}</div>
-        <div class="tw-font-[700] tw-text-[24px] tw-text-[#001f3f]">
-          <NumberAnimation v-if="!loading" :from="0" :to="dataReportProduct?.totalCategory" :duration="1" autoplay easing="linear" :format="theFormat" />
-          <a-skeleton-input v-else :loading="loading" :paragraph="{ rows: 0 }" active size="small" />
-        </div>
-      </div>
-    </div>
-
-    <div class="tw-bg-[#fff] tw-rounded-xl tw-p-4 tw-flex tw-gap-x-4">
-      <div class="tw-rounded-full tw-bg-[#bee6f9] tw-w-14 tw-h-14 tw-flex tw-items-center tw-justify-center">
-        <font-awesome-icon :icon="['fas', 'database']" size="xl" style="color: #ffffff" />
-      </div>
-      <div class="tw-overflow-hidden">
-        <div class="tw-truncate tw-font-600 tw-text-[14px]">{{ translate("NumberClassifications") }}</div>
-        <div class="tw-font-[700] tw-text-[24px] tw-text-[#001f3f]">
-          <NumberAnimation v-if="!loading" :from="0" :to="dataReportProduct?.totalClassifies" :duration="1" autoplay easing="linear" :format="theFormat" />
-          <a-skeleton-input v-else :loading="loading" :paragraph="{ rows: 0 }" active size="small" />
-        </div>
-      </div>
-    </div>
-
-    <div class="tw-bg-[#fff] tw-rounded-xl tw-p-4 tw-flex tw-gap-x-4">
-      <div class="tw-rounded-full tw-bg-[#bee6f9] tw-w-14 tw-h-14 tw-flex tw-items-center tw-justify-center">
-        <font-awesome-icon :icon="['fas', 'industry']" size="xl" style="color: #ffffff" />
-      </div>
-      <div class="tw-overflow-hidden">
-        <div class="tw-truncate tw-font-600 tw-text-[14px]">{{ translate("NumberManufacturers") }}</div>
-        <div class="tw-font-[700] tw-text-[24px] tw-text-[#001f3f]">
-          <NumberAnimation v-if="!loading" :from="0" :to="dataReportProduct?.totalProducer" :duration="1" autoplay easing="linear" :format="theFormat" />
-          <a-skeleton-input v-else :loading="loading" :paragraph="{ rows: 0 }" active size="small" />
-        </div>
-      </div>
-    </div>
+  <div class="tw-mb-6">
+    <span class="tw-text-[#aab8c5] tw-text-2xl tw-font-semibold">{{ translate('reportCustomer.title') }}</span>
   </div>
+
+  <Compo1/>
 
   <div class="tw-mt-6 tw-w-full tw-grid tw-grid-cols-1 lg:tw-grid-cols-3 tw-gap-6">
     <div class="tw-bg-white tw-rounded-xl tw-p-6">
@@ -129,12 +81,14 @@
 import { translate } from "@/languages/i18n";
 import NumberAnimation from "vue-number-animation";
 import Chartpie from "@/components/Chartpie/index.vue";
-import { computed, onMounted, reactive, ref, watch } from "vue";
+import { computed, defineAsyncComponent, onMounted, reactive, ref, watch } from "vue";
 import { getArrayRandColor } from "@/utils/common";
 import AntdTable from "@/components/antd-table/index.vue";
 import AntdButton from "@/components/antd-button/index.vue";
 import { useStore } from "vuex";
 import dayjs, { Dayjs } from "dayjs";
+
+const Compo1 = defineAsyncComponent(() => import("./components/compo1.vue"));
 
 const store = useStore();
 

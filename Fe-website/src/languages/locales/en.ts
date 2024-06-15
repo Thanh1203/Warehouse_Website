@@ -12,7 +12,6 @@ export const en = {
     StatisticsReports: "Statistics reports",
     ProductCategory: "Product category",
     ProductInformation: "Product information",
-    ProductReport: "Product report",
     SalesReport: "Sales report",
     WarehouseConfig: "Warehouse configuration",
     EnterWarehouse: "Enter warehouse",
@@ -152,7 +151,6 @@ export const en = {
     Age: "Age",
     AgeRatioCustomers: "Age ratio of customers",
     ReturnCustomerRate: "Return customer rate",
-    TotalProducts2: "Total number of products",
     datetime: {
         january: "January",
         february: "February",
@@ -269,4 +267,8 @@ export const en = {
         ListPotentialCustomers: "List of potential customers",
 
     },
+    reportProduct: {
+        title: "Product report",
+        total: "Total number of products",
+    }
 };
