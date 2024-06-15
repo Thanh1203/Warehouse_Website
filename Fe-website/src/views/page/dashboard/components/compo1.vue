@@ -2,7 +2,7 @@
   <div class="tw-grid tw-w-full tw-gap-4 tw-grid-cols-1 md:tw-grid-cols-2 lg:tw-gap-8 lg:tw-grid-cols-4">
     <div class="tw-bg-[#37404a] tw-h-[140px] tw-p-4 tw-rounded-lg tw-flex tw-flex-col tw-justify-between">
       <div class="tw-flex tw-justify-between">
-        <div class="tw-text-[#8391a2] tw-text-base tw-truncate tw-font-semibold">{{ translate("TotalProducts2") }}</div>
+        <div class="tw-text-[#8391a2] tw-text-base tw-truncate tw-font-semibold">{{ translate("reportProduct.total") }}</div>
         <div class="tw-bg-[#464F74] tw-p-3 tw-rounded-lg">
           <font-awesome-icon :icon="['fas', 'database']" size="xl" style="color: #727cf5" />
         </div>
