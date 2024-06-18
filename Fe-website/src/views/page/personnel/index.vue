@@ -24,7 +24,7 @@
   <Section
     :title="translate('PersonnelList')"
     :sub-title="translate('NumberOfPersonnel')"
-    :number="String(totalPersonnel)"
+    :number="totalPersonnel"
     class="tw-w-full tw-h-full tw-bg-white tw-overflow-hidden"
   >
     <template #action>

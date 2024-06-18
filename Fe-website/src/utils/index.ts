@@ -5,7 +5,7 @@ export const setLanguage = (data: string) => {
 };
   
 export const getLanguage = () => {
-return window.localStorage.getItem("language") || "vi";
+    return window.localStorage.getItem("language") || "vi";
 };
   
 export const getToken = () => {

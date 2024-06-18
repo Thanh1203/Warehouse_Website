@@ -1,3 +1,5 @@
+import { getLanguage } from ".";
+
 export const STR_UPPER_CASE = (str: string) => {
   return str
     .split(" ")

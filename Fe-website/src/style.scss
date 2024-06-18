@@ -110,3 +110,29 @@
         }
     }
 }
+
+.grid-border-item {
+    border: 1px solid #464f5b;
+}
+
+.new-switch-cus {
+    border: 1px solid #e2e8ed;
+    border-radius: 0.5rem;
+    position: relative;
+    overflow: hidden;
+    display: block;
+    .new-switch-overlay {
+        position: absolute;
+        top: 0;
+        width: 50%;
+        height: 100%;
+        background-color: $primary;
+        border-radius: .5rem;
+        transform: translateX(0%);
+        transition: all 0.3s ease 0s;
+    }
+    .new-switch-action {
+        transform: translateX(100%);
+
+    }
+}

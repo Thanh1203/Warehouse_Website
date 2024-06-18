@@ -179,9 +179,7 @@ export const en = {
     NumberCategories: "Number of categories",
     NumberManufacturers: "Number of manufacturers",
     NumberClassifications: "Number of classifications",
-    CategoryStatistics: "Category statistics",
     ClassificationStatistics: "Classification statistics",
-    ManufacturerStatistics: "Manufacturer statistics",
     ProductQuantity: "Product quantity",
     ListBestSellingProducts: "List of best-selling products",
     ListSlowSellingProducts: "List of slow selling products",
@@ -270,5 +268,15 @@ export const en = {
     reportProduct: {
         title: "Product report",
         total: "Total number of products",
-    }
+        provider: "Provider",
+        sector: "Sector",
+        categoryS: "Category statistics",
+        sectorS: "Sector statistics",
+        classifyS: "Classification Statistics",
+        productRanking: "Product ranking",
+        bestSelling: "Best selling",
+        slowSelling: "Slow selling",
+    },
+    numberSectors: "Number of sectors",
+    sectorsName: "Sector name",
 };
