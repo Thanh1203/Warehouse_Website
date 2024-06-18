@@ -90,18 +90,25 @@ const handleSubmit = async () => {
     return false;
   }
 
-  const response: any = await DataService.callApi(ConstantAPI.login.SIGN_IN, state, null);
-  if (response && response === "invalid account") {
-    notification["error"]({
-      message: translate('InvalidAccount')
-    })
-  } else {
-    notification["success"]({
-      message: translate('LoginSuccessful')
-    })
-    setAdminSession(response);
-    router.push("/");
+  router.push("/");
+  const adminInfor = {
+    name: "Nguyễn Đức Thành",
   }
+  window.sessionStorage.setItem("token", "abc");
+  window.sessionStorage.setItem("adminInfo", JSON.stringify(adminInfor));
+  
+  // const response: any = await DataService.callApi(ConstantAPI.login.SIGN_IN, state, null);
+  // if (response && response === "invalid account") {
+  //   notification["error"]({
+  //     message: translate('InvalidAccount')
+  //   })
+  // } else {
+  //   notification["success"]({
+  //     message: translate('LoginSuccessful')
+  //   })
+  //   setAdminSession(response);
+  //   router.push("/");
+  // }
 };
 
 const handleKeydown = (event) => {
