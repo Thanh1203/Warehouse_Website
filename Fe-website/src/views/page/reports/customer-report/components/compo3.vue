@@ -16,7 +16,7 @@
           :has-checkbox="false"
           :no-sort="true"
           v-if="!loading"
-          :dataSource="data?.dataPotentialCustomers"
+          :dataSource="dataPotentialCustomers"
           class="tw-h-full"
         >
           <template #custom-body="{ column, record }">
@@ -78,4 +78,84 @@ const columns = ref<Array<any>>([
     width: "30%"
   },
 ]);
+
+const dataPotentialCustomers = [
+  {
+    phoneNumber: "012345678",
+    name: "Nguyễn Văn A",
+    address: "Hải dương",
+    purchaseCount: "50",
+    totalOrders: 100000000
+  },
+  {
+    phoneNumber: "012345678",
+    name: "Nguyễn Văn B",
+    address: "Chí linh",
+    purchaseCount: "45",
+    totalOrders: 95000000
+  },
+  {
+    phoneNumber: "012345678",
+    name: "Nguyễn Văn C",
+    address: "Hải phòng",
+    purchaseCount: "40",
+    totalOrders: 90000000
+  },
+  {
+    phoneNumber: "012345678",
+    name: "Nguyễn Văn D",
+    address: "Quảng ninh",
+    purchaseCount: "35",
+    totalOrders: 85000000
+  },
+  {
+    phoneNumber: "012345678",
+    name: "Nguyễn Văn E",
+    address: "Hà nội",
+    purchaseCount: "30",
+    totalOrders: 80000000
+  },
+  {
+    phoneNumber: "012345678",
+    name: "Nguyễn Văn F",
+    address: "Hải dương",
+    purchaseCount: 20,
+    totalOrders: 75000000
+  },
+  {
+    phoneNumber: "012345678",
+    name: "Nguyễn Văn G",
+    address: "Tp.Hồ Chí Minh",
+    purchaseCount: 20,
+    totalOrders: 70000000
+  },
+  {
+    phoneNumber: "012345678",
+    name: "Nguyễn Văn H",
+    address: "Bình dương",
+    purchaseCount: 20,
+    totalOrders: 65000000
+  },
+  {
+    phoneNumber: "012345678",
+    name: "Nguyễn Văn I",
+    address: "Hải dương",
+    purchaseCount: 20,
+    totalOrders: 60000000
+  },
+  {
+    phoneNumber: "012345678",
+    name: "Nguyễn Văn K",
+    address: "Hải dương",
+    purchaseCount: 20,
+    totalOrders: 55000000
+  },
+  {
+    phoneNumber: "012345678",
+    name: "Nguyễn Văn L",
+    address: "Hải dương",
+    purchaseCount: 20,
+    totalOrders: 50000000
+  }
+]
 </script>
