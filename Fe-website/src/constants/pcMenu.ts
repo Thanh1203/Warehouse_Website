@@ -20,7 +20,7 @@ const menuAdmin = [
             },
             {
                 key: 'PRODUCTSREPORT',
-                label: translate("ProductReport"),
+                label: translate("reportProduct.title"),
                 icon: h(FontAwesomeIcon, {icon: faChartSimple })
             },
             {

@@ -134,6 +134,7 @@
     }
 }
 
+
 // antd steps
 .ant-steps {
     .ant-steps-item-container {
@@ -224,6 +225,15 @@ background: #555;
             &::after {
                 background: linear-gradient(90deg, rgba(255, 255, 255, 0.2) 25%, rgba(255, 255, 255, 0.3) 37%, rgba(255, 255, 255, 0.2) 63%);
             }
+        }
+    }
+}
+
+// tab
+.ant-tabs {
+    .ant-tabs-nav {
+        &::before {
+            border-color: #464f5b;
         }
     }
 }
