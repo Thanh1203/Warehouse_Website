@@ -1,5 +1,5 @@
 <template>
-  <div class="tw-w-full tw-grid tw-gap-4 tw-grid-cols-1 md:tw-grid-cols-2 lg:tw-gap-8 lg:tw-grid-cols-4">
+  <div class="tw-w-full tw-grid tw-gap-4 tw-grid-cols-1 md:tw-grid-cols-2 lg:tw-grid-cols-4 lg:tw-gap-8 tw-mb-6">
     <div class="tw-bg-[#37404a] tw-h-[160px] tw-p-4 tw-rounded-lg">
       <div class="tw-text-[#8391a2] tw-text-base tw-truncate tw-font-semibold tw-w-full tw-h-12">{{ translate("reportCommon.byWeek") }}</div>
       <div class="tw-text-[#aab8c5] tw-mb-6">
@@ -8,13 +8,13 @@
       </div>
       <div class="tw-flex tw-items-center tw-truncate tw-gap-3">
         <div :class="['tw-text-sm', statusTemp ? 'tw-text-[#0acf97]' : 'tw-text-[#fa5c7c]']">
-          <font-awesome-icon :icon="['fas', 'arrow-up']" v-if="statusTemp"/>
-          <font-awesome-icon :icon="['fas', 'arrow-down']" v-else/>
+          <font-awesome-icon :icon="['fas', 'arrow-up']" v-if="statusTemp" />
+          <font-awesome-icon :icon="['fas', 'arrow-down']" v-else />
           5.27%
         </div>
         <a-tooltip>
-          <template #title>{{ translate('reportCommon.sinceLastWeek') }}</template>
-          <span class="tw-text-[#8391a2]">{{ translate('reportCommon.sinceLastWeek') }}</span>
+          <template #title>{{ translate("reportCommon.sinceLastWeek") }}</template>
+          <span class="tw-text-[#8391a2]">{{ translate("reportCommon.sinceLastWeek") }}</span>
         </a-tooltip>
       </div>
     </div>
@@ -27,13 +27,13 @@
       </div>
       <div class="tw-flex tw-items-center tw-truncate tw-gap-3">
         <div :class="['tw-text-sm', !statusTemp ? 'tw-text-[#0acf97]' : 'tw-text-[#fa5c7c]']">
-          <font-awesome-icon :icon="['fas', 'arrow-up']" v-if="!statusTemp"/>
-          <font-awesome-icon :icon="['fas', 'arrow-down']" v-else/>
+          <font-awesome-icon :icon="['fas', 'arrow-up']" v-if="!statusTemp" />
+          <font-awesome-icon :icon="['fas', 'arrow-down']" v-else />
           5.27%
         </div>
         <a-tooltip>
-          <template #title>{{ translate('reportCommon.sinceLastMonth') }}</template>
-          <span class="tw-text-[#8391a2]">{{ translate('reportCommon.sinceLastMonth') }}</span>
+          <template #title>{{ translate("reportCommon.sinceLastMonth") }}</template>
+          <span class="tw-text-[#8391a2]">{{ translate("reportCommon.sinceLastMonth") }}</span>
         </a-tooltip>
       </div>
     </div>
@@ -46,13 +46,13 @@
       </div>
       <div class="tw-flex tw-items-center tw-truncate tw-gap-3">
         <div :class="['tw-text-sm', statusTemp ? 'tw-text-[#0acf97]' : 'tw-text-[#fa5c7c]']">
-          <font-awesome-icon :icon="['fas', 'arrow-up']" v-if="statusTemp"/>
-          <font-awesome-icon :icon="['fas', 'arrow-down']" v-else/>
+          <font-awesome-icon :icon="['fas', 'arrow-up']" v-if="statusTemp" />
+          <font-awesome-icon :icon="['fas', 'arrow-down']" v-else />
           5.27%
         </div>
         <a-tooltip>
-          <template #title>{{ translate('reportCommon.sinceLastQuater') }}</template>
-          <span class="tw-text-[#8391a2]">{{ translate('reportCommon.sinceLastQuater') }}</span>
+          <template #title>{{ translate("reportCommon.sinceLastQuater") }}</template>
+          <span class="tw-text-[#8391a2]">{{ translate("reportCommon.sinceLastQuater") }}</span>
         </a-tooltip>
       </div>
     </div>
@@ -65,33 +65,27 @@
       </div>
       <div class="tw-flex tw-items-center tw-truncate tw-gap-3">
         <div :class="['tw-text-sm', !statusTemp ? 'tw-text-[#0acf97]' : 'tw-text-[#fa5c7c]']">
-          <font-awesome-icon :icon="['fas', 'arrow-up']" v-if="!statusTemp"/>
-          <font-awesome-icon :icon="['fas', 'arrow-down']" v-else/>
+          <font-awesome-icon :icon="['fas', 'arrow-up']" v-if="!statusTemp" />
+          <font-awesome-icon :icon="['fas', 'arrow-down']" v-else />
           5.27%
         </div>
         <a-tooltip>
-          <template #title>{{ translate('reportCommon.sinceLastYear') }}</template>
-          <span class="tw-text-[#8391a2]">{{ translate('reportCommon.sinceLastYear') }}</span>
+          <template #title>{{ translate("reportCommon.sinceLastYear") }}</template>
+          <span class="tw-text-[#8391a2]">{{ translate("reportCommon.sinceLastYear") }}</span>
         </a-tooltip>
       </div>
     </div>
   </div>
 </template>
-<script setup lang="ts">
-import { translate } from "@/languages/i18n";
+<script lang="ts" setup>
 import { ref } from "vue";
 import NumberAnimation from "vue-number-animation";
-
-const props = defineProps({
-  data: {
-    type: Object,
-  },
-});
+import { translate } from "@/languages/i18n";
 
 const loading = ref<boolean>(false);
 const statusTemp = ref<boolean>(true);
 
 const theFormat = (number) => {
-  return number.toLocaleString('en-US');
+  return number.toLocaleString("en-US");
 };
 </script>
