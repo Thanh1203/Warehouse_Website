@@ -77,15 +77,22 @@
     </div>
   </div>
 </template>
-<script lang="ts" setup>
+<script setup lang="ts">
+import { translate } from "@/languages/i18n";
 import { ref } from "vue";
 import NumberAnimation from "vue-number-animation";
-import { translate } from "@/languages/i18n";
+
+const props = defineProps({
+  data: {
+    type: Object,
+  },
+});
 
 const loading = ref<boolean>(false);
 const statusTemp = ref<boolean>(true);
 
 const theFormat = (number) => {
-  return number.toLocaleString("en-US");
+  return number.toLocaleString('en-US');
 };
+
 </script>

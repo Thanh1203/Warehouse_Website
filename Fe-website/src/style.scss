@@ -136,3 +136,23 @@
 
     }
 }
+
+.new-tabs {
+    .ant-tabs-nav {
+        .ant-tabs-nav-wrap {
+            .ant-tabs-tab{
+                color: #8391a2 !important;
+                background: #37404a !important;
+                &.ant-tabs-tab-active {
+                    background: #727cf5 !important;
+                    .ant-tabs-tab-btn {
+                        color: #fff !important;
+                    }
+                }
+                &:hover {
+                    color: #fff !important;
+                }
+            }
+        }
+    }
+}
