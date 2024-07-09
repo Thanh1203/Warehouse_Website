@@ -156,3 +156,15 @@
         }
     }
 }
+
+.date-picker-quarter {
+    .ant-picker-input {
+        width: 100px;
+        input {
+            text-align: center;
+            color:#aab8c5!important;
+            font-size: 20px!important;
+            font-weight: 600;
+        }
+    }
+}
