@@ -1,5 +1,3 @@
-import { getLanguage } from ".";
-
 export const STR_UPPER_CASE = (str: string) => {
   return str
     .split(" ")
@@ -97,4 +95,18 @@ export const setBgColorChart = (value: number) => {
   } else {
     return "#07e500";
   }
+}
+
+export const setOrdinalNum = (val: number) => {
+  const j = val % 10, k = val % 100;
+  if (j == 1 && k != 11) {
+    return val + "st";
+  }
+  if (j == 2 && k != 12) {
+      return val + "nd";
+  }
+  if (j == 3 && k != 13) {
+      return val + "rd";
+  }
+  return val + "th";
 }

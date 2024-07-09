@@ -63,7 +63,7 @@ export default (): RouteRecordRaw[] => {
       name: "sale report",
       component: () => import("./reports/sale-report/index.vue"),
       meta: {
-        title: translate("SalesReport"),
+        title: translate("reportSale.title"),
         layout: defaultLayout,
       },
     },

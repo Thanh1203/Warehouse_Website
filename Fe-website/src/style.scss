@@ -136,3 +136,35 @@
 
     }
 }
+
+.new-tabs {
+    .ant-tabs-nav {
+        .ant-tabs-nav-wrap {
+            .ant-tabs-tab{
+                color: #8391a2 !important;
+                background: #37404a !important;
+                &.ant-tabs-tab-active {
+                    background: #727cf5 !important;
+                    .ant-tabs-tab-btn {
+                        color: #fff !important;
+                    }
+                }
+                &:hover {
+                    color: #fff !important;
+                }
+            }
+        }
+    }
+}
+
+.date-picker-quarter {
+    .ant-picker-input {
+        width: 100px;
+        input {
+            text-align: center;
+            color:#aab8c5!important;
+            font-size: 20px!important;
+            font-weight: 600;
+        }
+    }
+}

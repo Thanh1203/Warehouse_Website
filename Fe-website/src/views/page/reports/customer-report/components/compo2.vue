@@ -49,7 +49,7 @@
       </div>
 
     </div>
-    <div class="tw-bg-[#37404a] tw-rounded-lg tw-p-4 lg:tw-col-span-2 tw-flex tw-flex-col tw-justify-between">
+    <div class="tw-bg-[#37404a] tw-rounded-lg tw-p-4 lg:tw-col-span-2">
       <ChartCustomerMonth v-if="!loading"/>
       <a-skeleton v-else :loading="loading" active />
     </div>

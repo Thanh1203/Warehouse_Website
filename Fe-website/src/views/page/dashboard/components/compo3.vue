@@ -86,14 +86,26 @@ const chartLine = computed(() => ({
   labels: labelChartLine.value,
   datasets: [
     {
-      barPercentage: 0.5,
       label: translate("Revenue"),
-      backgroundColor: "#6B74E0",
       borderColor: "#6B74E0",
-      data: [989350,510318,1449654,262194,592645,1860202,572863,279960,1704150,1637208,63598,77858],
-      tension: 0.4,
+      data: [1802349, 2938475, 2129876, 2987623, 3098765, 4567812, 3893210, 4987654, 3998371, 3999876, 4999998, 5000000],
+      backgroundColor: (ctx) => {
+        const chart = ctx.chart;
+        const {ctx: context, chartArea} = chart;
+        if (!chartArea) {
+          // This case happens on initial chart load
+          return null;
+        }
+        const gradient = context.createLinearGradient(0, 0, 0, chartArea.bottom);
+        gradient.addColorStop(1, 'transparent');
+        gradient.addColorStop(0, '#6B74E0');
+
+        return gradient;
+      },
+      fill: true
     },
   ],
+  radius: 0,
 }));
 
 // char pie

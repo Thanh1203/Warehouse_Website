@@ -1,16 +1,19 @@
 <template>
-  <Bar :data="data" :options="options"/>
+  <Bar :data="data" :options="options" />
 </template>
 <script setup lang="ts">
-import { BarElement, CategoryScale, Chart, ChartOptions, Legend, LinearScale, Title, Tooltip } from 'chart.js';
-import { Bar } from 'vue-chartjs';
+import { BarElement, CategoryScale, Chart, ChartOptions, Legend, LinearScale, Title, Tooltip } from "chart.js";
+import { Bar } from "vue-chartjs";
+import VueTypes from "vue-types";
 
 Chart.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
-Chart.defaults.color = "#fff"
-defineProps({
-    data: {
-        type: null as any,
-    },
+Chart.defaults.color = "#fff";
+const props = defineProps({
+  data: {
+    type: null as any,
+  },
+  showLegend: VueTypes.bool.def(false),
+  
 });
 
 const options: ChartOptions<"bar"> = {
@@ -19,12 +22,15 @@ const options: ChartOptions<"bar"> = {
   plugins: {
     legend: {
       position: "bottom",
-      display: false,
+      display: props.showLegend,
     },
   },
   scales: {
+    x: {
+      stacked: true,
+    },
     y: {
-      beginAtZero: true,
+      stacked: true,
     },
   },
 };

@@ -25,7 +25,7 @@ const menuAdmin = [
             },
             {
                 key: 'SALESREPORT',
-                label: translate("SalesReport"),
+                label: translate("reportSale.title"),
                 icon: h(FontAwesomeIcon, {icon: faChartLine })
             }
         ]
