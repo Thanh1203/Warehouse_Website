@@ -1,6 +1,6 @@
 <template>
   <div class="tw-w-full tw-bg-white tw-h-16 tw-z-10 tw-fixed tw-pl-6 tw-pr-10 tw-flex tw-items-center tw-justify-between tw-text-[#666666] tw-border-b tw-border-[#e5e7eb]">
-    <div class="tw-flex tw-items-center tw-justify-center tw-text-black tw-h-full tw-pt-2">
+    <div class="tw-flex tw-items-center tw-justify-center tw-h-full tw-pt-2">
       <img src="/src/assets/images/headerIcon/icon.png" alt="icon" class="tw-h-3/4">
       <div class="name-company tw-text-2xl tw-pl-3">My Warehouse</div>
     </div>
@@ -71,7 +71,7 @@ const handleOpenSetting = () => {
 .name-company {
   font-family: "Dancing Script", cursive;
   font-optical-sizing: auto;
-  font-weight: 500;
-  font-style: italic;
+  font-weight: 600;
+  font-style: normal;
 }
 </style>
