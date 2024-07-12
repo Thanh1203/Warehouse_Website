@@ -2,11 +2,17 @@
 
 // menu
 .ant-menu {
+    color: #525b75;
     border: none !important;
     .ant-menu-title-content {
         font-size: 16px;
+        color: #525b75;
     }
-    background: #3a444e;
+    .ant-menu-item-group{
+        .ant-menu-item-group-title {
+            font-weight: 600;
+        }
+    }
 }
 
 //form
