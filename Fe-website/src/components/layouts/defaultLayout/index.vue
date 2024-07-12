@@ -1,13 +1,14 @@
 <template>
-<div class="tw-flex">
-  <SlideMenu/>
-  <div class="tw-grow tw-overflow-hidden tw-overflow-y-auto tw-h-screen">
-    <HeaderPage class="tw-fixed tw-z-10 tw-w-[calc(100%-90px)]"/>
-    <div class="tw-bg-[#2E3A45] tw-p-6 tw-mt-[70px]">
+  <HeaderPage/>
+  
+  <div class="tw-w-full tw-relative tw-top-16 tw-flex tw-overflow-hidden tw-overflow-y-auto">
+    <div class="tw-h-auto tw-border-r">
+      <SlideMenu/>
+    </div>
+    <div class="tw-grow tw-p-6 tw-h-full">
       <slot></slot>
     </div>
   </div>
-</div>
 </template>
 <script setup lang="ts">
 import SlideMenu from "@/components/slide-menu/index.vue"
