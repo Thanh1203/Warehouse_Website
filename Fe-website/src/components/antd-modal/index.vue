@@ -1,17 +1,26 @@
 <template>
-  <a-modal 
-  v-model:open="isVisible" 
-  :title="title" 
-  :closable="closable" 
-  :maskClosable="maskClosable" 
-  :afterClose="afterClose"
-  :width="width"
-  @ok="onOk"
-  @cancel="onCancel"
-  :okText="okText"
-  :cancelText="cancelText"
+  <a-modal
+    v-model:open="isVisible"
+    :title="title"
+    :closable="closable"
+    :maskClosable="maskClosable"
+    :afterClose="afterClose"
+    :width="width"
+    @ok="onOk"
+    @cancel="onCancel"
+    :okText="okText"
+    :cancelText="cancelText"
   >
-    <slot></slot>
+    <Suspense>
+      <template #default>
+        <div class="tw-mb-6">
+          <slot name="body-modal"></slot>
+        </div>
+      </template>
+      <template #fallback>
+        <a-spin size="large" />
+      </template>
+    </Suspense>
     <template #footer v-if="!defaultFooter">
       <slot name="footer"></slot>
     </template>
@@ -28,11 +37,11 @@ const props = defineProps({
   onCancel: VueTypes.func.def(() => {}),
   title: VueTypes.string.def(""),
   closable: VueTypes.bool.def(true),
-  afterClose: VueTypes.func.def(() => { }),
+  afterClose: VueTypes.func.def(() => {}),
   maskClosable: VueTypes.bool.def(true),
   width: VueTypes.string.def("800px"),
-  okText: VueTypes.string.def(translate('Agree')),
-  cancelText: VueTypes.string.def(translate('Cancel')),
+  okText: VueTypes.string.def(translate("Agree")),
+  cancelText: VueTypes.string.def(translate("Cancel")),
   defaultFooter: VueTypes.bool.def(false),
 });
 
@@ -44,5 +53,4 @@ watch(
     isVisible.value = val;
   },
 );
-
 </script>

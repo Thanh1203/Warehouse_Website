@@ -77,11 +77,11 @@ export default (): RouteRecordRaw[] => {
       },
     },
     {
-      path: "/warehouse-configuration",
-      name: "warehouse configuration",
-      component: () => import("./warehouse/warehouse-setting/index.vue"),
+      path: "/warehouse-information",
+      name: "wh-infor",
+      component: () => import("./warehouse/infor/index.vue"),
       meta: {
-        title: translate("Warehouse"),
+        title: translate("warehouse.title"),
         layout: defaultLayout,
       },
     },

@@ -43,14 +43,19 @@ const menuAdmin = [
         ]
     },
     {
-        label: translate("Warehouse"),
+        label: translate("warehouse.title"),
         type: "group",
         icon: null,
         children: [
             {
-                key: "WAREHOUSECONFIG",
-                label: translate("WarehouseConfig"),
-                icon: h(FontAwesomeIcon, {icon: faWarehouse })
+                key: "WAREHOUSE",
+                icon: h(FontAwesomeIcon, { icon: faWarehouse }),
+                children: [
+                    {
+                        key: 'WAREHOUSEINFO',
+                        label: translate('warehouse.infor'),
+                    }
+                ]
             },
         ]
     },

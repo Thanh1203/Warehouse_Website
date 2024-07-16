@@ -1,7 +1,7 @@
 <template>
   <a-descriptions :title="translate('WarehouseInformation')">
-    <a-descriptions-item :label="translate('WarehouseCode')">{{ data?.code }}</a-descriptions-item>
-    <a-descriptions-item :label="translate('warehouseName')">{{ data?.name }}</a-descriptions-item>
+    <a-descriptions-item :label="translate('warehouse.code')">{{ data?.code }}</a-descriptions-item>
+    <a-descriptions-item :label="translate('warehouse.name')">{{ data?.name }}</a-descriptions-item>
     <a-descriptions-item :label="translate('Nation')">{{ data?.nation }}</a-descriptions-item>
 
     <a-descriptions-item :label="translate('Area')">{{ data?.area }}</a-descriptions-item>
