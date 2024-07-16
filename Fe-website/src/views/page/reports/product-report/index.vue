@@ -6,7 +6,7 @@
   <Compo1/>
 
   <div class="tw-w-full tw-border-[#464f5b]">
-    <div class="tw-mb-3 tw-text-[#aab8c5] tw-text-lg">{{ translate('WarehouseList') }}</div>
+    <div class="tw-mb-3 tw-text-[#aab8c5] tw-text-lg">{{ translate('warehouse.list') }}</div>
       <a-tabs size="small" class="tw-text-[#eef2f5]">
         <a-tab-pane v-for="(item, idx) in listWarehouse" :key="idx" :tab="item.name">
           <DetailReport/>

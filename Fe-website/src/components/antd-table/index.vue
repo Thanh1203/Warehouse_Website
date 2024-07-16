@@ -1,81 +1,72 @@
 <template>
-  <a-table :columns="tableColumns" :data-source="dataSource" :pagination="pagination" :rowSelection="rowSelection" :sticky="sticky" :customRow="customRow" :rowKey="keyField">
-    <template #bodyCell="{ column, record }">
+  <a-table
+    :columns="columns"
+    :dataSource="dataSource"
+    :pagination="pagination"
+    :rowKey="keyField"
+    :sticky="sticky"
+    :rowSelection="rowSelection"
+    :loading="isLoading"
+    @change="onChange"
+  >
+    <template #bodyCell="{column, record}">
       <slot name="custom-body" :column="column" :record="record"></slot>
     </template>
-    <!-- <template v-if="title" #title>{{ title }}</template>
-    <template #headerCell="{ column }">
-      <slot name="custom-header" :column="column">
-        <div>{{ column.title }}</div>
-      </slot>
-    </template> -->
-    <!-- <slot name="custom-column"></slot> -->
     <template #emptyText>
       <a-empty :description="translate('noData')" />
     </template>
   </a-table>
 </template>
 <script setup lang="ts">
-import { computed, ref, watch } from "vue";
-import VueTypes from "vue-types";
 import { translate } from "@/languages/i18n";
-
-const emit = defineEmits(["onSelected", "onRowClicked"]);
+import { computed, ref } from "vue";
+import VueTypes from "vue-types";
 
 const props = defineProps({
-  title: VueTypes.string,
+  title: VueTypes.string.def(null),
   columns: VueTypes.array.def([]),
   dataSource: VueTypes.array.def([]),
   keyField: VueTypes.string.def("id"),
-  hasCheckbox: VueTypes.bool.def(false),
-  pagination: VueTypes.bool.def(false),
-  indexColumn: VueTypes.bool.def(false),
-  noSort: VueTypes.bool.def(false),
-  pageSize: VueTypes.number.def(10),
-  checkStrictly: VueTypes.bool.def(true),
   sticky: VueTypes.bool.def(true),
+  hasCheckbox: VueTypes.bool.def(false),
+  checkStrictly: VueTypes.bool.def(true),
+  pagesize: VueTypes.number.def(10),
+  currentPage: VueTypes.number.def(1),
+  isPagination: VueTypes.bool.def(true),
+  isLoading: VueTypes.bool.def(false),
 });
 
-const page = ref(1);
-const size = ref(props.pageSize);
-const selectedRows = ref<Array<any>>([]);
+const emit = defineEmits(["onSelected", "onChange"]);
 
-const tableColumns = computed(() => {
-  if (!props.columns.length) return null;
-  if (props.indexColumn)
-    return [
-      {
-        title: "STT",
-        align: "center",
-        width: 80,
-        customRender({ index }: any) {
-          return index + 1 + (page.value - 1) * size.value;
-        },
-      },
-      ...props.columns,
-    ];
-  return props.columns;
-});
+const selectRows = ref<any[]>([]);
 
 const rowSelection = props.hasCheckbox
   ? ref({
       checkStrictly: props.checkStrictly,
-      onSelect: (record: any, selected: any, row: Array<any>) => {
-        selectedRows.value = row;
-        emit("onSelected", selectedRows);
+      onSelect: (record: any, selected: boolean, selectedRows: any[]) => {
+        selectRows.value = selectedRows;
+        emit("onSelected", selectRows);
       },
-      onSelectAll: (selected: any, rows: Array<any>) => {
-        selectedRows.value = rows;
-        emit("onSelected", selectedRows);
+      onSelectAll: (selected: boolean, selectedRows: any[], changeRows: any[]) => {
+        selectRows.value = selectedRows;
+        emit("onSelected", selectRows);
       },
     })
   : null;
 
-const customRow = (record: any) => {
-  return {
-    onClick: () => {
-      emit("onRowClicked", record);
-    },
-  };
+const onChange = (pagination, filters, sorter, extra) => {
+  emit("onChange", pagination, filters, sorter, extra);
 };
+
+const pagination = computed(() => {
+  if (props.isPagination) {
+    return {
+      total: props.dataSource.length,
+      current: props.currentPage,
+      pageSize: props.pagesize,
+    };
+  } else {
+    return false;
+  }
+});
 </script>

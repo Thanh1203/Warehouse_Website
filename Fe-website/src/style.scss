@@ -79,6 +79,7 @@
 #app {
     font-family: "Roboto";
     background-color: #fff;
+    color: #333333; 
 }
 
 .required-star {
@@ -167,4 +168,10 @@
             font-weight: 600;
         }
     }
+}
+
+.name-page {
+    font-size: 22px;
+    font-weight: 500;
+    margin-bottom: 1.5rem;
 }

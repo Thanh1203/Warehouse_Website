@@ -34,8 +34,8 @@ export const PC_MENU = [
     path: "/product-information",
   },
   {
-    key: "WAREHOUSECONFIG",
-    path: "/warehouse-configuration",
+    key: "WAREHOUSEINFO",
+    path: "/warehouse-information",
   },
   {
     key: "ENTERWAREHOUSE",
