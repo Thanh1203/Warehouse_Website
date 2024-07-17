@@ -106,7 +106,7 @@ export const en = {
     },
     AddProductCategories: "Add new product categories",
     UpdateProductCategories: "Update product categories",
-    ListProducts: "List of products",
+    ListProducts: "",
     Category: "Category",
     AddProductInfo: "Add new product information",
     UpdateProductInfo: "Update product information",
@@ -166,7 +166,7 @@ export const en = {
     NumberManufacturers: "Number of manufacturers",
     NumberClassifications: "Number of classifications",
     ClassificationStatistics: "Classification statistics",
-    ProductQuantity: "Product quantity",
+    ProductQuantity: "",
     Month: "Month",
     Present: "Present",
     SelectMonth: "Select month",
@@ -297,6 +297,13 @@ export const en = {
     product: {
         name: "Product name",
         price: "Price",
+        list: "List of products",
+        quantity: "Product quantity",
+        category: "Product category",
+        type: "Product type",
+        sku: "SKU code",
+        barcode: "Barcode",
+        cost: "Cost",
     },
     warehouse: {
         infor: "Warehouse information",
@@ -312,6 +319,11 @@ export const en = {
         validCode: "Warehouse code cannot be blank",
         validName: "Warehouse name cannot be blank",
         validAddress: "Warehouse address cannot be blank",
+        import: "Import",
+        export: "Export",
+        inventory: "Inventory",
+        available: "Available",
+        soldOut: "Sold out",
     },
     common: {
         importFile: "Import file",
@@ -319,5 +331,16 @@ export const en = {
         save: "Save",
         delete: "Delete",
         edit: "Update information",
+        all: "All",
+        exportFile: "Export file",
     },
+    inventory: {
+        category: "Inventory category",
+        search: "Search by SKU code, product name, barcode",
+        viewProductList: "View product list",
+        canSold: "Can be sold",
+    },
+    supplier: {
+        title: "Supplier",
+    }
 };

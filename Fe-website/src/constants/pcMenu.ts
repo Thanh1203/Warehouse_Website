@@ -54,6 +54,10 @@ const menuAdmin = [
                     {
                         key: 'WAREHOUSEINFO',
                         label: translate('warehouse.infor'),
+                    },
+                    {
+                        key: "WAREHOUSEINVEN",
+                        label: translate('warehouse.inventory'),
                     }
                 ]
             },

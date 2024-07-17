@@ -5,7 +5,7 @@
 
   <Section :title="translate('warehouse.list')" :subTitle="translate('warehouse.number')" :number="10">
     <template #action>
-      <div class="tw-flex tw-items-center tw-flex-wrap tw-gap-4 class">
+      <div class="tw-flex tw-items-center tw-flex-wrap tw-gap-4">
         <a-button type="primary" danger :disabled="disabledDeleteBtn" @click="handleDelete(listSelected)">
           <font-awesome-icon :icon="['fas', 'trash']" />
           <span class="tw-ml-3">
