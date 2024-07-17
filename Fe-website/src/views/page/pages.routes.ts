@@ -174,5 +174,14 @@ export default (): RouteRecordRaw[] => {
         layout: defaultLayout,
       }
     },
+    {
+      path: "/warehouse-inventory",
+      name: "warehouse inventory",
+      component: () => import("./warehouse/inventory/index.vue"),
+      meta: {
+        title: translate("warehouse.inventory"),
+        layout: defaultLayout,
+      }
+    }
   ];
 };

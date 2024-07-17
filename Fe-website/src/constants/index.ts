@@ -57,6 +57,10 @@ export const PC_MENU = [
     key: "PRICECONFIG",
     path: "/price-configuration"
   },
+  {
+    key: "WAREHOUSEINVEN",
+    path: "/warehouse-inventory"
+  }
 ];
 
 export const DEFAULT_PROPERTY = {

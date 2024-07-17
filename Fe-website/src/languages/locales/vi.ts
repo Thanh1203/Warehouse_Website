@@ -7,7 +7,6 @@ export const vi = {
     Logout: "Đăng xuất",
     Dashboard: "Trang chủ",
     Personnel: "Nhân sự",
-    Products: "Sản phẩm",
     StatisticsReports: "Báo cáo",
     ProductCategory: "Chủng loại sản phẩm",
     ProductInformation: "Thông tin sản phẩm",
@@ -167,7 +166,6 @@ export const vi = {
     NumberManufacturers: "Số lượng hãng sản xuất",
     NumberClassifications: "Số lượng phân loại",
     ClassificationStatistics: "Thống kê phân loại",
-    ProductQuantity: "Số lượng sản phẩm",
     Month: "Tháng",
     Present: "Hiện tại",
     SelectMonth: "Chọn Tháng",
@@ -297,6 +295,13 @@ export const vi = {
     product: {
         name: "Tên sản phẩm",
         price: "Giá bán",
+        list: "Danh sách sản phẩm",
+        quantity: "Số lượng sản phẩm",
+        category: "Ngành hàng",
+        type: "Loại sản phẩm",
+        sku: "Mã SKU",
+        barCode: "Mã vạch",
+        cost: "Giá vốn",
     },
     warehouse: {
         infor: "Thông tin kho hàng",
@@ -312,6 +317,11 @@ export const vi = {
         validCode: "Mã kho hàng không được dể trống",
         validName: "Tên kho hàng không được để trống",
         validAddress: "Địa chỉ kho hàng không được để trống",
+        import: "Nhập hàng",
+        export: "Xuất hàng",
+        inventory: "Tồn kho",
+        available: "Còn hàng",
+        soldOut: "Hết hàng",
     },
     common: {
         importFile: "Nhập file",
@@ -319,5 +329,16 @@ export const vi = {
         save: "Lưu",
         delete: "Xóa",
         edit: "Cập nhật thông tin",
+        all: "Tất cả",
+        exportFile: "Xuất file",
     },
+    inventory: {
+        category: "Ngành hàng",
+        search: "Tìm kiếm theo mã SKU, tên sản phẩm, barcode",
+        viewProductList: "Xem danh sách sản phẩm",
+        canSold: "Có thể bán",
+    },
+    supplier: {
+        title: "Nhà cung cấp",
+    }
 };

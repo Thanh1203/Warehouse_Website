@@ -1,5 +1,5 @@
 <template>
-<div class="tw-w-full tw-rounded-lg tw-p-4 section">
+<div class="tw-w-full tw-rounded-lg tw-p-4 section-ctn">
     <div class="tw-w-full tw-flex tw-items-center tw-justify-between tw-gap-4 tw-flex-wrap">
         <div>
             <div class="tw-mb-2 tw-font-semibold ">{{ title }}</div>
@@ -25,9 +25,3 @@ const props = defineProps({
     number: VueTypes.number.def(null),
 })
 </script>
-
-<style lang="scss">
-.section {
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); 
-}
-</style>
