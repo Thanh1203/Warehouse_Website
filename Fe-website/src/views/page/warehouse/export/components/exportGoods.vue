@@ -8,7 +8,7 @@
       </a-breadcrumb-item>
       <a-breadcrumb-item>
         <RouterLink to="/warehouse-export">
-          {{ translate("ExportWarehouse") }}
+          {{ translate("warehouse.export") }}
         </RouterLink>
       </a-breadcrumb-item>
       <a-breadcrumb-item>

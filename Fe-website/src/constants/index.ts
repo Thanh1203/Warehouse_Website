@@ -38,11 +38,11 @@ export const PC_MENU = [
     path: "/warehouse-information",
   },
   {
-    key: "ENTERWAREHOUSE",
+    key: "WAREHOUSEIMPORT",
     path: "/warehouse-import",
   },
   {
-    key: "EXPORTWAREHOUSE",
+    key: "WAREHOUSEEXPORT",
     path: "/warehouse-export",
   },
   {
@@ -60,6 +60,10 @@ export const PC_MENU = [
   {
     key: "WAREHOUSEINVEN",
     path: "/warehouse-inventory"
+  },
+  {
+    key: "WAREHOUSETRANS",
+    path: "/warehouse-transfer"
   }
 ];
 

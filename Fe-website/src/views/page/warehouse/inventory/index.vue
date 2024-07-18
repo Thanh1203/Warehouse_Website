@@ -23,8 +23,12 @@
       </div>
     </div>
     <div class="tw-w-full tw-grid tw-grid-cols-1 tw-gap-4 md:tw-grid-cols-2 md:tw-gap-6">
-      <div class="tw-w-full tw-flex tw-items-center">
-        <a-input-search :placeholder="translate('inventory.search')" enter-button />
+      <div class="tw-w-full tw-flex tw-items-center tw-gap-4">
+        <a-input-search :placeholder="translate('inventory.search')" enter-button v-model:value="filterSearching"/>
+        <a-button type="text" danger :disabled="disabledClearSreach">
+          <font-awesome-icon :icon="['fas', 'trash']" />
+          <span class="tw-ml-2">{{ translate('common.delete') }}</span>
+        </a-button>
       </div>
       <div class="tw-w-full tw-flex tw-items-center tw-justify-end tw-gap-4">
         <a-button type="text">
@@ -105,12 +109,13 @@
 <script setup lang="ts">
 import SectionBreadcrumb from "@/components/section-breadcrumb/index.vue";
 import { translate } from "@/languages/i18n";
-import { onMounted, ref, watch } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 import Section from "@/components/section/index.vue";
 import dowloadIcon from "@/components/icons/dowloadIcon.vue";
 import uploadIcon from "@/components/icons/uploadIcon.vue";
 import eyeIcon from "@/components/icons/eyeIcon.vue";
 import AntdTable from "@/components/antd-table/index.vue";
+import { debounce } from "vue-debounce";
 
 const listBreadCrumb = ref<any>([
   {
@@ -119,7 +124,7 @@ const listBreadCrumb = ref<any>([
   },
 ]);
 
-const warehouseSelected = ref<string>("");
+const warehouseSelected = ref<string>(null);
 const categorySelected = ref<string>(null);
 const proTypeSelected = ref<string>(null);
 const supplierSelected = ref<string>(null);
@@ -141,6 +146,17 @@ const optionWh = [
     name: "Kho hàng C",
   },
 ];
+
+const filterSearching = ref<string>("");
+
+const disabledClearSreach = computed(() => filterSearching.value.length === 0);
+
+watch(
+  () => filterSearching.value,
+  debounce((val) => {
+    console.log(val);
+  },500)
+)
 
 const fetchAllDataInventory = (val) => {};
 

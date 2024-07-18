@@ -58,13 +58,25 @@ const menuAdmin = [
                     {
                         key: "WAREHOUSEINVEN",
                         label: translate('warehouse.inventory'),
+                    },
+                    {
+                        key: "WAREHOUSEIMPORT",
+                        label: translate('warehouse.import'),
+                    },
+                    {
+                        key: "WAREHOUSEEXPORT",
+                        label: translate('warehouse.export'),
+                    },
+                    {
+                        key: "WAREHOUSETRANS",
+                        label: translate('warehouse.transfer'),
                     }
                 ]
             },
         ]
     },
     {
-        label: translate("Products"),
+        label: translate("product.title"),
         type: "group",
         icon: null,
         children: [
@@ -101,30 +113,6 @@ const menuAdmin = [
             },
         ]
     },
-    {
-        label: translate("ImportAndExport"),
-        type: "group",
-        icon: null,
-        children: [
-            {
-                key: 'LOGISTICS',
-                icon: h(FontAwesomeIcon, { icon: faServer }),
-                children: [
-                    {
-                        key: "ENTERWAREHOUSE",
-                        label: translate("EnterWarehouse"),
-                        icon: h(FontAwesomeIcon, { icon: faDownload }),
-                    },
-                    {
-                        key: "EXPORTWAREHOUSE",
-                        label: translate("ExportWarehouse"),
-                        icon: h(FontAwesomeIcon, { icon: faUpload }),
-                    }
-                ]
-            },
-        ]
-    }
-
 ];
 
 export { menuAdmin };
