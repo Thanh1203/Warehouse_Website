@@ -148,11 +148,11 @@ export default (): RouteRecordRaw[] => {
       },
     },
     {
-      path: "/import-goods/:id",
-      name: "import goods",
-      component: () => import("./warehouse/import/components/importGoods.vue"),
+      path: "/create-import",
+      name: "create import",
+      component: () => import("./warehouse/import/components/createImport.vue"),
       meta: {
-        title: translate("ImportGoods"),
+        title: translate("warehouse.createImport"),
         layout: detailLayout,
       },
     },
