@@ -1,7 +1,7 @@
 <template>
   <a-form class="tw-flex tw-rounded-lg tw-px-6 tw-py-5 tw-mb-6 tw-bg-[#37404a]">
     <a-form-item class="tw-min-w-[200px]">
-      <div class="tw-opacity-70 tw-text-white">{{ translate("SelectWarehouse") }}</div>
+      <div class="tw-opacity-70 tw-text-white">{{ translate("warehouse.select") }}</div>
       <a-select :placeholder="translate('Search')" v-model:value="filterWarehouse" :options="optionFake.map((e) => ({ value: e.id, label: e.name }))" class="tw-mt-2 tw-w-full" />
     </a-form-item>
   </a-form>

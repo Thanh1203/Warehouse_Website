@@ -110,3 +110,18 @@ export const setOrdinalNum = (val: number) => {
   }
   return val + "th";
 }
+
+export const getEmptyProperties = (obj: object) => {
+  return Object.entries(obj).reduce((acc, [key, value]) => {
+    if (
+      value === null || 
+      value === undefined || 
+      value === '' || 
+      value === 0 || 
+      (Array.isArray(value) && value.length === 0)
+    ) {
+      acc.push(key);
+    }
+    return acc;
+  }, []);
+}

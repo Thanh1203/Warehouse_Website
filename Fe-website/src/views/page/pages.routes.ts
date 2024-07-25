@@ -106,18 +106,18 @@ export default (): RouteRecordRaw[] => {
     {
       path: "/warehouse-import",
       name: "warehouse import",
-      component: () => import("./warehouse/warehouse-import/index.vue"),
+      component: () => import("./warehouse/import/index.vue"),
       meta: {
-        title: translate("EnterWarehouse"),
+        title: translate("warehouse.import"),
         layout: defaultLayout,
       },
     },
     {
       path: "/warehouse-export",
       name: "warehouse export",
-      component: () => import("./warehouse/warehouse-export/index.vue"),
+      component: () => import("./warehouse/export/index.vue"),
       meta: {
-        title: translate("ExportWarehouse"),
+        title: translate("warehouse.export"),
         layout: defaultLayout,
       },
     },
@@ -148,18 +148,18 @@ export default (): RouteRecordRaw[] => {
       },
     },
     {
-      path: "/import-goods/:id",
-      name: "import goods",
-      component: () => import("./warehouse/warehouse-import/components/importGoods.vue"),
+      path: "/create-import",
+      name: "create import",
+      component: () => import("./warehouse/import/components/createImport.vue"),
       meta: {
-        title: translate("ImportGoods"),
+        title: translate("warehouse.createImport"),
         layout: detailLayout,
       },
     },
     {
       path: "/export-goods/:id",
       name: "export goods",
-      component: () => import("./warehouse/warehouse-export/components/exportGoods.vue"),
+      component: () => import("./warehouse/export/components/exportGoods.vue"),
       meta: {
         title: translate("ImportGoods"),
         layout: detailLayout,
