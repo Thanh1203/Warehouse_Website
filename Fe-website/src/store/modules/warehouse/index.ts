@@ -87,7 +87,15 @@ export default {
     setSupplier({ commit }, payload) {
       commit("SET_SUPPLIER", payload);
     },
-    async getListProduct({ commit }, payload) {
+    async getListProductImport({ commit }, payload) {
+      try {
+        const response: any = [];
+        await commit("SET_LISTPRODUCT", response);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async getListProductExport({ commit }, payload) {
       try {
         const response: any = [];
         await commit("SET_LISTPRODUCT", response);

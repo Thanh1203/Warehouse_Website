@@ -328,6 +328,10 @@ export const vi = {
         importBranch: "Chi nhánh nhập",
         quantityImported: "Số lượng nhập",
         select: "Chọn kho hàng",
+        listExport: "Danh sách đơn xuất hàng",
+        exportBranch: "Chi nhánh xuất",
+        numberExport: "Số lượng đơn xuất hàng",
+        createExport: "Tạo đơn xuất hàng",
     },
     common: {
         importFile: "Nhập file",
@@ -354,7 +358,7 @@ export const vi = {
         additionalInfo: "Thông tin bổ sung",
         selectMultiple: "Chọn nhiều",
         quantity: "Số lượng",
-
+        exportStatus: "Trạng thái xuất",
     },
     inventory: {
         category: "Ngành hàng",
@@ -366,7 +370,8 @@ export const vi = {
         referenceCode: "Mã tham chiếu",
         enterReferenceCode: "Nhập mã tham chiều",
         enterPurchaseCode: "Nhập mã đơn",
-
+        shipmentCode: "Mã đơn xuất",
+        exportDate: "Ngày xuất hàng dự  kiến",
     },
     supplier: {
         title: "Nhà cung cấp",

@@ -157,11 +157,11 @@ export default (): RouteRecordRaw[] => {
       },
     },
     {
-      path: "/export-goods/:id",
-      name: "export goods",
-      component: () => import("./warehouse/export/components/exportGoods.vue"),
+      path: "/create-export",
+      name: "create export",
+      component: () => import("./warehouse/export/components/createExport.vue"),
       meta: {
-        title: translate("ImportGoods"),
+        title: translate("warehouse.createExport"),
         layout: detailLayout,
       },
     },

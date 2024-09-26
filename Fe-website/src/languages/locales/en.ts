@@ -323,12 +323,16 @@ export const en = {
         available: "Available",
         soldOut: "Sold out",
         listImport: "Inventory receiving list",
-        numberImport: "Quantity of shipments",
+        numberImport: "Number of import orders",
         createImport: "Create import order",
         codeOrders: "Code orders",
         importBranch: "Import branch",
         quantityImported: "Quantity imported",
         select: "Select warehouse",
+        listExport: "List of export orders",
+        exportBranch: "Export branch",
+        numberExport: "Number of shipping orders",
+        createExport: "Create export order",
     },
     common: {
         importFile: "Import file",
@@ -354,7 +358,8 @@ export const en = {
         discount: "Discount",
         additionalInfo: "Additional info",
         selectMultiple: "Select multiple",
-        quantity: "Quantity"
+        quantity: "Quantity",
+        exportStatus: "Export status",
     },
     inventory: {
         category: "Inventory category",
@@ -366,7 +371,8 @@ export const en = {
         referenceCode: "Reference code",
         enterReferenceCode: "Enter reference code",
         enterPurchaseCode: "Enter Purchase order code",
-
+        shipmentCode: "Shipment order code",
+        exportDate: "Expected export date",
     },
     supplier: {
         title: "Supplier",

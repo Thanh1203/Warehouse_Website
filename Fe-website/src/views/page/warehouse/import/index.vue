@@ -69,7 +69,12 @@ import Section from "@/components/section/index.vue";
 import dowloadIcon from "@/components/icons/dowloadIcon.vue";
 import plusCircle from "@/components/icons/plusCircle.vue";
 import AntdTable from "@/components/antd-table/index.vue";
-import router from "@/router";
+import { useStore } from "vuex";
+import { useRoute, useRouter } from "vue-router";
+
+const store = useStore();
+const router = useRouter();
+const route = useRoute();
 
 const listBreadCrumb = ref<any[]>([
   {

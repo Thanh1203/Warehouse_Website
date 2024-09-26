@@ -6,7 +6,7 @@
 </template>
 <script setup lang="ts">
 import { translate } from '@/languages/i18n';
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useStore } from 'vuex';
 
 const store = useStore();
