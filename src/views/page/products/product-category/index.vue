@@ -13,7 +13,7 @@
       </AntdButton>
     </a-form-item>
   </a-form>
-  <Section :title="translate('CategoryList')" :subTitle="translate('TotalCategories')" :number="String(totalCategory)" class="tw-w-full tw-h-full tw-bg-white tw-overflow-hidden">
+  <Section :title="translate('CategoryList')" :subTitle="translate('TotalCategories')" :number="totalCategory" class="tw-w-full tw-h-full tw-bg-white tw-overflow-hidden">
     <template #action>
       <AntdButton :type="'text'" danger :disabled="disableDeleteMany" class="tw-mr-2" @click="handleDeleteCategory(listSelect, true)">
         <template #icon>

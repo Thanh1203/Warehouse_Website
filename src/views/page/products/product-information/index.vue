@@ -31,7 +31,7 @@
       class="!tw-w-[18%] !tw-h-auto tw-bg-transparent tw-border tw-border-solid tw-mr-2"
       :title="translate('CategoryList')"
       :subTitle="translate('TotalCategories')"
-      :number="String(totalCategory)"
+      :number="totalCategory"
     >
       <template #body>
         <a-menu
@@ -54,7 +54,7 @@
       class="!tw-w-[82%] tw-h-[calc(100vh-223px)] tw-bg-transparent tw-border tw-border-solid tw-ml-2 tw-overflow-hidden"
       :title="translate('ListProducts')"
       :subTitle="translate('TotalProducts')"
-      :number="String(totalProduct)"
+      :number="totalProduct"
     >
       <template #action>
         <AntdButton :type="'text'" danger class="tw-mr-2" :disabled="disableDeleteMany" @click="handleDeleteProduct(listSelect, true)">

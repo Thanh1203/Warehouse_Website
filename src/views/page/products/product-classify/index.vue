@@ -25,7 +25,7 @@
   <Section
     :title="translate('ClassificationList')"
     :subTitle="translate('TotalClassification')"
-    :number="String(totalClassify)"
+    :number="totalClassify"
     class="tw-w-full tw-h-full tw-bg-white tw-overflow-hidden"
   >
     <template #action>

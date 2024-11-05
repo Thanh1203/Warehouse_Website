@@ -25,7 +25,7 @@
   <Section
     :title="translate('ManufacturerList')"
     :subTitle="translate('TotalManufacturers')"
-    :number="String(tottalProducer)"
+    :number="tottalProducer"
     class="tw-w-full tw-h-full tw-bg-white tw-overflow-hidden"
   >
     <template #action>

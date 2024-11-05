@@ -29,7 +29,7 @@
     </a-form-item>
   </a-form>
 
-  <Section :title="translate('ListProducts')" :subTitle="translate('TotalProducts')" :number="String(productConfigUnitPrice?.length)">
+  <Section :title="translate('ListProducts')" :subTitle="translate('TotalProducts')" :number="productConfigUnitPrice?.length">
     <template #body>
       <AntdTable
         class="tw-h-[50vh] tw-w-full tw-overflow-hidden tw-overflow-y-auto"
