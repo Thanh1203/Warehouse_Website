@@ -28,7 +28,7 @@
 
     <div class="tw-bg-[#37404a] tw-h-[140px] tw-p-4 tw-rounded-lg tw-flex tw-flex-col tw-justify-between">
       <div class="tw-flex tw-justify-between">
-        <div class="tw-text-[#8391a2] tw-text-base tw-truncate tw-font-semibold">{{ translate("NumberOfWarehouses2") }}</div>
+        <!-- <div class="tw-text-[#8391a2] tw-text-base tw-truncate tw-font-semibold">{{ translate("NumberOfWarehouses2") }}</div> -->
         <div class="tw-bg-[#464F74] tw-p-3 tw-rounded-lg">
           <font-awesome-icon :icon="['fas', 'warehouse']" size="xl" style="color: #727cf5" />
         </div>

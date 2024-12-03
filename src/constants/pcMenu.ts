@@ -9,27 +9,27 @@ const menuAdmin = [
         label: translate("Dashboard"),
         icon: h(FontAwesomeIcon, {icon: faHome })
     },
-    {
-        label: translate("StatisticsReports"),
-        type: "group",
-        children: [
-            {
-                key: 'CUSTOMERREPORT',
-                label: translate("reportCustomer.title"),
-                icon: h(FontAwesomeIcon, {icon: faAddressBook })
-            },
-            {
-                key: 'PRODUCTSREPORT',
-                label: translate("reportProduct.title"),
-                icon: h(FontAwesomeIcon, {icon: faChartSimple })
-            },
-            {
-                key: 'SALESREPORT',
-                label: translate("reportSale.title"),
-                icon: h(FontAwesomeIcon, {icon: faChartLine })
-            }
-        ]
-    },
+    // {
+    //     label: translate("StatisticsReports"),
+    //     type: "group",
+    //     children: [
+    //         {
+    //             key: 'CUSTOMERREPORT',
+    //             label: translate("reportCustomer.title"),
+    //             icon: h(FontAwesomeIcon, {icon: faAddressBook })
+    //         },
+    //         {
+    //             key: 'PRODUCTSREPORT',
+    //             label: translate("reportProduct.title"),
+    //             icon: h(FontAwesomeIcon, {icon: faChartSimple })
+    //         },
+    //         {
+    //             key: 'SALESREPORT',
+    //             label: translate("reportSale.title"),
+    //             icon: h(FontAwesomeIcon, {icon: faChartLine })
+    //         }
+    //     ]
+    // },
     {        
         label: translate("Personnel"),
         type: "group",

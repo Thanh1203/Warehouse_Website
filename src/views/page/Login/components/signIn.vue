@@ -7,9 +7,9 @@
       <div class="tw-mb-6 tw-w-3/5 tw-flex tw-flex-col tw-items-start">
         <span>{{ translate("UserName") }}</span>
         <div class="tw-mt-2 tw-w-full">
-          <a-input class="tw-rounded-xl" v-model:value="v$.username.$model" :status="v$.username.$error ? 'error' : ''" />
+          <a-input class="tw-rounded-xl" v-model:value="v$.email.$model" :status="v$.email.$error ? 'error' : ''" />
         </div>
-        <ErrorMess title="UserName" :validator="v$.username.$errors[0]?.$validator" />
+        <ErrorMess title="UserName" :validator="v$.email.$errors[0]?.$validator" />
       </div>
       <div class="tw-mb-6 tw-w-3/5 tw-flex tw-flex-col tw-items-start">
         <span>{{ translate("PassWord") }}</span>
@@ -37,7 +37,7 @@
 <script setup lang="ts">
 import { translate } from "@/languages/i18n";
 import ErrorMess from "@/components/error-mess/index.vue";
-import { required } from "@vuelidate/validators";
+import { email, required } from "@vuelidate/validators";
 import { onMounted, onUnmounted, reactive } from "vue";
 import useVuelidate from "@vuelidate/core";
 import AntdButton from "@/components/antd-button/index.vue";
@@ -45,10 +45,10 @@ import { useRouter } from "vue-router";
 import { message, notification } from "ant-design-vue";
 import { DataService } from "@/services/request";
 import ConstantAPI from "@/services/ConstantAPI";
-import { setAdminSession } from "@/utils";
+import { setUserInformation } from "@/utils";
 
 interface State {
-  username: string;
+  email: string;
   password: string;
 }
 
@@ -57,7 +57,7 @@ const router = useRouter();
 const emit = defineEmits(["handleSwap"]);
 
 const rules = {
-  username: {
+  email: {
     required,
   },
   password: {
@@ -66,7 +66,7 @@ const rules = {
 };
 
 const state = reactive<State>({
-  username: "",
+  email: "",
   password: "",
 });
 
@@ -89,26 +89,19 @@ const handleSubmit = async () => {
   if (v$.value.$invalid) {
     return false;
   }
-
-  router.push("/");
-  const adminInfor = {
-    name: "Nguyễn Đức Thành",
+  try {
+    const response: any = await DataService.post(`${ConstantAPI.login.SIGN_IN.url}`, state, null);
+    setUserInformation(response);
+    notification["success"]({
+      message: translate('LoginSuccessful')
+    });
+    router.push("/");
+  } catch (error) {
+    console.log(error);
+    notification["success"]({
+      message: translate('InvalidAccount')
+    });
   }
-  window.sessionStorage.setItem("token", "abc");
-  window.sessionStorage.setItem("adminInfo", JSON.stringify(adminInfor));
-  
-  // const response: any = await DataService.callApi(ConstantAPI.login.SIGN_IN, state, null);
-  // if (response && response === "invalid account") {
-  //   notification["error"]({
-  //     message: translate('InvalidAccount')
-  //   })
-  // } else {
-  //   notification["success"]({
-  //     message: translate('LoginSuccessful')
-  //   })
-  //   setAdminSession(response);
-  //   router.push("/");
-  // }
 };
 
 const handleKeydown = (event) => {

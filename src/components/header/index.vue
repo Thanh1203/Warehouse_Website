@@ -7,7 +7,7 @@
     <div class="tw-flex tw-h-full tw-items-center">
       <UserIcon class="tw-text-[#b0b0b0]" />
       <div class="tw-h-full tw-pt-3 tw-mx-4">
-        <div class="tw-font-[500]">{{ adminInfo.name }}</div>
+        <div class="tw-font-[500]">{{ adminInfo?.Name }}</div>
         <div class="tw-text-sm">Admin</div>
       </div>
       <a-dropdown :trigger="['click']">
@@ -47,13 +47,12 @@ const router = useRouter();
 const route = useRoute();
 
 const adminInfo = computed(() => {
-  const info = window.sessionStorage.getItem("adminInfo");
+  const info = window.sessionStorage.getItem("userInformation");
   return JSON.parse(info);
 });
 
 const handleLogOut = () => {
-  window.sessionStorage.removeItem("token");
-  window.sessionStorage.removeItem("adminInfo");
+  window.sessionStorage.removeItem("userInformation");
   router.push({ name: "signIn" });
 };
 

@@ -9,12 +9,16 @@ export const getLanguage = () => {
 };
   
 export const getToken = () => {
-    const token = window.sessionStorage.getItem("token");
+    const token = JSON.parse(window.sessionStorage.getItem("userInformation"))?.access_token;
     if (!token) {
         clearStorage();
         return undefined;
     }
     return token
+};
+
+export const getRefreshToken = () => {
+    return JSON.parse(window.sessionStorage.getItem("userInformation"))?.refresh_token;
 };
 
 export const clearStorage = async () => {
@@ -23,14 +27,6 @@ export const clearStorage = async () => {
     });
 };
 
-export const setAdminSession = (data: any) => {
-    window.sessionStorage.setItem("token", data?.token);
-    const dataAdmin = {
-        companyId: data?.companyId,
-        name: data?.name,
-        email: data?.email,
-        phoneNumber: data?.phoneNumber,
-    };
-    const dataAdminJson = JSON.stringify(dataAdmin);
-    window.sessionStorage.setItem("adminInfo", dataAdminJson);
+export const setUserInformation = (val: any) => {
+    window.sessionStorage.setItem("userInformation", JSON.stringify(val?.data));
 };

@@ -39,12 +39,7 @@ library.add(faUserSecret);
 library.add(fas);
 library.add(far);
 // createApp
-const app = createApp(App, {
-  setup() {
-    const { t } = useI18n();
-    return { t };
-  },
-});
+const app = createApp(App);
 
 app.component("font-awesome-icon", FontAwesomeIcon);
 // use

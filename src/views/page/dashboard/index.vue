@@ -3,11 +3,11 @@
     <span class="tw-text-[#aab8c5] tw-text-2xl tw-font-semibold">{{ translate('Dashboard') }}</span>
   </div>
 
-  <Compo1/>
+  <!-- <Compo1/>
 
   <Compo2/>
 
-  <Compo3/>
+  <Compo3/> -->
   
 </template>
 <script setup lang="ts">

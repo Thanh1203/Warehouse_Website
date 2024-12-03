@@ -192,11 +192,15 @@ export default {
     },
     login: {
         SIGN_IN: {
-            url: "/api/Login/signIn",
+            url: "/auth/signin",
             method: "POST"
         },
         SIGN_UP: {
-            url: "/api/Login/signUp",
+            url: "/auth/signup",
+            method: "POST"
+        },
+        REFRESH_TOKEN: {
+            url: "/auth/refresh",
             method: "POST"
         }
     }

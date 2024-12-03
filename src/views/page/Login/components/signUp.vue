@@ -15,9 +15,9 @@
         <div class="tw-basis-1/2 tw-flex tw-flex-col tw-items-start tw-mr-3">
           <span>{{ translate("PhoneNumber") }}<span class="required-star">*</span></span>
           <div class="tw-mt-2 tw-w-full">
-            <a-input class="tw-rounded-xl" v-model:value="v$.phoneNumber.$model" :status="v$.phoneNumber.$error ? 'error' : ''" />
+            <a-input class="tw-rounded-xl" v-model:value="v$.phone.$model" :status="v$.phone.$error ? 'error' : ''" />
           </div>
-          <ErrorMess title="PhoneNumber" :validator="v$.phoneNumber.$errors[0]?.$validator" />
+          <ErrorMess title="PhoneNumber" :validator="v$.phone.$errors[0]?.$validator" />
         </div>
       </div>
       <div class="tw-mb-6 tw-w-full tw-flex tw-flex-col tw-items-start">
@@ -58,13 +58,13 @@ import { REGEX_TEL } from "@/constants/index";
 import { DataService } from "@/services/request";
 import ConstantAPI from "@/services/ConstantAPI";
 import { notification } from "ant-design-vue";
-import { setAdminSession } from "@/utils";
+import { setUserInformation } from "@/utils";
 import { useRouter } from "vue-router";
 
 interface State {
   password: string;
   email: string;
-  phoneNumber: string;
+  phone: string;
   name: string;
 }
 
@@ -85,7 +85,7 @@ const rules = {
     required,
     maxLength: maxLength(128),
   },
-  phoneNumber: {
+  phone: {
     required,
     maxLength: maxLength(15),
     telephone: function (value: string) {
@@ -107,7 +107,7 @@ const state = reactive<State>({
   name: "",
   password: "",
   email: "",
-  phoneNumber: "",
+  phone: "",
 });
 const v$ = useVuelidate(rules, state);
 
@@ -116,34 +116,34 @@ const handleSubmit = async () => {
   if (v$.value.$invalid) {
     return false;
   }
-
-  const response: any = await DataService.callApi(ConstantAPI.login.SIGN_UP, state, null);
-  if (response && response === "sign up fail") {
-    notification["error"]({
-      message: translate('Register failed')
-    })
-  } else {
+  try {
+    const response: any = await DataService.post(`${ConstantAPI.login.SIGN_UP.url}`, state, null);
+    setUserInformation(response);
     notification["success"]({
-      message: translate('LoginSuccessful')
-    })
-    setAdminSession(response);
+      message: translate("LoginSuccessful"),
+    });
     router.push("/");
+  } catch (error) {
+    console.log(error);
+    notification["error"]({
+      message: translate("InvalidAccount"),
+    });
   }
 };
 
 const handleKeydown = (event) => {
-  if (event.key === 'Enter') {
+  if (event.key === "Enter") {
     handleSubmit();
   }
 };
 
 // Use onMounted to add the event listener
 onMounted(() => {
-  window.addEventListener('keydown', handleKeydown);
+  window.addEventListener("keydown", handleKeydown);
 });
 
 // Use onUnmounted to remove the event listener
 onUnmounted(() => {
-  window.removeEventListener('keydown', handleKeydown);
+  window.removeEventListener("keydown", handleKeydown);
 });
 </script>
