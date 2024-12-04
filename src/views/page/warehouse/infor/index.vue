@@ -5,24 +5,24 @@
 
   <Section :title="translate('warehouse.list')" :subTitle="translate('warehouse.number')" :number="10">
     <template #action>
-      <div class="tw-flex tw-items-center tw-flex-wrap tw-gap-4">
+      <div class="flex items-center flex-wrap gap-4">
         <a-button type="primary" danger :disabled="disabledDeleteBtn" @click="handleDelete(listSelected)">
           <font-awesome-icon :icon="['fas', 'trash']" />
-          <span class="tw-ml-3">
+          <span class="ml-3">
             {{translate("common.delete")}} 
             <span v-if="listSelected?.length > 0">({{ listSelected?.length }})</span>
           </span>
         </a-button>
         <a-button @click="handleImportFile">
-          <div class="tw-h-full tw-flex tw-items-center tw-gap-x-2">
+          <div class="h-full flex items-center gap-x-2">
             <dowloadIcon />
             {{ translate("common.importFile") }}
           </div>
         </a-button>
         <a-button type="primary" @click="handleAddnew">{{ translate("warehouse.addNew") }}</a-button>
       </div>
-      <div class="tw-mt-4 tw-flex tw-items-center tw-gap-4">
-        <div class="tw-text-sm tw-min-w-max">{{ translate("common.search") }}:</div>
+      <div class="mt-4 flex items-center gap-4">
+        <div class="text-sm min-w-max">{{ translate("common.search") }}:</div>
         <a-input-search :placeholder="translate('warehouse.insertName')" v-model:value="filterSearching"/>
       </div>
     </template>

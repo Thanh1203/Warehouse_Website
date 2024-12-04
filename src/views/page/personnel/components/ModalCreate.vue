@@ -1,36 +1,36 @@
 <template>
   <BaseModal :visible="isVisible" :title="title" :default-footer="false" @cancel="$emit('closeModal')">
-    <a-form @submit.prevent="handleSubmit" class="tw-mb-6">
+    <a-form @submit.prevent="handleSubmit" class="mb-6">
 
-      <div class="tw-w-full tw-flex tw-items-start tw-mb-6">
-        <div class="tw-basis-1/2 tw-flex tw-flex-col tw-items-start tw-justify-start tw-mr-4">
+      <div class="w-full flex items-start mb-6">
+        <div class="basis-1/2 flex flex-col items-start justify-start mr-4">
           <span>{{ translate("EmployeeCode") }}<span class="required-star">*</span></span>
-          <div class="tw-mt-2 tw-w-full">
+          <div class="mt-2 w-full">
             <a-input :disabled="isEdit" :placeholder="translate('EmployeeCode')" v-model:value="v$.code.$model" :status="v$.code.$error ? 'error' : ''" />
           </div>
           <ErrorMess :params="[64]" title="EmployeeCode" :validator="v$.code.$errors[0]?.$validator" />
         </div>
-        <div class="tw-basis-1/2 tw-flex tw-flex-col tw-items-start tw-justify-start tw-ml-4">
+        <div class="basis-1/2 flex flex-col items-start justify-start ml-4">
           <span>{{ translate("EmployeeName") }}<span class="required-star">*</span></span>
-          <div class="tw-mt-2 tw-w-full">
+          <div class="mt-2 w-full">
             <a-input :placeholder="translate('EmployeeName')" v-model:value="v$.name.$model" :status="v$.name.$error ? 'error' : ''" />
           </div>
           <ErrorMess title="EmployeeName" :validator="v$.name.$errors[0]?.$validator" />
         </div>
       </div>
 
-      <div class="tw-w-full tw-flex tw-items-start tw-mb-6">
-        <div class="tw-basis-1/2 tw-flex tw-flex-col tw-items-start tw-justify-start tw-mr-4">
+      <div class="w-full flex items-start mb-6">
+        <div class="basis-1/2 flex flex-col items-start justify-start mr-4">
           <span>{{ translate("Role") }}<span class="required-star">*</span></span>
-          <div class="tw-w-full tw-mt-2">
+          <div class="w-full mt-2">
             <a-input :placeholder="translate('Role')" v-model:value="v$.role.$model" :status="v$.role.$error ? 'error' : ''" />
           </div>
           <ErrorMess title="Role" :validator="v$.role.$errors[0]?.$validator" />
         </div>
 
-        <div class="tw-basis-1/2 tw-flex tw-flex-col tw-items-start tw-justify-start tw-ml-4">
+        <div class="basis-1/2 flex flex-col items-start justify-start ml-4">
           <span>{{ translate("Address") }}</span>
-          <div class="tw-mt-2 tw-w-full">
+          <div class="mt-2 w-full">
             <a-input :placeholder="translate('Address')" v-model:value="v$.address.$model" />
           </div>
         </div>
@@ -42,7 +42,7 @@
         <template #icon>
           <font-awesome-icon :icon="['far', 'floppy-disk']" />
         </template>
-        <span class="tw-ml-2 tw-text-sm">{{ translate("Save") }}</span>
+        <span class="ml-2 text-sm">{{ translate("Save") }}</span>
       </AntdButton>
     </template>
   </BaseModal>

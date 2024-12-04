@@ -1,24 +1,24 @@
 <template>
-  <div class="tw-mb-6 tw-h-8 tw-flex tw-justify-between">
-    <div class="tw-text-xl tw-text-[#aab8c5] tw-font-semibold">{{ translate("reportCustomer.NumberNewCustomers") }}</div>
-    <div class="tw-flex tw-items-center">
-      <a-button class="tw-mr-2 tw-text-[#aab8c5]" type="gray-hover" shape="circle" @click="prevYear">
+  <div class="mb-6 h-8 flex justify-between">
+    <div class="text-xl text-[#aab8c5] font-semibold">{{ translate("reportCustomer.NumberNewCustomers") }}</div>
+    <div class="flex items-center">
+      <a-button class="mr-2 text-[#aab8c5]" type="gray-hover" shape="circle" @click="prevYear">
         <font-awesome-icon :icon="['fas', 'circle-chevron-left']" size="xl" />
       </a-button>
 
-      <div class="tw-flex tw-items-center">
-        <div class="tw-text-xl tw-text-[#aab8c5] tw-mr-[-24px]">{{ translate("Year") }}</div>
-        <a-date-picker class="date-picker-shedule tw-p-0 tw-m-0 tw-border-none" picker="year" v-model:value="formState.time" :bordered="false" :allowClear="false">
+      <div class="flex items-center">
+        <div class="text-xl text-[#aab8c5] mr-[-24px]">{{ translate("Year") }}</div>
+        <a-date-picker class="date-picker-shedule p-0 m-0 border-none" picker="year" v-model:value="formState.time" :bordered="false" :allowClear="false">
           <template #suffixIcon> </template>
         </a-date-picker>
       </div>
 
-      <a-button class="tw-mr-1 tw-text-[#aab8c5]" type="gray-hover" shape="circle" @click="nextYear">
+      <a-button class="mr-1 text-[#aab8c5]" type="gray-hover" shape="circle" @click="nextYear">
         <font-awesome-icon :icon="['fas', 'circle-chevron-right']" size="xl" />
       </a-button>
     </div>
   </div>
-  <div class="tw-h-[410px]">
+  <div class="h-[410px]">
     <Chartline :data="dataChartLine"/>
   </div>
 </template>

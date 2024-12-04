@@ -1,7 +1,7 @@
 <template>
-  <div class="tw-w-full section-ctn tw-p-4 tw-rounded-lg tw-mb-6">
-    <div class="tw-mb-4 tw-font-semibold">{{ translate('common.coupons') }}</div>
-    <a-select class="tw-w-full" :options="dataCoupons" :placeholder="translate('common.selectCoupon')"/>
+  <div class="w-full section-ctn p-4 rounded-lg mb-6">
+    <div class="mb-4 font-semibold">{{ translate('common.coupons') }}</div>
+    <a-select class="w-full" :options="dataCoupons" :placeholder="translate('common.selectCoupon')"/>
   </div>
 </template>
 <script setup lang="ts">

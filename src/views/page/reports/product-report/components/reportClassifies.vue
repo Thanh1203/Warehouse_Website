@@ -1,11 +1,11 @@
 <template>
-  <div class="tw-grid tw-grid-cols-1 tw-gap-4 xl:tw-grid-cols-2">
-    <div class="tw-w-full tw-pr-2 tw-flex tw-items-center tw-justify-center">
+  <div class="grid grid-cols-1 gap-4 xl:grid-cols-2">
+    <div class="w-full pr-2 flex items-center justify-center">
       <Chartpie :data="dataClassify" :show-legend="false" v-if="!loading" />
       <a-skeleton v-else :loading="loading" active />
     </div>
-    <div class="tw-w-full">
-      <a-table v-if="!loading" key-field="id" :columns="columns" :dataSource="data" :pagination="false" :sticky="true" class="tw-h-[500px] tw-overflow-hidden tw-overflow-y-auto">
+    <div class="w-full">
+      <a-table v-if="!loading" key-field="id" :columns="columns" :dataSource="data" :pagination="false" :sticky="true" class="h-[500px] overflow-hidden overflow-y-auto">
         <template #emptyText>
           <a-empty :description="translate('noData')" />
         </template>

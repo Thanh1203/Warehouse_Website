@@ -1,49 +1,42 @@
 <template>
-  <a-form class="tw-flex tw-rounded-xl tw-bg-white tw-px-6 tw-py-5 tw-mb-6">
-    <a-form-item class="tw-w-[250px] !tw-mr-3">
-      <span class="tw-opacity-70">{{ translate("EmployeeCode") }}</span>
-      <a-input :placeholder="translate('Search')" v-model:value="filterSearching.code" class="tw-mt-2" />
-    </a-form-item>
-    <a-form-item class="tw-w-[250px] !tw-mr-3">
-      <span class="tw-opacity-70">{{ translate("EnterEmployeeName") }}</span>
-      <a-input :placeholder="translate('Search')" v-model:value="filterSearching.name" class="tw-mt-2" />
-    </a-form-item>
-    <a-form-item class="tw-w-[200px] !tw-mr-3">
-      <span class="tw-opacity-70">{{ translate("SelectArea") }}</span>
-      <a-select :placeholder="translate('SelectArea')" v-model:value="filterSearching.address" :options="personnelAddress?.map((e) => ({ value: e, label: e }))" class="tw-mt-2" />
-    </a-form-item>
-    <a-form-item class="tw-flex tw-items-end">
-      <AntdButton :type="'text'" danger :disabled="disabledDeleteFilter" @click="handleClearFilter">
-        <template #icon>
-          <font-awesome-icon :icon="['far', 'trash-can']" />
-        </template>
-        <span class="tw-ml-2">{{ translate("Delete") }}</span>
-      </AntdButton>
-    </a-form-item>
-  </a-form>
-  <Section
-    :title="translate('PersonnelList')"
-    :sub-title="translate('NumberOfPersonnel')"
-    :number="totalPersonnel"
-    class="tw-w-full tw-h-full tw-bg-white tw-overflow-hidden"
-  >
+  <div class="section w-full mb-4 text-sm grid grid-cols-5 gap-4">
+    <div>
+      <span class="opacity-70">{{ translate("EmployeeName") }}</span>
+      <a-input :placeholder="translate('common.Search')" v-model:value="filterSearching.name" class="mt-2" />
+    </div>
+    <div>
+      <span class="opacity-70">{{ translate("PhoneNumber") }}</span>
+      <a-input :placeholder="translate('common.Search')" v-model:value="filterSearching.phone" class="mt-2" />
+    </div>
+    <div>
+      <span class="opacity-70">{{ translate("Role") }}</span>
+      <a-input :placeholder="translate('common.Search')" v-model:value="filterSearching.role" class="mt-2" />
+    </div>
+    <div class="flex items-end justify-items-start">
+      <a-button type="text" danger class="flex gap-2 items-center">
+        <font-awesome-icon :icon="['far', 'trash-can']" />
+        <span>{{ translate("common.Delete") }}</span>
+      </a-button>
+    </div>
+  </div>
+  <Section :title="translate('PersonnelList')" :sub-title="translate('NumberOfPersonnel')" :number="totalPersonnel">
     <template #action>
-      <AntdButton :type="'text'" danger class="tw-mr-2" :disabled="disableDeleteMany" @click="handleDeletePersonnel(listSelect, true)">
-        <template #icon>
-          <font-awesome-icon :icon="['far', 'trash-can']" />
-        </template>
-        <span class="tw-text-sm tw-ml-2"
-          >{{ translate("Delete") }}<span v-if="listSelect?.length > 0">({{ listSelect?.length }})</span></span
-        >
-      </AntdButton>
-      <AntdButton :type="'primary'" @click="handleCreate">
-        <template #icon>
-          <font-awesome-icon :icon="['fas', 'plus']" />
-        </template>
-        <span class="tw-text-sm tw-ml-2">{{ translate("AddNew") }}</span>
-      </AntdButton>
+      <a-button type="text" danger class="flex gap-2 items-center">
+        <font-awesome-icon :icon="['far', 'trash-can']" />
+        <span>{{ translate("common.Delete") }}</span>
+      </a-button>
+      <a-button type="primary" class="flex gap-2 items-center">
+        <font-awesome-icon :icon="['fas', 'plus']" />
+        <span>{{ translate('AddNew') }}</span>
+      </a-button>
     </template>
-    <template #body>
+
+    <template #content>
+      <a-table :columns="columns">
+
+      </a-table>
+    </template>
+    <!-- <template #body>
       <AntdTable
         ref="table"
         key-field="id"
@@ -53,7 +46,7 @@
         :has-checkbox="true"
         :no-sort="true"
         @onSelected="handleSelectRow"
-        class="tw-w-full tw-h-[calc(100vh-290px)] tw-overflow-hidden tw-overflow-y-auto"
+        class="w-full h-[calc(100vh-290px)] overflow-hidden overflow-y-auto"
         v-if="!loading"
       >
         <template #custom-body="{ column, record }">
@@ -71,7 +64,7 @@
       </AntdTable>
 
       <a-skeleton v-else active />
-    </template>
+    </template> -->
   </Section>
 
   <!-- modal -->
@@ -116,21 +109,9 @@ const titleModal = ref<string>("");
 const listSelect = ref<Array<any>>([]);
 const columns = ref<Array<any>>([
   {
-    title: translate("EmployeeCode"),
-    dataIndex: "code",
-    key: "code",
-    align: "left",
-  },
-  {
     title: translate("EmployeeName"),
     dataIndex: "name",
     key: "name",
-    align: "left",
-  },
-  {
-    title: translate("Address"),
-    dataIndex: "address",
-    key: "address",
     align: "left",
   },
   {
@@ -140,9 +121,27 @@ const columns = ref<Array<any>>([
     aligin: "left",
   },
   {
+    title: translate("PhoneNumber"),
+    dataIndex: "phone",
+    key: "phone",
+    aligin: "left",
+  },
+  {
+    title: translate("Email"),
+    dataIndex: "email",
+    key: "email",
+    aligin: "left",
+  },
+  {
+    title: translate("Address"),
+    dataIndex: "address",
+    key: "address",
+    align: "left",
+  },
+  {
     dataIndex: "action",
     key: "action",
-    width: 100,
+    width: 150,
     align: "center",
     fixed: "right",
   },
@@ -150,8 +149,8 @@ const columns = ref<Array<any>>([
 
 const filterSearching = reactive<any>({
   name: "",
-  address: null,
-  code: "",
+  phone: "",
+  role: "",
 });
 
 const formState = reactive<FormState>({

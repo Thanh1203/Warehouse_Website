@@ -1,5 +1,5 @@
 <template>
-  <a-breadcrumb class="tw-mb-4">
+  <a-breadcrumb class="mb-4">
     <a-breadcrumb-item><a href="/">{{ translate('Home') }}</a></a-breadcrumb-item>
     <a-breadcrumb-item v-for="item in list">
       <a :href="item.url">{{ item.title }}</a>

@@ -13,7 +13,7 @@
   >
     <Suspense>
       <template #default>
-        <div class="tw-mb-6">
+        <div class="mb-6">
           <slot name="body-modal"></slot>
         </div>
       </template>

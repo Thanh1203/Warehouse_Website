@@ -1,10 +1,10 @@
 <template>
-  <div class="tw-mb-6 tw-w-full tw-rounded-lg section-ctn tw-p-4">
-    <div class="tw-mb-4 tw-font-semibold tw-flex tw-items-center tw-justify-between">
+  <div class="mb-6 w-full rounded-lg section-ctn p-4">
+    <div class="mb-4 font-semibold flex items-center justify-between">
       <div>{{ translate("product.list") }}</div>
       <a-button type="text" danger :disabled="disabledDeleteBtn" @click="handleDelete(listSelected)">
         <font-awesome-icon :icon="['fas', 'trash']" />
-        <span class="tw-ml-3">
+        <span class="ml-3">
           {{ translate("common.delete") }}
           <span v-if="listSelected?.length > 0">({{ listSelected?.length }})</span>
         </span>

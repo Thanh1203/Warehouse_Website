@@ -1,47 +1,47 @@
 <template>
-  <div class="tw-mt-4 tw-w-full tw-grid tw-gap-4 tw-grid-cols-1 xl:tw-grid-cols-4 xl:tw-gap-8">
-    <div class="tw-w-full tw-grid tw-gap-4 tw-grid-cols-1 md:tw-grid-cols-2 xl:tw-grid-cols-1 xl:tw-gap-6 tw-h-[464px] md:tw-h-[232px] xl:tw-h-[488px]">
-      <div class="tw-bg-[#37404a] tw-rounded-lg tw-p-4 tw-h-full">
-        <div class="tw-flex tw-justify-between">
-          <div class="tw-text-[#8391a2] tw-text-base tw-truncate tw-font-semibold">{{ translate("CurrentRevenue") }}</div>
-          <div class="tw-bg-[#464F74] tw-p-3 tw-rounded-lg">
+  <div class="mt-4 w-full grid gap-4 grid-cols-1 xl:grid-cols-4 xl:gap-8">
+    <div class="w-full grid gap-4 grid-cols-1 md:grid-cols-2 xl:grid-cols-1 xl:gap-6 h-[464px] md:h-[232px] xl:h-[488px]">
+      <div class="bg-[#37404a] rounded-lg p-4 h-full">
+        <div class="flex justify-between">
+          <div class="text-[#8391a2] text-base truncate font-semibold">{{ translate("CurrentRevenue") }}</div>
+          <div class="bg-[#464F74] p-3 rounded-lg">
             <font-awesome-icon :icon="['fas', 'money-check-dollar']" size="xl" style="color: #727cf5" />
           </div>
         </div>
 
-        <div class="tw-flex tw-items-center tw-h-[calc(100%-49px)]">
-          <div class="tw-text-[#aab8c5] tw-truncate">
-            <NumberAnimation v-if="!loading" :from="0" :to="100000000" :duration="1" autoplay easing="linear" :format="theFormat" class="tw-text-4xl" />
+        <div class="flex items-center h-[calc(100%-49px)]">
+          <div class="text-[#aab8c5] truncate">
+            <NumberAnimation v-if="!loading" :from="0" :to="100000000" :duration="1" autoplay easing="linear" :format="theFormat" class="text-4xl" />
             <a-skeleton-input v-else :loading="loading" :paragraph="{ rows: 0 }" active size="small" />
           </div>
         </div>
       </div>
 
-      <div class="tw-bg-[#37404a] tw-rounded-lg tw-p-4 tw-h-full">
-        <div class="tw-flex tw-justify-between">
-          <div class="tw-text-[#8391a2] tw-text-base tw-truncate tw-font-semibold">{{ translate("ReturnCustomerRate") }}</div>
-          <div class="tw-bg-[#464F74] tw-p-3 tw-rounded-lg">
+      <div class="bg-[#37404a] rounded-lg p-4 h-full">
+        <div class="flex justify-between">
+          <div class="text-[#8391a2] text-base truncate font-semibold">{{ translate("ReturnCustomerRate") }}</div>
+          <div class="bg-[#464F74] p-3 rounded-lg">
             <font-awesome-icon :icon="['fas', 'percent']" size="xl" style="color: #727cf5" />
           </div>
         </div>
 
-        <div class="tw-flex tw-items-center tw-justify-around tw-flex-wrap tw-gap-x-6 tw-h-[calc(100%-49px)]">
-          <div class="tw-w-[120px] tw-h-[120px]">
+        <div class="flex items-center justify-around flex-wrap gap-x-6 h-[calc(100%-49px)]">
+          <div class="w-[120px] h-[120px]">
             <ChartDoughnut :data="dataChartDoughnut"/>
           </div>
-          <div v-if="!loading" class="tw-flex tw-items-center tw-truncate" :class="setTextColor(80)">
+          <div v-if="!loading" class="flex items-center truncate" :class="setTextColor(80)">
             <font-awesome-icon :icon="['fas', 'arrow-up']" size="xl" />
-            <NumberAnimation :from="0" :to="80" :duration="1" autoplay easing="linear" :format="theFormatPercent" class="tw-text-4xl tw-ml-2" />
-            <span class="tw-text-2xl tw-ml-1">%</span>
+            <NumberAnimation :from="0" :to="80" :duration="1" autoplay easing="linear" :format="theFormatPercent" class="text-4xl ml-2" />
+            <span class="text-2xl ml-1">%</span>
           </div>
           <a-skeleton-input v-else :loading="loading" :paragraph="{ rows: 0 }" active size="small" />
         </div>
       </div>
     </div>
 
-    <div class="tw-bg-[#37404a] tw-rounded-lg tw-p-4 xl:tw-col-span-3">
-      <div class="tw-text-xl tw-text-[#aab8c5] tw-font-semibold tw-mb-6 tw-h-8">{{ translate("WeeklyRevenue") }}</div>
-      <div class="tw-flex tw-justify-center tw-h-[400px]">
+    <div class="bg-[#37404a] rounded-lg p-4 xl:col-span-3">
+      <div class="text-xl text-[#aab8c5] font-semibold mb-6 h-8">{{ translate("WeeklyRevenue") }}</div>
+      <div class="flex justify-center h-[400px]">
         <Chartbar v-if="!loading" :data="dataChartBar" />
         <a-skeleton v-else :loading="loading" active />
       </div>

@@ -1,130 +1,130 @@
 <template>
-  <div class="tw-w-full tw-grid tw-gap-4 tw-grid-cols-1 md:tw-grid-cols-2 lg:tw-grid-cols-4 lg:tw-gap-8 tw-mb-6">
-    <div class="tw-bg-[#37404a] tw-h-[160px] tw-p-4 tw-rounded-lg">
-      <div class="tw-text-[#8391a2] tw-text-base tw-truncate tw-font-semibold tw-w-full tw-h-12">{{ translate("reportCommon.byWeek") }}</div>
-      <div class="tw-text-[#aab8c5] tw-mb-6">
-        <NumberAnimation v-if="!loading" :from="0" :to="1000" :duration="1" autoplay easing="linear" :format="theFormat" class="tw-text-xl" />
+  <div class="w-full grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 lg:gap-8 mb-6">
+    <div class="bg-[#37404a] h-[160px] p-4 rounded-lg">
+      <div class="text-[#8391a2] text-base truncate font-semibold w-full h-12">{{ translate("reportCommon.byWeek") }}</div>
+      <div class="text-[#aab8c5] mb-6">
+        <NumberAnimation v-if="!loading" :from="0" :to="1000" :duration="1" autoplay easing="linear" :format="theFormat" class="text-xl" />
         <a-skeleton-input v-else :loading="loading" :paragraph="{ rows: 0 }" active size="small" />
       </div>
-      <div class="tw-flex tw-items-center tw-truncate tw-gap-3">
-        <div :class="['tw-text-sm', statusTemp ? 'tw-text-[#0acf97]' : 'tw-text-[#fa5c7c]']">
+      <div class="flex items-center truncate gap-3">
+        <div :class="['text-sm', statusTemp ? 'text-[#0acf97]' : 'text-[#fa5c7c]']">
           <font-awesome-icon :icon="['fas', 'arrow-up']" v-if="statusTemp" />
           <font-awesome-icon :icon="['fas', 'arrow-down']" v-else />
           5.27%
         </div>
         <a-tooltip>
           <template #title>{{ translate("reportCommon.sinceLastWeek") }}</template>
-          <span class="tw-text-[#8391a2]">{{ translate("reportCommon.sinceLastWeek") }}</span>
+          <span class="text-[#8391a2]">{{ translate("reportCommon.sinceLastWeek") }}</span>
         </a-tooltip>
       </div>
     </div>
 
-    <div class="tw-bg-[#37404a] tw-h-[160px] tw-p-4 tw-rounded-lg tw-flex tw-flex-col tw-justify-between">
-      <div class="tw-text-[#8391a2] tw-text-base tw-truncate tw-font-semibold tw-w-full tw-h-12">{{ translate("reportCommon.byMonth") }}</div>
-      <div class="tw-text-[#aab8c5] tw-mb-6">
-        <NumberAnimation v-if="!loading" :from="0" :to="2000" :duration="1" autoplay easing="linear" :format="theFormat" class="tw-text-xl" />
+    <div class="bg-[#37404a] h-[160px] p-4 rounded-lg flex flex-col justify-between">
+      <div class="text-[#8391a2] text-base truncate font-semibold w-full h-12">{{ translate("reportCommon.byMonth") }}</div>
+      <div class="text-[#aab8c5] mb-6">
+        <NumberAnimation v-if="!loading" :from="0" :to="2000" :duration="1" autoplay easing="linear" :format="theFormat" class="text-xl" />
         <a-skeleton-input v-else :loading="loading" :paragraph="{ rows: 0 }" active size="small" />
       </div>
-      <div class="tw-flex tw-items-center tw-truncate tw-gap-3">
-        <div :class="['tw-text-sm', !statusTemp ? 'tw-text-[#0acf97]' : 'tw-text-[#fa5c7c]']">
+      <div class="flex items-center truncate gap-3">
+        <div :class="['text-sm', !statusTemp ? 'text-[#0acf97]' : 'text-[#fa5c7c]']">
           <font-awesome-icon :icon="['fas', 'arrow-up']" v-if="!statusTemp" />
           <font-awesome-icon :icon="['fas', 'arrow-down']" v-else />
           5.27%
         </div>
         <a-tooltip>
           <template #title>{{ translate("reportCommon.sinceLastMonth") }}</template>
-          <span class="tw-text-[#8391a2]">{{ translate("reportCommon.sinceLastMonth") }}</span>
+          <span class="text-[#8391a2]">{{ translate("reportCommon.sinceLastMonth") }}</span>
         </a-tooltip>
       </div>
     </div>
 
-    <div class="tw-bg-[#37404a] tw-h-[160px] tw-p-4 tw-rounded-lg tw-flex tw-flex-col tw-justify-between">
-      <div class="tw-text-[#8391a2] tw-text-base tw-truncate tw-font-semibold tw-w-full tw-h-12">{{ translate("reportCommon.byQuater") }}</div>
-      <div class="tw-text-[#aab8c5] tw-mb-6">
-        <NumberAnimation v-if="!loading" :from="0" :to="1500" :duration="1" autoplay easing="linear" :format="theFormat" class="tw-text-xl" />
+    <div class="bg-[#37404a] h-[160px] p-4 rounded-lg flex flex-col justify-between">
+      <div class="text-[#8391a2] text-base truncate font-semibold w-full h-12">{{ translate("reportCommon.byQuater") }}</div>
+      <div class="text-[#aab8c5] mb-6">
+        <NumberAnimation v-if="!loading" :from="0" :to="1500" :duration="1" autoplay easing="linear" :format="theFormat" class="text-xl" />
         <a-skeleton-input v-else :loading="loading" :paragraph="{ rows: 0 }" active size="small" />
       </div>
-      <div class="tw-flex tw-items-center tw-truncate tw-gap-3">
-        <div :class="['tw-text-sm', statusTemp ? 'tw-text-[#0acf97]' : 'tw-text-[#fa5c7c]']">
+      <div class="flex items-center truncate gap-3">
+        <div :class="['text-sm', statusTemp ? 'text-[#0acf97]' : 'text-[#fa5c7c]']">
           <font-awesome-icon :icon="['fas', 'arrow-up']" v-if="statusTemp" />
           <font-awesome-icon :icon="['fas', 'arrow-down']" v-else />
           5.27%
         </div>
         <a-tooltip>
           <template #title>{{ translate("reportCommon.sinceLastQuater") }}</template>
-          <span class="tw-text-[#8391a2]">{{ translate("reportCommon.sinceLastQuater") }}</span>
+          <span class="text-[#8391a2]">{{ translate("reportCommon.sinceLastQuater") }}</span>
         </a-tooltip>
       </div>
     </div>
 
-    <div class="tw-bg-[#37404a] tw-h-[160px] tw-p-4 tw-rounded-lg tw-flex tw-flex-col tw-justify-between">
-      <div class="tw-text-[#8391a2] tw-text-base tw-truncate tw-font-semibold tw-w-full tw-h-12">{{ translate("reportCommon.byYear") }}</div>
-      <div class="tw-text-[#aab8c5] tw-mb-6">
-        <NumberAnimation v-if="!loading" :from="0" :to="2000" :duration="1" autoplay easing="linear" :format="theFormat" class="tw-text-xl" />
+    <div class="bg-[#37404a] h-[160px] p-4 rounded-lg flex flex-col justify-between">
+      <div class="text-[#8391a2] text-base truncate font-semibold w-full h-12">{{ translate("reportCommon.byYear") }}</div>
+      <div class="text-[#aab8c5] mb-6">
+        <NumberAnimation v-if="!loading" :from="0" :to="2000" :duration="1" autoplay easing="linear" :format="theFormat" class="text-xl" />
         <a-skeleton-input v-else :loading="loading" :paragraph="{ rows: 0 }" active size="small" />
       </div>
-      <div class="tw-flex tw-items-center tw-truncate tw-gap-3">
-        <div :class="['tw-text-sm', !statusTemp ? 'tw-text-[#0acf97]' : 'tw-text-[#fa5c7c]']">
+      <div class="flex items-center truncate gap-3">
+        <div :class="['text-sm', !statusTemp ? 'text-[#0acf97]' : 'text-[#fa5c7c]']">
           <font-awesome-icon :icon="['fas', 'arrow-up']" v-if="!statusTemp" />
           <font-awesome-icon :icon="['fas', 'arrow-down']" v-else />
           5.27%
         </div>
         <a-tooltip>
           <template #title>{{ translate("reportCommon.sinceLastYear") }}</template>
-          <span class="tw-text-[#8391a2]">{{ translate("reportCommon.sinceLastYear") }}</span>
+          <span class="text-[#8391a2]">{{ translate("reportCommon.sinceLastYear") }}</span>
         </a-tooltip>
       </div>
     </div>
   </div>
 
-  <div class="tw-w-full tw-mb-6 tw-grid tw-grid-cols-1 tw-gap-4 lg:tw-gap-8 lg:tw-grid-cols-4">
-    <div class="tw-w-full tw-grid tw-grid-cols-1 tw-gap-6 md:tw-grid-cols-3 lg:tw-grid-cols-1">
-      <div class="tw-w-full tw-h-[120px] tw-bg-[#37404a] tw-p-4 tw-rounded-lg">
-        <div class="tw-w-full tw-flex tw-items-center tw-justify-between tw-text-[#aab8c5] tw-font-semibold">
+  <div class="w-full mb-6 grid grid-cols-1 gap-4 lg:gap-8 lg:grid-cols-4">
+    <div class="w-full grid grid-cols-1 gap-6 md:grid-cols-3 lg:grid-cols-1">
+      <div class="w-full h-[120px] bg-[#37404a] p-4 rounded-lg">
+        <div class="w-full flex items-center justify-between text-[#aab8c5] font-semibold">
           {{ translate("reportSale.averageDaily") }}
-          <div class="tw-rounded-full tw-bg-[#464F74] tw-h-10 tw-w-10 tw-flex tw-items-center tw-justify-center">
+          <div class="rounded-full bg-[#464F74] h-10 w-10 flex items-center justify-center">
             <font-awesome-icon :icon="['fas', 'sack-dollar']" style="color: #ffffff" />
           </div>
         </div>
 
-        <div class="tw-text-[#aab8c5] tw-mt-4">
-          <NumberAnimation v-if="!loading" :from="0" :to="5000" :duration="1" autoplay easing="linear" :format="theFormat" class="tw-text-2xl" />
+        <div class="text-[#aab8c5] mt-4">
+          <NumberAnimation v-if="!loading" :from="0" :to="5000" :duration="1" autoplay easing="linear" :format="theFormat" class="text-2xl" />
           <a-skeleton-input v-else :loading="loading" :paragraph="{ rows: 0 }" active size="small" />
         </div>
       </div>
 
-      <div class="tw-w-full tw-h-[120px] tw-bg-[#37404a] tw-p-4 tw-rounded-lg">
-        <div class="tw-w-full tw-flex tw-items-center tw-justify-between tw-text-[#aab8c5] tw-font-semibold">
+      <div class="w-full h-[120px] bg-[#37404a] p-4 rounded-lg">
+        <div class="w-full flex items-center justify-between text-[#aab8c5] font-semibold">
           {{ translate("reportSale.averageMonthly") }}
-          <div class="tw-rounded-full tw-bg-[#464F74] tw-h-10 tw-w-10 tw-flex tw-items-center tw-justify-center">
+          <div class="rounded-full bg-[#464F74] h-10 w-10 flex items-center justify-center">
             <font-awesome-icon :icon="['fas', 'sack-dollar']" style="color: #ffffff" />
           </div>
         </div>
 
-        <div class="tw-text-[#aab8c5] tw-mt-4">
-          <NumberAnimation v-if="!loading" :from="0" :to="5000" :duration="1" autoplay easing="linear" :format="theFormat" class="tw-text-2xl" />
+        <div class="text-[#aab8c5] mt-4">
+          <NumberAnimation v-if="!loading" :from="0" :to="5000" :duration="1" autoplay easing="linear" :format="theFormat" class="text-2xl" />
           <a-skeleton-input v-else :loading="loading" :paragraph="{ rows: 0 }" active size="small" />
         </div>
       </div>
 
-      <div class="tw-w-full tw-h-[120px] tw-bg-[#37404a] tw-p-4 tw-rounded-lg">
-        <div class="tw-w-full tw-flex tw-items-center tw-justify-between tw-text-[#aab8c5] tw-font-semibold">
+      <div class="w-full h-[120px] bg-[#37404a] p-4 rounded-lg">
+        <div class="w-full flex items-center justify-between text-[#aab8c5] font-semibold">
           {{ translate("reportSale.averageQuarterly") }}
-          <div class="tw-rounded-full tw-bg-[#464F74] tw-h-10 tw-w-10 tw-flex tw-items-center tw-justify-center">
+          <div class="rounded-full bg-[#464F74] h-10 w-10 flex items-center justify-center">
             <font-awesome-icon :icon="['fas', 'sack-dollar']" style="color: #ffffff" />
           </div>
         </div>
 
-        <div class="tw-text-[#aab8c5] tw-mt-4">
-          <NumberAnimation v-if="!loading" :from="0" :to="5000" :duration="1" autoplay easing="linear" :format="theFormat" class="tw-text-2xl" />
+        <div class="text-[#aab8c5] mt-4">
+          <NumberAnimation v-if="!loading" :from="0" :to="5000" :duration="1" autoplay easing="linear" :format="theFormat" class="text-2xl" />
           <a-skeleton-input v-else :loading="loading" :paragraph="{ rows: 0 }" active size="small" />
         </div>
       </div>
     </div>
 
-    <div class="tw-bg-[#37404a] tw-rounded-lg tw-p-4 lg:tw-col-span-3">
-      <div class="tw-mb-3 tw-text-xl tw-text-[#aab8c5] tw-font-semibold">{{ translate("Revenue") }}</div>
-      <div class="tw-w-full tw-h-[calc(100%-40px)]">
+    <div class="bg-[#37404a] rounded-lg p-4 lg:col-span-3">
+      <div class="mb-3 text-xl text-[#aab8c5] font-semibold">{{ translate("Revenue") }}</div>
+      <div class="w-full h-[calc(100%-40px)]">
         <Chartline v-if="!loading" :data="dataChartLine" :showLegend="true" />
         <a-skeleton v-else :loading="loading" active />
       </div>

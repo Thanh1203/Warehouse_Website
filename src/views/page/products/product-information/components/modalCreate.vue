@@ -1,29 +1,29 @@
 <template>
   <BaseModal :visible="isVisible" :title="titleModal" :defaultFooter="false" @cancel="$emit('closeModal')">
-    <a-form class="tw-mb-6">
-      <div class="tw-w-full tw-flex tw-items-start tw-mb-6">
-        <div class="tw-basis-1/2 tw-mr-2 tw-flex tw-flex-col tw-justify-start tw-items-start">
+    <a-form class="mb-6">
+      <div class="w-full flex items-start mb-6">
+        <div class="basis-1/2 mr-2 flex flex-col justify-start items-start">
           <span>{{ translate("ProductCode") }}<span class="required-star">*</span></span>
-          <div class="tw-w-full">
-            <a-input :placeholder="translate('ProductCode')" :status="v$.code.$error ? 'error' : ''" :disabled="isEdit" class="tw-mt-2" v-model:value="v$.code.$model" />
+          <div class="w-full">
+            <a-input :placeholder="translate('ProductCode')" :status="v$.code.$error ? 'error' : ''" :disabled="isEdit" class="mt-2" v-model:value="v$.code.$model" />
           </div>
           <ErrorMess :params="[64]" title="ProductCode" :validator="v$.code.$errors[0]?.$validator" />
         </div>
-        <div class="tw-basis-1/2 tw-ml-2 tw-flex tw-flex-col tw-justify-start tw-items-start">
+        <div class="basis-1/2 ml-2 flex flex-col justify-start items-start">
           <span>{{ translate("ProductName") }}<span class="required-star">*</span></span>
-          <div class="tw-w-full">
-            <a-input :placeholder="translate('ProductName')" class="tw-mt-2" v-model:value="v$.name.$model" :status="v$.name.$error ? 'error' : ''" />
+          <div class="w-full">
+            <a-input :placeholder="translate('ProductName')" class="mt-2" v-model:value="v$.name.$model" :status="v$.name.$error ? 'error' : ''" />
           </div>
           <ErrorMess :params="[64]" title="ProductName" :validator="v$.name.$errors[0]?.$validator" />
         </div>
       </div>
-      <div class="tw-w-full tw-flex tw-items-start tw-mb-6">
-        <div class="tw-basis-1/2 tw-mr-2 tw-flex tw-flex-col tw-justify-start tw-items-start">
+      <div class="w-full flex items-start mb-6">
+        <div class="basis-1/2 mr-2 flex flex-col justify-start items-start">
           <span>{{ translate("ProductCategory") }}<span class="required-star">*</span></span>
-          <div class="tw-w-full">
+          <div class="w-full">
             <a-select
               :placeholder="translate('ProductCategory')"
-              class="tw-mt-2 tw-w-full"
+              class="mt-2 w-full"
               v-model:value="v$.categoryId.$model"
               :options="categoryData.map((x) => ({ value: x.id, label: x.name }))"
               :status="v$.categoryId.$error ? 'error' : ''"
@@ -31,12 +31,12 @@
           </div>
           <ErrorMess :params="[64]" title="ProductCategory" :validator="v$.categoryId.$errors[0]?.$validator" />
         </div>
-        <div class="tw-basis-1/2 tw-ml-2 tw-flex tw-flex-col tw-justify-start tw-items-start">
+        <div class="basis-1/2 ml-2 flex flex-col justify-start items-start">
           <span>{{ translate("Classify") }}<span class="required-star">*</span></span>
-          <div class="tw-w-full">
+          <div class="w-full">
             <a-select
               :placeholder="translate('Classify')"
-              class="tw-mt-2 tw-w-full"
+              class="mt-2 w-full"
               v-model:value="v$.classifyId.$model"
               :options="classifyData.map((x) => ({ value: x.id, label: x.name }))"
               :status="v$.classifyId.$error ? 'error' : ''"
@@ -45,13 +45,13 @@
           <ErrorMess :params="[64]" title="Classify" :validator="v$.classifyId.$errors[0]?.$validator" />
         </div>
       </div>
-      <div class="tw-w-full tw-flex tw-items-start tw-mb-6">
-        <div class="tw-basis-1/2 tw-mr-2 tw-flex tw-flex-col tw-justify-start tw-items-start">
+      <div class="w-full flex items-start mb-6">
+        <div class="basis-1/2 mr-2 flex flex-col justify-start items-start">
           <span>{{ translate("Producer") }}<span class="required-star">*</span></span>
-          <div class="tw-w-full">
+          <div class="w-full">
             <a-select
               :placeholder="translate('Producer')"
-              class="tw-mt-2 tw-w-full"
+              class="mt-2 w-full"
               v-model:value="v$.producerId.$model"
               :options="producerData.map((x) => ({ value: x.id, label: x.name }))"
               :status="v$.producerId.$error ? 'error' : ''"
@@ -59,45 +59,45 @@
           </div>
           <ErrorMess :params="[64]" title="Producer" :validator="v$.producerId.$errors[0]?.$validator" />
         </div>
-        <div class="tw-basis-1/2 tw-ml-2 tw-flex tw-flex-col tw-justify-start tw-items-start">
+        <div class="basis-1/2 ml-2 flex flex-col justify-start items-start">
           <span>{{ translate("Size") }}</span>
-          <div class="tw-w-full">
-            <a-input :placeholder="translate('Size')" class="tw-mt-2" v-model:value="v$.Size.$model" />
+          <div class="w-full">
+            <a-input :placeholder="translate('Size')" class="mt-2" v-model:value="v$.Size.$model" />
           </div>
         </div>
       </div>
-      <div class="tw-w-full tw-flex tw-items-start tw-mb-6">
-        <div class="tw-basis-1/2 tw-mr-2 tw-flex tw-flex-col tw-justify-start tw-items-start">
+      <div class="w-full flex items-start mb-6">
+        <div class="basis-1/2 mr-2 flex flex-col justify-start items-start">
           <span>{{ translate("Material") }}</span>
-          <div class="tw-w-full">
-            <a-input :placeholder="translate('Material')" class="tw-mt-2" v-model:value="v$.Material.$model" />
+          <div class="w-full">
+            <a-input :placeholder="translate('Material')" class="mt-2" v-model:value="v$.Material.$model" />
           </div>
         </div>
-        <div class="tw-basis-1/2 tw-ml-2 tw-flex tw-flex-col tw-justify-start tw-items-start">
+        <div class="basis-1/2 ml-2 flex flex-col justify-start items-start">
           <span>{{ translate("ConnectionTypes") }}</span>
-          <div class="tw-w-full">
-            <a-input :placeholder="translate('ConnectionTypes')" class="tw-mt-2" v-model:value="v$.ConnectionTypes.$model" />
+          <div class="w-full">
+            <a-input :placeholder="translate('ConnectionTypes')" class="mt-2" v-model:value="v$.ConnectionTypes.$model" />
           </div>
         </div>
       </div>
-      <div class="tw-w-full tw-flex tw-items-start tw-mb-6">
-        <div class="tw-basis-1/2 tw-mr-2 tw-flex tw-flex-col tw-justify-start tw-items-start">
+      <div class="w-full flex items-start mb-6">
+        <div class="basis-1/2 mr-2 flex flex-col justify-start items-start">
           <span>{{ translate("Color") }}</span>
-          <div class="tw-w-full">
-            <a-input :placeholder="translate('Color')" class="tw-mt-2" v-model:value="v$.Color.$model" />
+          <div class="w-full">
+            <a-input :placeholder="translate('Color')" class="mt-2" v-model:value="v$.Color.$model" />
           </div>
         </div>
-        <div class="tw-basis-1/2 tw-ml-2 tw-flex tw-flex-col tw-justify-start tw-items-start">
+        <div class="basis-1/2 ml-2 flex flex-col justify-start items-start">
           <span>{{ translate("Designs") }}</span>
-          <div class="tw-w-full">
-            <a-input :placeholder="translate('Designs')" class="tw-mt-2 tw-w-full" v-model:value="v$.Designs.$model" />
+          <div class="w-full">
+            <a-input :placeholder="translate('Designs')" class="mt-2 w-full" v-model:value="v$.Designs.$model" />
           </div>
         </div>
       </div>
-      <div class="tw-w-full tw-flex tw-flex-col tw-justify-start tw-items-start tw-mb-6">
+      <div class="w-full flex flex-col justify-start items-start mb-6">
         <span>{{ translate("Describe") }}</span>
-        <div class="tw-mt-2 tw-w-full">
-          <a-textarea class="tw-w-full" :showCount="true" :maxlength="100" :auto-size="{ minRows: 3 }" :placeholder="translate('Describe')" v-model:value="v$.Describe.$model" />
+        <div class="mt-2 w-full">
+          <a-textarea class="w-full" :showCount="true" :maxlength="100" :auto-size="{ minRows: 3 }" :placeholder="translate('Describe')" v-model:value="v$.Describe.$model" />
         </div>
       </div>
     </a-form>
@@ -106,7 +106,7 @@
         <template #icon>
           <font-awesome-icon :icon="['far', 'floppy-disk']" />
         </template>
-        <span class="tw-ml-2 tw-text-sm">{{ translate("Save") }}</span>
+        <span class="ml-2 text-sm">{{ translate("Save") }}</span>
       </AntdButton>
     </template>
   </BaseModal>

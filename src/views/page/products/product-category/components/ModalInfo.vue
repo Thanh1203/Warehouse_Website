@@ -1,37 +1,37 @@
 <template>
   <BaseModal :width="'600px'" :visible="isVisible" :defaultFooter="false" :maskClosable="true" :title="titleModal" @cancel="$emit('closeModal')">
-    <div class="tw-w-full tw-flex tw-items-start tw-justify-between">
-      <div class="tw-w-1/3 tw-flex tw-items-start tw-justify-between">
+    <div class="w-full flex items-start justify-between">
+      <div class="w-1/3 flex items-start justify-between">
         <span>{{ translate("CategoryCode") }}</span>
-        <span class="tw-mr-4">:</span>
+        <span class="mr-4">:</span>
       </div>
-      <div class="tw-w-2/3 tw-flex tw-items-start">{{ form.code }}</div>
+      <div class="w-2/3 flex items-start">{{ form.code }}</div>
     </div>
-    <div class="tw-mt-4 tw-flex tw-items-start tw-justify-between">
-      <div class="tw-w-1/3 tw-flex tw-items-start tw-justify-between">
+    <div class="mt-4 flex items-start justify-between">
+      <div class="w-1/3 flex items-start justify-between">
         <span>{{ translate("CategoryName") }}</span>
-        <span class="tw-mr-4">:</span>
+        <span class="mr-4">:</span>
       </div>
-      <div class="tw-w-2/3 tw-flex tw-iem-start">{{ form.name }}</div>
+      <div class="w-2/3 flex iem-start">{{ form.name }}</div>
     </div>
-    <div class="tw-w-full tw-mt-4 tw-flex tw-items-start tw-justify-between">
-      <div class="tw-w-1/3 tw-flex tw-items-start tw-justify-between">
+    <div class="w-full mt-4 flex items-start justify-between">
+      <div class="w-1/3 flex items-start justify-between">
         <span>{{ translate("DefaultProperties") }}</span>
-        <span class="tw-mr-4">:</span>
+        <span class="mr-4">:</span>
       </div>
-      <div class="tw-w-2/3 tw-mt-2 tw-flex tw-items-center tw-justify-sart tw-flex-wrap tw-gap-4">
-        <div v-for="(item, idx) in propsDefault" :key="idx" class="tw-max-w-[150px] tw-px-4 tw-py-2 tw-mb-3 tw-border tw-border-slate-700 tw-flex tw-justify-center tw-items-center tw-rounded-xl ">
+      <div class="w-2/3 mt-2 flex items-center justify-sart flex-wrap gap-4">
+        <div v-for="(item, idx) in propsDefault" :key="idx" class="max-w-[150px] px-4 py-2 mb-3 border border-slate-700 flex justify-center items-center rounded-xl ">
           <span>{{ item.label }}</span>
         </div>
       </div>
     </div>
-    <!-- <div class="tw-mt-4 tw-flex tw-items-start tw-justify-between">
-      <div class="tw-w-1/3 tw-flex tw-items-start tw-justify-between">
+    <!-- <div class="mt-4 flex items-start justify-between">
+      <div class="w-1/3 flex items-start justify-between">
         <span>{{ translate("CustomProperties") }}</span>
-        <span class="tw-mr-4">:</span>
+        <span class="mr-4">:</span>
       </div>
-      <div class="tw-w-2/3 tw-flex tw-flex-col tw-items-start tw-justify-start">
-        <div v-for="(item, idx) in form.propertyExtend" :class="idx !== 0 ? 'tw-mt-3' : ''">
+      <div class="w-2/3 flex flex-col items-start justify-start">
+        <div v-for="(item, idx) in form.propertyExtend" :class="idx !== 0 ? 'mt-3' : ''">
           {{ item }}
         </div>
       </div>

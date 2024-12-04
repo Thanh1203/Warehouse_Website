@@ -1,17 +1,17 @@
 <template>
-  <div class="tw-w-full section-ctn tw-p-4 tw-rounded-lg">
-    <div class="tw-mb-4 tw-font-semibold">{{ translate("common.payment") }}</div>
-    <div class="tw-w-full tw-mb-4">
-      <div class="tw-flex tw-items-start tw-justify-between tw-pb-3">
+  <div class="w-full section-ctn p-4 rounded-lg">
+    <div class="mb-4 font-semibold">{{ translate("common.payment") }}</div>
+    <div class="w-full mb-4">
+      <div class="flex items-start justify-between pb-3">
         <div>{{ translate('product.quantity') }}</div>
         <div>{{ products }} {{ translate('product.title') }}</div>
       </div>
-      <div class="tw-flex tw-items-start tw-justify-between tw-pb-3">
+      <div class="flex items-start justify-between pb-3">
         <div>{{ translate('common.totalAmount') }}</div>
         <div>{{ totalAmount.toLocaleString('en-US') }} đ</div>
       </div>
     </div>
-    <div class="tw-w-full tw-flex tw-items-center tw-justify-end tw-pt-4">
+    <div class="w-full flex items-center justify-end pt-4">
       <a-button type="primary" @click="$emit('handleSubmit')">
         {{ translate('warehouse.createImport') }}
       </a-button>

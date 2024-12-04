@@ -1,48 +1,48 @@
 <template>
-  <div class="tw-w-1/2 tw-h-full tw-p-6 tw-flex tw-flex-col tw-justify-center tw-items-start tw-text-black">
-    <a-form class="tw-w-full tw-flex tw-flex-col tw-items-center" @submit.prevent="handleSubmit">
-      <div class="tw-mb-6 tw-w-full tw-flex tw-items-center tw-justify-center">
-        <span class="tw-text-3xl tw-font-bold tw-tracking-widest">{{ translate("SignUp") }}</span>
+  <div class="w-1/2 h-full p-6 flex flex-col justify-center items-start text-black">
+    <a-form class="w-full flex flex-col items-center" @submit.prevent="handleSubmit">
+      <div class="mb-6 w-full flex items-center justify-center">
+        <span class="text-3xl font-bold tracking-widest">{{ translate("SignUp") }}</span>
       </div>
-      <div class="tw-mb-6 tw-w-full tw-flex tw-items-start">
-        <div class="tw-basis-1/2 tw-flex tw-flex-col tw-items-start tw-mr-3">
+      <div class="mb-6 w-full flex items-start">
+        <div class="basis-1/2 flex flex-col items-start mr-3">
           <span>{{ translate("FirstLastName") }}<span class="required-star">*</span></span>
-          <div class="tw-mt-2 tw-w-full">
-            <a-input class="tw-rounded-xl" v-model:value="v$.name.$model" :status="v$.name.$error ? 'error' : ''" />
+          <div class="mt-2 w-full">
+            <a-input class="rounded-xl" v-model:value="v$.name.$model" :status="v$.name.$error ? 'error' : ''" />
           </div>
           <ErrorMess title="FirstLastName" :validator="v$.name.$errors[0]?.$validator" :params="[64]" />
         </div>
-        <div class="tw-basis-1/2 tw-flex tw-flex-col tw-items-start tw-mr-3">
+        <div class="basis-1/2 flex flex-col items-start mr-3">
           <span>{{ translate("PhoneNumber") }}<span class="required-star">*</span></span>
-          <div class="tw-mt-2 tw-w-full">
-            <a-input class="tw-rounded-xl" v-model:value="v$.phone.$model" :status="v$.phone.$error ? 'error' : ''" />
+          <div class="mt-2 w-full">
+            <a-input class="rounded-xl" v-model:value="v$.phone.$model" :status="v$.phone.$error ? 'error' : ''" />
           </div>
           <ErrorMess title="PhoneNumber" :validator="v$.phone.$errors[0]?.$validator" />
         </div>
       </div>
-      <div class="tw-mb-6 tw-w-full tw-flex tw-flex-col tw-items-start">
+      <div class="mb-6 w-full flex flex-col items-start">
         <span>{{ translate("Email") }}<span class="required-star">*</span></span>
-        <div class="tw-mt-2 tw-w-full">
-          <a-input class="tw-rounded-xl" v-model:value="v$.email.$model" :status="v$.email.$error ? 'error' : ''" />
+        <div class="mt-2 w-full">
+          <a-input class="rounded-xl" v-model:value="v$.email.$model" :status="v$.email.$error ? 'error' : ''" />
         </div>
         <ErrorMess title="Email" :validator="v$.email.$errors[0]?.$validator" />
       </div>
-      <div class="tw-mb-6 tw-w-full tw-flex tw-flex-col tw-items-start">
+      <div class="mb-6 w-full flex flex-col items-start">
         <span>{{ translate("PassWord") }}<span class="required-star">*</span></span>
-        <div class="tw-mt-2 tw-w-full">
-          <a-input-password class="tw-rounded-xl" v-model:value="v$.password.$model" :status="v$.password.$error ? 'error' : ''" />
+        <div class="mt-2 w-full">
+          <a-input-password class="rounded-xl" v-model:value="v$.password.$model" :status="v$.password.$error ? 'error' : ''" />
         </div>
         <ErrorMess title="PassWord" :validator="v$.password.$errors[0]?.$validator" />
       </div>
-      <div class="tw-w-full tw-mb-6 tw-flex tw-items-center tw-justify-between">
-        <AntdButton :type="'link'" @click="$emit('handleSwap')" class="tw-p-0">
+      <div class="w-full mb-6 flex items-center justify-between">
+        <AntdButton :type="'link'" @click="$emit('handleSwap')" class="p-0">
           <span>{{ translate("LoginAgain") }}</span>
         </AntdButton>
       </div>
     </a-form>
-    <div class="tw-w-full tw-flex tw-items-center tw-justify-center">
+    <div class="w-full flex items-center justify-center">
       <AntdButton :type="'primary'" :size="'large'" @click="handleSubmit">
-        <span class="tw-tracking-[2px]">{{ translate("SignUp") }}</span>
+        <span class="tracking-[2px]">{{ translate("SignUp") }}</span>
       </AntdButton>
     </div>
   </div>

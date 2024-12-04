@@ -1,8 +1,8 @@
 <template>
-  <div class="tw-mb-3 tw-text-[#aab8c5] tw-text-lg tw-font-bold">{{ translate("Revenue") }}</div>
+  <div class="mb-3 text-[#aab8c5] text-lg font-bold">{{ translate("Revenue") }}</div>
   <CurrentRevenue/>
   
-  <div class="tw-mb-3 tw-text-[#aab8c5] tw-text-lg tw-font-bold">{{ translate("reportCommon.order") }}</div>
+  <div class="mb-3 text-[#aab8c5] text-lg font-bold">{{ translate("reportCommon.order") }}</div>
   <CurrentOrders/>
 
 </template>

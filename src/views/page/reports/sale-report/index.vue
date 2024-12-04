@@ -1,6 +1,6 @@
 <template>
-  <div class="tw-mb-6">
-    <span class="tw-text-[#aab8c5] tw-text-2xl tw-font-semibold">{{ translate('reportSale.title') }}</span>
+  <div class="mb-6">
+    <span class="text-[#aab8c5] text-2xl font-semibold">{{ translate('reportSale.title') }}</span>
   </div>
 
   <a-tabs v-model:activeKey="activeKey" type="card" class="new-tabs">

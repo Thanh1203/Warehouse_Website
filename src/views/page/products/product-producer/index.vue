@@ -1,10 +1,10 @@
 <template>
-  <a-form class="tw-flex tw-rounded-xl tw-bg-white tw-px-6 tw-py-5 tw-mb-6">
-    <a-form-item class="tw-w-[300px] tw-h-[62px] !tw-mr-3">
-      <span class="tw-opacity-70">{{ translate("ManufacturerName") }}</span>
-      <a-input :placeholder="translate('Search')" v-model:value="filterSearching.Keyword" class="tw-mt-2" />
+  <a-form class="flex rounded-xl bg-white px-6 py-5 mb-6">
+    <a-form-item class="w-[300px] h-[62px] !mr-3">
+      <span class="opacity-70">{{ translate("ManufacturerName") }}</span>
+      <a-input :placeholder="translate('Search')" v-model:value="filterSearching.Keyword" class="mt-2" />
     </a-form-item>
-    <a-form-item class="tw-flex tw-items-end">
+    <a-form-item class="flex items-end">
       <AntdButton
         :type="'text'"
         danger
@@ -18,7 +18,7 @@
         <template #icon>
           <font-awesome-icon :icon="['far', 'trash-can']" />
         </template>
-        <span class="tw-ml-2">{{ translate("Delete") }}</span>
+        <span class="ml-2">{{ translate("Delete") }}</span>
       </AntdButton>
     </a-form-item>
   </a-form>
@@ -26,14 +26,14 @@
     :title="translate('ManufacturerList')"
     :subTitle="translate('TotalManufacturers')"
     :number="tottalProducer"
-    class="tw-w-full tw-h-full tw-bg-white tw-overflow-hidden"
+    class="w-full h-full bg-white overflow-hidden"
   >
     <template #action>
-      <AntdButton :type="'text'" danger :disabled="disableDeleteMany" class="tw-mr-2" @click="handleDeleteProducer(listSelect, true)">
+      <AntdButton :type="'text'" danger :disabled="disableDeleteMany" class="mr-2" @click="handleDeleteProducer(listSelect, true)">
         <template #icon>
           <font-awesome-icon :icon="['far', 'trash-can']" />
         </template>
-        <span class="tw-text-sm tw-ml-2"
+        <span class="text-sm ml-2"
           >{{ translate("Delete") }} <span v-if="listSelect?.length > 0">({{ listSelect?.length }})</span></span
         >
       </AntdButton>
@@ -41,7 +41,7 @@
         <template #icon>
           <font-awesome-icon :icon="['fas', 'plus']" />
         </template>
-        <span class="tw-text-sm tw-ml-2">{{ translate("AddNew") }}</span>
+        <span class="text-sm ml-2">{{ translate("AddNew") }}</span>
       </AntdButton>
     </template>
     <template #body>
@@ -54,7 +54,7 @@
         :columns="columns"
         :dataSource="producerData"
         @onSelected="handleSelectRow"
-        class="tw-w-full tw-h-[calc(100vh-290px)] tw-overflow-hidden tw-overflow-y-auto"
+        class="w-full h-[calc(100vh-290px)] overflow-hidden overflow-y-auto"
         v-if="!loading"
       >
         <template #custom-body="{ column, record }">

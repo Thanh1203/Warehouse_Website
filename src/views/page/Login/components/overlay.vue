@@ -1,6 +1,6 @@
 <template>
-<div class="tw-w-1/2 tw-h-full tw-bg-transparent tw-relative">
-    <div class="tw-w-full tw-h-full tw-bg-transparent tw-flex tw-items-center">
+<div class="w-1/2 h-full bg-transparent relative">
+    <div class="w-full h-full bg-transparent flex items-center">
         <Transition  name="fade" mode="out-in">
             <img v-if="isLogin" src="@/assets/images/warehouse.png" alt="image login">
             <img v-else src="@/assets/images/warehouse2.png" alt="image login">

@@ -1,13 +1,13 @@
 <template>
-  <div class="tw-mb-6">
-    <span class="tw-text-[#aab8c5] tw-text-2xl tw-font-semibold">{{ translate('reportProduct.title') }}</span>
+  <div class="mb-6">
+    <span class="text-[#aab8c5] text-2xl font-semibold">{{ translate('reportProduct.title') }}</span>
   </div>
 
   <Compo1/>
 
-  <div class="tw-w-full tw-border-[#464f5b]">
-    <div class="tw-mb-3 tw-text-[#aab8c5] tw-text-lg">{{ translate('warehouse.list') }}</div>
-      <a-tabs size="small" class="tw-text-[#eef2f5]">
+  <div class="w-full border-[#464f5b]">
+    <div class="mb-3 text-[#aab8c5] text-lg">{{ translate('warehouse.list') }}</div>
+      <a-tabs size="small" class="text-[#eef2f5]">
         <a-tab-pane v-for="(item, idx) in listWarehouse" :key="idx" :tab="item.name">
           <DetailReport/>
         </a-tab-pane>

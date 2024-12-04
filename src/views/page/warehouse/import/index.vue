@@ -3,32 +3,32 @@
 
   <div class="name-page">{{ translate("warehouse.import") }}</div>
 
-  <div class="tw-w-full tw-rounded-lg tw-bg-white tw-p-4 section-ctn tw-mb-6 tw-grid tw-grid-cols-1 tw-gap-4 md:tw-grid-cols-2 lg:tw-grid-cols-4 lg:tw-gap-6">
-    <div class="tw-flex tw-flex-col tw-justify-between">
-      <div class="tw-text-sm tw-mb-3">{{ translate("warehouse.title") }}</div>
+  <div class="w-full rounded-lg bg-white p-4 section-ctn mb-6 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4 lg:gap-6">
+    <div class="flex flex-col justify-between">
+      <div class="text-sm mb-3">{{ translate("warehouse.title") }}</div>
       <a-select :options="optionWh?.map((x) => ({ value: x.code, label: x.name }))" v-model:value="warehouseSelected" :placeholder="translate('warehouse.title')" />
     </div>
-    <div class="tw-flex tw-flex-col tw-justify-between">
-      <div class="tw-text-sm tw-mb-3">{{ translate("common.time") }}</div>
+    <div class="flex flex-col justify-between">
+      <div class="text-sm mb-3">{{ translate("common.time") }}</div>
       <a-date-picker v-model:value="timeSelected" :placeholder="translate('common.selectTime')" />
     </div>
-    <div class="tw-flex tw-flex-col tw-justify-between">
-      <div class="tw-text-sm tw-mb-3">{{ translate("common.importStatus") }}</div>
+    <div class="flex flex-col justify-between">
+      <div class="text-sm mb-3">{{ translate("common.importStatus") }}</div>
       <a-select :options="statusOption" v-model:value="importStatusSelect" :placeholder="translate('common.importStatus')" />
     </div>
   </div>
 
   <Section :title="translate('warehouse.listImport')" :subTitle="translate('warehouse.numberImport')" :number="dataImportOrder.length">
     <template #action>
-      <div class="tw-flex tw-items-center tw-gap-4">
+      <div class="flex items-center gap-4">
         <a-button type="text">
-          <div class="tw-h-full tw-flex tw-items-center tw-gap-x-2">
+          <div class="h-full flex items-center gap-x-2">
             <dowloadIcon />
             {{ translate("common.importFile") }}
           </div>
         </a-button>
         <a-button type="primary" @click="handleCreateNew">
-          <div class="tw-flex tw-items-center tw-gap-3">
+          <div class="flex items-center gap-3">
             <plusCircle />
             {{ translate("warehouse.createImport") }}
           </div>

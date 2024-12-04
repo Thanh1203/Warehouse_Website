@@ -1,57 +1,57 @@
 <template>
   <BaseModal :width="'600px'" :visible="isVisible" :title="titleModal" :defaultFooter="false" @cancel="$emit('closeModal')">
-    <div class="tw-mb-4 tw-flex tw-items-start tw-justify-between">
-      <div class="tw-w-1/3 tw-flex tw-items-start tw-justify-between">
+    <div class="mb-4 flex items-start justify-between">
+      <div class="w-1/3 flex items-start justify-between">
         <span>{{ translate("ProductCode") }}</span>
-        <span class="tw-mr-4">:</span>
+        <span class="mr-4">:</span>
       </div>
     </div>
-    <div class="tw-mb-4 tw-flex tw-items-start tw-justify-between">
-      <div class="tw-w-1/3 tw-flex tw-items-start tw-justify-between">
+    <div class="mb-4 flex items-start justify-between">
+      <div class="w-1/3 flex items-start justify-between">
         <span>{{ translate("ProductName") }}</span>
-        <span class="tw-mr-4">:</span>
+        <span class="mr-4">:</span>
       </div>
     </div>
-    <div class="tw-mb-4 tw-flex tw-items-start tw-justify-between">
-      <div class="tw-w-1/3 tw-flex tw-items-start tw-justify-between">
+    <div class="mb-4 flex items-start justify-between">
+      <div class="w-1/3 flex items-start justify-between">
         <span>{{ translate("ProductCategory") }}</span>
-        <span class="tw-mr-4">:</span>
+        <span class="mr-4">:</span>
       </div>
     </div>
-    <div class="tw-mb-4 tw-flex tw-items-start tw-justify-between">
-      <div class="tw-w-1/3 tw-flex tw-items-start tw-justify-between">
+    <div class="mb-4 flex items-start justify-between">
+      <div class="w-1/3 flex items-start justify-between">
         <span>{{ translate("ProductClassify") }}</span>
-        <span class="tw-mr-4">:</span>
+        <span class="mr-4">:</span>
       </div>
     </div>
-    <div class="tw-mb-4 tw-flex tw-items-start tw-justify-between">
-      <div class="tw-w-1/3 tw-flex tw-items-start tw-justify-between">
+    <div class="mb-4 flex items-start justify-between">
+      <div class="w-1/3 flex items-start justify-between">
         <span>{{ translate("Producer") }}</span>
-        <span class="tw-mr-4">:</span>
+        <span class="mr-4">:</span>
       </div>
     </div>
-    <div class="tw-mb-4 tw-flex tw-items-start tw-justify-between">
-      <div class="tw-w-1/3 tw-flex tw-items-start tw-justify-between">
+    <div class="mb-4 flex items-start justify-between">
+      <div class="w-1/3 flex items-start justify-between">
         <span>{{ translate("Size") }}</span>
-        <span class="tw-mr-4">:</span>
+        <span class="mr-4">:</span>
       </div>
     </div>
-    <div class="tw-mb-4 tw-flex tw-items-start tw-justify-between">
-      <div class="tw-w-1/3 tw-flex tw-items-start tw-justify-between">
+    <div class="mb-4 flex items-start justify-between">
+      <div class="w-1/3 flex items-start justify-between">
         <span>{{ translate("Material") }}</span>
-        <span class="tw-mr-4">:</span>
+        <span class="mr-4">:</span>
       </div>
     </div>
-    <div class="tw-mb-4 tw-flex tw-items-start tw-justify-between">
-      <div class="tw-w-1/3 tw-flex tw-items-start tw-justify-between">
+    <div class="mb-4 flex items-start justify-between">
+      <div class="w-1/3 flex items-start justify-between">
         <span>{{ translate("Designs") }}</span>
-        <span class="tw-mr-4">:</span>
+        <span class="mr-4">:</span>
       </div>
     </div>
-    <div class="tw-mb-4 tw-flex tw-items-start tw-justify-between">
-      <div class="tw-w-1/3 tw-flex tw-items-start tw-justify-between">
+    <div class="mb-4 flex items-start justify-between">
+      <div class="w-1/3 flex items-start justify-between">
         <span>{{ translate("Describe") }}</span>
-        <span class="tw-mr-4">:</span>
+        <span class="mr-4">:</span>
       </div>
     </div>
   </BaseModal>

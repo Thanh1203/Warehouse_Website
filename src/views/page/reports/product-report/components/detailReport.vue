@@ -1,25 +1,25 @@
 <template>
-  <div class="tw-w-full tw-grid tw-grid-cols-1 tw-gap-4 md:tw-gap-8 md:tw-grid-cols-2">
-    <div class="tw-w-full tw-bg-[#37404a] tw-rounded-lg tw-p-4">
-      <div class="tw-text-xl tw-text-[#aab8c5] tw-font-semibold tw-mb-4">{{ translate('reportProduct.sectorS') }}</div>
-      <div class="tw-pb-2 tw-mb-4 tw-border-b tw-border-[#e2e8ed]">{{ translate('numberSectors') }} : 10</div>
+  <div class="w-full grid grid-cols-1 gap-4 md:gap-8 md:grid-cols-2">
+    <div class="w-full bg-[#37404a] rounded-lg p-4">
+      <div class="text-xl text-[#aab8c5] font-semibold mb-4">{{ translate('reportProduct.sectorS') }}</div>
+      <div class="pb-2 mb-4 border-b border-[#e2e8ed]">{{ translate('numberSectors') }} : 10</div>
       <ReportSectors/>
     </div>
 
-    <div class="tw-w-full tw-bg-[#37404a] tw-rounded-lg tw-p-4">
-      <div class="tw-text-xl tw-text-[#aab8c5] tw-font-semibold tw-mb-2">{{ translate('reportProduct.categoryS') }}</div>
-      <div class="tw-pb-2 tw-mb-4 tw-border-b tw-border-[#e2e8ed]">{{ translate('NumberCategories') }} : 10</div>
+    <div class="w-full bg-[#37404a] rounded-lg p-4">
+      <div class="text-xl text-[#aab8c5] font-semibold mb-2">{{ translate('reportProduct.categoryS') }}</div>
+      <div class="pb-2 mb-4 border-b border-[#e2e8ed]">{{ translate('NumberCategories') }} : 10</div>
       <ReportCategories/>
     </div>
 
-    <div class="tw-w-full tw-bg-[#37404a] tw-rounded-lg tw-p-4">
-      <div class="tw-text-xl tw-text-[#aab8c5] tw-font-semibold tw-mb-4">{{ translate('reportProduct.classifyS') }}</div>
-      <div class="tw-pb-2 tw-mb-4 tw-border-b tw-border-[#e2e8ed]">{{ translate('numberSectors') }} : 10</div>
+    <div class="w-full bg-[#37404a] rounded-lg p-4">
+      <div class="text-xl text-[#aab8c5] font-semibold mb-4">{{ translate('reportProduct.classifyS') }}</div>
+      <div class="pb-2 mb-4 border-b border-[#e2e8ed]">{{ translate('numberSectors') }} : 10</div>
       <ReportClassifies/>
     </div>
 
-    <div class="tw-w-full tw-bg-[#37404a] tw-rounded-lg tw-p-4">
-      <div class="tw-text-xl tw-text-[#aab8c5] tw-font-semibold tw-mb-4">{{ translate('reportProduct.productRanking') }}</div>
+    <div class="w-full bg-[#37404a] rounded-lg p-4">
+      <div class="text-xl text-[#aab8c5] font-semibold mb-4">{{ translate('reportProduct.productRanking') }}</div>
       <ReportProducts/>
     </div>
 

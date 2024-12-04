@@ -1,13 +1,13 @@
 <template>
-  <div class="tw-w-full tw-grid tw-grid-cols-1 tw-gap-4 xl:tw-grid-cols-2 xl:tw-gap-8">
-    <div class="tw-bg-[#37404a] tw-py-4 tw-rounded-lg tw-h-[600px]">
+  <div class="w-full grid grid-cols-1 gap-4 xl:grid-cols-2 xl:gap-8">
+    <div class="bg-[#37404a] py-4 rounded-lg h-[600px]">
       <ChartCustomerYears />
     </div>
-    <div class="tw-bg-[#37404a] tw-p-4 tw-rounded-lg tw-h-[600px]">
-      <div class="tw-w-full tw-h-[28px] tw-mb-6">
-        <div class="tw-text-xl tw-text-[#aab8c5] tw-font-semibold">{{ translate("reportCustomer.ListPotentialCustomers") }}</div>
+    <div class="bg-[#37404a] p-4 rounded-lg h-[600px]">
+      <div class="w-full h-[28px] mb-6">
+        <div class="text-xl text-[#aab8c5] font-semibold">{{ translate("reportCustomer.ListPotentialCustomers") }}</div>
       </div>
-      <div class="tw-h-[calc(100%-52px)] tw-overflow-hidden tw-overflow-y-auto">
+      <div class="h-[calc(100%-52px)] overflow-hidden overflow-y-auto">
         <AntdTable
           ref="table"
           key-field="id"
@@ -17,7 +17,7 @@
           :no-sort="true"
           v-if="!loading"
           :dataSource="dataPotentialCustomers"
-          class="tw-h-full"
+          class="h-full"
         >
           <template #custom-body="{ column, record }">
             <template v-if="column.key === 'totalOrders' && record">

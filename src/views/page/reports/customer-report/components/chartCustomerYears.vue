@@ -1,19 +1,19 @@
 <template>
-  <div class="tw-w-full tw-h-[28px] tw-mb-6 tw-px-4">
-    <div class="tw-text-xl tw-text-[#aab8c5] tw-font-semibold">{{ translate("reportCustomer.NumberNewCustomersYear") }}</div>
+  <div class="w-full h-[28px] mb-6 px-4">
+    <div class="text-xl text-[#aab8c5] font-semibold">{{ translate("reportCustomer.NumberNewCustomersYear") }}</div>
   </div>
-  <div class="tw-h-[calc(100%-52px)] tw-grid tw-grid-cols-12">
-    <div class="tw-flex tw-items-center tw-justify-center">
-      <a-button @click="prevfiveYear" class="tw-flex tw-items-center tw-justify-center tw-text-white tw-border-none">
+  <div class="h-[calc(100%-52px)] grid grid-cols-12">
+    <div class="flex items-center justify-center">
+      <a-button @click="prevfiveYear" class="flex items-center justify-center text-white border-none">
         <font-awesome-icon :icon="['fas', 'chevron-left']" size="2xl"/>
       </a-button>
     </div>
-    <div class="tw-col-span-10">
+    <div class="col-span-10">
       <Chartbar v-if="!loading" :data="dataChartBar" />
       <a-skeleton v-else :loading="loading" active />
     </div>
-    <div class="tw-flex tw-items-center tw-justify-center">
-      <a-button @click="nextfiveYear" class="tw-flex tw-items-center tw-justify-center tw-text-white tw-border-none">
+    <div class="flex items-center justify-center">
+      <a-button @click="nextfiveYear" class="flex items-center justify-center text-white border-none">
         <font-awesome-icon :icon="['fas', 'chevron-right']" size="2xl"/>
       </a-button>
     </div>

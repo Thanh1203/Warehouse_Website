@@ -3,48 +3,48 @@
 
   <div class="name-page">{{ translate("warehouse.inventory") }}</div>
 
-  <div class="tw-w-full tw-bg-white tw-rounded-lg section-ctn tw-p-4 tw-mb-6">
-    <div class="tw-w-full tw-grid tw-grid-cols-1 tw-gap-4 md:tw-grid-cols-2 lg:tw-grid-cols-4 lg:tw-gap-6 tw-mb-6">
-      <div class="tw-flex tw-flex-col tw-justify-between">
-        <div class="tw-text-sm tw-mb-3">{{ translate("warehouse.title") }}</div>
+  <div class="w-full bg-white rounded-lg section-ctn p-4 mb-6">
+    <div class="w-full grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4 lg:gap-6 mb-6">
+      <div class="flex flex-col justify-between">
+        <div class="text-sm mb-3">{{ translate("warehouse.title") }}</div>
         <a-select :options="optionWh?.map((x) => ({ value: x.code, label: x.name }))" v-model:value="warehouseSelected" :placeholder="translate('warehouse.title')" />
       </div>
-      <div class="tw-flex tw-flex-col tw-justify-between">
-        <div class="tw-text-sm tw-mb-3">{{ translate("inventory.category") }}</div>
+      <div class="flex flex-col justify-between">
+        <div class="text-sm mb-3">{{ translate("inventory.category") }}</div>
         <a-select :options="optionWh?.map((x) => ({ value: x.code, label: x.name }))" v-model:value="categorySelected" :placeholder="translate('inventory.category')" />
       </div>
-      <div class="tw-flex tw-flex-col tw-justify-between">
-        <div class="tw-text-sm tw-mb-3">{{ translate("product.type") }}</div>
+      <div class="flex flex-col justify-between">
+        <div class="text-sm mb-3">{{ translate("product.type") }}</div>
         <a-select :options="optionWh?.map((x) => ({ value: x.code, label: x.name }))" v-model:value="proTypeSelected" :placeholder="translate('product.type')" />
       </div>
-      <div class="tw-flex tw-flex-col tw-justify-between">
-        <div class="tw-text-sm tw-mb-3">{{ translate("supplier.title") }}</div>
+      <div class="flex flex-col justify-between">
+        <div class="text-sm mb-3">{{ translate("supplier.title") }}</div>
         <a-select :options="optionWh?.map((x) => ({ value: x.code, label: x.name }))" v-model:value="supplierSelected" :placeholder="translate('supplier.title')" />
       </div>
     </div>
-    <div class="tw-w-full tw-grid tw-grid-cols-1 tw-gap-4 md:tw-grid-cols-2 md:tw-gap-6">
-      <div class="tw-w-full tw-flex tw-items-center tw-gap-4">
+    <div class="w-full grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6">
+      <div class="w-full flex items-center gap-4">
         <a-input-search :placeholder="translate('inventory.search')" enter-button v-model:value="filterSearching"/>
         <a-button type="text" danger :disabled="disabledClearSreach">
           <font-awesome-icon :icon="['fas', 'trash']" />
-          <span class="tw-ml-2">{{ translate('common.delete') }}</span>
+          <span class="ml-2">{{ translate('common.delete') }}</span>
         </a-button>
       </div>
-      <div class="tw-w-full tw-flex tw-items-center tw-justify-end tw-gap-4">
+      <div class="w-full flex items-center justify-end gap-4">
         <a-button type="text">
-          <div class="tw-h-full tw-flex tw-items-center tw-gap-x-2">
+          <div class="h-full flex items-center gap-x-2">
             <eyeIcon />
             {{ translate("inventory.viewProductList") }}
           </div>
         </a-button>
         <a-button type="text">
-          <div class="tw-h-full tw-flex tw-items-center tw-gap-x-2">
+          <div class="h-full flex items-center gap-x-2">
             <uploadIcon />
             {{ translate("common.exportFile") }}
           </div>
         </a-button>
         <a-button type="text">
-          <div class="tw-h-full tw-flex tw-items-center tw-gap-x-2">
+          <div class="h-full flex items-center gap-x-2">
             <dowloadIcon />
             {{ translate("common.importFile") }}
           </div>
@@ -55,8 +55,8 @@
 
   <Section :title="translate('product.list')" :subTitle="translate('product.quantity')" :number="100">
     <template #action>
-      <div class="tw-flex tw-items-center tw-flex-wrap tw-gap-4"></div>
-      <a-radio-group v-model:value="stateProduct" class="tw-mt-4">
+      <div class="flex items-center flex-wrap gap-4"></div>
+      <a-radio-group v-model:value="stateProduct" class="mt-4">
         <a-radio-button value="1">{{ translate("common.all") }}</a-radio-button>
         <a-radio-button value="2">{{ translate("warehouse.available") }}</a-radio-button>
         <a-radio-button value="3">{{ translate("warehouse.soldOut") }}</a-radio-button>

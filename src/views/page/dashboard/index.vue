@@ -1,6 +1,6 @@
 <template>
-  <div class="tw-mb-6">
-    <span class="tw-text-[#aab8c5] tw-text-2xl tw-font-semibold">{{ translate('Dashboard') }}</span>
+  <div class="mb-6">
+    <span class="text-[#aab8c5] text-2xl font-semibold">{{ translate('Dashboard') }}</span>
   </div>
 
   <!-- <Compo1/>

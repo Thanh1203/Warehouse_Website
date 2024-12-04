@@ -2,19 +2,19 @@
   <BaseModal :visible="isVisible" :title="titleModal" @cancel="handleCancel">
     <template #body-modal>
       <a-form layout="vertical" ref="formRef" :rules="rules" :model="state">
-        <div class="tw-mb-6 tw-w-full tw-flex tw-justify-between tw-gap-x-6">
-          <a-form-item class="tw-w-full" :label="translate('warehouse.code')" required name="code">
+        <div class="mb-6 w-full flex justify-between gap-x-6">
+          <a-form-item class="w-full" :label="translate('warehouse.code')" required name="code">
             <a-input :placeholder="translate('warehouse.code')" v-model:value="state.code" :disabled="isEdit" />
           </a-form-item>
-          <a-form-item class="tw-w-full" :label="translate('warehouse.name')" required name="name">
+          <a-form-item class="w-full" :label="translate('warehouse.name')" required name="name">
             <a-input :placeholder="translate('warehouse.name')" v-model:value="state.name" />
           </a-form-item>
         </div>
-        <div class="tw-w-full tw-flex tw-justify-between tw-gap-x-6">
-          <a-form-item class="tw-w-2/3" :label="translate('warehouse.address')" required name="address">
+        <div class="w-full flex justify-between gap-x-6">
+          <a-form-item class="w-2/3" :label="translate('warehouse.address')" required name="address">
             <a-input :placeholder="translate('warehouse.address')" v-model:value="state.address" />
           </a-form-item>
-          <a-form-item class="tw-w-1/3" :label="translate('warehouse.staffCharge')">
+          <a-form-item class="w-1/3" :label="translate('warehouse.staffCharge')">
             <a-select :placeholder="translate('warehouse.staffCharge')" :options="optionsFake?.map((e) => ({ value: e.id, label: e.name }))" v-model:value="state.staffId" />
           </a-form-item>
         </div>
@@ -22,7 +22,7 @@
     </template>
     <template #footer>
       <a-button type="primary" @click="handleSubmit">
-        <div class="tw-h-full tw-flex tw-items-center tw-gap-x-2">
+        <div class="h-full flex items-center gap-x-2">
           <dowloadIcon />
           {{ translate("common.save") }}
         </div>

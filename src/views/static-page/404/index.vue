@@ -1,7 +1,7 @@
 <template>
-  <div class="tw-w-full tw-flex tw-justify-center tw-items-center tw-flex-col tw-h-[100vh]">
-    <h1 class="title tw-mb-4">404 Not Found</h1>
-    <div class="tw-mb-3">
+  <div class="w-full flex justify-center items-center flex-col h-[100vh]">
+    <h1 class="title mb-4">404 Not Found</h1>
+    <div class="mb-3">
       <p class="description">{{ translate('PageNotFound') }}</p>
     </div>
   </div>

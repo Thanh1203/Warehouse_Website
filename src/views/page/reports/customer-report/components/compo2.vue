@@ -1,61 +1,61 @@
 <template>
-  <div class="tw-w-full tw-mb-6 tw-grid tw-gap-4 tw-grid-cols-1 lg:tw-gap-8 lg:tw-grid-cols-4">
-    <div class="tw-rounded-lg tw-grid tw-grid-cols-1 tw-gap-4 md:tw-grid-cols-3 lg:tw-grid-cols-1">
-      <div class="tw-bg-[#37404a] tw-h-[150px] tw-p-4 tw-rounded-lg tw-flex tw-flex-col tw-justify-between">
-        <div class="tw-flex tw-justify-between">
-          <div class="tw-text-[#8391a2] tw-text-base tw-truncate tw-font-semibold">{{ translate("reportCustomer.total") }}</div>
-          <div class="tw-bg-[#464F74] tw-p-3 tw-rounded-lg">
+  <div class="w-full mb-6 grid gap-4 grid-cols-1 lg:gap-8 lg:grid-cols-4">
+    <div class="rounded-lg grid grid-cols-1 gap-4 md:grid-cols-3 lg:grid-cols-1">
+      <div class="bg-[#37404a] h-[150px] p-4 rounded-lg flex flex-col justify-between">
+        <div class="flex justify-between">
+          <div class="text-[#8391a2] text-base truncate font-semibold">{{ translate("reportCustomer.total") }}</div>
+          <div class="bg-[#464F74] p-3 rounded-lg">
             <font-awesome-icon :icon="['fas', 'user-group']" style="color: #727cf5" />
           </div>
         </div>
-        <div class="tw-text-[#aab8c5] tw-mb-6">
-          <NumberAnimation v-if="!loading" :from="0" :to="5000" :duration="1" autoplay easing="linear" :format="theFormat" class="tw-text-2xl" />
+        <div class="text-[#aab8c5] mb-6">
+          <NumberAnimation v-if="!loading" :from="0" :to="5000" :duration="1" autoplay easing="linear" :format="theFormat" class="text-2xl" />
           <a-skeleton-input v-else :loading="loading" :paragraph="{ rows: 0 }" active size="small" />
         </div>
       </div>
 
-      <div class="tw-bg-[#37404a] tw-h-[150px] tw-p-4 tw-rounded-lg tw-flex tw-flex-col tw-justify-between">
-        <div class="tw-flex tw-justify-between">
-          <div class="tw-text-[#8391a2] tw-text-base tw-truncate tw-font-semibold">{{ translate("reportCustomer.TotalPurchases") }}</div>
-          <div class="tw-bg-[#464F74] tw-p-3 tw-rounded-lg">
+      <div class="bg-[#37404a] h-[150px] p-4 rounded-lg flex flex-col justify-between">
+        <div class="flex justify-between">
+          <div class="text-[#8391a2] text-base truncate font-semibold">{{ translate("reportCustomer.TotalPurchases") }}</div>
+          <div class="bg-[#464F74] p-3 rounded-lg">
             <font-awesome-icon :icon="['fas', 'cart-shopping']" style="color: #727cf5" />
           </div>
         </div>
-        <div class="tw-text-[#aab8c5] tw-mb-6">
-          <NumberAnimation v-if="!loading" :from="0" :to="10000" :duration="1" autoplay easing="linear" :format="theFormat" class="tw-text-2xl" />
+        <div class="text-[#aab8c5] mb-6">
+          <NumberAnimation v-if="!loading" :from="0" :to="10000" :duration="1" autoplay easing="linear" :format="theFormat" class="text-2xl" />
           <a-skeleton-input v-else :loading="loading" :paragraph="{ rows: 0 }" active size="small" />
         </div>
       </div>
 
-      <div class="tw-bg-[#37404a] tw-rounded-lg tw-p-4 tw-h-[150px]">
-        <div class="tw-flex tw-justify-between">
-          <div class="tw-text-[#8391a2] tw-text-base tw-truncate tw-font-semibold">{{ translate("ReturnCustomerRate") }}</div>
-          <div class="tw-bg-[#464F74] tw-p-3 tw-rounded-lg">
+      <div class="bg-[#37404a] rounded-lg p-4 h-[150px]">
+        <div class="flex justify-between">
+          <div class="text-[#8391a2] text-base truncate font-semibold">{{ translate("ReturnCustomerRate") }}</div>
+          <div class="bg-[#464F74] p-3 rounded-lg">
             <font-awesome-icon :icon="['fas', 'percent']" style="color: #727cf5" />
           </div>
         </div>
 
-        <div class="tw-flex tw-items-center tw-gap-x-6 tw-h-[calc(100%-48px)] tw-relative">
-          <div class="chartDoughnut-style tw-absolute tw-left-2">
+        <div class="flex items-center gap-x-6 h-[calc(100%-48px)] relative">
+          <div class="chartDoughnut-style absolute left-2">
             <ChartDoughnut :data="dataChartDoughnut"/>
           </div>
-          <div v-if="!loading" class="tw-flex tw-items-center tw-truncate tw-ml-[104px] md:tw-ml-[80px] lg:tw-ml-[100px]" :class="setTextColor(80)">
+          <div v-if="!loading" class="flex items-center truncate ml-[104px] md:ml-[80px] lg:ml-[100px]" :class="setTextColor(80)">
             <font-awesome-icon :icon="['fas', 'arrow-up']" size="xl" />
-            <NumberAnimation :from="0" :to="80" :duration="1" autoplay easing="linear" :format="theFormatPercent" class="tw-text-4xl tw-ml-2 md:tw-text-xl" />
-            <span class="tw-text-2xl tw-ml-1">%</span>
+            <NumberAnimation :from="0" :to="80" :duration="1" autoplay easing="linear" :format="theFormatPercent" class="text-4xl ml-2 md:text-xl" />
+            <span class="text-2xl ml-1">%</span>
           </div>
           <a-skeleton-input v-else :loading="loading" :paragraph="{ rows: 0 }" active size="small" />
         </div>
       </div>
 
     </div>
-    <div class="tw-bg-[#37404a] tw-rounded-lg tw-p-4 lg:tw-col-span-2">
+    <div class="bg-[#37404a] rounded-lg p-4 lg:col-span-2">
       <ChartCustomerMonth v-if="!loading"/>
       <a-skeleton v-else :loading="loading" active />
     </div>
-    <div class="tw-bg-[#37404a] tw-rounded-lg tw-p-4 tw-flex tw-flex-col tw-justify-between">
-      <div class="tw-mb-6 tw-h-14 tw-text-xl tw-text-[#aab8c5] tw-font-semibold">{{ translate("reportCustomer.StatisticsPurchases") }}</div>
-      <div class="tw-h-[380px] tw-flex tw-items-center tw-justify-center">
+    <div class="bg-[#37404a] rounded-lg p-4 flex flex-col justify-between">
+      <div class="mb-6 h-14 text-xl text-[#aab8c5] font-semibold">{{ translate("reportCustomer.StatisticsPurchases") }}</div>
+      <div class="h-[380px] flex items-center justify-center">
         <Chartpie :data="dataChartPie" v-if="!loading"/>
         <a-skeleton v-else :loading="loading" active />
       </div>

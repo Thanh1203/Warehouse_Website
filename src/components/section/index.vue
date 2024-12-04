@@ -1,27 +1,25 @@
 <template>
-<div class="tw-w-full tw-rounded-lg tw-p-4 section-ctn">
-    <div class="tw-w-full tw-flex tw-items-center tw-justify-between tw-gap-4 tw-flex-wrap">
-        <div>
-            <div class="tw-mb-2 tw-font-semibold ">{{ title }}</div>
-            <div class="tw-text-sm" v-if="subTitle">
-                {{ subTitle }}: {{number}}
-            </div>
-        </div>
-        <div>
-            <slot name="action"></slot>
-        </div>
+  <div class="section">
+    <div class="w-full flex items-center justify-between gap-4 flex-wrap">
+      <div>
+        <div class="mb-2 font-semibold">{{ title }}</div>
+        <div class="text-sm" v-if="subTitle">{{ subTitle }}: {{ number }}</div>
+      </div>
+      <div class="flex gap-4 justify-start">
+        <slot name="action"></slot>
+      </div>
     </div>
-    <div class="tw-mt-4">
-        <slot name="content"></slot>
+    <div class="mt-4">
+      <slot name="content"></slot>
     </div>
-</div>
+  </div>
 </template>
 <script setup lang="ts">
 import VueTypes from "vue-types";
 
 const props = defineProps({
-    title: VueTypes.string.def(""),
-    subTitle: VueTypes.string.def(""),
-    number: VueTypes.number.def(null),
-})
+  title: VueTypes.string.def(""),
+  subTitle: VueTypes.string.def(""),
+  number: VueTypes.number.def(null),
+});
 </script>

@@ -1,37 +1,37 @@
 <template>
-  <div class="tw-w-full tw-flex tw-items-center tw-justify-between tw-flex-wrap tw-mb-4 tw-gap-4">
+  <div class="w-full flex items-center justify-between flex-wrap mb-4 gap-4">
     <div class="new-switch-cus">
       <div :class="['new-switch-overlay', selectOption === 1 ? '' : 'new-switch-action']"></div>
-      <a-button class="tw-border-none" type="text" @click="handleSelectSell(1)">
-        <span class="tw-text-white">
+      <a-button class="border-none" type="text" @click="handleSelectSell(1)">
+        <span class="text-white">
           {{ translate("reportProduct.bestSelling") }}
         </span>
       </a-button>
-      <a-button class="tw-border-none" type="text" @click="handleSelectSell(2)">
-        <span class="tw-text-white">
+      <a-button class="border-none" type="text" @click="handleSelectSell(2)">
+        <span class="text-white">
           {{ translate("reportProduct.slowSelling") }}
         </span>
       </a-button>
     </div>
-    <div class="tw-flex tw-items-center">
-      <a-button class="tw-mr-2 tw-text-[#aab8c5] tw-pb-0" type="gray-hover" shape="circle" @click="prevYear">
+    <div class="flex items-center">
+      <a-button class="mr-2 text-[#aab8c5] pb-0" type="gray-hover" shape="circle" @click="prevYear">
         <font-awesome-icon :icon="['fas', 'circle-chevron-left']" size="xl" />
       </a-button>
 
-      <div class="tw-flex tw-items-center">
-        <div class="tw-text-xl tw-text-[#aab8c5] tw-mr-2">{{ translate("Month") }}</div>
-        <a-date-picker class="date-picker-shedule tw-p-0 tw-m-0 tw-border-none" picker="month" v-model:value="formState.time" :bordered="false" :allowClear="false">
+      <div class="flex items-center">
+        <div class="text-xl text-[#aab8c5] mr-2">{{ translate("Month") }}</div>
+        <a-date-picker class="date-picker-shedule p-0 m-0 border-none" picker="month" v-model:value="formState.time" :bordered="false" :allowClear="false">
           <template #suffixIcon> </template>
         </a-date-picker>
       </div>
 
-      <a-button class="tw-mr-1 tw-text-[#aab8c5] tw-pb-0" type="gray-hover" shape="circle" @click="nextYear">
+      <a-button class="mr-1 text-[#aab8c5] pb-0" type="gray-hover" shape="circle" @click="nextYear">
         <font-awesome-icon :icon="['fas', 'circle-chevron-right']" size="xl" />
       </a-button>
     </div>
   </div>
 
-  <div class="tw-w-full">
+  <div class="w-full">
     <AntdTable ref="table" key-field="id" :index-column="true" :columns="columns" :has-checkbox="false" :no-sort="true" :dataSource="selectOption === 1 ? databest : dataslow" v-if="!loading"></AntdTable>
     <a-skeleton v-else :loading="loading" active />
   </div>

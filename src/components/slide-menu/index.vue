@@ -1,5 +1,5 @@
 <template>
-    <a-menu :items="menuAdmin" v-model:selectedKeys="selectedKeys" v-model:openKeys="openKeys" @click="handleClickMenu" mode="inline" :inline-collapsed="true" class="tw-h-full tw-w-24"/>
+  <a-menu theme="dark" :items="menuAdmin" v-model:selectedKeys="selectedKeys" v-model:openKeys="openKeys" @click="handleClickMenu" mode="inline" :inline-collapsed="true" class="h-full w-24"/>
 </template>
 <script setup lang="ts">
 import { useRoute, useRouter } from "vue-router";

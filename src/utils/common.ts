@@ -63,25 +63,25 @@ export const formatIdProduct = (str: string) => {
 
 export const setTextColor = (value: number) => {
   if (value <= 25) {
-    return "tw-text-[#FF0000]";
+    return "text-[#FF0000]";
   } else if (value > 25 && value <=50) {
-    return "tw-text-[#FFA500]";
+    return "text-[#FFA500]";
   } else if (value > 50 && value <= 75) {
-    return "tw-text-[#FFFF00]";
+    return "text-[#FFFF00]";
   } else {
-    return "tw-text-[#29fe1d]";
+    return "text-[#29fe1d]";
   }
 }
 
 export const setBgColor = (value: number) => {
   if (value <= 25) {
-    return "tw-bg-[#FF0000]";
+    return "bg-[#FF0000]";
   } else if (value > 25 && value <= 50) {
-    return "tw-bg-[#FFA500]";
+    return "bg-[#FFA500]";
   } else if (value > 50 && value <= 75) {
-    return "tw-bg-[#FFFF00]";
+    return "bg-[#FFFF00]";
   } else {
-    return "tw-bg-[#07e500]";
+    return "bg-[#07e500]";
   }
 }
 

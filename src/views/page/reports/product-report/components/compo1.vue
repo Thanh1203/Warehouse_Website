@@ -1,45 +1,45 @@
 <template>
-  <div class="tw-w-full tw-mb-6 tw-grid tw-grid-cols-1 md:tw-grid-cols-2 lg:tw-grid-cols-5 tw-bg-[#37404a] tw-rounded-lg tw-overflow-hidden tw-border tw-border-[#464f5b]">    
-    <div class="tw-h-[140px] tw-p-4 tw-flex tw-flex-col tw-items-center tw-justify-between md:tw-col-span-2 lg:tw-col-span-1 grid-border-item">
+  <div class="w-full mb-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 bg-[#37404a] rounded-lg overflow-hidden border border-[#464f5b]">    
+    <div class="h-[140px] p-4 flex flex-col items-center justify-between md:col-span-2 lg:col-span-1 grid-border-item">
       <font-awesome-icon :icon="['fas', 'database']" size="xl" style="color: #8391a2" />
-      <div class="tw-text-[#aab8c5]">
-        <NumberAnimation v-if="!loading" :from="0" :to="10000" :duration="1" autoplay easing="linear" :format="theFormat" class="tw-text-2xl" />
+      <div class="text-[#aab8c5]">
+        <NumberAnimation v-if="!loading" :from="0" :to="10000" :duration="1" autoplay easing="linear" :format="theFormat" class="text-2xl" />
         <a-skeleton-input v-else :loading="loading" :paragraph="{ rows: 0 }" active size="small" />
       </div>
-      <div class="tw-text-[#8391a2] tw-text-base tw-truncate">{{ translate("Products") }}</div>
+      <div class="text-[#8391a2] text-base truncate">{{ translate("Products") }}</div>
     </div>
-    <div class="tw-w-full tw-grid tw-grid-cols-1 md:tw-grid-cols-2 md:tw-col-span-2 lg:tw-col-span-4 lg:tw-grid-cols-4">
-      <div class="tw-h-[140px] tw-p-4 tw-flex tw-flex-col tw-items-center tw-justify-between grid-border-item">
+    <div class="w-full grid grid-cols-1 md:grid-cols-2 md:col-span-2 lg:col-span-4 lg:grid-cols-4">
+      <div class="h-[140px] p-4 flex flex-col items-center justify-between grid-border-item">
         <font-awesome-icon :icon="['fas', 'database']" size="xl" style="color: #8391a2" />
-        <div class="tw-text-[#aab8c5]">
-          <NumberAnimation v-if="!loading" :from="0" :to="300" :duration="1" autoplay easing="linear" :format="theFormat" class="tw-text-2xl" />
+        <div class="text-[#aab8c5]">
+          <NumberAnimation v-if="!loading" :from="0" :to="300" :duration="1" autoplay easing="linear" :format="theFormat" class="text-2xl" />
           <a-skeleton-input v-else :loading="loading" :paragraph="{ rows: 0 }" active size="small" />
         </div>
-        <div class="tw-text-[#8391a2] tw-text-base tw-truncate">{{ translate("Category") }}</div>
+        <div class="text-[#8391a2] text-base truncate">{{ translate("Category") }}</div>
       </div>
-      <div class="tw-h-[140px] tw-p-4 tw-flex tw-flex-col tw-items-center tw-justify-between grid-border-item">
+      <div class="h-[140px] p-4 flex flex-col items-center justify-between grid-border-item">
         <font-awesome-icon :icon="['fas', 'database']" size="xl" style="color: #8391a2" />
-        <div class="tw-text-[#aab8c5]">
-          <NumberAnimation v-if="!loading" :from="0" :to="100" :duration="1" autoplay easing="linear" :format="theFormat" class="tw-text-2xl" />
+        <div class="text-[#aab8c5]">
+          <NumberAnimation v-if="!loading" :from="0" :to="100" :duration="1" autoplay easing="linear" :format="theFormat" class="text-2xl" />
           <a-skeleton-input v-else :loading="loading" :paragraph="{ rows: 0 }" active size="small" />
         </div>
-        <div class="tw-text-[#8391a2] tw-text-base tw-truncate">{{ translate("Classify") }}</div>
+        <div class="text-[#8391a2] text-base truncate">{{ translate("Classify") }}</div>
       </div>
-      <div class="tw-h-[140px] tw-p-4 tw-flex tw-flex-col tw-items-center tw-justify-between grid-border-item">
+      <div class="h-[140px] p-4 flex flex-col items-center justify-between grid-border-item">
         <font-awesome-icon :icon="['fas', 'database']" size="xl" style="color: #8391a2" />
-        <div class="tw-text-[#aab8c5]">
-          <NumberAnimation v-if="!loading" :from="0" :to="1000" :duration="1" autoplay easing="linear" :format="theFormat" class="tw-text-2xl" />
+        <div class="text-[#aab8c5]">
+          <NumberAnimation v-if="!loading" :from="0" :to="1000" :duration="1" autoplay easing="linear" :format="theFormat" class="text-2xl" />
           <a-skeleton-input v-else :loading="loading" :paragraph="{ rows: 0 }" active size="small" />
         </div>
-        <div class="tw-text-[#8391a2] tw-text-base tw-truncate">{{ translate("reportProduct.provider") }}</div>
+        <div class="text-[#8391a2] text-base truncate">{{ translate("reportProduct.provider") }}</div>
       </div>
-      <div class="tw-h-[140px] tw-p-4 tw-flex tw-flex-col tw-items-center tw-justify-between grid-border-item">
+      <div class="h-[140px] p-4 flex flex-col items-center justify-between grid-border-item">
         <font-awesome-icon :icon="['fas', 'database']" size="xl" style="color: #8391a2" />
-        <div class="tw-text-[#aab8c5]">
-          <NumberAnimation v-if="!loading" :from="0" :to="10" :duration="1" autoplay easing="linear" :format="theFormat" class="tw-text-2xl" />
+        <div class="text-[#aab8c5]">
+          <NumberAnimation v-if="!loading" :from="0" :to="10" :duration="1" autoplay easing="linear" :format="theFormat" class="text-2xl" />
           <a-skeleton-input v-else :loading="loading" :paragraph="{ rows: 0 }" active size="small" />
         </div>
-        <div class="tw-text-[#8391a2] tw-text-base tw-truncate">{{ translate("reportProduct.sector") }}</div>
+        <div class="text-[#8391a2] text-base truncate">{{ translate("reportProduct.sector") }}</div>
       </div>
     </div>
   </div>

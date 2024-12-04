@@ -1,17 +1,17 @@
 <template>
   <BaseModal :visible="isVisible" :title="titleModal" :defaultFooter="false" @cancel="$emit('closeModal')">
-    <a-form class="tw-mb-6">
-      <div class="tw-w-full tw-flex tw-items-start tw-mb-6">
-        <div class="tw-basis-1/2 tw-mr-2 tw-flex tw-flex-col tw-justify-start tw-items-start">
+    <a-form class="mb-6">
+      <div class="w-full flex items-start mb-6">
+        <div class="basis-1/2 mr-2 flex flex-col justify-start items-start">
           <span>{{ translate("ClassificationCode") }}<span class="required-star">*</span></span>
-          <div class="tw-w-full tw-mt-2">
+          <div class="w-full mt-2">
             <a-input :placeholder="translate('ClassificationCode')" :status="v$.code.$error ? 'error' : ''" v-model:value="v$.code.$model"/>
           </div>
           <ErrorMess :params="[64]" title="ClassificationCode" :validator="v$.code.$errors[0]?.$validator" />
         </div>
-        <div class="tw-basis-1/2 tw-ml-2 tw-flex tw-flex-col tw-justify-start tw-items-start">
+        <div class="basis-1/2 ml-2 flex flex-col justify-start items-start">
           <span>{{ translate("ClassificationName") }}<span class="required-star">*</span></span>
-          <div class="tw-w-full tw-mt-2">
+          <div class="w-full mt-2">
             <a-input :placeholder="translate('ClassificationName')" :status="v$.name.$error ? 'error' : ''" v-model:value="v$.name.$model"/>
           </div>
           <ErrorMess :params="[64]" title="ClassificationName" :validator="v$.name.$errors[0]?.$validator" />
@@ -23,7 +23,7 @@
         <template #icon>
           <font-awesome-icon :icon="['far', 'floppy-disk']" />
         </template>
-        <span class="tw-ml-2 tw-text-sm">{{ translate("Save") }}</span>
+        <span class="ml-2 text-sm">{{ translate("Save") }}</span>
       </AntdButton>
     </template>
   </BaseModal>

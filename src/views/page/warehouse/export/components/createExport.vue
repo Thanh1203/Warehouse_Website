@@ -1,14 +1,14 @@
 <template>
   <SectionBreadcrumb :list="listBreadCrumb" />
 
-  <div class="tw-font-semibold tw-text-2xl tw-mb-6">{{ translate("warehouse.createExport") }}</div>
+  <div class="font-semibold text-2xl mb-6">{{ translate("warehouse.createExport") }}</div>
   
-  <div class="tw-w-full tw-px-10 tw-grid tw-grid-cols-1 tw-gap-4 md:tw-grid-cols-4 md:tw-gap-6">
+  <div class="w-full px-10 grid grid-cols-1 gap-4 md:grid-cols-4 md:gap-6">
     <div>
       <SectionWarehouse/>
       <SectionCategory :type="'EXPORT'"/>
     </div>
-    <div class="tw-col-span-2">
+    <div class="col-span-2">
       <SectionSelectProducts/>
       <SectionListImport/>
     </div>

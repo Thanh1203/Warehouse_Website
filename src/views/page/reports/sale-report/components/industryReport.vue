@@ -51,64 +51,64 @@ const datafakePlatfrom = [
 </script>
 
 <template>
-  <div class="tw-w-full tw-bg-[#37404a] tw-rounded-lg tw-p-4">
-    <div class="tw-w-full tw-flex tw-justify-between tw-mb-4">
-      <div class="tw-mb-3 tw-text-[#aab8c5] tw-text-lg tw-font-bold tw-truncate">
+  <div class="w-full bg-[#37404a] rounded-lg p-4">
+    <div class="w-full flex justify-between mb-4">
+      <div class="mb-3 text-[#aab8c5] text-lg font-bold truncate">
         <a-tooltip>
           <template #title>{{ translate("reportSale.revenueIndustry") }}</template>
           {{ translate("reportSale.revenueIndustry") }}
         </a-tooltip>
       </div>
 
-      <div class="tw-flex tw-items-center">
-        <a-button class="tw-mr-2 tw-text-[#aab8c5]" type="gray-hover" shape="circle" @click="prevYear(2)">
+      <div class="flex items-center">
+        <a-button class="mr-2 text-[#aab8c5]" type="gray-hover" shape="circle" @click="prevYear(2)">
           <font-awesome-icon :icon="['fas', 'circle-chevron-left']" size="xl" />
         </a-button>
 
-        <div class="tw-flex tw-items-center">
-          <a-date-picker class="date-picker-shedule tw-p-0 tw-m-0 tw-border-none" picker="month" v-model:value="formState.year" :bordered="false" :allowClear="false">
+        <div class="flex items-center">
+          <a-date-picker class="date-picker-shedule p-0 m-0 border-none" picker="month" v-model:value="formState.year" :bordered="false" :allowClear="false">
             <template #suffixIcon> </template>
           </a-date-picker>
         </div>
 
-        <a-button class="tw-mr-1 tw-text-[#aab8c5]" type="gray-hover" shape="circle" @click="nextYear(2)">
+        <a-button class="mr-1 text-[#aab8c5]" type="gray-hover" shape="circle" @click="nextYear(2)">
           <font-awesome-icon :icon="['fas', 'circle-chevron-right']" size="xl" />
         </a-button>
       </div>
     </div>
 
-    <div class="tw-w-full tw-h-[400px] tw-overflow-hidden tw-overflow-y-auto">
-      <div v-for="(item, idx) in datafakePlatfrom" class="tw-w-full tw-h-20 tw-py-4 tw-border-b tw-border-[#464f5b] tw-flex">
-        <div class="tw-h-full tw-w-12 tw-min-w-12 tw-flex tw-items-center tw-justify-center tw-text-xl tw-font-semibold tw-text-[#aab8c5]">
+    <div class="w-full h-[400px] overflow-hidden overflow-y-auto">
+      <div v-for="(item, idx) in datafakePlatfrom" class="w-full h-20 py-4 border-b border-[#464f5b] flex">
+        <div class="h-full w-12 min-w-12 flex items-center justify-center text-xl font-semibold text-[#aab8c5]">
           <img v-if="idx === 0" src="/src/assets/images/listIcon/1st.png" alt="1st" />
           <img v-if="idx === 1" src="/src/assets/images/listIcon/2nd.png" alt="2nd" />
           <img v-if="idx === 2" src="/src/assets/images/listIcon/3rd.png" alt="3rd" />
           <span v-if="idx > 2">{{ setOrdinalNum(idx + 1) }}</span>
         </div>
-        <div class="tw-grow tw-pl-4 tw-pr-2 tw-truncate">
+        <div class="grow pl-4 pr-2 truncate">
           <a-tooltip>
             <template #title>
-              <div class="tw-text-[#aab8c5] tw-text-base tw-font-semibold tw-truncate">
+              <div class="text-[#aab8c5] text-base font-semibold truncate">
                 {{ item.name }}
               </div>
-              <div class="tw-text-[#8391a2] tw-truncate">{{ translate("Revenue") }}: {{ item.revenueTotal.toLocaleString("en-US") }} VND</div>
+              <div class="text-[#8391a2] truncate">{{ translate("Revenue") }}: {{ item.revenueTotal.toLocaleString("en-US") }} VND</div>
             </template>
-            <div class="tw-text-[#aab8c5] tw-text-base tw-font-semibold tw-truncate">
+            <div class="text-[#aab8c5] text-base font-semibold truncate">
               {{ item.name }}
             </div>
-            <div class="tw-text-[#8391a2] tw-truncate">{{ translate("Revenue") }}: {{ item.revenueTotal.toLocaleString("en-US") }} VND</div>
+            <div class="text-[#8391a2] truncate">{{ translate("Revenue") }}: {{ item.revenueTotal.toLocaleString("en-US") }} VND</div>
           </a-tooltip>
         </div>
-        <div class="tw-h-full tw-w-32 tw-flex tw-flex-col tw-justify-center tw-truncate">
-          <div v-if="item.state === 'up'" class="tw-text-[#0acf97]">
+        <div class="h-full w-32 flex flex-col justify-center truncate">
+          <div v-if="item.state === 'up'" class="text-[#0acf97]">
             <font-awesome-icon :icon="['fas', 'arrow-trend-up']" />
-            <span class="tw-ml-2">{{ item.statis }}%</span>
+            <span class="ml-2">{{ item.statis }}%</span>
           </div>
-          <div v-if="item.state === 'down'" class="tw-text-[#fa5c7c]">
+          <div v-if="item.state === 'down'" class="text-[#fa5c7c]">
             <font-awesome-icon :icon="['fas', 'arrow-trend-down']" />
-            <span class="tw-ml-2">{{ item.statis }}%</span>
+            <span class="ml-2">{{ item.statis }}%</span>
           </div>
-          <div class="tw-text-[#8391a2] tw-truncate">{{ translate("reportCommon.sinceLastMonth") }}</div>
+          <div class="text-[#8391a2] truncate">{{ translate("reportCommon.sinceLastMonth") }}</div>
         </div>
       </div>
     </div>

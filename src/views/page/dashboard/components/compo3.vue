@@ -1,37 +1,37 @@
 <template>
-  <div class="tw-mt-4 tw-grid tw-w-full tw-gap-4 tw-grid-cols-1 xl:tw-grid-cols-4 xl:tw-gap-8">
-    <div class="tw-bg-[#37404a] tw-rounded-lg tw-p-4 xl:tw-col-span-3">
-      <div class="tw-w-full tw-mb-6 tw-text-[#aab8c5] tw-font-semibold tw-flex tw-items-center tw-justify-between tw-h-8">
-        <span class="tw-text-xl">{{ translate("Revenue") }}</span>
+  <div class="mt-4 grid w-full gap-4 grid-cols-1 xl:grid-cols-4 xl:gap-8">
+    <div class="bg-[#37404a] rounded-lg p-4 xl:col-span-3">
+      <div class="w-full mb-6 text-[#aab8c5] font-semibold flex items-center justify-between h-8">
+        <span class="text-xl">{{ translate("Revenue") }}</span>
 
-        <div class="tw-flex tw-items-center">
-          <a-button class="tw-mr-2 tw-text-[#aab8c5]" type="gray-hover" shape="circle" @click="prevYear">
+        <div class="flex items-center">
+          <a-button class="mr-2 text-[#aab8c5]" type="gray-hover" shape="circle" @click="prevYear">
             <font-awesome-icon :icon="['fas', 'circle-chevron-left']" size="xl" />
           </a-button>
 
-          <div class="tw-flex tw-items-center">
-            <div class="tw-text-xl tw-mr-[-24px]">{{ translate("Year") }}</div>
-            <a-date-picker class="date-picker-shedule tw-p-0 tw-m-0 tw-border-none" picker="year" v-model:value="formState.time" :bordered="false" :allowClear="false">
+          <div class="flex items-center">
+            <div class="text-xl mr-[-24px]">{{ translate("Year") }}</div>
+            <a-date-picker class="date-picker-shedule p-0 m-0 border-none" picker="year" v-model:value="formState.time" :bordered="false" :allowClear="false">
               <template #suffixIcon> </template>
             </a-date-picker>
           </div>
 
-          <a-button class="tw-mr-1 tw-text-[#aab8c5]" type="gray-hover" shape="circle" @click="nextYear">
+          <a-button class="mr-1 text-[#aab8c5]" type="gray-hover" shape="circle" @click="nextYear">
             <font-awesome-icon :icon="['fas', 'circle-chevron-right']" size="xl" />
           </a-button>
         </div>
       </div>
-      <div class="tw-h-[50vh] tw-flex tw-justify-center">
+      <div class="h-[50vh] flex justify-center">
         <Chartline v-if="!loading" :data="chartLine" />
         <a-skeleton v-else :loading="loading" active />
       </div>
     </div>
 
-    <div class="tw-bg-[#37404a] tw-rounded-lg tw-p-4">
-      <div class="tw-text-[#aab8c5] tw-h-8 tw-mb-6 tw-font-semibold">
-        <div class="tw-text-xl tw-truncate">{{ translate("ProductDistributionCategory") }}</div>
+    <div class="bg-[#37404a] rounded-lg p-4">
+      <div class="text-[#aab8c5] h-8 mb-6 font-semibold">
+        <div class="text-xl truncate">{{ translate("ProductDistributionCategory") }}</div>
       </div>
-      <div class="tw-h-[430px] tw-flex tw-justify-center tw-items-center">
+      <div class="h-[430px] flex justify-center items-center">
         <Chartpie v-if="!loading" :data="chartPie" />
         <a-skeleton v-else :loading="loading" active />
       </div>

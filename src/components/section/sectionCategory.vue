@@ -1,7 +1,7 @@
 <template>
-  <div class="tw-p-4 tw-w-full tw-rounded-lg section-ctn tw-mb-6">
-    <div class="tw-mb-4 tw-font-semibold">{{ translate('product.category') }}</div>
-    <a-select class="tw-w-full" :options="dataSupplier" :placeholder="translate('product.selectCategory')" @select="handleSelect"/>
+  <div class="p-4 w-full rounded-lg section-ctn mb-6">
+    <div class="mb-4 font-semibold">{{ translate('product.category') }}</div>
+    <a-select class="w-full" :options="dataSupplier" :placeholder="translate('product.selectCategory')" @select="handleSelect"/>
   </div>
 </template>
 <script setup lang="ts">

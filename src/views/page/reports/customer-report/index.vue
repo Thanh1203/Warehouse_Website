@@ -1,10 +1,10 @@
 <template>
-  <div class="tw-mb-6">
-    <span class="tw-text-[#aab8c5] tw-text-2xl tw-font-semibold">{{ translate('reportCustomer.title') }}</span>
+  <div class="mb-6">
+    <span class="text-[#aab8c5] text-2xl font-semibold">{{ translate('reportCustomer.title') }}</span>
   </div>
 
-  <div class="tw-w-full tw-mb-6 tw-p-4 tw-relative tw-border">
-    <div class="tw-bg-[#2E3A45] tw-w-fit tw-h-fit tw-text-[#aab8c5] tw-p-1 tw-absolute tw-top-[-17px]">
+  <div class="w-full mb-6 p-4 relative border">
+    <div class="bg-[#2E3A45] w-fit h-fit text-[#aab8c5] p-1 absolute top-[-17px]">
       {{ translate('reportCustomer.NumberNewCustomers') }}
     </div>
     <Compo1/>
