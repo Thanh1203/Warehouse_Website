@@ -1,4 +1,6 @@
 <template>
+  <SectionBreadcrumb :list="listBreadCrumb" />
+
   <div class="section w-full mb-4 text-sm grid grid-cols-5 gap-4">
     <div>
       <span class="opacity-70">{{ translate("EmployeeName") }}</span>
@@ -81,6 +83,7 @@ import { useRoute, useRouter } from "vue-router";
 import { debounce } from "vue-debounce";
 import { checkDeleteItem, removeNullObjects } from "@/utils/common";
 import { Modal, notification } from "ant-design-vue";
+import SectionBreadcrumb from "@/components/section-breadcrumb/index.vue";
 
 interface FormState {
   id: string | number | null;
@@ -91,6 +94,13 @@ interface FormState {
   companyId: number | null;
   allowDelete?: boolean;
 }
+
+const listBreadCrumb = ref<any>([
+  {
+    title: translate("Personnel"),
+    url: "/personnal",
+  },
+]);
 
 const ModalCreate = defineAsyncComponent(() => import("./components/ModalCreate.vue"));
 

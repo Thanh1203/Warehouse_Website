@@ -117,3 +117,24 @@ html {
     color: $base-white-50 !important;
   }
 }
+
+.ant-breadcrumb {
+  ol {
+    align-items: end;
+    li {  
+      &:first-child {
+        font-size: 1.125rem;
+        font-weight: 600;
+      } 
+      .ant-breadcrumb-link {
+        a {
+          color: $base-white-50 !important;
+        }
+      }
+    
+      .ant-breadcrumb-separator {
+        color: $base-white-50 !important;
+      }
+    }
+  }
+}
