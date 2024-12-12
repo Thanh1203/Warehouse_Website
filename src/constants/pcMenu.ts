@@ -11,29 +11,29 @@ const menuAdmin = [
         label: translate("Dashboard"),
         icon: () => h(FontAwesomeIcon, { icon: faChartSimple }),
     },
-    {
-        key: 'REPORT',
-        label: translate("StatisticsReports"),
-        icon: () => h(FontAwesomeIcon, { icon: faChartPie }),
-        children: [
-            {
-                key: 'CUSTOMERREPORT',
-                label: translate("CustomerReport"),
-                icon: () => h(FontAwesomeIcon, { icon: faAddressBook }),
-            },
-            {
-                key: 'PRODUCTSREPORT',
-                label: translate("ProductReport"),
-                icon: () => h(FontAwesomeIcon, { icon: faChartLine }),
-            },
-            {
-                key: 'SALESREPORT',
-                label: translate("SalesReport"),
-                icon: () => h(FontAwesomeIcon, { icon: faChartColumn }),
+    // {
+    //     key: 'REPORT',
+    //     label: translate("StatisticsReports"),
+    //     icon: () => h(FontAwesomeIcon, { icon: faChartPie }),
+    //     children: [
+    //         {
+    //             key: 'CUSTOMERREPORT',
+    //             label: translate("CustomerReport"),
+    //             icon: () => h(FontAwesomeIcon, { icon: faAddressBook }),
+    //         },
+    //         {
+    //             key: 'PRODUCTSREPORT',
+    //             label: translate("ProductReport"),
+    //             icon: () => h(FontAwesomeIcon, { icon: faChartLine }),
+    //         },
+    //         {
+    //             key: 'SALESREPORT',
+    //             label: translate("SalesReport"),
+    //             icon: () => h(FontAwesomeIcon, { icon: faChartColumn }),
 
-            }
-        ]
-    },
+    //         }
+    //     ]
+    // },
     {
         key: 'PERSONNEL',
         label: translate("Personnel"),

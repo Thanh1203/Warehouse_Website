@@ -1,5 +1,5 @@
 <template>
-  <div class="tw-py-4 tw-font-bold tw-overflow-hidden">
+  <div class="py-4 font-bold overflow-hidden">
     <Empty class="shake" :description="emptyText || translate('noData')" />
   </div>
 </template>

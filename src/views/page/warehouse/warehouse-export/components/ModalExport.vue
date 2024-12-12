@@ -1,12 +1,12 @@
 <template>
   <BaseModal :width="'500px'" :visible="isVisible" :title="translate('ProductQuantity')" centered  @cancel="$emit('closeModal')" :defaultFooter="false" :maskClosable="false">
-    <div class="tw-mb-6">
+    <div class="mb-6">
       {{ translate('ProductQuantity') }}: {{ maxQuantity }}
     </div>
-    <a-form @submit.prevent="handleSubmit" class="tw-mb-6">
+    <a-form @submit.prevent="handleSubmit" class="mb-6">
       <a-form-item>
-        <span class="tw-opacity-70">{{ translate('Quantity') }}</span>
-        <a-input class="tw-w-full tw-mt-2" v-model:value="v$.quantity.$model" :placeholder="translate('ProductQuantity')"/>
+        <span class="opacity-70">{{ translate('Quantity') }}</span>
+        <a-input class="w-full mt-2" v-model:value="v$.quantity.$model" :placeholder="translate('ProductQuantity')"/>
         <ErrorMess :params="[64]" title="Quantity" :validator="v$.quantity.$errors[0]?.$validator" />
       </a-form-item>
     </a-form>
@@ -16,7 +16,7 @@
         <template #icon>
           <font-awesome-icon :icon="['far', 'floppy-disk']" />
         </template>
-        <span class="tw-ml-2 tw-text-sm">{{ translate("Save") }}</span>
+        <span class="ml-2 text-sm">{{ translate("Save") }}</span>
       </AntdButton>
     </template>
   </BaseModal>

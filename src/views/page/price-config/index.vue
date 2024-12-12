@@ -1,6 +1,6 @@
 <template>
-  <div class="tw-mb-6 tw-p-6 tw-bg-white tw-rounded-xl">
-    <a-Tabs v-model:activeKey="activeKey" type="card" class="tw-h-[177px]" v-if="!loading">
+  <div class="mb-6 p-6 bg-white rounded-xl">
+    <a-Tabs v-model:activeKey="activeKey" type="card" class="h-[177px]" v-if="!loading">
       <a-tab-pane v-for="item in listWhInfo" :key="item.id" :tab="item.name">
         <TabWhInfo  :data="item" />
       </a-tab-pane>
@@ -8,23 +8,23 @@
     <a-skeleton v-else active />
   </div>
 
-  <a-form class="tw-mb-6 tw-px-6 tw-py-5 tw-bg-white tw-rounded-xl tw-flex">
-    <a-form-item class="tw-w-[300px] !tw-mr-3">
-      <span class="tw-opacity-70">{{ translate("ProductCode") }}</span>
-      <a-input :placeholder="translate('Search')" v-model:value="filterSearching.code" class="tw-mt-2" />
+  <a-form class="mb-6 px-6 py-5 bg-white rounded-xl flex">
+    <a-form-item class="w-[300px] !mr-3">
+      <span class="opacity-70">{{ translate("ProductCode") }}</span>
+      <a-input :placeholder="translate('Search')" v-model:value="filterSearching.code" class="mt-2" />
     </a-form-item>
 
-    <a-form-item class="tw-w-[300px] !tw-mr-3">
-      <span class="tw-opacity-70">{{ translate("ProductName") }}</span>
-      <a-input :placeholder="translate('Search')" v-model:value="filterSearching.name" class="tw-mt-2" />
+    <a-form-item class="w-[300px] !mr-3">
+      <span class="opacity-70">{{ translate("ProductName") }}</span>
+      <a-input :placeholder="translate('Search')" v-model:value="filterSearching.name" class="mt-2" />
     </a-form-item>
 
-    <a-form-item class="tw-flex tw-items-end">
+    <a-form-item class="flex items-end">
       <AntdButton :type="'text'" danger :disabled="disabledDeleteFilter" @click="handleClearFilter">
         <template #icon>
           <font-awesome-icon :icon="['far', 'trash-can']" />
         </template>
-        <span class="tw-ml-2">{{ translate("Delete") }}</span>
+        <span class="ml-2">{{ translate("Delete") }}</span>
       </AntdButton>
     </a-form-item>
   </a-form>
@@ -32,13 +32,13 @@
   <Section :title="translate('ListProducts')" :subTitle="translate('TotalProducts')" :number="String(productConfigUnitPrice?.length)">
     <template #body>
       <AntdTable
-        class="tw-h-[50vh] tw-w-full tw-overflow-hidden tw-overflow-y-auto"
+        class="h-[50vh] w-full overflow-hidden overflow-y-auto"
         :columns="columns"
         ref="table"
         key-field="id"
         :index-column="true"
         :has-checkbox="false"
-        :no-sort="true"
+        
         :dataSource="productConfigUnitPrice"
         v-if="!loading"
       >
@@ -46,7 +46,7 @@
           <template v-if="column.key === 'unitPrice' && record">
             <div>
               <div v-if="checkRowUpdate(record.id)">
-                <a-input v-model:value="v$.valUnitPrice.$model" class="tw-mb-2" />
+                <a-input v-model:value="v$.valUnitPrice.$model" class="mb-2" />
                 <ErrorMess :params="[64]" title="UnitPrice" :validator="v$.valUnitPrice.$errors[0]?.$validator" />
               </div>
               <template v-else>
@@ -61,7 +61,7 @@
                 {{ translate("EditUnitPrice") }}
               </AntdButton>
             </div>
-            <div v-else class="tw-flex tw-gap-4">
+            <div v-else class="flex gap-4">
               <AntdButton danger ghost @click="cancelEdit">
                 {{ translate("Cancel") }}
               </AntdButton>

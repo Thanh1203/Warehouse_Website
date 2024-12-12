@@ -1,29 +1,29 @@
 <template>
   <BaseModal :width="'1000px'" :visible="isVisible" :title="titleModal" :defaultFooter="false" :maskClosable="false" @cancel="$emit('closeModal')">
-    <a-form class="tw-w-full tw-mb-6">
-      <div class="tw-w-full tw-flex tw-items-start tw-mb-6">
-        <div class="tw-basis-1/2 tw-flex tw-flex-col tw-items-start tw-justify-start tw-mr-3">
-          <span class="tw-mb-2">{{ translate("CategoryCode") }}<span class="required-star">*</span></span>
+    <a-form class="w-full mb-6">
+      <div class="w-full flex items-start mb-6">
+        <div class="basis-1/2 flex flex-col items-start justify-start mr-3">
+          <span class="mb-2">{{ translate("CategoryCode") }}<span class="required-star">*</span></span>
           <a-input v-model:value="v$.code.$model" :status="v$.code.$error ? 'error' : ''" :placeholder="translate('CategoryCode')" :disabled="isEdit" />
           <ErrorMess :params="[64]" title="CategoryCode" :validator="v$.code.$errors[0]?.$validator" />
         </div>
-        <div class="tw-basis-1/2 tw-flex tw-flex-col tw-items-start tw-justify-start">
-          <span class="tw-mb-2">{{ translate("CategoryName") }}<span class="required-star">*</span></span>
+        <div class="basis-1/2 flex flex-col items-start justify-start">
+          <span class="mb-2">{{ translate("CategoryName") }}<span class="required-star">*</span></span>
           <a-input v-model:value="v$.name.$model" :status="v$.name.$error ? 'error' : ''" :placeholder="translate('CategoryName')" />
           <ErrorMess :params="[64]" title="CategoryName" :validator="v$.name.$errors[0]?.$validator" />
         </div>
       </div>
-      <div class="tw-w-full tw-flex tw-flex-col tw-items-start tw-mb-6">
+      <div class="w-full flex flex-col items-start mb-6">
         <span>{{ translate("DefaultProperties") }}:</span>
-        <div class="tw-w-full tw-mt-2 tw-flex tw-items-center tw-justify-between">
-          <div v-for="(item, idx) in propsDefault" :key="idx" class="tw-max-w-[150px] tw-px-4 tw-py-2 tw-border tw-border-slate-700 tw-flex tw-justify-center tw-items-center tw-rounded-xl">
+        <div class="w-full mt-2 flex items-center justify-between">
+          <div v-for="(item, idx) in propsDefault" :key="idx" class="max-w-[150px] px-4 py-2 border border-slate-700 flex justify-center items-center rounded-xl">
             <span>{{ item.label }}</span>
           </div>
         </div>
       </div>
-      <!-- <div class="tw-w-full tw-flex tw-flex-col tw-items-start">
-        <span class="tw-mb-2">{{ translate("CustomProperties") }}:</span>
-        <a-select mode="tags" class="tw-w-full" v-model:value="v$.propertyExtend.$model" :placeholder="translate('EnterProperty')" />
+      <!-- <div class="w-full flex flex-col items-start">
+        <span class="mb-2">{{ translate("CustomProperties") }}:</span>
+        <a-select mode="tags" class="w-full" v-model:value="v$.propertyExtend.$model" :placeholder="translate('EnterProperty')" />
       </div> -->
     </a-form>
     <template #footer>
@@ -31,7 +31,7 @@
         <template #icon>
           <font-awesome-icon :icon="['far', 'floppy-disk']" />
         </template>
-        <span class="tw-ml-2 tw-text-sm">{{ translate("Save") }}</span>
+        <span class="ml-2 text-sm">{{ translate("Save") }}</span>
       </AntdButton>
     </template>
   </BaseModal>

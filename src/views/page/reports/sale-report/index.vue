@@ -1,7 +1,7 @@
 <template>
-  <a-form class="tw-flex tw-rounded-xl tw-bg-white tw-px-6 tw-py-5 tw-mb-6 tw-gap-6">
+  <a-form class="flex rounded-xl bg-white px-6 py-5 mb-6 gap-6">
     <a-form-item>
-      <span class="tw-opacity-70 tw-mr-4">{{ translate("Year") }}</span>
+      <span class="opacity-70 mr-4">{{ translate("Year") }}</span>
       <a-date-picker picker="year" :allowClear="false" :placeholder="translate('SelectYear')" v-model:value="filterSearching"/>
     </a-form-item>
     <a-form-item>
@@ -9,45 +9,45 @@
         <template #icon>
           <font-awesome-icon :icon="['far', 'clock']" />
         </template>
-        <span class="tw-ml-2">{{ translate("Present") }}</span>
+        <span class="ml-2">{{ translate("Present") }}</span>
       </AntdButton>
     </a-form-item>
   </a-form>
 
-  <div class="tw-grid tw-w-full tw-gap-4 tw-grid-cols-2 lg:tw-gap-8 lg:tw-grid-cols-3 tw-mt-6">
-    <div class="tw-bg-[#fff] tw-rounded-xl tw-p-4 tw-flex tw-gap-x-4">
-      <div class="tw-rounded-full tw-bg-[#bee6f9] tw-w-14 tw-h-14 tw-flex tw-items-center tw-justify-center">
+  <div class="grid w-full gap-4 grid-cols-2 lg:gap-8 lg:grid-cols-3 mt-6">
+    <div class="bg-[#fff] rounded-xl p-4 flex gap-x-4">
+      <div class="rounded-full bg-[#bee6f9] w-14 h-14 flex items-center justify-center">
         <font-awesome-icon :icon="['fas', 'coins']" size="xl" style="color: #ffffff" />
       </div>
-      <div class="tw-overflow-hidden">
-        <div class="tw-truncate tw-font-600 tw-text-[14px]">{{ translate("TotalRevenue") }}</div>
-        <div class="tw-font-[700] tw-text-[24px] tw-text-[#001f3f]">
+      <div class="overflow-hidden">
+        <div class="truncate font-600 text-[14px]">{{ translate("TotalRevenue") }}</div>
+        <div class="font-[700] text-[24px] text-[#001f3f]">
           <NumberAnimation v-if="!loading" :from="0" :to="dataReportRevenue?.totalRevenue" :duration="1" autoplay easing="linear" :format="theFormat" />
           <a-skeleton-input v-else :loading="loading" :paragraph="{ rows: 0 }" active size="small" />
         </div>
       </div>
     </div>
 
-    <div class="tw-bg-[#fff] tw-rounded-xl tw-p-4 tw-flex tw-gap-x-4">
-      <div class="tw-rounded-full tw-bg-[#bee6f9] tw-w-14 tw-h-14 tw-flex tw-items-center tw-justify-center">
+    <div class="bg-[#fff] rounded-xl p-4 flex gap-x-4">
+      <div class="rounded-full bg-[#bee6f9] w-14 h-14 flex items-center justify-center">
         <font-awesome-icon :icon="['fas', 'coins']" size="xl" style="color: #ffffff" />
       </div>
-      <div class="tw-overflow-hidden">
-        <div class="tw-truncate tw-font-600 tw-text-[14px]">{{ translate("AverageDailyRevenue") }}</div>
-        <div class="tw-font-[700] tw-text-[24px] tw-text-[#001f3f]">
+      <div class="overflow-hidden">
+        <div class="truncate font-600 text-[14px]">{{ translate("AverageDailyRevenue") }}</div>
+        <div class="font-[700] text-[24px] text-[#001f3f]">
           <NumberAnimation v-if="!loading" :from="0" :to="dataReportRevenue?.averageDailyRevenue" :duration="1" autoplay easing="linear" :format="theFormat" />
           <a-skeleton-input v-else :loading="loading" :paragraph="{ rows: 0 }" active size="small" />
         </div>
       </div>
     </div>
 
-    <div class="tw-bg-[#fff] tw-rounded-xl tw-p-4 tw-flex tw-gap-x-4">
-      <div class="tw-rounded-full tw-bg-[#bee6f9] tw-w-14 tw-h-14 tw-flex tw-items-center tw-justify-center">
+    <div class="bg-[#fff] rounded-xl p-4 flex gap-x-4">
+      <div class="rounded-full bg-[#bee6f9] w-14 h-14 flex items-center justify-center">
         <font-awesome-icon :icon="['fas', 'coins']" size="xl" style="color: #ffffff" />
       </div>
-      <div class="tw-overflow-hidden">
-        <div class="tw-truncate tw-font-600 tw-text-[14px]">{{ translate("AverageMonthlyRevenue") }}</div>
-        <div class="tw-font-[700] tw-text-[24px] tw-text-[#001f3f]">
+      <div class="overflow-hidden">
+        <div class="truncate font-600 text-[14px]">{{ translate("AverageMonthlyRevenue") }}</div>
+        <div class="font-[700] text-[24px] text-[#001f3f]">
           <NumberAnimation v-if="!loading" :from="0" :to="dataReportRevenue?.averageMonthlyRevenue" :duration="1" autoplay easing="linear" :format="theFormat" />
           <a-skeleton-input v-else :loading="loading" :paragraph="{ rows: 0 }" active size="small" />
         </div>
@@ -55,31 +55,31 @@
     </div>
   </div>
 
-  <div class="tw-h-[70vh] tw-w-full tw-flex tw-gap-6 tw-bg-white tw-mt-6 tw-rounded-xl tw-p-4 tw-justify-around">
-    <div class="tw-p-4 tw-h-full tw-flex tw-flex-col tw-justify-center tw-items-center">
-      <div class="tw-mb-6 tw-font-[700] tw-text-[18px] tw-text-[#001f3f]">{{ translate("RevenueStatisticsRegion") }}</div>
+  <div class="h-[70vh] w-full flex gap-6 bg-white mt-6 rounded-xl p-4 justify-around">
+    <div class="p-4 h-full flex flex-col justify-center items-center">
+      <div class="mb-6 font-[700] text-[18px] text-[#001f3f]">{{ translate("RevenueStatisticsRegion") }}</div>
       <Chartpie v-if="!loading" :data="dataChartWarehouse"/>
       <a-skeleton v-else :loading="loading" active />
     </div>
 
-    <div class="tw-p-4 tw-h-full tw-flex tw-flex-col tw-justify-center tw-items-center">
-      <div class="tw-mb-6 tw-font-[700] tw-text-[18px] tw-text-[#001f3f]">{{ translate("QuarterlyRevenue") }}</div>
+    <div class="p-4 h-full flex flex-col justify-center items-center">
+      <div class="mb-6 font-[700] text-[18px] text-[#001f3f]">{{ translate("QuarterlyRevenue") }}</div>
       <Chartpie v-if="!loading" :data="dataChartQuarter" />
       <a-skeleton v-else :loading="loading" active />
     </div>
   </div>
 
-  <div class="tw-w-full tw-h-[70vh] tw-flex tw-flex-col tw-mt-6 tw-gap-x-6 tw-bg-white tw-rounded-xl tw-p-4">
-    <div class="tw-mb-6 tw-font-[700] tw-text-[18px] tw-text-[#001f3f]">{{ translate("RevenueEachMonth") }}</div>
-    <div class="tw-grow">
+  <div class="w-full h-[70vh] flex flex-col mt-6 gap-x-6 bg-white rounded-xl p-4">
+    <div class="mb-6 font-[700] text-[18px] text-[#001f3f]">{{ translate("RevenueEachMonth") }}</div>
+    <div class="grow">
       <Chartbar v-if="!loading" :data="dataChartRevenuaMonth" />
       <a-skeleton v-else :loading="loading" active />
     </div>
   </div>
 
-  <div class="tw-w-full tw-h-[70vh] tw-flex tw-flex-col tw-mt-6 tw-gap-x-6 tw-bg-white tw-rounded-xl tw-p-4">
-    <div class="tw-mb-6 tw-font-[700] tw-text-[18px] tw-text-[#001f3f]">{{ translate("RevenueEachWarehouse") }}</div>
-    <div class="tw-grow">
+  <div class="w-full h-[70vh] flex flex-col mt-6 gap-x-6 bg-white rounded-xl p-4">
+    <div class="mb-6 font-[700] text-[18px] text-[#001f3f]">{{ translate("RevenueEachWarehouse") }}</div>
+    <div class="grow">
       <Chartbar v-if="!loading" :data="dataChartRevenuaWarehouse" />
       <a-skeleton v-else :loading="loading" active />
     </div>

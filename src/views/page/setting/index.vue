@@ -1,10 +1,10 @@
 <template>
-  <div class="tw-w-full tw-p-6 tw-mb-6 tw-bg-white tw-rounded-xl">
-    <div class="tw-mb-2 tw-font-semibold tw-text-[20px]">{{ translate('Language') }}</div>
-    <div class="tw-flex tw-gap-6 tw-flex-wrap">
+  <div class="w-full p-6 mb-6 bg-white rounded-xl">
+    <div class="mb-2 font-semibold text-[20px]">{{ translate('Language') }}</div>
+    <div class="flex gap-6 flex-wrap">
       <div>{{ translate('SelectLanguage') }}</div>
       <a-select 
-        class="tw-w-[150px]"
+        class="w-[150px]"
         :options="optionsLanguare"
         v-model:value="currentLanguage"
       >

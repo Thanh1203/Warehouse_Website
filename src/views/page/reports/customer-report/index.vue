@@ -1,39 +1,39 @@
 <template>
-  <div class="tw-flex tw-w-full tw-h-full tw-justify-between">
-    <div class="tw-basis-1/4 tw-grid tw-grid-cols-1 tw-gap-8 tw-h-full">
-      <div class="tw-bg-[#fff] tw-rounded-xl tw-p-4 tw-flex tw-gap-x-4">
-        <div class="tw-rounded-full tw-bg-[#bee6f9] tw-w-14 tw-h-14 tw-flex tw-items-center tw-justify-center">
+  <div class="flex w-full h-full justify-between">
+    <div class="basis-1/4 grid grid-cols-1 gap-8 h-full">
+      <div class="bg-[#fff] rounded-xl p-4 flex gap-x-4">
+        <div class="rounded-full bg-[#bee6f9] w-14 h-14 flex items-center justify-center">
           <font-awesome-icon :icon="['fas', 'database']" size="xl" style="color: #ffffff" />
         </div>
-        <div class="tw-overflow-hidden">
-          <div class="tw-truncate tw-font-600 tw-text-[14px]">{{ translate("TotalCustomer") }}</div>
-          <div class="tw-font-[700] tw-text-[24px] tw-text-[#001f3f]">
+        <div class="overflow-hidden">
+          <div class="truncate font-600 text-[14px]">{{ translate("TotalCustomer") }}</div>
+          <div class="font-[700] text-[24px] text-[#001f3f]">
             <NumberAnimation v-if="!loading" :from="0" :to="dataReportCustomer?.totalCustomer" :duration="1" autoplay easing="linear" :format="theFormat" />
             <a-skeleton-input v-else :loading="loading" :paragraph="{ rows: 0 }" active size="small" />
           </div>
         </div>
       </div>
 
-      <div class="tw-bg-[#fff] tw-rounded-xl tw-p-4 tw-flex tw-gap-x-4">
-        <div class="tw-rounded-full tw-bg-[#bee6f9] tw-w-14 tw-h-14 tw-flex tw-items-center tw-justify-center">
+      <div class="bg-[#fff] rounded-xl p-4 flex gap-x-4">
+        <div class="rounded-full bg-[#bee6f9] w-14 h-14 flex items-center justify-center">
           <font-awesome-icon :icon="['fas', 'cart-shopping']" size="xl" style="color: #ffffff" />
         </div>
-        <div class="tw-overflow-hidden">
-          <div class="tw-truncate tw-font-600 tw-text-[14px]">{{ translate("TotalPurchases") }}</div>
-          <div class="tw-font-[700] tw-text-[24px] tw-text-[#001f3f]">
+        <div class="overflow-hidden">
+          <div class="truncate font-600 text-[14px]">{{ translate("TotalPurchases") }}</div>
+          <div class="font-[700] text-[24px] text-[#001f3f]">
             <NumberAnimation v-if="!loading" :from="0" :to="dataReportCustomer?.totalPurchase" :duration="1" autoplay easing="linear" :format="theFormat" />
             <a-skeleton-input v-else :loading="loading" :paragraph="{ rows: 0 }" active size="small" />
           </div>
         </div>
       </div>
 
-      <div class="tw-bg-[#fff] tw-rounded-xl tw-p-4 tw-flex tw-gap-x-4">
-        <div class="tw-rounded-full tw-bg-[#bee6f9] tw-w-14 tw-h-14 tw-flex tw-items-center tw-justify-center">
+      <div class="bg-[#fff] rounded-xl p-4 flex gap-x-4">
+        <div class="rounded-full bg-[#bee6f9] w-14 h-14 flex items-center justify-center">
           <font-awesome-icon :icon="['fas', 'percent']" size="xl" style="color: #ffffff" />
         </div>
-        <div class="tw-overflow-hidden">
-          <div class="tw-truncate tw-font-600 tw-text-[14px]">{{ translate("ReturnCustomerRate") }}</div>
-          <div class="tw-font-[700] tw-text-[24px] tw-text-[#001f3f]">
+        <div class="overflow-hidden">
+          <div class="truncate font-600 text-[14px]">{{ translate("ReturnCustomerRate") }}</div>
+          <div class="font-[700] text-[24px] text-[#001f3f]">
             <NumberAnimation
               v-if="!loading"
               :from="0"
@@ -42,59 +42,59 @@
               autoplay
               easing="linear"
               :format="theFormat"
-              :class="`tw-text-[${setColor(100)}]`"
+              :class="`text-[${setColor(100)}]`"
             />
             <a-skeleton-input v-else :loading="loading" :paragraph="{ rows: 0 }" active size="small" />
           </div>
         </div>
       </div>
 
-      <div class="tw-bg-[#fff] tw-rounded-xl tw-p-4">
-        <div class="tw-mb-6 tw-font-[700] tw-text-[18px] tw-text-[#001f3f]">{{ translate("StatisticsPurchases") }}</div>
+      <div class="bg-[#fff] rounded-xl p-4">
+        <div class="mb-6 font-[700] text-[18px] text-[#001f3f]">{{ translate("StatisticsPurchases") }}</div>
         <Chartpie v-if="!loading" :data="dataChartPie" />
         <a-skeleton v-else :loading="loading" active />
       </div>
     </div>
 
-    <div class="tw-basis-[70%] tw-bg-white tw-p-6 tw-rounded-xl tw-flex tw-flex-col tw-gap-y-6">
-      <div class="tw-flex tw-flex-col tw-items-start tw-justify-start">
+    <div class="basis-[70%] bg-white p-6 rounded-xl flex flex-col gap-y-6">
+      <div class="flex flex-col items-start justify-start">
         <div>
-          <span class="tw-mr-3 tw-text-[14px]">{{ translate("SelectYear") }}</span>
-          <a-date-picker v-model:value="yearSelected" picker="year" class="tw-max-w-[350px] tw-h-9" />
+          <span class="mr-3 text-[14px]">{{ translate("SelectYear") }}</span>
+          <a-date-picker v-model:value="yearSelected" picker="year" class="max-w-[350px] h-9" />
         </div>
       </div>
-      <div class="tw-w-full tw-h-1/2 tw-flex tw-flex-col">
-        <div class="tw-text-[20px] tw-grow tw-flex tw-items-center tw-mb-4 tw-gap-2">
+      <div class="w-full h-1/2 flex flex-col">
+        <div class="text-[20px] grow flex items-center mb-4 gap-2">
           <span>{{ translate("NumberNewCustomers") }}:</span>
           <div v-if="!loadingNewCustomer">
             {{ dataReportNewCustomer?.totalNewCustomer }}
           </div>
           <a-skeleton-input v-else :loading="loadingNewCustomer" :paragraph="{ rows: 0 }" active size="small" />
         </div>
-        <div class="tw-grow">
+        <div class="grow">
           <Chartline v-if="!loadingNewCustomer" :data="dataChartLine" />
           <a-skeleton v-else :loading="loadingNewCustomer" active />
         </div>
       </div>
-      <div class="tw-w-full tw-grow tw-h-1/2 tw-flex tw-flex-col">
-        <div class="tw-text-[20px] tw-mb-4">{{ translate("NewCustomersEachYear") }}</div>
-        <div class="tw-grow">
+      <div class="w-full grow h-1/2 flex flex-col">
+        <div class="text-[20px] mb-4">{{ translate("NewCustomersEachYear") }}</div>
+        <div class="grow">
           <Chartbar v-if="!loading" :data="dataChartBar" />
           <a-skeleton v-else :loading="loading" active />
         </div>
       </div>
     </div>
   </div>
-  <div class="tw-mt-6 tw-p-6 tw-bg-white tw-rounded-xl">
-    <div class="tw-mb-6 tw-text-[18px]">{{ translate("ListPotentialCustomers") }}</div>
-    <div class="tw-max-h-screen tw-overflow-hidden tw-overflow-y-auto">
+  <div class="mt-6 p-6 bg-white rounded-xl">
+    <div class="mb-6 text-[18px]">{{ translate("ListPotentialCustomers") }}</div>
+    <div class="max-h-screen overflow-hidden overflow-y-auto">
       <AntdTable
         ref="table"
         key-field="id"
         :index-column="false"
         :columns="columns"
         :has-checkbox="false"
-        :no-sort="true"
+        
         v-if="!loading"
         :dataSource="dataReportCustomer?.dataPotentialCustomers"
       >
@@ -211,24 +211,24 @@ const theFormat = (number) => {
 };
 
 const fetchData = async () => {
-  await store.dispatch("report/fetchDataReportCustomer");
+  // await store.dispatch("report/fetchDataReportCustomer");
 };
 
 const fetchDataNewCustomerYear = async (params) => {
-  await store.dispatch("report/fetchDataReportNewCustomerYear", params);
+  // await store.dispatch("report/fetchDataReportNewCustomerYear", params);
 };
 
 watch(
   () => yearSelected.value,
   debounce(() => {
-    fetchDataNewCustomerYear(yearSelected.value.year());
+    // fetchDataNewCustomerYear(yearSelected.value.year());
   }, 500),
 );
 
 onMounted(async () => {
   const currentYear = dayjs().year();
-  fetchDataNewCustomerYear(currentYear);
-  fetchData();
+  // fetchDataNewCustomerYear(currentYear);
+  // fetchData();
 });
 </script>
 <style scoped lang="scss"></style>

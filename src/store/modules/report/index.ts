@@ -70,9 +70,10 @@ export default {
   async fetchDataReportCustomer({ commit }, payload) {
    try {
     commit("SET_LOADING", true);
-    const response: any = await DataService.callApi(ConstantAPI.report.GET_CUSTOMER, null, null);
-    await commit("SET_DATA_REPORT_CUSTOMER", response);
-    return response;
+    // const response: any = await DataService.callApi(ConstantAPI.report.GET_CUSTOMER, null, null);
+    // await commit("SET_DATA_REPORT_CUSTOMER", response);
+    // return response;
+    commit("SET_LOADING", false);
    } catch (error) {
     console.log(error);
    }
@@ -81,9 +82,10 @@ export default {
   async fetchDataReportNewCustomerYear({ commit }, payload) {
    try {
     commit("SET_LOADING_NEW_CUSTOMER", true);
-    const response: any = await DataService.get(`${ConstantAPI.report.GET_NEW_CUSTOMER_YEAR.url}/${payload}`, null, null);
-    await commit("SET_DATA_REPORT_NEW_CUSTOMER", response);
-    return response;
+    // const response: any = await DataService.get(`${ConstantAPI.report.GET_NEW_CUSTOMER_YEAR.url}/${payload}`, null, null);
+    // await commit("SET_DATA_REPORT_NEW_CUSTOMER", response);
+    // return response;
+    commit("SET_LOADING", false);
    } catch (error) {
     console.log(error);
    }
@@ -93,9 +95,10 @@ export default {
   async fetchDataReportProduct({ commit }, payload) {
    try {
     commit("SET_LOADING", true);
-    const response: any = await DataService.callApi(ConstantAPI.report.GET_PRODUCT, null, null);
-    await commit("SET_DATA_REPORT_PRODUCT", response);
-    return response;
+    // const response: any = await DataService.callApi(ConstantAPI.report.GET_PRODUCT, null, null);
+    // await commit("SET_DATA_REPORT_PRODUCT", response);
+    // return response;
+    commit("SET_LOADING", false);
    } catch (error) {
     console.log(error);
    }
@@ -104,9 +107,10 @@ export default {
   async fetchSaleProduct({ commit }, payload) {
    try {
     commit("SET_LOADING_SALE_PRODUCT", true);
-    const response: any = await DataService.callApi(ConstantAPI.report.GET_PRODUCT_SALE, null, payload);
-    commit("SET_DATA_REPORT_SALE_PRDUCT", response);
-    return response;
+    // const response: any = await DataService.callApi(ConstantAPI.report.GET_PRODUCT_SALE, null, payload);
+    // commit("SET_DATA_REPORT_SALE_PRDUCT", response);
+    // return response;
+    commit("SET_LOADING_SALE_PRODUCT", false);
    } catch (error) {
     console.log(error);
    }
@@ -116,9 +120,10 @@ export default {
   async fetchDataReportRevenue({ commit }, payload) {
    try {
     commit("SET_LOADING", true);
-    const response: any = await DataService.get(`${ConstantAPI.report.GET_SALE.url}/${payload}`,null, null);
-    await commit("SET_DATA_REPORT_REVENUE", response);
-    return response;
+    // const response: any = await DataService.get(`${ConstantAPI.report.GET_SALE.url}/${payload}`,null, null);
+    // await commit("SET_DATA_REPORT_REVENUE", response);
+    // return response;
+    commit("SET_LOADING", false);
    } catch (error) {
     console.log(error);
    }

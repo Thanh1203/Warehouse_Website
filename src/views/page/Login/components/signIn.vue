@@ -1,35 +1,35 @@
 <template>
-  <div class="tw-w-1/2 tw-h-full tw-p-6 tw-flex tw-flex-col tw-justify-center tw-items-start tw-text-black">
-    <a-form class="tw-w-full tw-flex tw-flex-col tw-items-center" @submit.prevent="handleSubmit">
-      <div class="tw-mb-6 tw-w-full tw-flex tw-items-center tw-justify-center">
-        <span class="tw-text-3xl tw-font-bold tw-tracking-widest">{{ translate("SignIn") }}</span>
+  <div class="w-1/2 h-full p-6 flex flex-col justify-center items-start text-black">
+    <a-form class="w-full flex flex-col items-center" @submit.prevent="handleSubmit">
+      <div class="mb-6 w-full flex items-center justify-center">
+        <span class="text-3xl font-bold tracking-widest">{{ translate("SignIn") }}</span>
       </div>
-      <div class="tw-mb-6 tw-w-3/5 tw-flex tw-flex-col tw-items-start">
+      <div class="mb-6 w-3/5 flex flex-col items-start">
         <span>{{ translate("UserName") }}</span>
-        <div class="tw-mt-2 tw-w-full">
-          <a-input class="tw-rounded-xl" v-model:value="v$.username.$model" :status="v$.username.$error ? 'error' : ''" />
+        <div class="mt-2 w-full">
+          <a-input class="rounded-xl" v-model:value="v$.email.$model" :status="v$.email.$error ? 'error' : ''" />
         </div>
-        <ErrorMess title="UserName" :validator="v$.username.$errors[0]?.$validator" />
+        <ErrorMess title="UserName" :validator="v$.email.$errors[0]?.$validator" />
       </div>
-      <div class="tw-mb-6 tw-w-3/5 tw-flex tw-flex-col tw-items-start">
+      <div class="mb-6 w-3/5 flex flex-col items-start">
         <span>{{ translate("PassWord") }}</span>
-        <div class="tw-mt-2 tw-w-full">
-          <a-input-password  class="tw-rounded-xl" v-model:value="v$.password.$model" :status="v$.password.$error ? 'error' : ''" />
+        <div class="mt-2 w-full">
+          <a-input-password  class="rounded-xl" v-model:value="v$.password.$model" :status="v$.password.$error ? 'error' : ''" />
         </div>
         <ErrorMess title="PassWord" :validator="v$.password.$errors[0]?.$validator" />
       </div>
-      <div class="tw-w-3/5 tw-mb-6 tw-flex tw-items-center tw-justify-between tw-flex-wrap">
-        <AntdButton :type="'link'" danger class="tw-p-0" @click="handleForgot">
+      <div class="w-3/5 mb-6 flex items-center justify-between flex-wrap">
+        <AntdButton :type="'link'" danger class="p-0" @click="handleForgot">
           <span>{{ translate("ForgotPassword") }}</span>
         </AntdButton>
-        <AntdButton :type="'link'" @click="goSignUp" class="tw-p-0">
+        <AntdButton :type="'link'" @click="goSignUp" class="p-0">
           <span>{{ translate("HaveAccount") }}</span>
         </AntdButton>
       </div>
     </a-form>
-    <div class="tw-w-full tw-flex tw-items-center tw-justify-center">
+    <div class="w-full flex items-center justify-center">
       <AntdButton :type="'primary'" :size="'large'" @click="handleSubmit">
-        <span class="tw-tracking-[2px]">{{ translate("SignIn") }}</span>
+        <span class="tracking-[2px]">{{ translate("SignIn") }}</span>
       </AntdButton>
     </div>
   </div>
@@ -38,17 +38,18 @@
 import { translate } from "@/languages/i18n";
 import ErrorMess from "@/components/error-mess/index.vue";
 import { required } from "@vuelidate/validators";
-import { reactive } from "vue";
+import { onMounted, reactive } from "vue";
 import useVuelidate from "@vuelidate/core";
 import AntdButton from "@/components/antd-button/index.vue";
 import { useRouter } from "vue-router";
 import { message, notification } from "ant-design-vue";
 import { DataService } from "@/services/request";
 import ConstantAPI from "@/services/ConstantAPI";
-import { setAdminSession } from "@/utils";
+import { setUserInformation } from "@/utils";
+import { onUnmounted } from "vue";
 
 interface State {
-  username: string;
+  email: string;
   password: string;
 }
 
@@ -57,7 +58,7 @@ const router = useRouter();
 const emit = defineEmits(["handleSwap"]);
 
 const rules = {
-  username: {
+  email: {
     required,
   },
   password: {
@@ -66,7 +67,7 @@ const rules = {
 };
 
 const state = reactive<State>({
-  username: "",
+  email: "",
   password: "",
 });
 
@@ -91,16 +92,30 @@ const handleSubmit = async () => {
   }
 
   const response: any = await DataService.callApi(ConstantAPI.login.SIGN_IN, state, null);
-  if (response && response === "invalid account") {
-    notification["error"]({
-      message: translate('InvalidAccount')
-    })
-  } else {
+  if (response?.status=== 200) {
+    setUserInformation(response);
     notification["success"]({
       message: translate('LoginSuccessful')
-    })
-    setAdminSession(response);
-    router.push("/");
+    });
+    router.push('/');
+  } else {
+    notification["error"]({
+      message: translate('InvalidAccount')
+    });
   }
 };
+
+const handleKeydown = (event) => {
+  if (event.key === 'Enter') {
+    handleSubmit();
+  }
+};
+
+onMounted(() => {
+  window.addEventListener('keydown', handleKeydown);
+});
+
+onUnmounted(() => {
+  window.removeEventListener('keydown', handleKeydown);
+});
 </script>

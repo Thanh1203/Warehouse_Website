@@ -1,69 +1,54 @@
 <template>
-  <a-form class="tw-flex tw-rounded-xl tw-bg-white tw-px-6 tw-py-5 tw-mb-6">
-    <a-form-item class="tw-w-[250px] !tw-mr-3">
-      <span class="tw-opacity-70">{{ translate("EmployeeCode") }}</span>
-      <a-input :placeholder="translate('Search')" v-model:value="filterSearching.code" class="tw-mt-2" />
-    </a-form-item>
-    <a-form-item class="tw-w-[250px] !tw-mr-3">
-      <span class="tw-opacity-70">{{ translate("EnterEmployeeName") }}</span>
-      <a-input :placeholder="translate('Search')" v-model:value="filterSearching.name" class="tw-mt-2" />
-    </a-form-item>
-    <a-form-item class="tw-w-[200px] !tw-mr-3">
-      <span class="tw-opacity-70">{{ translate("SelectArea") }}</span>
-      <a-select :placeholder="translate('SelectArea')" v-model:value="filterSearching.address" :options="personnelAddress?.map((e) => ({ value: e, label: e }))" class="tw-mt-2" />
-    </a-form-item>
-    <a-form-item class="tw-flex tw-items-end">
-      <AntdButton :type="'text'" danger :disabled="disabledDeleteFilter" @click="handleClearFilter">
-        <template #icon>
-          <font-awesome-icon :icon="['far', 'trash-can']" />
-        </template>
-        <span class="tw-ml-2">{{ translate("Delete") }}</span>
-      </AntdButton>
-    </a-form-item>
-  </a-form>
   <Section
     :title="translate('PersonnelList')"
     :sub-title="translate('NumberOfPersonnel')"
     :number="String(totalPersonnel)"
-    class="tw-w-full tw-h-full tw-bg-white tw-overflow-hidden"
+    class="w-full h-full bg-white overflow-hidden"
   >
     <template #action>
-      <AntdButton :type="'text'" danger class="tw-mr-2" :disabled="disableDeleteMany" @click="handleDeletePersonnel(listSelect, true)">
+      <AntdButton :type="'text'" danger @click="handleClearFilter">
         <template #icon>
           <font-awesome-icon :icon="['far', 'trash-can']" />
         </template>
-        <span class="tw-text-sm tw-ml-2"
-          >{{ translate("Delete") }}<span v-if="listSelect?.length > 0">({{ listSelect?.length }})</span></span
-        >
+        <span class="ml-2">{{ translate("Delete") }}</span>
       </AntdButton>
       <AntdButton :type="'primary'" @click="handleCreate">
         <template #icon>
           <font-awesome-icon :icon="['fas', 'plus']" />
         </template>
-        <span class="tw-text-sm tw-ml-2">{{ translate("AddNew") }}</span>
+        <span class="text-sm ml-2">{{ translate("AddNew") }}</span>
       </AntdButton>
+    </template>
+    <template #action-second>
+      <div class="mt-3 w-1/4">
+        <a-input :placeholder="translate('EnterEmployeeName')" v-model:value="userFilter.name"/>
+      </div>
     </template>
     <template #body>
       <AntdTable
         ref="table"
-        key-field="id"
         :index-column="true"
         :columns="columns"
         :data-source="personnelData"
-        :has-checkbox="true"
-        :no-sort="true"
-        @onSelected="handleSelectRow"
-        class="tw-w-full tw-h-[calc(100vh-290px)] tw-overflow-hidden tw-overflow-y-auto"
+        class="w-full h-[calc(100vh-204px)] overflow-hidden overflow-y-auto"
+        @onChange="handleTable"
         v-if="!loading"
       >
         <template #custom-body="{ column, record }">
+          <template v-if="column.key === 'Role'">
+            {{ translate(`common.${record.Role.toLowerCase()}`) }}
+          </template>
+          <template v-if="column.key === 'CreateAt'">
+            {{ dayjs(record.CreateAt).format("DD/MM/YYYY") }}
+          </template>
+          <template v-if="column.key === 'Status'">
+            <a-tag v-if="record.Status === 'ACTIVE'" color="success">{{ translate("common.active")}}</a-tag>
+            <a-tag v-if="record.Status === 'DEACTIVE'" color="error"> {{ translate("common.deactive") }}</a-tag>
+          </template>
           <template v-if="column.key === 'action'">
             <div class="action">
               <AntdButton class="action-btn" :type="'light-hover'" shape="circle" @click="handleEditRow(record)">
                 <font-awesome-icon :icon="['far', 'pen-to-square']" style="color: #001f3f" />
-              </AntdButton>
-              <AntdButton class="action-btn" :type="'light-hover'" shape="circle" @click="handleDeletePersonnel(record, false)">
-                <font-awesome-icon :icon="['far', 'trash-can']" style="color: #ff0000" />
               </AntdButton>
             </div>
           </template>
@@ -86,18 +71,9 @@ import AntdTable from "@/components/antd-table/index.vue";
 import { useStore } from "vuex";
 import { useRoute, useRouter } from "vue-router";
 import { debounce } from "vue-debounce";
-import { checkDeleteItem, removeNullObjects } from "@/utils/common";
-import { Modal, notification } from "ant-design-vue";
-
-interface FormState {
-  id: string | number | null;
-  code: string;
-  name: string;
-  role: string;
-  address: string;
-  companyId: number | null;
-  allowDelete?: boolean;
-}
+import { removeNullObjects } from "@/utils/common";
+import { notification } from "ant-design-vue";
+import dayjs from "dayjs";
 
 const ModalCreate = defineAsyncComponent(() => import("./components/ModalCreate.vue"));
 
@@ -107,37 +83,68 @@ const router = useRouter();
 
 const personnelData = computed(() => store.getters["personnel/personnelData"]);
 const totalPersonnel = computed(() => store.getters["personnel/totalPersonnel"]);
-const personnelAddress = computed(() => store.getters["personnel/addressData"]);
 const loading = computed(() => store.getters["personnel/loading"]);
 
 const isVisibleModalCreate = ref<boolean>(false);
 const isEdit = ref<boolean>(false);
 const titleModal = ref<string>("");
-const listSelect = ref<Array<any>>([]);
+const userFilter = reactive({
+  name: "",
+  phone: "",
+  email: "",
+  role: null,
+  status: null,
+});
+
 const columns = ref<Array<any>>([
   {
-    title: translate("EmployeeCode"),
-    dataIndex: "code",
-    key: "code",
-    align: "left",
-  },
-  {
     title: translate("EmployeeName"),
-    dataIndex: "name",
-    key: "name",
-    align: "left",
-  },
-  {
-    title: translate("Address"),
-    dataIndex: "address",
-    key: "address",
+    dataIndex: "Name",
+    key: "Name",
     align: "left",
   },
   {
     title: translate("Role"),
-    dataIndex: "role",
-    key: "role",
+    dataIndex: "Role",
+    key: "Role",
     aligin: "left",
+    filters: [
+      { text: `${translate('common.admin')}`, value: 'Admin' },
+      { text: `${translate('common.employee')}`, value: 'Employee' },
+    ],
+    filterMultiple: false,
+    filteredValue: userFilter.role ? [userFilter.role] : null,
+  },
+  {
+    title: translate("PhoneNumber"),
+    dataIndex: "Phone",
+    key: "Phone",
+    aligin: "left",
+  },
+  {
+    title: translate("Email"),
+    dataIndex: "Email",
+    key: "Email",
+    aligin: "left",
+  },
+  {
+    title: translate("DateCreated"),
+    dataIndex: "CreateAt",
+    key: "CreateAt",
+    align: "left",
+  },
+  {
+    title: translate("common.Status"),
+    dataIndex: "Status",
+    key: "Status",
+    aligin: "left",
+    filters: [
+      { text: `${translate('common.active')}`, value: 'ACTIVE' },
+      { text: `${translate('common.deactive')}`, value: 'DEACTIVE' },
+    ],
+    filterMultiple: false,
+    filteredValue: userFilter.status ? [userFilter.status] : null,
+    width: 150,
   },
   {
     dataIndex: "action",
@@ -148,52 +155,50 @@ const columns = ref<Array<any>>([
   },
 ]);
 
-const filterSearching = reactive<any>({
-  name: "",
-  address: null,
-  code: "",
-});
+const handleTable = (pag:any, filter:any) => {
+  userFilter.role = filter.Role?.[0];
+  userFilter.status = filter.Status?.[0];
+}
 
-const formState = reactive<FormState>({
+const formState = reactive({
   id: null,
-  code: "",
   name: "",
-  role: "",
+  role: null,
   address: "",
-  companyId: null,
+  phone: "",
+  email: "",
+  password: "",
+  status: "",
 });
-
-//filter
-const disabledDeleteFilter = computed(() => filterSearching?.name?.length === 0 && filterSearching?.code?.length === 0 && filterSearching?.address === null);
 
 const handleClearFilter = () => {
-  filterSearching.name = "";
-  filterSearching.address = null;
-  filterSearching.code = "";
+  userFilter.name = "";
+  userFilter.role = null;
+  userFilter.status = null;
+  userFilter.email = "";
+  userFilter.phone = "";
 };
 
 //CRUD
 const handleCreate = () => {
-  formState.id = 0;
-  formState.code = "";
   formState.name = "";
-  formState.role = "";
+  formState.role = null;
   formState.address = "";
-  formState.companyId = null;
-  formState.allowDelete = true;
+  formState.phone = "";
+  formState.email = "";
+  formState.password = "";
   isVisibleModalCreate.value = true;
   isEdit.value = false;
   titleModal.value = translate("AddEmployee");
 };
 
 const handleEditRow = (data: any) => {
-  formState.id = data?.id;
-  formState.code = data?.code;
-  formState.name = data?.name;
-  formState.role = data?.role;
-  formState.address = data?.address;
-  formState.companyId = data?.companyId;
-  formState.allowDelete = data?.allowDeletes;
+  formState.id = data?.Id;
+  formState.name = data?.Name;
+  formState.role = data?.Role;
+  formState.address = data?.Address;
+  formState.phone = data?.Phone;
+  formState.email = data?.Email;
   isVisibleModalCreate.value = true;
   isEdit.value = true;
   titleModal.value = translate("UpdateEmployee");
@@ -238,75 +243,22 @@ const handleSubmitForm = async (state: any) => {
   }
 };
 
-const handleSelectRow = (rows: any) => {
-  listSelect.value = rows.value.map((x: any) => ({ id: x?.id, allowDelete: x?.allowDelete }));
-};
-
-const disableDeleteMany = computed(() => listSelect?.value?.length === 0);
-
-const handleDeletePersonnel = (itemDelete: any, isMany: boolean) => {
-  Modal.confirm({
-    title: translate(translate(isMany ? "confirm.many" : "confirm.one", "Personnel")),
-    content: translate("NoDataRestore"),
-    okText: translate("Agree"),
-    cancelText: translate("Cancel"),
-    centered: true,
-    async onOk() {
-      handleDelete(itemDelete);
-    },
-    onCancel() {},
-  });
-};
-
-const handleDelete = async (itemDelete: any) => {
-  if (checkDeleteItem(itemDelete)) {
-    if (itemDelete.length > 1) {
-      const temp = itemDelete.map((x: any) => x?.id);
-      await store.dispatch("personnel/deletePersonnel", {
-        state: temp,
-        params: {
-          ...route.query,
-        },
-      });
-    } else {
-      await store.dispatch("personnel/deletePersonnel", {
-        state: [itemDelete.id],
-        params: {
-          ...route.query,
-        },
-      });
-    }
-    listSelect.value = [];
-    notification["success"]({
-      message: translate("noti.deleteSuccess"),
-    });
-  } else {
-    notification["error"]({
-      message: translate("noti.deleteWarehouseFail"),
-    });
-  }
-};
-
 // close modal
 const onCancel = () => {
   isVisibleModalCreate.value = false;
 };
 
-const fetchData = async (params) => {
+const fetchData = async (params: any) => {
   await store.dispatch("personnel/getPersonnel", params);
 };
 
-const fetchAddressPersonnel = async () => {
-  await store.dispatch("personnel/getAddress", null);
-};
-
 watch(
-  () => filterSearching,
+  () => userFilter,
   debounce(() => {
     const params = {
-      code: filterSearching?.code,
-      name: filterSearching?.name,
-      address: filterSearching?.address,
+      name: userFilter?.name,
+      status: userFilter?.status,
+      role: userFilter?.role,
     };
     fetchData(removeNullObjects(params));
   }, 500),
@@ -315,7 +267,6 @@ watch(
 
 onMounted(async () => {
   await fetchData(null);
-  await fetchAddressPersonnel();
 });
 </script>
 <style scoped lang="scss"></style>

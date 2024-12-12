@@ -1,27 +1,27 @@
 <template>
-  <div class="tw-mb-6 tw-flex tw-gap-6 tw-items-center tw-justify-between">
-    <span class="tw-font-semibold tw-text-[20px]">{{ translate("UpdateProductQuantity") }}</span>
-    <a-alert type="error" :message="translate('ErrorNotConfigPrice')" banner v-if="!allHasUntiPrice" class="tw-rounded-xl tw-font-medium"/>
+  <div class="mb-6 flex gap-6 items-center justify-between">
+    <span class="font-semibold text-[20px]">{{ translate("UpdateProductQuantity") }}</span>
+    <a-alert type="error" :message="translate('ErrorNotConfigPrice')" banner v-if="!allHasUntiPrice" class="rounded-xl font-medium"/>
   </div>
 
-  <a-form class="tw-flex tw-items-end tw-gap-x-6 tw-mb-6">
-    <a-form-item class="tw-max-w-[400px] tw-min-w-[130px]">
-      <span class="tw-opacity-70">{{ translate("ProductCode") }}</span>
-      <a-input class="tw-w-full tw-mt-2" v-model:value="filterSearching" />
+  <a-form class="flex items-end gap-x-6 mb-6">
+    <a-form-item class="max-w-[400px] min-w-[130px]">
+      <span class="opacity-70">{{ translate("ProductCode") }}</span>
+      <a-input class="w-full mt-2" v-model:value="filterSearching" />
     </a-form-item>
     <a-form-item>
       <AntdButton :type="'text'" danger :disabled="disabledDeleteFilter" @click="handleClearFilter">
         <template #icon>
           <font-awesome-icon :icon="['far', 'trash-can']" />
         </template>
-        <span class="tw-ml-2">{{ translate("Delete") }}</span>
+        <span class="ml-2">{{ translate("Delete") }}</span>
       </AntdButton>
     </a-form-item>
   </a-form>
 
-  <div class="tw-grid tw-grid-cols-1 lg:tw-grid-cols-2 tw-gap-6 tw-mb-6">
-    <div class="tw-basis-1/2 tw-p-4 tw-border tw-rounded-xl tw-shadow tw-shadow-blue-100">
-      <div class="tw-mb-6 tw-font-semibold tw-flex tw-justify-between tw-gap-2 tw-flex-wrap">
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+    <div class="basis-1/2 p-4 border rounded-xl shadow shadow-blue-100">
+      <div class="mb-6 font-semibold flex justify-between gap-2 flex-wrap">
         <span>{{ translate("ListProductsWarehouse") }}</span>
       </div>
       <AntdTable
@@ -30,7 +30,7 @@
         :index-column="true"
         :columns="columnDataCurrent"
         :data-source="productInWh"
-        class="tw-w-full tw-h-[calc(100vh-330px)] tw-overflow-hidden tw-overflow-y-auto"
+        class="w-full h-[calc(100vh-330px)] overflow-hidden overflow-y-auto"
       >
         <template #custom-body="{ column, record }">
           <template v-if="column.key === 'action' && record">
@@ -42,8 +42,8 @@
       </AntdTable>
     </div>
 
-    <div class="tw-basis-1/2 tw-p-4 tw-border tw-rounded-xl tw-shadow tw-shadow-blue-100">
-      <div class="tw-mb-6 tw-font-semibold tw-flex tw-justify-between tw-gap-2 tw-flex-wrap">
+    <div class="basis-1/2 p-4 border rounded-xl shadow shadow-blue-100">
+      <div class="mb-6 font-semibold flex justify-between gap-2 flex-wrap">
         <span>{{ translate("ProductListUpdatedQuantity") }}</span>
       </div>
       <AntdTable
@@ -52,7 +52,7 @@
         :index-column="true"
         :columns="columnDataUpdate"
         :data-source="dataList"
-        class="tw-w-full tw-h-[calc(100vh-330px)] tw-overflow-hidden tw-overflow-y-auto"
+        class="w-full h-[calc(100vh-330px)] overflow-hidden overflow-y-auto"
       >
         <template #custom-body="{ column, record }">
           <template v-if="column.key === 'action' && record">
@@ -65,12 +65,12 @@
     </div>
   </div>
 
-  <div class="tw-w-full tw-flex tw-items-center tw-justify-end">
+  <div class="w-full flex items-center justify-end">
     <AntdButton :type="'primary'" @click="handleSubmit()" :disabled="disabledHandleSubmit">
       <template #icon>
         <font-awesome-icon :icon="['far', 'floppy-disk']" />
       </template>
-      <span class="tw-ml-2 tw-text-sm">{{ translate("Save") }}</span>
+      <span class="ml-2 text-sm">{{ translate("Save") }}</span>
     </AntdButton>
   </div>
   <!-- modal -->

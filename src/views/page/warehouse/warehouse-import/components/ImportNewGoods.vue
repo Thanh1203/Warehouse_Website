@@ -1,16 +1,16 @@
 <template>
-  <div class="tw-mb-6 tw-font-semibold tw-text-[20px]">
+  <div class="mb-6 font-semibold text-[20px]">
     {{ translate("AddNewProducts") }}
   </div>
 
-  <a-form @submit.prevent="handleSubmit" class="tw-mb-6">
-    <div class="tw-w-full tw-flex tw-gap-x-6 tw-items-start">
-      <div class="tw-w-1/2">
-        <div class="tw-opacity-70 tw-mb-2">{{ translate("ProductCode") }}</div>
+  <a-form @submit.prevent="handleSubmit" class="mb-6">
+    <div class="w-full flex gap-x-6 items-start">
+      <div class="w-1/2">
+        <div class="opacity-70 mb-2">{{ translate("ProductCode") }}</div>
         <a-select
           v-model:value="v$.id.$model"
           :options="options.map((e) => ({ value: e.id, label: e.code }))"
-          class="tw-w-full"
+          class="w-full"
           :allowClear="false"
           :placeholder="translate('ProductCode')"
           :status="v$.id.$error ? 'error' : ''"
@@ -18,12 +18,12 @@
         />
         <ErrorMess :params="[64]" title="ProductCode" :validator="v$.id.$errors[0]?.$validator" />
       </div>
-      <div class="tw-w-1/4">
-        <div class="tw-opacity-70 tw-mb-2">{{ translate("Quantity") }}</div>
-        <a-input class="tw-w-full" v-model:value="v$.quantity.$model" :placeholder="translate('Quantity')" />
+      <div class="w-1/4">
+        <div class="opacity-70 mb-2">{{ translate("Quantity") }}</div>
+        <a-input class="w-full" v-model:value="v$.quantity.$model" :placeholder="translate('Quantity')" />
         <ErrorMess :params="[64]" title="Quantity" :validator="v$.quantity.$errors[0]?.$validator" />
       </div>
-      <div class="tw-w-1/4 tw-h-[62px] tw-flex tw-justify-center tw-items-end">
+      <div class="w-1/4 h-[62px] flex justify-center items-end">
         <AntdButton type="primary" ghost @click="handleAddProduct">
           <span>{{ translate("AddToList") }}</span>
         </AntdButton>
@@ -31,8 +31,8 @@
     </div>
   </a-form>
 
-  <div class="tw-mb-6 tw-grow">
-    <AntdTable ref="table" key-field="id" :index-column="true" :columns="columns" :data-source="data" class="tw-h-[calc(100vh-394px)] tw-overflow-hidden tw-overflow-y-auto">
+  <div class="mb-6 grow">
+    <AntdTable ref="table" key-field="id" :index-column="true" :columns="columns" :data-source="data" class="h-[calc(100vh-394px)] overflow-hidden overflow-y-auto">
       <template #custom-body="{ column, record }">
         <template v-if="column.key === 'action' && record">
           <AntdButton type="primary" danger shape="circle" @click="handleDelete(record.id)">
@@ -43,12 +43,12 @@
     </AntdTable>
   </div>
 
-  <div class="tw-w-full tw-flex tw-items-center tw-justify-end">
+  <div class="w-full flex items-center justify-end">
     <AntdButton :type="'primary'" @click="handleSubmit()" :disabled="disabledHandleSubmit">
       <template #icon>
         <font-awesome-icon :icon="['fas', 'download']" />
       </template>
-      <span class="tw-ml-2 tw-text-sm">{{ translate("ImportGoods") }}</span>
+      <span class="ml-2 text-sm">{{ translate("ImportGoods") }}</span>
     </AntdButton>
   </div>
 </template>

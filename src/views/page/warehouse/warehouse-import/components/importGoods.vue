@@ -1,6 +1,6 @@
 <template>
-  <div class="tw-mb-6">
-    <a-breadcrumb separator=">>" class="tw-flex tw-items-center">
+  <div class="mb-6">
+    <a-breadcrumb separator=">>" class="flex items-center">
       <a-breadcrumb-item>
         <RouterLink to="/">
           <font-awesome-icon :icon="['fas', 'house']" />
@@ -17,8 +17,8 @@
     </a-breadcrumb>
   </div>
 
-  <div class="tw-flex tw-flex-col tw-bg-white tw-p-6 tw-rounded-xl">
-    <div class="tw-flex tw-items-center tw-gap-6 tw-mb-6">
+  <div class="flex flex-col bg-white p-6 rounded-xl">
+    <div class="flex items-center gap-6 mb-6">
       <AntdButton type="primary" :ghost="!isNewProduct" @click="() => isNewProduct = !isNewProduct">
         {{ translate('NewProduct') }}
       </AntdButton>
@@ -27,7 +27,7 @@
       </AntdButton>
     </div>
 
-    <div class="tw-grow tw-flex tw-flex-col">
+    <div class="grow flex flex-col">
       <ImportNewGoods v-if="isNewProduct"/>
       <UpdateQuantity v-else/>
     </div>

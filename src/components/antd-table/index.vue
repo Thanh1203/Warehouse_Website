@@ -5,29 +5,24 @@
   :pagination="pagination"
   :rowSelection="rowSelection"
   :sticky="sticky"
-  :customRow="customRow"
   :rowKey="keyField"
+  :loading="isLoading"
+  @change="onChange"
   >
     <template #bodyCell="{column, record}">
       <slot name="custom-body" :column="column" :record="record"></slot>
     </template>
-  <!-- <template v-if="title" #title>{{ title }}</template>
-    <template #headerCell="{ column }">
-      <slot name="custom-header" :column="column">
-        <div>{{ column.title }}</div>
-      </slot>
-    </template>
-    <slot name="custom-column"></slot>
     <template #emptyText>
-      <slot name="emptyText"></slot>
-    </template> -->
+      <a-empty :description="translate('noData')" />
+    </template>>
   </a-table>
 </template>
 <script setup lang="ts">
+import { translate } from "@/languages/i18n";
 import { computed, ref, watch } from "vue";
 import VueTypes from "vue-types";
 
-const emit = defineEmits(["onSelected", "onRowClicked"]);
+const emit = defineEmits(["onSelected", "onChange"]);
 
 const props = defineProps({
   title: VueTypes.string,
@@ -37,16 +32,15 @@ const props = defineProps({
   hasCheckbox: VueTypes.bool.def(false),
   pagination: VueTypes.bool.def(false),
   indexColumn: VueTypes.bool.def(false),
-  noSort: VueTypes.bool.def(false),
   pageSize: VueTypes.number.def(10),
   checkStrictly: VueTypes.bool.def(true),
   sticky: VueTypes.bool.def(true),
-
+  isLoading: VueTypes.bool.def(false),
 });
 
 const page = ref(1);
 const size = ref(props.pageSize);
-const selectedRows = ref<Array<any>>([]);
+const selectRows = ref<Array<any>>([]);
 
 const tableColumns = computed(() => {
   if (!props.columns.length) return null;
@@ -65,25 +59,23 @@ const tableColumns = computed(() => {
   return props.columns;
 });
 
-const rowSelection = props.hasCheckbox
-  ? ref({
-    checkStrictly: props.checkStrictly,
-    onSelect: (record :any, selected: any , row: Array<any>) => {
-        selectedRows.value = row;
-        emit("onSelected", selectedRows);
-      },
-      onSelectAll: (selected: any, rows: Array<any>) => {
-        selectedRows.value = rows;
-        emit("onSelected", selectedRows);
-      },
-    })
-  : null;
+const onChange = (pagination: any, filters: any, sorter: any, extra: any) => {
+  emit("onChange", pagination, filters, sorter, extra);
+};
 
-const customRow = (record: any) => {
+const rowSelection = computed(() => {
+  if (!props.hasCheckbox) return null;
   return {
-    onClick: () => {
-      emit("onRowClicked", record);
+    checkStrictly: props.checkStrictly,
+    onSelect: (record: any, selected: boolean, selectedRows: any[]) => {
+      selectRows.value = selectedRows;
+      emit("onSelected", selectRows.value);
+    },
+    onSelectAll: (selected: boolean, selectedRows: any[], changeRows: any[]) => {
+      selectRows.value = selectedRows;
+      emit("onSelected", selectRows.value);
     },
   };
-};
+});
+
 </script>

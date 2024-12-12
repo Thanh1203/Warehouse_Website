@@ -1,29 +1,29 @@
 <template>
-  <a-form class="tw-flex tw-rounded-xl tw-bg-white tw-px-6 tw-py-5 tw-mb-6">
-    <a-form-item class="tw-w-[250px] !tw-mr-3">
-      <span class="tw-opacity-70">{{ translate("EnterWarehouseName") }}</span>
-      <a-input :placeholder="translate('Search')" v-model:value="filterSearching.keyword" class="tw-mt-2" />
+  <a-form class="flex rounded-xl bg-white px-6 py-5 mb-6">
+    <a-form-item class="w-[250px] !mr-3">
+      <span class="opacity-70">{{ translate("EnterWarehouseName") }}</span>
+      <a-input :placeholder="translate('Search')" v-model:value="filterSearching.keyword" class="mt-2" />
     </a-form-item>
-    <a-form-item class="tw-w-[150px] !tw-mr-3">
-      <span class="tw-opacity-70">{{ translate("SelectNation") }}</span>
-      <a-select :placeholder="translate('Nation')" v-model:value="filterSearching.nationSlected" :options="nationOption?.map((e) => ({ value: e, label: e }))" class="tw-mt-2" />
+    <a-form-item class="w-[150px] !mr-3">
+      <span class="opacity-70">{{ translate("SelectNation") }}</span>
+      <a-select :placeholder="translate('Nation')" v-model:value="filterSearching.nationSlected" :options="nationOption?.map((e) => ({ value: e, label: e }))" class="mt-2" />
     </a-form-item>
-    <a-form-item class="tw-w-[150px] !tw-mr-3">
-      <span class="tw-opacity-70">{{ translate("SelectArea") }}</span>
+    <a-form-item class="w-[150px] !mr-3">
+      <span class="opacity-70">{{ translate("SelectArea") }}</span>
       <a-select
         :placeholder="translate('Area')"
         v-model:value="filterSearching.areaSelected"
         :options="areaOption?.map((e) => ({ value: e, label: e }))"
         :allowClear="true"
-        class="tw-mt-2"
+        class="mt-2"
       />
     </a-form-item>
-    <a-form-item class="tw-flex tw-items-end">
+    <a-form-item class="flex items-end">
       <AntdButton :type="'text'" danger :disabled="disabledDeleteFilter" @click="handleClearFilter">
         <template #icon>
           <font-awesome-icon :icon="['far', 'trash-can']" />
         </template>
-        <span class="tw-ml-2">{{ translate("Delete") }}</span>
+        <span class="ml-2">{{ translate("Delete") }}</span>
       </AntdButton>
     </a-form-item>
   </a-form>
@@ -31,14 +31,14 @@
     :title="translate('WarehouseList')"
     :sub-title="translate('NumberOfWarehouses')"
     :number="String(totalWarehouse)"
-    class="tw-w-full tw-h-full tw-bg-white tw-overflow-hidden"
+    class="w-full h-full bg-white overflow-hidden"
   >
     <template #action>
-      <AntdButton :type="'text'" danger class="tw-mr-2" :disabled="disableDeleteMany" @click="handleDeleteWarehouse(listSelect, true)">
+      <AntdButton :type="'text'" danger class="mr-2" :disabled="disableDeleteMany" @click="handleDeleteWarehouse(listSelect, true)">
         <template #icon>
           <font-awesome-icon :icon="['far', 'trash-can']" />
         </template>
-        <span class="tw-text-sm tw-ml-2">
+        <span class="text-sm ml-2">
           {{ translate("Delete") }} <span v-if="listSelect?.length > 0">({{ listSelect?.length }})</span>
         </span>
       </AntdButton>
@@ -46,7 +46,7 @@
         <template #icon>
           <font-awesome-icon :icon="['fas', 'plus']" />
         </template>
-        <span class="tw-text-sm tw-ml-2">{{ translate("AddNew") }}</span>
+        <span class="text-sm ml-2">{{ translate("AddNew") }}</span>
       </AntdButton>
     </template>
     <template #body>
@@ -57,9 +57,9 @@
         :columns="columns"
         :data-source="warehouseData"
         :has-checkbox="true"
-        :no-sort="true"
+        
         @onSelected="handleSelectRow"
-        class="tw-w-full tw-h-[calc(100vh-290px)] tw-overflow-hidden tw-overflow-y-auto"
+        class="w-full h-[calc(100vh-290px)] overflow-hidden overflow-y-auto"
         v-if="!loading"
       >
         <template #custom-body="{ column, record }">

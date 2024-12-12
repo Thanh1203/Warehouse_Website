@@ -1,14 +1,44 @@
+import { getRefreshToken, getToken, setUserInformation } from "@/utils";
 import axios from "axios";
+import ConstantAPI from "./ConstantAPI";
 
 const httpClient = axios.create({
-    baseURL: "https://localhost:7281",
+    baseURL: "http://localhost:1203",
     headers: {
-        "Content-Type": "application/json",
-    }
-
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${getToken()}`,
+    },
 })
 
-httpClient.interceptors.response.use((response) => response.data);
+httpClient.interceptors.response.use((response) => response,
+async (error) => {
+    const originalRequest = error.config;
+    if (error.response.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
+      try {
+        const response = await httpClient.post(
+          `${ConstantAPI.login.REFRESH_TOKEN.url}`,{},
+          {
+            headers: {
+              Authorization: `Bearer ${getRefreshToken()}`,
+            },
+          }
+        );
+        // Update tokens in storage
+        setUserInformation(response);
+        originalRequest.headers.Authorization = `Bearer ${getToken()}`;
+        // Retry original request
+        return httpClient(originalRequest);
+      } catch (error) {
+        // If refresh token fails, logout user
+        sessionStorage.clear();
+        window.location.href = '/login';
+        return Promise.reject(error);
+      }
+    }
+    return error.response;
+  }
+);
 class DataService {
     static callApi(api: any, data?: any, params?: any, headers?: any) {
         return httpClient({

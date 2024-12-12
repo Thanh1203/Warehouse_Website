@@ -1,6 +1,6 @@
 <template>
-  <div class="tw-mb-6 tw-p-6 tw-bg-white tw-rounded-xl">
-    <a-Tabs v-model:activeKey="activeKey" type="card" class="tw-h-[177px]" v-if="!loading">
+  <div class="mb-6 p-6 bg-white rounded-xl">
+    <a-Tabs v-model:activeKey="activeKey" type="card" class="h-[177px]" v-if="!loading">
       <a-tab-pane v-for="item in listWhInfo" :key="item.id" :tab="item.name">
         <TabWhInfo :data="item" />
       </a-tab-pane>
@@ -9,30 +9,30 @@
     <a-skeleton v-else active />
   </div>
 
-  <div class="tw-w-full tw-flex tw-gap-6 tw-justify-between">
-    <div class="tw-bg-white tw-rounded-xl tw-p-6 tw-basis-1/4">
-      <div class="tw-opacity-70 tw-mb-2">{{ translate("SelectDay") }}</div>
-      <a-date-picker class="tw-mb-6" :placeholder="translate('SelectDay')" v-model:value="searchingDay" :allowClear="false" />
-      <div class="tw-opacity-70 tw-mb-2">{{ translate("SelectMonth") }}</div>
-      <a-date-picker class="tw-mb-6" picker="month" :placeholder="translate('SelectMonth')" v-model:value="searchingMonth" :allowClear="false" />
-      <div class="tw-opacity-70 tw-mb-2">{{ translate("SelectYear") }}</div>
-      <a-date-picker class="tw-mb-6" picker="year" :placeholder="translate('SelectYear')" v-model:value="searchingYear" :allowClear="false" />
-      <AntdButton type="primary" class="tw-mb-6 tw-w-[200px]" @click="handleSubmitFilter">
-        <span class="tw-text-sm tw-ml-2">{{ translate("LookUpImportHistory") }}</span>
+  <div class="w-full flex gap-6 justify-between">
+    <div class="bg-white rounded-xl p-6 basis-1/4">
+      <div class="opacity-70 mb-2">{{ translate("SelectDay") }}</div>
+      <a-date-picker class="mb-6" :placeholder="translate('SelectDay')" v-model:value="searchingDay" :allowClear="false" />
+      <div class="opacity-70 mb-2">{{ translate("SelectMonth") }}</div>
+      <a-date-picker class="mb-6" picker="month" :placeholder="translate('SelectMonth')" v-model:value="searchingMonth" :allowClear="false" />
+      <div class="opacity-70 mb-2">{{ translate("SelectYear") }}</div>
+      <a-date-picker class="mb-6" picker="year" :placeholder="translate('SelectYear')" v-model:value="searchingYear" :allowClear="false" />
+      <AntdButton type="primary" class="mb-6 w-[200px]" @click="handleSubmitFilter">
+        <span class="text-sm ml-2">{{ translate("LookUpImportHistory") }}</span>
       </AntdButton>
-      <AntdButton :type="'text'" class="tw-mb-6" danger :disabled="disabledDeleteFilter" @click="handleClearFilter">
+      <AntdButton :type="'text'" class="mb-6" danger :disabled="disabledDeleteFilter" @click="handleClearFilter">
         <template #icon>
           <font-awesome-icon :icon="['far', 'trash-can']" />
         </template>
-        <span class="tw-ml-2">{{ translate("Delete") }}</span>
+        <span class="ml-2">{{ translate("Delete") }}</span>
       </AntdButton>
     </div>
 
-    <div class="tw-grow tw-min-h-[calc(100vh-240px)]">
-      <Section class="tw-w-full tw-bg-white tw-h-full" :title="translate('ImportHistory')">
+    <div class="grow min-h-[calc(100vh-240px)]">
+      <Section class="w-full bg-white h-full" :title="translate('ImportHistory')">
         <template #action>
           <AntdButton type="primary" @click="goImportGodds">
-            <span class="tw-text-sm tw-ml-2">{{ translate("ImportGoods") }}</span>
+            <span class="text-sm ml-2">{{ translate("ImportGoods") }}</span>
           </AntdButton>
         </template>
         <template #body>
@@ -42,7 +42,7 @@
             :index-column="true"
             :columns="columns"
             :dataSource="listWHImport"
-            class="tw-w-full tw-h-[60vh] tw-overflow-hidden tw-overflow-y-auto"
+            class="w-full h-[60vh] overflow-hidden overflow-y-auto"
             v-if="!loadingImport"
           >
           </AntdTable>

@@ -29,9 +29,11 @@ export default {
     async getDataDashboard({ commit }, payload) {
       try {
         commit("SET_LOADING", true);
-        const response: any = await DataService.callApi(ConstantAPI.dashboard.GET, null, null);
-        await commit("SET_DATA_DASHBOARD", response);
-        return response;
+        // const response: any = await DataService.callApi(ConstantAPI.dashboard.GET, null, null);
+        // await commit("SET_DATA_DASHBOARD", response);
+        // return response;
+        commit("SET_LOADING", false);
+        
       } catch (error) {
         console.log(error);
       }
