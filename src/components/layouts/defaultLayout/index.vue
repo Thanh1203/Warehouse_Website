@@ -1,9 +1,9 @@
 <template>
-<div class="flex flex-col h-screen">
+<div class="flex flex-col h-screen layout-pages">
   <HeaderPage/>
   <div class="grow flex overflow-hidden">
     <SlideMenu/>
-    <div class="w-full p-4 overflow-hidden">
+    <div class="w-full p-4 overflow-hidden overflow-y-auto">
       <slot/>
     </div>
   </div>

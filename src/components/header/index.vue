@@ -30,6 +30,8 @@
 
 <script setup lang="ts">
 import { translate } from '@/languages/i18n';
+import ConstantAPI from '@/services/ConstantAPI';
+import { DataService } from '@/services/request';
 import { computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
@@ -41,7 +43,8 @@ const userInformation = computed(() => {
   return JSON.parse(info);
 });
 
-const handleLogOut = () => {
+const handleLogOut = async () => {
+  const logout:any = await DataService.callApi(ConstantAPI.login.LOGOUT);
   window.sessionStorage.removeItem("userInformation");
   router.push({ name: "signIn" });
 };

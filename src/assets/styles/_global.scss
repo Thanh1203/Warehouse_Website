@@ -1,15 +1,165 @@
 // component styles
-@import './_variables.scss';
+@import "./_variables.scss";
 
-.header-page{
-  background-color: $bg-component;
+.header-page {
   height: 70px;
   width: 100%;
+  border-bottom: 1px solid $base-gray-50;
 }
 
-.section {
-  background-color: $bg-section;
-  padding: 1rem;
-  border-radius: 0.3125rem;
-  box-shadow: $shadow;
+//form
+.ant-form {
+  .ant-form-item {
+    margin: 0;
+  }
 }
+
+//modal
+.ant-modal {
+  padding: 0;
+  // close
+  .ant-modal-close-x {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  //header
+  .ant-modal-header {
+    margin-bottom: 24px;
+    .ant-modal-title {
+      font-size: 20px;
+    }
+  }
+  // content
+  .ant-modal-content {
+    border-radius: 12px;
+    padding: 24px;
+  }
+  // footer
+  .ant-modal-footer {
+    margin-top: 0;
+  }
+}
+
+//antd select
+.ant-select {
+  .ant-select-clear {
+    display: flex !important;
+  }
+  .ant-select-selection-item-remove {
+    display: flex;
+  }
+}
+
+// action table
+.ant-table {
+  .ant-table-row {
+    position: relative;
+    .action {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 0;
+      opacity: 0;
+      transform: translateX(100%);
+      transition: all 0.3s ease 0s;
+      visibility: hidden;
+      .action-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 16px;
+        padding: 8px;
+      }
+    }
+    &:hover {
+      .action {
+        width: 100%;
+        opacity: 1;
+        transform: translateX(0);
+        visibility: visible;
+        display: flex;
+      }
+    }
+  }
+}
+
+// antd steps
+.ant-steps {
+  .ant-steps-item-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    .ant-steps-item-icon {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+}
+
+// produc categrory
+.property-list {
+  .property-list-action {
+    position: absolute;
+    right: 0;
+    opacity: 0;
+    width: 0;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transform: translateX(100%);
+    transition: all 0.3s ease 0s;
+    visibility: hidden;
+  }
+  &:hover {
+    .property-list-action {
+      opacity: 1;
+      width: 80px;
+      transform: translateX(0);
+      visibility: visible;
+    }
+  }
+}
+
+//scrollbar
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 12px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+// view detail in column name
+.viewByName {
+  &:hover {
+    .viewByName_name {
+      text-decoration-line: underline;
+      color: #1677ff;
+    }
+  }
+}
+
+.name-page {
+  font-size: 22px;
+  font-weight: 500;
+  margin-bottom: 1.5rem;
+}
+

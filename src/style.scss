@@ -1,5 +1,4 @@
 // global styles
-
 @import "./assets/styles/_variables.scss";
 
 @font-face {
@@ -20,121 +19,130 @@
   font-weight: 600;
 }
 
+:root {
+  // Background colors
+  --bg-primary: #ffffff;
+  --bg-secondary: #f5f5f5;
+  --bg-tertiary: #e0e0e0;
+
+  // Text colors
+  --text-primary: #333333;
+  --text-secondary: #666666;
+  --text-muted: #999999;
+
+  // Accent colors
+  --accent-primary: #1677ff;
+  --accent-secondary: #28a745;
+  --accent-warning: #ffc107;
+  --accent-danger: #dc3545;
+
+  // Border color
+  --border-color: #dddddd;
+}
+
 html {
   font-family: "Open Sans", sans-serif;
-  background-color: $background;
-  color: $base-white-50;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
 }
 
-:root {
-  --font-primary: "Open Sans", sans-serif;
+.section {
+  padding: 1rem;
+  border-radius: 0.3125rem;
+  border: 1px solid var(--border-color);
 }
 
-.section-bg {
-  background-color: $bg-section;
-}
-
-.ant-dropdown-menu {
-  background-color: $bg-component-child !important;
-  .ant-dropdown-menu-title-content {
-    color: $base-white-50;
-  }
-}
-
-.ant-menu-dark {
-  background-color: $bg-component;
-  .ant-menu-sub {
-    background-color: $bg-component-child !important;
-  }
-}
-
-.ant-input {
-  background-color: $bg-component-child;
-  color: $base-white-50;
-  border-color: $border-color-dark;
-  &::placeholder {
-    color: $base-white-50;
-    opacity: 0.5;
-  }
-}
-
-.ant-btn-dangerous {
-  &.ant-btn-text {
-    color: $btn-error-color-text-dark !important;
-    &:hover {
-      background-color: $btn-error-hover-dark !important;
-    }
-  }
-}
 .ant-btn-primary {
-  background-color: $primary;
-  color: $base-white-50;
-  &:hover {
-    background-color: darken($primary, 5%);
-    border-color: darken($primary, 5%);
-  }
+  background-color: var(--accent-primary);
 }
 
-// Add these styles to your SCSS
-.ant-table {
-  background-color: $bg-component !important;
-  
-  // Header styles
-  .ant-table-thead > tr > th {
-    background-color: $bg-component-child !important;
-    color: $base-white-50 !important;
-    border-bottom: 1px solid $base-gray-400 !important;
-  }
+.invalid-feedback {
+  color: var(--accent-danger);
+}
 
-  // Body styles
-  .ant-table-tbody > tr > td {
-    background-color: $bg-component !important;
-    color: $base-white-50 !important;
-    border-bottom: 1px solid $base-gray-400 !important;
-  }
+.required-star {
+  color: $red;
+  margin-left: 5px;
+}
 
-  // Hover state
-  .ant-table-tbody > tr:hover > td {
-    background-color: $bg-component-child !important;
-  }
+.subConfirmDelete {
+  color: $red;
+}
 
-  // Pagination
-  .ant-pagination {
-    color: $base-white-50 !important;
-    
-    .ant-pagination-item {
-      background-color: $bg-component-child !important;
-      border-color: $base-gray-400 !important;
-      
-      a {
-        color: $base-white-50 !important;
-      }
+.invalid-feedback {
+  margin-top: 0px;
+  color: $base-red-400;
+}
+
+.is-invalid {
+  border: 1px solid $base-red-400;
+}
+
+.date-picker-quarter {
+  .ant-picker-input {
+    width: 100px;
+    input {
+      text-align: center;
+      color: #aab8c5 !important;
+      font-size: 20px !important;
+      font-weight: 600;
     }
   }
-
-  // text emty
-  .ant-empty-description {
-    color: $base-white-50 !important;
-  }
 }
 
-.ant-breadcrumb {
-  ol {
-    align-items: end;
-    li {  
-      &:first-child {
-        font-size: 1.125rem;
-        font-weight: 600;
-      } 
-      .ant-breadcrumb-link {
-        a {
-          color: $base-white-50 !important;
+.new-tabs {
+  .ant-tabs-nav {
+    .ant-tabs-nav-wrap {
+      .ant-tabs-tab {
+        color: #8391a2 !important;
+        background: #37404a !important;
+        &.ant-tabs-tab-active {
+          background: #727cf5 !important;
+          .ant-tabs-tab-btn {
+            color: #fff !important;
+          }
+        }
+        &:hover {
+          color: #fff !important;
         }
       }
-    
-      .ant-breadcrumb-separator {
-        color: $base-white-50 !important;
-      }
     }
+  }
+}
+
+.date-picker-shedule {
+  .ant-picker-input {
+    width: 80px;
+    input {
+      text-align: end;
+      color: #aab8c5 !important;
+      font-size: 20px !important;
+      font-weight: 600;
+    }
+  }
+}
+
+.grid-border-item {
+  border: 1px solid #464f5b;
+}
+
+.new-switch-cus {
+  border: 1px solid #e2e8ed;
+  border-radius: 0.5rem;
+  position: relative;
+  overflow: hidden;
+  display: block;
+  .new-switch-overlay {
+    position: absolute;
+    top: 0;
+    width: 50%;
+    height: 100%;
+    background-color: $primary;
+    border-radius: 0.5rem;
+    transform: translateX(0%);
+    transition: all 0.3s ease 0s;
+  }
+  .new-switch-action {
+    transform: translateX(100%);
   }
 }

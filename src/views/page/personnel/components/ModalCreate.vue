@@ -1,42 +1,36 @@
 <template>
-  <BaseModal :visible="isVisible" :title="title" :default-footer="false" @cancel="$emit('closeModal')">
-    <a-form @submit.prevent="handleSubmit" class="mb-6">
-
-      <div class="w-full flex items-start mb-6">
-        <div class="basis-1/2 flex flex-col items-start justify-start mr-4">
-          <span>{{ translate("EmployeeCode") }}<span class="required-star">*</span></span>
-          <div class="mt-2 w-full">
-            <a-input :disabled="isEdit" :placeholder="translate('EmployeeCode')" v-model:value="v$.code.$model" :status="v$.code.$error ? 'error' : ''" />
-          </div>
-          <ErrorMess :params="[64]" title="EmployeeCode" :validator="v$.code.$errors[0]?.$validator" />
+  <BaseModal :visible="isVisible" :title="title" :default-footer="false" @cancel="handleCancel">
+    <template #body-modal>
+      <a-form :model="state" layout="vertical">
+        <div class="grid grid-cols-2 gap-4">
+          <a-form-item :label="translate('EmployeeName')">
+            <a-input v-model:value="v$.name.$model" :placeholder="translate('EnterEmployeeName')" :status="v$.name.$error ? 'error' : ''"/>
+            <ErrorMess :params="[64]" title="EmployeeName" :validator="v$.name.$errors[0]?.$validator" />
+          </a-form-item>
+          <a-form-item label="Email">
+            <a-input v-model:value="v$.email.$model" :placeholder="translate('EnterEmail')" :status="v$.email.$error ? 'error' : ''"/>
+            <ErrorMess :params="[64]" title="Email" :validator="v$.name.$errors[0]?.$validator" />
+          </a-form-item>
+          <a-form-item :label="translate('PhoneNumber')">
+            <a-input v-model:value="v$.phone.$model" :placeholder="translate('EnterPhoneNumber')" :status="v$.phone.$error ? 'error' : ''"/>
+            <ErrorMess :params="[64]" title="PhoneNumber" :validator="v$.name.$errors[0]?.$validator" />
+          </a-form-item>
+          <a-form-item :label="translate('Address')">
+            <a-input v-model:value="v$.address.$model" :placeholder="translate('EnterAddress')"/>
+          </a-form-item>
+          <a-form-item :label="translate('Role')">
+            <a-select v-model:value="v$.role.$model" :placeholder="translate('SelectRole')" :status="v$.role.$error ? 'error' : ''">
+              <a-select-option value="Admin">{{ translate('common.admin') }}</a-select-option>
+              <a-select-option value="Employee">{{ translate('common.employee') }}</a-select-option>
+            </a-select>
+            <ErrorMess :params="[64]" title="Role" :validator="v$.name.$errors[0]?.$validator" />
+          </a-form-item>
+          <a-form-item :label="translate('PassWord')">
+            <a-input-password v-model:value="v$.password.$model" :placeholder="translate('EnterPass')" :status="v$.password.$error ? 'error' : ''"/>
+          </a-form-item>
         </div>
-        <div class="basis-1/2 flex flex-col items-start justify-start ml-4">
-          <span>{{ translate("EmployeeName") }}<span class="required-star">*</span></span>
-          <div class="mt-2 w-full">
-            <a-input :placeholder="translate('EmployeeName')" v-model:value="v$.name.$model" :status="v$.name.$error ? 'error' : ''" />
-          </div>
-          <ErrorMess title="EmployeeName" :validator="v$.name.$errors[0]?.$validator" />
-        </div>
-      </div>
-
-      <div class="w-full flex items-start mb-6">
-        <div class="basis-1/2 flex flex-col items-start justify-start mr-4">
-          <span>{{ translate("Role") }}<span class="required-star">*</span></span>
-          <div class="w-full mt-2">
-            <a-input :placeholder="translate('Role')" v-model:value="v$.role.$model" :status="v$.role.$error ? 'error' : ''" />
-          </div>
-          <ErrorMess title="Role" :validator="v$.role.$errors[0]?.$validator" />
-        </div>
-
-        <div class="basis-1/2 flex flex-col items-start justify-start ml-4">
-          <span>{{ translate("Address") }}</span>
-          <div class="mt-2 w-full">
-            <a-input :placeholder="translate('Address')" v-model:value="v$.address.$model" />
-          </div>
-        </div>
-      </div>
-
-    </a-form>
+      </a-form>
+    </template>
     <template #footer>
       <AntdButton :type="'primary'" @click="handleSubmit">
         <template #icon>
@@ -52,7 +46,7 @@ import BaseModal from "@/components/antd-modal/index.vue";
 import { translate } from "@/languages/i18n";
 import AntdButton from "@/components/antd-button/index.vue";
 import { reactive, watch } from "vue";
-import { required } from "@vuelidate/validators";
+import { email, required } from "@vuelidate/validators";
 import useVuelidate from "@vuelidate/core";
 import ErrorMess from "@/components/error-mess/index.vue";
 import { STR_UPPER_CASE } from "@/utils/common";
@@ -78,23 +72,15 @@ const props = defineProps({
 });
 
 const state = reactive({
-  id: props?.form?.id,
-  code: props?.form?.code,
   name: props?.form?.name,
+  email: props?.form?.email,
+  phone: props?.form?.phone,
   role: props?.form?.role,
   address: props?.form?.address,
-  companyId: props?.form?.companyId,
-  allowDelete: props?.form?.allowDelete,
+  password: props?.form?.password || 'admin',
 });
 
 const rules = {
-  code: {
-    required,
-    vi: function validateInput(input: string) {
-      const regex = /^[a-zA-Z0-9\u00C0-\u1EF9\s]+$/;
-      return regex.test(input);
-    },
-  },
   name: {
     required,
     vi: function validateInput(input: string) {
@@ -102,10 +88,22 @@ const rules = {
       return regex.test(input);
     },
   },
-  address: {
-
+  email: {
+    required,
+    email,
   },
+  phone: {
+    required,
+    vi: function validateInput(input: string) {
+      const regex = /^[0-9]+$/;
+      return regex.test(input);
+    },
+  },
+  address: {},
   role: {
+    required,
+  },
+  password: {
     required,
   },
 };
@@ -113,46 +111,29 @@ const rules = {
 const v$ = useVuelidate(rules, state);
 
 const handleSubmit = async () => {
-  console.log(state);
   v$.value.$touch();
   if (v$.value.$invalid) {
     return false;
   }
   const stateResult = {
-    id: state.id,
-    code: state?.code,
     name: STR_UPPER_CASE(state?.name),
     role: STR_UPPER_CASE(state?.role),
     address: STR_UPPER_CASE(state?.address),
-    companyId: state?.companyId,
-    allowDelete: state?.allowDelete,
-  }
+    email: state?.email,
+    phone: state?.phone,
+    password: state?.password,
+  };
   emit("handleSubmit", stateResult);
 };
 
-watch(
-  () => props.form,
-  (val) => {
-    v$.value.$reset();
-    (state.code = val.code), (state.name = val.name), (state.role = val.role), (state.address = val.address), (state.allowDelete = val.allowDelete), (state.id = val.id), (state.companyId = val.companyId);
-  },
-  {
-    deep: true,
-  },
-);
-
-// data fake
-const datafake1 = [
-  {
-    id: 1,
-    name: "Hà nội"
-  }
-]
-
-const datafake2 = [
-  {
-    id: 1,
-    name: "Kho hàng 1"
-  }
-]
+const handleCancel = () => {
+  v$.value.$reset();
+  state.name = '';
+  state.email = '';
+  state.phone = '';
+  state.address = '';
+  state.role = null;
+  state.password = 'admin';
+  emit("closeModal");
+}
 </script>

@@ -1,94 +1,75 @@
 import ConstantAPI from "@/services/ConstantAPI";
 import { DataService } from "@/services/request";
 
-export interface personnel {
-  personnelData: any;
-  totalPersonnel: number | null;
-  addressData: any;
-  loading: boolean;
-}
-
 export default {
   namespaced: true as true,
   state: {
-    personnelData: [],
-    totalPersonnel: 0,
-    addressData: [],
-    loading: true,
-  } as personnel,
+    users: [],
+    totalRecord: 0,
+  } as any,
   getters: {
-    personnelData: (state) => state.personnelData,
-    totalPersonnel: (state) => state.totalPersonnel,
-    addressData: (state) => state.addressData,
-    loading: (state) => state.loading,
+    users: (state) => state.personnelData,
+    totalRecord: (state) => state.totalRecord,
   },
   mutations: {
-    SET_PERSONNEL_DATA(state, payload) {
-      state.loading = false;
-      state.personnelData = payload;
+    SET_USER(state: any, payload: any) {
+      state.users = payload;
     },
-    SET_TOTAL_PERSONNEL(state, payload) {
-      state.loading = false;
-      state.totalPersonnel = payload;
-    },
-    SET_ADDRESS_DATA(state, payload) {
-      state.loading = false;
-      state.addressData = payload;
-    },
-    SET_LOADING(state, payload) {
-      state.loading = payload;
+    SET_TOTALRECORD(state: any, payload: any) {
+      state.totalRecord = payload;
     },
   },
   actions: {
     //get
-    async getPersonnel({ commit }, payload) {
+    async fetchUser({ commit }, payload: any) {
       try {
-        commit("SET_LOADING", true);
-        const response: any = await DataService.callApi(ConstantAPI.personnel.GET, null, payload);
-        await commit("SET_PERSONNEL_DATA", response.data);
-        await commit("SET_TOTAL_PERSONNEL", response?.totalElement);
+        const { data }: any = await DataService.callApi(ConstantAPI.user.GET, null, payload);
+        commit("SET_USER", data?.data || []);
+        commit("SET_TOTALRECORD", data?.totalElemnts || 0);
       } catch (error) {
         console.log(error);
       }
     },
-    async getAddress({ commit }, payload) {
+
+    async createUser({ dispatch }, payload: any) {
       try {
-        commit("SET_LOADING", true);
-        const response: any = await DataService.callApi(ConstantAPI.personnel.GET_ADDRESS, null, payload);
-        await commit("SET_ADDRESS_DATA", response);
+        const { data }:any = await DataService.callApi(ConstantAPI.user.CREATE, payload, null);
+        await dispatch("fetchUser", null);
+        return data;
       } catch (error) {
         console.log(error);
       }
     },
-    //create
-    async createPersonnel({ dispatch }, payload) {
-      try {
-        const response: any = await DataService.callApi(ConstantAPI.personnel.CREATE, payload.state, null);
-        await dispatch("getPersonnel", payload.params);
-        return response;
-      } catch (error) {
-        console.log(error);
-      }
-    },
-    //delete
-    async deletePersonnel({ dispatch }, payload) {
-      try {
-        const response: any = await DataService.callApi(ConstantAPI.personnel.DELETE, payload.state, null);
-        await dispatch("getPersonnel", payload.params);
-        return response;
-      } catch (error) {
-        console.log(error);
-      }
-    },
-    //update
-    async updatePersonnel({ dispatch }, payload) {
-      try {
-        const response: any = await DataService.callApi(ConstantAPI.personnel.UPDATE, payload.state, null);
-        await dispatch("getPersonnel", payload.params);
-        return response;
-      } catch (error) {
-        console.log(error);
-      }
-    },
+
+    // //create
+    // async createPersonnel({ dispatch }, payload) {
+    //   try {
+    //     const response: any = await DataService.callApi(ConstantAPI.personnel.CREATE, payload.state, null);
+    //     await dispatch("getPersonnel", payload.params);
+    //     return response;
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    // },
+    // //delete
+    // async deletePersonnel({ dispatch }, payload) {
+    //   try {
+    //     const response: any = await DataService.callApi(ConstantAPI.personnel.DELETE, payload.state, null);
+    //     await dispatch("getPersonnel", payload.params);
+    //     return response;
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    // },
+    // //update
+    // async updatePersonnel({ dispatch }, payload) {
+    //   try {
+    //     const response: any = await DataService.callApi(ConstantAPI.personnel.UPDATE, payload.state, null);
+    //     await dispatch("getPersonnel", payload.params);
+    //     return response;
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    // },
   },
 };

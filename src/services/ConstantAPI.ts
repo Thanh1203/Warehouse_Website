@@ -18,7 +18,7 @@ export default {
         },
         UPDATE: {
             url: "api/Warehouse",
-            method: "PUT"
+            method: "PATCH"
         },
         DELETE: {
             url: "api/Warehouse",
@@ -36,7 +36,7 @@ export default {
         },
         UPDATE: {
             url: "/api/category",
-            method: "PUT"
+            method: "PATCH"
         },
         DELETE: {
             url: "/api/category",
@@ -54,7 +54,7 @@ export default {
         },
         UPDATE: {
             url: "/api/classify",
-            method: "PUT"
+            method: "PATCH"
         },
         DELETE: {
             url: "/api/classify",
@@ -64,27 +64,19 @@ export default {
     customer: {
 
     },
-    personnel: {
+    user: {
         GET: {
-            url: "/api/personnel",
+            url: "/users",
             method: "GET"
         },
         CREATE: {
-            url: "/api/personnel",
+            url: "/users",
             method: "POST"
         },
         UPDATE: {
-            url: "/api/personnel",
-            method: "PUT"
+            url: "/users",
+            method: "PATCH"
         },
-        DELETE: {
-            url: "/api/personnel",
-            method: "DELETE"
-        },
-        GET_ADDRESS: {
-            url: "/api/personnel/address",
-            method: "GET",
-        }
     },
     producer: {
         GET: {
@@ -97,7 +89,7 @@ export default {
         },
         UPDATE: {
             url: "/api/producer",
-            method: "PUT"
+            method: "PATCH"
         },
         DELETE: {
             url: "/api/producer",
@@ -115,7 +107,7 @@ export default {
         },
         UPDATE: {
             url: "/api/productInfo",
-            method: "PUT"
+            method: "PATCH"
         },
         DELETE: {
             url: "/api/productInfo",
@@ -131,7 +123,7 @@ export default {
         },
         UPDATE_UNIT_PRICE: {
             url: "/api/warehouseData",
-            method: "PUT"
+            method: "PATCH"
         },
         GET_LIST_UNIT_PRICE: {
             url: "api/productInfo/ProductConfigPrice",
@@ -147,13 +139,13 @@ export default {
             url: "/api/warehouseData",
             method: "POST"
         },
-        PUT_GOODS_IMPORT: {
+        PATCH_GOODS_IMPORT: {
             url: "/api/warehouseData/GoodsImport",
-            method: "PUT"
+            method: "PATCH"
         },
-        PUT_GOODS_EXPORT: {
+        PATCH_GOODS_EXPORT: {
             url: "/api/warehouseData/GoodsExport",
-            method: "PUT"
+            method: "PATCH"
         }
     },
     warehouseExport: {
@@ -201,6 +193,10 @@ export default {
         },
         REFRESH_TOKEN: {
             url: "/auth/refresh",
+            method: "POST"
+        },
+        LOGOUT: {
+            url: "/auth/logout",
             method: "POST"
         }
     }

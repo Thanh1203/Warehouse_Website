@@ -1,5 +1,5 @@
 <template>
-  <a-menu theme="dark" :items="menuAdmin" v-model:selectedKeys="selectedKeys" v-model:openKeys="openKeys" @click="handleClickMenu" mode="inline" :inline-collapsed="true" class="h-full w-24"/>
+  <a-menu :items="menuAdmin" v-model:selectedKeys="selectedKeys" v-model:openKeys="openKeys" @click="handleClickMenu" mode="inline" :inline-collapsed="true" class="h-full w-24"/>
 </template>
 <script setup lang="ts">
 import { useRoute, useRouter } from "vue-router";
@@ -17,7 +17,6 @@ const handleClickMenu = (ev: any) => {
   const path = menuPath.find((i) => i.key === ev.key);
   router.push(path?.path || "/");
 };
-
 
 const handleSelectMenu = (value: string) => {
   const path: any = menuPath.find((i) => i.path == value);

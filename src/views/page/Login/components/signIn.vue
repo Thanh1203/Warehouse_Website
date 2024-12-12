@@ -1,5 +1,5 @@
 <template>
-  <div class="w-1/2 h-full p-6 flex flex-col justify-center items-start text-black">
+  <div class="w-1/2 h-full p-6 flex flex-col justify-center items-start">
     <a-form class="w-full flex flex-col items-center" @submit.prevent="handleSubmit">
       <div class="mb-6 w-full flex items-center justify-center">
         <span class="text-3xl font-bold tracking-widest">{{ translate("SignIn") }}</span>
@@ -89,16 +89,16 @@ const handleSubmit = async () => {
   if (v$.value.$invalid) {
     return false;
   }
-  try {
-    const response: any = await DataService.post(`${ConstantAPI.login.SIGN_IN.url}`, state, null);
+  const response: any = await DataService.post(`${ConstantAPI.login.SIGN_IN.url}`, state, null);
+
+  if (response?.status=== 200) {
     setUserInformation(response);
     notification["success"]({
       message: translate('LoginSuccessful')
     });
-    router.push("/");
-  } catch (error) {
-    console.log(error);
-    notification["success"]({
+    router.push('/');
+  } else {
+    notification["error"]({
       message: translate('InvalidAccount')
     });
   }

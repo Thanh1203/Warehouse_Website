@@ -28,11 +28,15 @@ httpClient.interceptors.response.use(
     const originalRequest = error.config;
     if (error.response.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
-
       try {
-        const response = await httpClient.post(`${ConstantAPI.login.REFRESH_TOKEN.url}`,{
-          refresh_token: getRefreshToken()
-        })
+        const response = await httpClient.post(
+          `${ConstantAPI.login.REFRESH_TOKEN.url}`,{},
+          {
+            headers: {
+              Authorization: `Bearer ${getRefreshToken()}`,
+            },
+          }
+        );
         // Update tokens in storage
         setUserInformation(response);
         originalRequest.headers.Authorization = `Bearer ${getToken()}`;
@@ -61,7 +65,7 @@ class DataService {
   }
 
   static get(path = "", params?: any, headers?: any) {
-    return httpClient.get(path, { headers, params });
+    return httpClient.get(path, { params, headers });
   }
 
   static post(path = "", data = {}, headers: any) {
