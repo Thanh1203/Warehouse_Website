@@ -27,6 +27,7 @@
     <template #body>
       <AntdTable
         ref="table"
+        key-field="id"
         :index-column="true"
         :columns="columns"
         :data-source="personnelData"
@@ -43,7 +44,7 @@
           </template>
           <template v-if="column.key === 'Status'">
             <a-tag v-if="record.Status === 'ACTIVE'" color="success">{{ translate("common.active")}}</a-tag>
-            <a-tag v-if="record.Status === 'DEACTIVE'" color="error"> {{ translate("common.deactive") }}</a-tag>
+            <a-tag v-if="record.Status === 'DEACTIVE'" color="error">{{ translate("common.deactive") }}</a-tag>
           </template>
           <template v-if="column.key === 'action'">
             <div class="action">
@@ -199,6 +200,7 @@ const handleEditRow = (data: any) => {
   formState.address = data?.Address;
   formState.phone = data?.Phone;
   formState.email = data?.Email;
+  formState.status = data?.Status;
   isVisibleModalCreate.value = true;
   isEdit.value = true;
   titleModal.value = translate("UpdateEmployee");

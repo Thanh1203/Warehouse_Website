@@ -34,7 +34,7 @@ export default {
   },
   actions: {
     //get
-    async getProducer({ commit }, payload) {
+    async getSupplier({ commit }, payload) {
       try {
         commit("SET_LOADING", true);
         const response: any = await DataService.callApi(ConstantAPI.producer.GET, null, payload);
@@ -45,30 +45,30 @@ export default {
       }
     },
     //create
-    async createProducer({ dispatch }, payload) {
+    async createSupplier({ dispatch }, payload) {
       try {
         const response: any = DataService.callApi(ConstantAPI.producer.CREATE, payload.state, null);
-        await dispatch("getProducer", payload.params);
+        await dispatch("getSupplier", payload.params);
         return response;
       } catch (error) {
         console.log(error);
       }
     },
     //update
-    async updateProducer({ dispatch }, payload) {
+    async updateSupplier({ dispatch }, payload) {
       try {
         const response: any = DataService.callApi(ConstantAPI.producer.UPDATE, payload.state, null);
-        await dispatch("getProducer", payload.params);
+        await dispatch("getSupplier", payload.params);
         return response;
       } catch (error) {
         console.log(error);
       }
     },
     //delete
-    async deleteProducer({ dispatch }, payload) {
+    async deleteSupplier({ dispatch }, payload) {
       try {
         const response: any = DataService.callApi(ConstantAPI.producer.DELETE, payload.state, null);
-        await dispatch("getProducer", payload.params);
+        await dispatch("getSupplier", payload.params);
         return response;
       } catch (error) {
         console.log(error);

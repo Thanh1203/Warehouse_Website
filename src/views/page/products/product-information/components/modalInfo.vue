@@ -26,7 +26,7 @@
     </div>
     <div class="mb-4 flex items-start justify-between">
       <div class="w-1/3 flex items-start justify-between">
-        <span>{{ translate("Producer") }}</span>
+        <span>{{ translate("Supplier") }}</span>
         <span class="mr-4">:</span>
       </div>
     </div>

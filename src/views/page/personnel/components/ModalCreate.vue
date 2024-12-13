@@ -1,23 +1,22 @@
 <template>
   <BaseModal :visible="isVisible" :title="title" :default-footer="false" @cancel="$emit('closeModal')">
-    {{ props.form.id }}
     <a-form :model="state" layout="vertical">
-      <a-form-item class="!mb-2" :label="translate('EmployeeName')">
+      <a-form-item class="!mb-2" :label="translate('EmployeeName')" required>
         <a-input v-model:value="v$.name.$model" :placeholder="translate('EnterEmployeeName')" :status="v$.name.$error ? 'error' : ''" />
         <ErrorMess :params="[64]" title="EmployeeName" :validator="v$.name.$errors[0]?.$validator" />
       </a-form-item>
-      <a-form-item class="!mb-2" label="Email">
+      <a-form-item class="!mb-2" label="Email" required>
         <a-input v-model:value="v$.email.$model" :placeholder="translate('EnterEmail')" :status="v$.email.$error ? 'error' : ''" />
         <ErrorMess :params="[64]" title="Email" :validator="v$.name.$errors[0]?.$validator" />
       </a-form-item>
-      <a-form-item class="!mb-2" :label="translate('PhoneNumber')">
+      <a-form-item class="!mb-2" :label="translate('PhoneNumber')" required>
         <a-input v-model:value="v$.phone.$model" :placeholder="translate('EnterPhoneNumber')" :status="v$.phone.$error ? 'error' : ''" />
         <ErrorMess :params="[64]" title="PhoneNumber" :validator="v$.name.$errors[0]?.$validator" />
       </a-form-item>
       <a-form-item class="!mb-2" :label="translate('Address')">
         <a-input v-model:value="v$.address.$model" :placeholder="translate('EnterAddress')" />
       </a-form-item>
-      <a-form-item class="!mb-2" :label="translate('Role')">
+      <a-form-item class="!mb-2" :label="translate('Role')" required>
         <a-select v-model:value="v$.role.$model" :placeholder="translate('SelectRole')" :status="v$.role.$error ? 'error' : ''">
           <a-select-option value="Admin">{{ translate("common.admin") }}</a-select-option>
           <a-select-option value="Employee">{{ translate("common.employee") }}</a-select-option>
@@ -26,6 +25,12 @@
       </a-form-item>
       <a-form-item class="!mb-2" :label="translate('PassWord')">
         <a-input-password v-model:value="v$.password.$model" :placeholder="translate('EnterPass')" />
+      </a-form-item>
+      <a-form-item :hidden="!props.isEdit" :label="translate('common.Status')">
+        <a-radio-group v-model:value="v$.status.$model">
+          <a-radio value="ACTIVE">{{ translate("common.active")}}</a-radio>
+          <a-radio value="DEACTIVE">{{ translate("common.deactive") }}</a-radio>
+        </a-radio-group>
       </a-form-item>
     </a-form>
     <template #footer>
@@ -103,6 +108,7 @@ const rules = {
     required,
   },
   password: {},
+  status: {},
 };
 
 const v$ = useVuelidate(rules, state);
@@ -136,7 +142,7 @@ watch(
   () => props.form,
   (val) => {
     v$.value.$reset();
-    (state.name = val.name), (state.role = val.role), (state.address = val.address), (state.email = val.email), (state.phone = val.phone), (state.password = val.password);
+    (state.name = val.name), (state.role = val.role), (state.address = val.address), (state.email = val.email), (state.phone = val.phone), (state.password = val.password), (state.status = val.status);
   },
   {
     deep: true,

@@ -68,7 +68,7 @@ const menuAdmin = [
         children: [
             {
                 key: 'PRODUCTPRODUCER',
-                label: translate('Producer'),
+                label: translate('Supplier'),
                 icon: () => h(FontAwesomeIcon, {icon: faIndustry })
             },
             {

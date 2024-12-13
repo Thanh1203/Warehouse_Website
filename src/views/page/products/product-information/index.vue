@@ -9,9 +9,9 @@
       <a-select :placeholder="translate('Classify')" v-model:value="filterSearching.classifyId" class="mt-2" :options="classifyData.map((x) => ({value: x.id, label: x.name}))"/>
     </a-form-item>
     <a-form-item class="w-[200px] !mr-3">
-      <span class="opacity-70">{{ translate("Producer") }}</span>
+      <span class="opacity-70">{{ translate("Supplier") }}</span>
       <a-select
-        :placeholder="translate('Producer')"
+        :placeholder="translate('Supplier')"
         v-model:value="filterSearching.producerId"
         :options="producerData.map((x) => ({ value: x.id, label: x.name }))"
         class="mt-2"
@@ -183,7 +183,7 @@ const columns = ref<Array<any>>([
     align: "left",
   },
   {
-    title: translate("Producer"),
+    title: translate("Supplier"),
     dataIndex: "producerName",
     key: "producerName",
     align: "left",
@@ -388,7 +388,7 @@ const handleDelete = async (itemDelete: any) => {
 const fetchData = async () => {
   await store.dispatch("category/getCategory", null);
   await store.dispatch("classify/getClassify", null);
-  await store.dispatch("producer/getProducer", null);
+  await store.dispatch("producer/getSupplier", null);
 };
 
 const handleFetchProduct = async (params: any) => {

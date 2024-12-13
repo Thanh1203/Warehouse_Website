@@ -1,27 +1,19 @@
 export default {
   warehouse: {
     GET: {
-      url: "/api/Warehouse",
+      url: "warehouses",
       method: "GET",
-    },
-    GET_NATION: {
-      url: "/api/Warehouse/nation",
-      method: "GET",
-    },
-    GET_AREA: {
-      url: "/api/Warehouse/area",
-      medthod: "GET",
     },
     CREATE: {
-      url: "api/Warehouse",
+      url: "warehouses",
       method: "POST",
     },
     UPDATE: {
-      url: "api/Warehouse",
-      method: "PUT",
+      url: "warehouses",
+      method: "PATCH",
     },
     DELETE: {
-      url: "api/Warehouse",
+      url: "warehouses",
       method: "DELETE",
     },
   },

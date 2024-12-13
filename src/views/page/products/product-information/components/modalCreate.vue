@@ -47,17 +47,17 @@
       </div>
       <div class="w-full flex items-start mb-6">
         <div class="basis-1/2 mr-2 flex flex-col justify-start items-start">
-          <span>{{ translate("Producer") }}<span class="required-star">*</span></span>
+          <span>{{ translate("Supplier") }}<span class="required-star">*</span></span>
           <div class="w-full">
             <a-select
-              :placeholder="translate('Producer')"
+              :placeholder="translate('Supplier')"
               class="mt-2 w-full"
               v-model:value="v$.producerId.$model"
               :options="producerData.map((x) => ({ value: x.id, label: x.name }))"
               :status="v$.producerId.$error ? 'error' : ''"
             />
           </div>
-          <ErrorMess :params="[64]" title="Producer" :validator="v$.producerId.$errors[0]?.$validator" />
+          <ErrorMess :params="[64]" title="Supplier" :validator="v$.producerId.$errors[0]?.$validator" />
         </div>
         <div class="basis-1/2 ml-2 flex flex-col justify-start items-start">
           <span>{{ translate("Size") }}</span>
@@ -204,7 +204,7 @@ const categoryData = computed(() => store.getters["category/categoryData"]);
 const fetchData = async () => {
   await store.dispatch("category/getCategory", null);
   await store.dispatch("classify/getClassify", null);
-  await store.dispatch("producer/getProducer", null);
+  await store.dispatch("producer/getSupplier", null);
 };
 
 watch(

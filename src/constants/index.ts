@@ -66,7 +66,7 @@ export const DEFAULT_PROPERTY = {
   Size: "Size", // kích thước
   Classify: "Classify", // phân loại
   ConnectionTypes: "ConnectionTypes", // kiểu kết nối
-  Producer: "Producer", // hãng sản xuất
+  Supplier: "Supplier", // hãng sản xuất
   Designs: "Designs", // Thiết kế
 };
 

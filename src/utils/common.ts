@@ -25,20 +25,6 @@ export const removeNullObjects = (obj: any) => {
   return Object.entries(obj).reduce((a, [k, v]) => (v === undefined || v === null || v === "" || (Array.isArray(v) && !v?.length) ? a : ((a[k] = v), a)), {});
 };
 
-export const checkDeleteItem = (item: any) => {
-  if (item.length > 0) {
-    if (!item.find((x: any) => x?.allowDelete === false)) {
-      return true;
-    } else {
-      return false;
-    }
-  } else {
-    if (item.allowDelete) {
-      return true;
-    } else return false;
-  }
-};
-
 export const getArrayRandColor = (numOfColor: number) => {
   var colors = [];
 

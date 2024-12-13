@@ -1,7 +1,7 @@
 <template>
   <a-form class="flex rounded-xl bg-white px-6 py-5 mb-6">
     <a-form-item class="w-[300px] h-[62px] !mr-3">
-      <span class="opacity-70">{{ translate("ManufacturerName") }}</span>
+      <span class="opacity-70">{{ translate("SupplierName") }}</span>
       <a-input :placeholder="translate('Search')" v-model:value="filterSearching.Keyword" class="mt-2" />
     </a-form-item>
     <a-form-item class="flex items-end">
@@ -23,13 +23,13 @@
     </a-form-item>
   </a-form>
   <Section
-    :title="translate('ManufacturerList')"
-    :subTitle="translate('TotalManufacturers')"
-    :number="String(tottalProducer)"
+    :title="translate('SupplierList')"
+    :subTitle="translate('TotalRecordSupplier')"
+    :number="String(tottalSupplier)"
     class="w-full h-full bg-white overflow-hidden"
   >
     <template #action>
-      <AntdButton :type="'text'" danger :disabled="disableDeleteMany" class="mr-2" @click="handleDeleteProducer(listSelect, true)">
+      <AntdButton :type="'text'" danger :disabled="disableDeleteMany" class="mr-2" @click="handleDeleteSupplier(listSelect, true)">
         <template #icon>
           <font-awesome-icon :icon="['far', 'trash-can']" />
         </template>
@@ -63,7 +63,7 @@
               <AntdButton class="action-btn" :type="'light-hover'" shape="circle" @click="handleUpdate(record)">
                 <font-awesome-icon :icon="['far', 'pen-to-square']" style="color: #001f3f" />
               </AntdButton>
-              <AntdButton class="action-btn" :type="'light-hover'" shape="circle" @click="handleDeleteProducer(record, false)">
+              <AntdButton class="action-btn" :type="'light-hover'" shape="circle" @click="handleDeleteSupplier(record, false)">
                 <font-awesome-icon :icon="['far', 'trash-can']" style="color: #ff0000" />
               </AntdButton>
             </div>
@@ -104,7 +104,7 @@ const route = useRoute();
 const router = useRouter();
 
 const producerData = computed(() => store.getters["producer/producerData"]);
-const tottalProducer = computed(() => store.getters["producer/totalElement"]);
+const tottalSupplier = computed(() => store.getters["producer/totalElement"]);
 const loading = computed(() => store.getters["producer/loading"]);
 
 const listSelect = ref<any>([]);
@@ -113,13 +113,13 @@ const isEdit = ref<boolean>(false);
 const titleModal = ref<string>("");
 const columns = ref<Array<any>>([
   {
-    title: translate("ManufacturerCode"),
+    title: translate("SupplierCode"),
     dataIndex: "code",
     key: "code",
     align: "left",
   },
   {
-    title: translate("ManufacturerName"),
+    title: translate("SupplierName"),
     dataIndex: "name",
     key: "name",
     align: "left",
@@ -190,7 +190,7 @@ const handleUpdate = (item: FormState) => {
 const handleSubmitForm = async (state: FormState) => {
   if (isEdit.value && state.id !== 0) {
     try {
-      await store.dispatch("producer/updateProducer", {
+      await store.dispatch("producer/updateSupplier", {
         state: state,
         params: {
           ...route.query,
@@ -208,7 +208,7 @@ const handleSubmitForm = async (state: FormState) => {
     }
   } else {
     try {
-      await store.dispatch("producer/createProducer", {
+      await store.dispatch("producer/createSupplier", {
         state: state,
         params: {
           ...route.query,
@@ -231,9 +231,9 @@ const handleSubmitForm = async (state: FormState) => {
 
 const disableDeleteMany = computed(() => listSelect?.value?.length === 0);
 
-const handleDeleteProducer = async (itemDelete: any, isMany: boolean) => {
+const handleDeleteSupplier = async (itemDelete: any, isMany: boolean) => {
   Modal.confirm({
-    title: translate(translate(isMany ? "confirm.many" : "confirm.one", "Producer")),
+    title: translate(translate(isMany ? "confirm.many" : "confirm.one", "Supplier")),
     content: translate("NoDataRestore"),
     okText: translate("Agree"),
     cancelText: translate("Cancel"),
@@ -249,14 +249,14 @@ const handleDelete = async (itemDelete: any) => {
   if (checkDeleteItem(itemDelete)) {
     if (itemDelete.length > 1) {
       const temp = itemDelete.map((x: any) => x?.id);
-      await store.dispatch("producer/deleteProducer", {
+      await store.dispatch("producer/deleteSupplier", {
         state: temp,
         params: {
           ...route.query,
         },
       });
     } else {
-      await store.dispatch("producer/deleteProducer", {
+      await store.dispatch("producer/deleteSupplier", {
         state: [itemDelete.id],
         params: {
           ...route.query,
@@ -269,7 +269,7 @@ const handleDelete = async (itemDelete: any) => {
     });
   } else {
     notification["error"]({
-      message: translate("noti.deleteProducerFail"),
+      message: translate("noti.deleteSupplierFail"),
     });
   }
 };
@@ -280,7 +280,7 @@ const onCancel = () => {
 };
 
 const fetchData = async (params) => {
-  await store.dispatch("producer/getProducer", params);
+  await store.dispatch("producer/getSupplier", params);
 };
 
 watch(

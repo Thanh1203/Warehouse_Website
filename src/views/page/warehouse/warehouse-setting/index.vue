@@ -1,46 +1,11 @@
 <template>
-  <a-form class="flex rounded-xl bg-white px-6 py-5 mb-6">
-    <a-form-item class="w-[250px] !mr-3">
-      <span class="opacity-70">{{ translate("EnterWarehouseName") }}</span>
-      <a-input :placeholder="translate('Search')" v-model:value="filterSearching.keyword" class="mt-2" />
-    </a-form-item>
-    <a-form-item class="w-[150px] !mr-3">
-      <span class="opacity-70">{{ translate("SelectNation") }}</span>
-      <a-select :placeholder="translate('Nation')" v-model:value="filterSearching.nationSlected" :options="nationOption?.map((e) => ({ value: e, label: e }))" class="mt-2" />
-    </a-form-item>
-    <a-form-item class="w-[150px] !mr-3">
-      <span class="opacity-70">{{ translate("SelectArea") }}</span>
-      <a-select
-        :placeholder="translate('Area')"
-        v-model:value="filterSearching.areaSelected"
-        :options="areaOption?.map((e) => ({ value: e, label: e }))"
-        :allowClear="true"
-        class="mt-2"
-      />
-    </a-form-item>
-    <a-form-item class="flex items-end">
-      <AntdButton :type="'text'" danger :disabled="disabledDeleteFilter" @click="handleClearFilter">
+  <Section :title="translate('WarehouseList')" :sub-title="translate('NumberOfWarehouses')" :number="String(totalWarehouse)" class="w-full h-full bg-white overflow-hidden">
+    <template #action>
+      <AntdButton :type="'text'" danger @click="handleClearFilter">
         <template #icon>
           <font-awesome-icon :icon="['far', 'trash-can']" />
         </template>
         <span class="ml-2">{{ translate("Delete") }}</span>
-      </AntdButton>
-    </a-form-item>
-  </a-form>
-  <Section
-    :title="translate('WarehouseList')"
-    :sub-title="translate('NumberOfWarehouses')"
-    :number="String(totalWarehouse)"
-    class="w-full h-full bg-white overflow-hidden"
-  >
-    <template #action>
-      <AntdButton :type="'text'" danger class="mr-2" :disabled="disableDeleteMany" @click="handleDeleteWarehouse(listSelect, true)">
-        <template #icon>
-          <font-awesome-icon :icon="['far', 'trash-can']" />
-        </template>
-        <span class="text-sm ml-2">
-          {{ translate("Delete") }} <span v-if="listSelect?.length > 0">({{ listSelect?.length }})</span>
-        </span>
       </AntdButton>
       <AntdButton :type="'primary'" @click="handleCreate">
         <template #icon>
@@ -49,6 +14,11 @@
         <span class="text-sm ml-2">{{ translate("AddNew") }}</span>
       </AntdButton>
     </template>
+    <template #action-second>
+      <div class="mt-3 w-1/4">
+        <a-input :placeholder="translate('EnterWarehouseName')" v-model:value="whFilter.name" />
+      </div>
+    </template>
     <template #body>
       <AntdTable
         ref="table"
@@ -56,18 +26,15 @@
         :index-column="true"
         :columns="columns"
         :data-source="warehouseData"
-        :has-checkbox="true"
-        
-        @onSelected="handleSelectRow"
-        class="w-full h-[calc(100vh-290px)] overflow-hidden overflow-y-auto"
+        class="w-full h-[calc(100vh-204px)] overflow-hidden overflow-y-auto"
         v-if="!loading"
       >
         <template #custom-body="{ column, record }">
+          <template v-if="column.key === 'TimeCreate'">
+            {{ dayjs(record.TimeCreate).format("DD/MM/YYYY") }}
+          </template>
           <template v-if="column.key === 'action' && record">
             <div class="action">
-              <AntdButton class="action-btn" :type="'light-hover'" shape="circle" @click="handleViewRow(record)">
-                <font-awesome-icon :icon="['fas', 'circle-info']" style="color: #4caf50" />
-              </AntdButton>
               <AntdButton class="action-btn" :type="'light-hover'" shape="circle" @click="handleEditRow(record)">
                 <font-awesome-icon :icon="['far', 'pen-to-square']" style="color: #001f3f" />
               </AntdButton>
@@ -83,8 +50,15 @@
     </template>
   </Section>
   <!-- modal -->
-  <ModalCreate :is-visible="isVisibleModalCreate" :is-edit="isEdit" :form="formState" :title-modal="titleModal" @close-modal="closeModal" @handle-submit="handleSubmitForm" />
-  <ModalInfo :is-visible="isVisibleModalInfo" @close-modal="closeModal" :state="formState" />
+  <ModalCreate
+    v-if="isVisibleModalCreate"
+    :is-visible="isVisibleModalCreate"
+    :is-edit="isEdit"
+    :form="formState"
+    :title-modal="titleModal"
+    @close-modal="closeModal"
+    @handle-submit="handleSubmitForm"
+  />
 </template>
 <script setup lang="ts">
 import Section from "@/components/section/index.vue";
@@ -96,22 +70,10 @@ import { useStore } from "vuex";
 import { useRoute, useRouter } from "vue-router";
 import { debounce } from "vue-debounce";
 import { Modal, notification } from "ant-design-vue";
-import { checkDeleteItem, removeNullObjects } from "@/utils/common";
-
-interface Columns {
-  title?: string;
-  dataIndex: string;
-  key: string;
-  ellipsis?: boolean;
-  align?: string;
-  width?: number | null;
-  maxWidth?: number | null;
-  fixed?: string;
-  aligin?: string;
-}
+import { removeNullObjects } from "@/utils/common";
+import dayjs from "dayjs";
 
 const ModalCreate = defineAsyncComponent(() => import("./components/ModalCreate.vue"));
-const ModalInfo = defineAsyncComponent(() => import("./components/ModalInfo.vue"));
 
 const store = useStore();
 const route = useRoute();
@@ -119,37 +81,22 @@ const router = useRouter();
 
 const warehouseData = computed(() => store.getters["warehouse/warehouseInfo"]);
 const totalWarehouse = computed(() => store.getters["warehouse/totalWarehouse"]);
-const nationOption = computed(() => store.getters["warehouse/nationData"]);
-const areaOption = computed(() => store.getters["warehouse/areaData"]);
 const loading = computed(() => store.getters["warehouse/loading"]);
 
 const isVisibleModalCreate = ref<boolean>(false);
-const isVisibleModalInfo = ref<boolean>(false);
 const isEdit = ref<boolean>(false);
 const listSelect = ref<Array<any>>([]);
-const columns = ref<Array<Columns>>([
+const columns = ref<Array<any>>([
   {
     title: translate("WarehouseCode"),
-    dataIndex: "code",
-    key: "code",
+    dataIndex: "Code",
+    key: "Code",
     align: "left",
   },
   {
     title: translate("warehouseName"),
-    dataIndex: "name",
-    key: "name",
-    align: "left",
-  },
-  {
-    title: translate("Nation"),
-    dataIndex: "nation",
-    key: "nation",
-    align: "left",
-  },
-  {
-    title: translate("Area"),
-    dataIndex: "area",
-    key: "area",
+    dataIndex: "Name",
+    key: "Name",
     align: "left",
   },
   {
@@ -159,9 +106,15 @@ const columns = ref<Array<Columns>>([
     aligin: "left",
   },
   {
+    title: translate("Address"),
+    dataIndex: "Address",
+    key: "Address",
+    align: "left",
+  },
+  {
     title: translate("DateCreated"),
-    dataIndex: "timeCreate",
-    key: "timeCreate",
+    dataIndex: "TimeCreate",
+    key: "TimeCreate",
     aligin: "left",
   },
   {
@@ -174,47 +127,30 @@ const columns = ref<Array<Columns>>([
 ]);
 const titleModal = ref<string>("");
 
-const filterSearching = reactive({
-  keyword: "",
-  nationSlected: null,
-  areaSelected: null,
-});
-const formState = reactive<any>({
-  id: "",
-  code: "",
+const whFilter = reactive({
   name: "",
-  nation: "",
-  area: "",
-  address: "",
-  companyId: null,
-  staffId: null,
-  allowDelete: true,
-  timeCreate: "",
-  staffName: "",
 });
-
-//filter
-const disabledDeleteFilter = computed(() => filterSearching?.keyword?.length === 0 && filterSearching?.nationSlected === null && filterSearching?.areaSelected === null);
 
 const handleClearFilter = () => {
-  filterSearching.keyword = "";
-  filterSearching.nationSlected = null;
-  filterSearching.areaSelected = null;
+  whFilter.name = "";
 };
+
+const formState = reactive<any>({
+  id: null,
+  code: "",
+  name: "",
+  address: "",
+  staffId: null,
+});
 
 // CRUD
 const handleCreate = () => {
   isVisibleModalCreate.value = true;
   isEdit.value = false;
-  formState.id = 0;
   formState.code = "";
   formState.name = "";
-  formState.nation = null;
-  formState.area = null;
   formState.address = "";
-  formState.companyId = null;
   formState.staffId = null;
-  formState.allowDelete = true;
   titleModal.value = translate("CreateWarehouse");
 };
 
@@ -222,15 +158,11 @@ const handleEditRow = (data: any) => {
   isEdit.value = true;
   isVisibleModalCreate.value = true;
   titleModal.value = translate("UpdateWarehouseInfo");
-  formState.id = data?.id;
-  formState.code = data?.code;
-  formState.name = data?.name;
-  formState.nation = data?.nation;
-  formState.area = data?.area;
-  formState.address = data?.address;
-  formState.companyId = data?.companyId;
-  formState.staffId = data?.staffId;
-  formState.allowDelete = data?.allowDelete;
+  formState.id = data?.Id;
+  formState.code = data?.Code;
+  formState.name = data?.Name;
+  formState.address = data?.Address;
+  formState.staffId = data?.StaffId;
 };
 
 const handleSubmitForm = async (state: any) => {
@@ -274,12 +206,6 @@ const handleSubmitForm = async (state: any) => {
   }
 };
 
-const handleSelectRow = (rows: any) => {
-  listSelect.value = rows.value.map((x: any) => ({ id: x?.id, allowDelete: x?.allowDelete }));
-};
-
-const disableDeleteMany = computed(() => listSelect?.value?.length === 0);
-
 const handleDeleteWarehouse = async (itemDelete: any, isMany: boolean) => {
   Modal.confirm({
     title: translate(translate(isMany ? "confirm.many" : "confirm.one", "Warehouse")),
@@ -295,58 +221,31 @@ const handleDeleteWarehouse = async (itemDelete: any, isMany: boolean) => {
 };
 
 const handleDelete = async (itemDelete: any) => {
-  if (checkDeleteItem(itemDelete)) {
-    if (itemDelete.length > 1) {
-      const temp = itemDelete.map((x: any) => x?.id);
-      await store.dispatch("warehouse/deleteWarehouse", {
-        state: temp,
-        params: {
-          ...route.query,
-        },
-      });
-    } else {
-      await store.dispatch("warehouse/deleteWarehouse", {
-        state: [itemDelete.id],
-        params: {
-          ...route.query,
-        },
-      });
-    }
-    listSelect.value = [];
-    notification["success"]({
-      message: translate("noti.deleteSuccess"),
-    });
+  if (itemDelete.length > 1) {
+    // const temp = itemDelete.map((x: any) => x?.Id);
+    // await store.dispatch("warehouse/deleteWarehouse", {
+    //   state: temp,
+    //   params: {
+    //     ...route.query,
+    //   },
+    // });
   } else {
-    notification["error"]({
-      message: translate("noti.deleteWarehouseFail"),
+    await store.dispatch("warehouse/deleteWarehouse", {
+      state: itemDelete.Id,
+      params: {
+        ...route.query,
+      },
     });
   }
-};
-
-const handleViewRow = (data: any) => {
-  isVisibleModalInfo.value = true;
-  formState.id = data?.id;
-  formState.code = data?.code;
-  formState.name = data?.name;
-  formState.nation = data?.nation;
-  formState.area = data?.area;
-  formState.address = data?.address;
-  formState.companyId = data?.companyId;
-  formState.staffId = data?.staffId;
-  formState.allowDelete = data?.allowDelete;
-  formState.timeCreate = data?.timeCreate;
-  formState.staffName = data?.staffName;
+  listSelect.value = [];
+  notification["success"]({
+    message: translate("noti.deleteSuccess"),
+  });
 };
 
 // close modal
 const closeModal = () => {
   isVisibleModalCreate.value = false;
-  isVisibleModalInfo.value = false;
-};
-
-const fetchData = async () => {
-  await store.dispatch("warehouse/getNationData", null);
-  await store.dispatch("warehouse/getAreaData", null);
 };
 
 const fetchWarehouse = async (params: any) => {
@@ -354,12 +253,10 @@ const fetchWarehouse = async (params: any) => {
 };
 
 watch(
-  () => filterSearching,
+  () => whFilter,
   debounce(() => {
     const params = {
-      name: filterSearching?.keyword,
-      nation: filterSearching?.nationSlected,
-      area: filterSearching?.areaSelected,
+      name: whFilter?.name,
     };
     fetchWarehouse(removeNullObjects(params));
   }, 500),
@@ -368,7 +265,6 @@ watch(
 
 onMounted(async () => {
   await fetchWarehouse(null);
-  await fetchData();
 });
 </script>
 <style scoped lang="scss"></style>

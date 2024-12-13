@@ -135,7 +135,7 @@ export default (): RouteRecordRaw[] => {
       name: "product producer",
       component: () => import("./products/product-producer/index.vue"),
       meta: {
-        title: translate("Producer"),
+        title: translate("Supplier"),
         layout: defaultLayout,
       },
     },

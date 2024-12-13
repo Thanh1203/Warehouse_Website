@@ -3,14 +3,14 @@
     <a-form class="w-full mb-6">
       <div class="w-full flex items-start mb-6">
         <div class="basis-1/2 mr-3 flex flex-col items-start justify-start">
-          <span class="mb-2">{{ translate("ManufacturerCode") }}<span class="required-star">*</span></span>
-          <a-input :placeholder="translate('ManufacturerCode')" v-model:value="v$.code.$model" :status="v$.code.$error ? 'error' : ''" />
-          <ErrorMess :params="[64]" title="ManufacturerCode" :validator="v$.code.$errors[0]?.$validator" />
+          <span class="mb-2">{{ translate("SupplierCode") }}<span class="required-star">*</span></span>
+          <a-input :placeholder="translate('SupplierCode')" v-model:value="v$.code.$model" :status="v$.code.$error ? 'error' : ''" />
+          <ErrorMess :params="[64]" title="SupplierCode" :validator="v$.code.$errors[0]?.$validator" />
         </div>
         <div class="basis-1/2 ml-3 flex flex-col items-start justify-start">
-          <span class="mb-2">{{ translate("ManufacturerName") }}<span class="required-star">*</span></span>
-          <a-input :placeholder="translate('ManufacturerName')" v-model:value="v$.name.$model" :status="v$.name.$error ? 'error' : ''" />
-          <ErrorMess :params="[64]" title="ManufacturerName" :validator="v$.name.$errors[0]?.$validator" />
+          <span class="mb-2">{{ translate("SupplierName") }}<span class="required-star">*</span></span>
+          <a-input :placeholder="translate('SupplierName')" v-model:value="v$.name.$model" :status="v$.name.$error ? 'error' : ''" />
+          <ErrorMess :params="[64]" title="SupplierName" :validator="v$.name.$errors[0]?.$validator" />
         </div>
       </div>
       <div class="w-full flex items-start">

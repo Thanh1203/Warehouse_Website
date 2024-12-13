@@ -46,7 +46,7 @@
       <div class="overflow-hidden">
         <div class="truncate font-600 text-[14px]">{{ translate("NumberManufacturers") }}</div>
         <div class="font-[700] text-[24px] text-[#001f3f]">
-          <NumberAnimation v-if="!loading" :from="0" :to="dataReportProduct?.totalProducer" :duration="1" autoplay easing="linear" :format="theFormat" />
+          <NumberAnimation v-if="!loading" :from="0" :to="dataReportProduct?.totalSupplier" :duration="1" autoplay easing="linear" :format="theFormat" />
           <a-skeleton-input v-else :loading="loading" :paragraph="{ rows: 0 }" active size="small" />
         </div>
       </div>
@@ -79,7 +79,7 @@
     <div class="bg-white rounded-xl p-6">
       <div class="font-[700]">{{ translate("ManufacturerStatistics") }}</div>
       <div class="mt-6 flex justify-center">
-        <Chartpie :data="dataProducer" :show-legend="false" v-if="!loading"/>
+        <Chartpie :data="dataSupplier" :show-legend="false" v-if="!loading"/>
         <a-skeleton v-else :loading="loading" active />
       </div>
       <div class="mt-6 max-h-[50vh] overflow-hidden overflow-y-auto">
@@ -160,12 +160,12 @@ const dataClassify = computed(() => ({
     },
   ],
 }));
-const dataProducer = computed(() => ({
-  labels: dataReportProduct.value?.dataProducerRatio?.names,
+const dataSupplier = computed(() => ({
+  labels: dataReportProduct.value?.dataSupplierRatio?.names,
   datasets: [
     {
       backgroundColor: getArrayRandColor(9),
-      data: dataReportProduct.value?.dataProducerRatio?.ratios,
+      data: dataReportProduct.value?.dataSupplierRatio?.ratios,
     },
   ],
 }));
@@ -199,7 +199,7 @@ const classifyColumns = ref<Array<any>>([
 ]);
 const producerColumns = ref<Array<any>>([
   {
-    title: translate("ManufacturerName"),
+    title: translate("SupplierName"),
     dataIndex: "name",
     key: "name",
     align: "left",
