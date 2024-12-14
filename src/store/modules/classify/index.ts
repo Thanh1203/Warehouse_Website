@@ -1,19 +1,13 @@
 import ConstantAPI from "@/services/ConstantAPI";
 import { DataService } from "@/services/request";
 
-export interface classify {
-  classifyData: any;
-  totalElement: number;
-  loading: boolean;
-}
-
 export default {
   namespaced: true as true,
   state: {
     classifyData: [],
     totalElement: 0,
     loading: true,
-  } as classify,
+  } as any,
   getters: {
     classifyData: (state) => state.classifyData,
     totalElement: (state) => state.totalElement,
@@ -35,9 +29,10 @@ export default {
     async getClassify({ commit }, payload) {
       try {
         commit("SET_LOADING", true);
-        const response: any = await DataService.callApi(ConstantAPI.classify.GET, null, payload);
-        await commit("SET_CLASSIFY_DATA", response?.data);
-        await commit("SET_TOTAL_CATEGORY", response?.totalElement);
+        const { data }: any = await DataService.callApi(ConstantAPI.classify.GET, null, payload);
+        await commit("SET_CLASSIFY_DATA", data?.data);
+        await commit("SET_TOTAL_CATEGORY", data?.totalRecord); 
+        commit("SET_LOADING", false);
       } catch (error) {
         console.log(error);
       }
@@ -55,7 +50,7 @@ export default {
     //update
     async updateClassify({ dispatch }, payload) {
       try {
-        const response: any = await DataService.callApi(ConstantAPI.classify.UPDATE, payload.state, null);
+        const response: any = await DataService.patch(`${ConstantAPI.classify.UPDATE.url}/${payload.state.id}`, payload.state, null);
         await dispatch("getClassify", payload.params);
         return response;
       } catch (error) {

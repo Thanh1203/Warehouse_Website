@@ -19,37 +19,37 @@ export default {
   },
   category: {
     GET: {
-      url: "/categories",
+      url: "categories",
       method: "GET",
     },
     CREATE: {
-      url: "/categories",
+      url: "categories",
       method: "POST",
     },
     UPDATE: {
-      url: "/categories",
+      url: "categories",
       method: "PATCH",
     },
     DELETE: {
-      url: "/categories",
+      url: "categories",
       method: "DELETE",
     },
   },
   classify: {
     GET: {
-      url: "/api/classify",
+      url: "classifies",
       method: "GET",
     },
     CREATE: {
-      url: "/api/classify",
+      url: "classifies",
       method: "POST",
     },
     UPDATE: {
-      url: "/api/classify",
-      method: "PUT",
+      url: "classifies",
+      method: "PATCH",
     },
     DELETE: {
-      url: "/api/classify",
+      url: "classifies",
       method: "DELETE",
     },
   },

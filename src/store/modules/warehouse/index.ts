@@ -31,7 +31,7 @@ export default {
         commit("SET_LOADING", true);
         const { data }: any = await DataService.callApi(ConstantAPI.warehouse.GET, null, payload);
         await commit("SET_WAREHOUSE_INFO", data?.data);
-        await commit("SET_TOTAL_WAREHOUSE", data?.totalElemnts);
+        await commit("SET_TOTAL_WAREHOUSE", data?.totalRecord);
         commit("SET_LOADING", false);
         return data;
       } catch (error) {

@@ -1,15 +1,15 @@
 <template>
   <BaseModal :visible="isVisible" :title="titleModal" :defaultFooter="false" @cancel="$emit('closeModal')">
     <a-form @submit.prevent="handleSubmit" model="horizontal" :labelCol="{span: 5}" class="mb-6">
-      <a-form-item :label="translate('WarehouseCode')" required class="!mb-4">
+      <a-form-item :label="translate('WarehouseCode')" required>
         <a-input :placeholder="translate('WarehouseCode')" class="w-full" :status="v$.code.$error ? 'error' : ''" v-model:value="v$.code.$model" :disabled="isEdit"/>
         <ErrorMess :params="[64]" title="WarehouseCode" :validator="v$.code.$errors[0]?.$validator" />
       </a-form-item>
-      <a-form-item :label="translate('Name')" required class="!mb-4">
+      <a-form-item :label="translate('Name')" required>
         <a-input :placeholder="translate('Name')" class="w-full" :status="v$.name.$error ? 'error' : ''" v-model:value="v$.name.$model" />
         <ErrorMess :params="[64]" title="Name" :validator="v$.name.$errors[0]?.$validator" />
       </a-form-item>
-      <a-form-item :label="translate('Address')" required class="!mb-4">
+      <a-form-item :label="translate('Address')" required>
         <a-input :placeholder="translate('Address')" class="w-full" :status="v$.address.$error ? 'error' : ''" v-model:value="v$.address.$model" />
         <ErrorMess :params="[64]" title="Address" :validator="v$.address.$errors[0]?.$validator" />
       </a-form-item>

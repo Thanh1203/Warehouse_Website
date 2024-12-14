@@ -31,7 +31,7 @@ export default {
         commit("SET_LOADING", true);
         const { data }: any = await DataService.callApi(ConstantAPI.producer.GET, null, payload);
         await commit("SET_PRODUCER_DATA", data?.data);
-        await commit("SET_TOTAL_CATEGORY",data?.totalElements);
+        await commit("SET_TOTAL_CATEGORY",data?.totalRecord);
         commit("SET_LOADING", false);
         return data;
       } catch (error) {

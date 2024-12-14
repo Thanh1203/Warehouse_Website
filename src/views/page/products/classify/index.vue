@@ -1,33 +1,5 @@
 <template>
-  <a-form class="flex rounded-xl bg-white px-6 py-5 mb-6">
-    <a-form-item class="w-[300px] !mr-3">
-      <span class="opacity-70">{{ translate("ClassificationName") }}</span>
-      <a-input :placeholder="translate('Search')" v-model:value="filterSearching.Keyword" class="mt-2" />
-    </a-form-item>
-    <a-form-item class="flex items-end">
-      <AntdButton
-        :type="'text'"
-        danger
-        :disabled="disabledDeleteFilter"
-        @click="
-          () => {
-            filterSearching.Keyword = '';
-          }
-        "
-      >
-        <template #icon>
-          <font-awesome-icon :icon="['far', 'trash-can']" />
-        </template>
-        <span class="ml-2">{{ translate("Delete") }}</span>
-      </AntdButton>
-    </a-form-item>
-  </a-form>
-  <Section
-    :title="translate('ClassificationList')"
-    :subTitle="translate('TotalClassification')"
-    :number="String(totalClassify)"
-    class="w-full h-full bg-white overflow-hidden"
-  >
+  <Section :title="translate('ClassificationList')" :subTitle="translate('TotalClassification')" :number="String(totalClassify)" class="w-full h-full bg-white overflow-hidden">
     <template #action>
       <AntdButton :type="'text'" danger :disabled="disableDeleteMany" class="mr-2" @click="handleDeleteClassify(listSelect, true)">
         <template #icon>
@@ -46,33 +18,65 @@
     </template>
 
     <template #body>
-      <AntdTable
-        ref="table"
-        key-field="id"
-        :index-column="true"
-        :has-checkbox="true"
-        
-        :dataSource="classifyData"
-        :columns="columns"
-        @onSelected="handleSelectRow"
-        class="w-full h-[calc(100vh-290px)] overflow-hidden overflow-y-auto"
-        v-if="!loading"
-      >
-        <template #custom-body="{ column, record }">
-          <template v-if="column.key === 'action'">
-            <div class="action">
-              <AntdButton class="action-btn" :type="'light-hover'" shape="circle" @click="handleEdit(record)">
-                <font-awesome-icon :icon="['far', 'pen-to-square']" style="color: #001f3f" />
-              </AntdButton>
-              <AntdButton class="action-btn" :type="'light-hover'" shape="circle" @click="handleDeleteClassify(record, false)">
-                <font-awesome-icon :icon="['far', 'trash-can']" style="color: #ff0000" />
-              </AntdButton>
-            </div>
-          </template>
-        </template>
-      </AntdTable>
-
-      <a-skeleton v-else active />
+      <div class="w-100 flex">
+        <a-form layout="vertical" class="w-44 border-r pr-2">
+          <a-form-item :label="translate('ClassificationName')" class="mb-2">
+            <a-input :placeholder="translate('Search')" v-model:value="filterSearching.Keyword" />
+          </a-form-item>
+          <a-form-item :label="translate('ClassificationCode')" class="mb-2">
+            <a-input :placeholder="translate('Search')" v-model:value="filterSearching.code" />
+          </a-form-item>
+          <a-form-item :label="translate('Warehouse')">
+            <a-select :placeholder="translate('SelectWarehouse')" v-model:value="filterSearching.warehouseId" :options="warehouses.map((x) => ({ value: x.Id, label: x.Code }))"/>
+          </a-form-item>
+          <a-form-item :label="translate('Supplier')">
+            <a-select :placeholder="translate('SelectSupplier')" v-model:value="filterSearching.supplierId" :options="suppliers.map((x) => ({ value: x.Id, label: x.Code }))"/>
+          </a-form-item>
+          <a-form-item :label="translate('Category')">
+            <a-select :placeholder="translate('SelectCategory')" v-model:value="filterSearching.categoryId" :options="categories.map((x) => ({ value: x.Id, label: x.Code }))"/>
+          </a-form-item>
+          <AntdButton :type="'text'" danger @click="handleClearFilter">
+            <template #icon>
+              <font-awesome-icon :icon="['far', 'trash-can']" />
+            </template>
+            <span class="ml-2">{{ translate("DeleteFilter") }}</span>
+          </AntdButton>
+        </a-form>
+        <div class="pl-2 grow">
+          <AntdTable
+            ref="table"
+            key-field="Id"
+            :index-column="true"
+            :has-checkbox="true"
+            :dataSource="classifyData"
+            :columns="columns"
+            @onSelected="handleSelectRow"
+            class="w-full h-[calc(100vh-160px)] overflow-hidden overflow-y-auto"
+            v-if="!loading"
+          >
+            <template #custom-body="{ column, record }">
+              <template v-if="column.key === 'IsRestock' && record">
+                <a-tag v-if="record.IsRestock" color="success">{{ translate("common.active") }}</a-tag>
+                <a-tag v-else color="error">{{ translate("common.deactive") }}</a-tag>
+              </template>
+              <template v-if="column.key === 'CreateAt'">
+                {{ dayjs(record.CreateAt).format("DD/MM/YYYY") }}
+              </template>
+              <template v-if="column.key === 'action'">
+                <div class="action">
+                  <AntdButton class="action-btn" :type="'light-hover'" shape="circle" @click="handleEdit(record)">
+                    <font-awesome-icon :icon="['far', 'pen-to-square']" style="color: #001f3f" />
+                  </AntdButton>
+                  <AntdButton class="action-btn" :type="'light-hover'" shape="circle" @click="handleDeleteClassify(record, false)">
+                    <font-awesome-icon :icon="['far', 'trash-can']" style="color: #ff0000" />
+                  </AntdButton>
+                </div>
+              </template>
+            </template>
+          </AntdTable>
+          <a-skeleton v-else active />
+        </div>
+      </div>
     </template>
   </Section>
 
@@ -90,6 +94,7 @@ import { useRoute, useRouter } from "vue-router";
 import { Modal, notification } from "ant-design-vue";
 import { removeNullObjects } from "@/utils/common";
 import { debounce } from "vue-debounce";
+import dayjs from "dayjs";
 
 const ModalCreate = defineAsyncComponent(() => import("./components/modalCreate.vue"));
 
@@ -100,28 +105,70 @@ const router = useRouter();
 const classifyData = computed(() => store.getters["classify/classifyData"]);
 const totalClassify = computed(() => store.getters["classify/totalElement"]);
 const loading = computed(() => store.getters["classify/loading"]);
+const warehouses = computed(() => store.getters["warehouse/warehouseInfo"]);
+const suppliers = computed(() => store.getters["producer/producerData"]);
+const categories = computed(() => store.getters["category/categoryData"]);
 
 const listSelect = ref<any>([]);
 const isVisibleModalCreate = ref<boolean>(false);
 const isEdit = ref<boolean>(false);
 const titleModal = ref<string>("");
+const filterSearching = reactive<any>({
+  Keyword: "",
+  code: "",
+  warehouseId: null,
+  supplierId: null,
+  categoryId: null,
+  isRestock: null,
+});
 const columns = ref<Array<any>>([
   {
     title: translate("ClassificationCode"),
-    dataIndex: "code",
-    key: "code",
+    dataIndex: "Code",
+    key: "Code",
     align: "left",
   },
   {
     title: translate("ClassificationName"),
-    dataIndex: "name",
-    key: "name",
+    dataIndex: "Name",
+    key: "Name",
     align: "left",
   },
   {
+    title: translate("Warehouse"),
+    dataIndex: "warehouseCode",
+    key: "warehouseCode",
+    align: "left",
+  },
+  {
+    title: translate("Supplier"),
+    dataIndex: "supplierCode",
+    key: "supplierCode",
+    align: "left",
+  },
+  {
+    title: translate("Category"),
+    dataIndex: "categoryCode",
+    key: "categoryCode",
+    align: "left",
+  },
+  {
+    title: translate("common.Status"),
+    dataIndex: "IsRestock",
+    key: "IsRestock",
+    aligin: "left",
+    filters: [
+      { text: `${translate("common.active")}`, value: true },
+      { text: `${translate("common.deactive")}`, value: false },
+    ],
+    filterMultiple: false,
+    filteredValue: filterSearching.isRestock ? filterSearching.isRestock : null,
+    width: 150,
+  },
+  {
     title: translate("DateCreated"),
-    dataIndex: "timeCreate",
-    key: "timeCreate",
+    dataIndex: "CreateAt",
+    key: "CreateAt",
     align: "left",
   },
   {
@@ -133,17 +180,16 @@ const columns = ref<Array<any>>([
   },
 ]);
 
-const filterSearching = reactive<any>({
-  Keyword: "",
-});
 const formState = reactive<any>({
-  id: "",
+  id: null,
   code: "",
   name: "",
-  allowDelete: true,
+  warehouseId: null,
+  supplierId: null,
+  categoryId: null,
+  isRestock: null,
 });
 
-const disabledDeleteFilter = computed(() => filterSearching?.Keyword?.length === 0);
 const disableDeleteMany = computed(() => listSelect?.value?.length === 0);
 
 //close modal
@@ -152,25 +198,31 @@ const onCancel = () => {
 };
 
 const handleSelectRow = (rows: any) => {
-  listSelect.value = rows.value.map((x: any) => ({ id: x?.id, allowDelete: x?.allowDelete }));
+  listSelect.value = rows.map((x: any) => x?.Id);
 };
 
 //CRUD
 const handelCreate = () => {
-  formState.id = 0;
+  formState.id = null;
   formState.code = "";
   formState.name = "";
-  formState.allowDelete = true;
+  formState.warehouseId = null;
+  formState.supplierId = null;
+  formState.categoryId = null;
+  formState.isRestock = true;
   isVisibleModalCreate.value = true;
   isEdit.value = false;
   titleModal.value = translate("AddClassification");
 };
 
 const handleEdit = (item: any) => {
-  formState.id = item.id;
-  formState.code = item.code;
-  formState.name = item.name;
-  formState.allowDelete = item.allowDelete;
+  formState.id = item.Id;
+  formState.code = item.Code;
+  formState.name = item.Name;
+  formState.warehouseId = item.WarehouseId;
+  formState.supplierId = item.SupplierId;
+  formState.categoryId = item.CategoryId;
+  formState.isRestock = item.IsRestock;
   isVisibleModalCreate.value = true;
   isEdit.value = true;
   titleModal.value = translate("AddClassification");
@@ -178,39 +230,36 @@ const handleEdit = (item: any) => {
 
 const handleSubmitForm = async (state: any) => {
   if (isEdit.value && state.id !== 0) {
-    try {
-      await store.dispatch("classify/updateClassify", {
-        state: state,
-        params: {
-          ...route.query,
-        },
-      });
-
-      notification["success"]({
-        message: translate("noti.updateSuccess"),
-      });
-    } catch (error) {
-      console.log(error);
+    const res = await store.dispatch("classify/updateClassify", {
+      state: state,
+      params: {
+        ...route.query,
+      },
+    });
+  
+    if (res.status === 403) {
       notification["error"]({
         message: translate("noti.updateFail"),
       });
-    }
+    } else {
+      notification["error"]({
+        message: translate("noti.updateFail"),
+      });
+    } 
   } else {
-    try {
-      await store.dispatch("classify/createClassify", {
-        state: state,
-        params: {
-          ...route.query,
-        },
-      });
-
-      notification["success"]({
-        message: translate("noti.createSuccess"),
-      });
-    } catch (error) {
-      console.log(error);
+    const res = await store.dispatch("classify/createClassify", {
+      state: state,
+      params: {
+        ...route.query,
+      },
+    });
+    if (res.status === 403) {
       notification["error"]({
         message: translate("noti.createFail"),
+      });
+    } else {
+      notification["success"]({
+        message: translate("noti.createSuccess"),
       });
     }
   }
@@ -233,50 +282,67 @@ const handleDeleteClassify = async (itemDelete: any, isMany: boolean) => {
 };
 
 const handleDelete = async (itemDelete: any) => {
-  if (checkDeleteItem(itemDelete)) {
-    if (itemDelete.length > 1) {
-      const temp = itemDelete.map((x: any) => x?.id);
-      await store.dispatch("classify/deleteClassify", {
-        state: temp,
-        params: {
-          ...route.query,
-        },
-      });
-    } else {
-      await store.dispatch("classify/deleteClassify", {
-        state: [itemDelete.id],
-        params: {
-          ...route.query,
-        },
-      });
-    }
-    listSelect.value = [];
-    notification["success"]({
-      message: translate("noti.deleteSuccess"),
+  if (itemDelete.length > 1) {
+    const temp = itemDelete.map((x: any) => x?.id);
+    await store.dispatch("classify/deleteClassify", {
+      state: temp,
+      params: {
+        ...route.query,
+      },
     });
   } else {
-    notification["error"]({
-      message: translate("noti.deleteClassifyFail"),
+    await store.dispatch("classify/deleteClassify", {
+      state: [itemDelete.id],
+      params: {
+        ...route.query,
+      },
     });
   }
+  listSelect.value = [];
+  notification["success"]({
+    message: translate("noti.deleteSuccess"),
+  });
 };
 
-const fetData = async (params) => {
+const handleClearFilter = () => {
+  filterSearching.Keyword = "";
+  filterSearching.code = "";
+  filterSearching.warehouseId = null;
+  filterSearching.supplierId = null;
+  filterSearching.categoryId = null;
+  filterSearching.isRestock = null;
+};
+
+const fetchData = async (params) => {
   await store.dispatch("classify/getClassify", params);
 };
+
+const fetchDataFilter = async () => {
+  await Promise.all([
+    store.dispatch("warehouse/getWarehouse", null),
+    store.dispatch("producer/getSupplier", null),
+    store.dispatch("category/getCategory", null),
+  ]);
+}
 
 watch(
   () => filterSearching,
   debounce(() => {
     const params = {
       name: filterSearching?.Keyword,
+      code: filterSearching?.code,
+      warehouseId: filterSearching?.warehouseId,
+      supplierId: filterSearching?.supplierId,
+      categoryId: filterSearching?.categoryId,
+      isRestock: filterSearching?.isRestock,
     };
-    fetData(removeNullObjects(params));
+    fetchData(removeNullObjects(params));
   }, 500),
   { deep: true },
 );
 
 onMounted(async () => {
-  fetData(null);
+  fetchData(null);
+  fetchDataFilter()
 });
 </script>

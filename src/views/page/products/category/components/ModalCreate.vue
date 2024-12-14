@@ -1,15 +1,15 @@
 <template>
-  <BaseModal :width="'1000px'" :visible="isVisible" :title="titleModal" :defaultFooter="false" :maskClosable="false" @cancel="$emit('closeModal')">
+  <BaseModal :visible="isVisible" :title="titleModal" :defaultFooter="false" :maskClosable="false" @cancel="$emit('closeModal')">
     <a-form class="w-full mb-6" model="horizontal" :labelCol="{span: 5}">
-      <a-form-item :label="translate('CategoryCode')" required class="!mb-4">
+      <a-form-item :label="translate('CategoryCode')" required>
         <a-input v-model:value="v$.code.$model" :status="v$.code.$error ? 'error' : ''" :placeholder="translate('CategoryCode')" :disabled="isEdit" />
         <ErrorMess :params="[64]" title="CategoryCode" :validator="v$.code.$errors[0]?.$validator" />
       </a-form-item>
-      <a-form-item :label="translate('CategoryName')" required class="!mb-4">
+      <a-form-item :label="translate('CategoryName')" required>
         <a-input v-model:value="v$.name.$model" :status="v$.name.$error ? 'error' : ''" :placeholder="translate('CategoryName')" />
         <ErrorMess :params="[64]" title="CategoryName" :validator="v$.name.$errors[0]?.$validator" />
       </a-form-item>
-      <a-form-item :label="translate('Supplier')" required class="!mb-4">
+      <a-form-item :label="translate('Supplier')" required>
         <a-select class="w-1/6" :placeholder="translate('SelectSupplier')" v-model:value="v$.supplierId.$model"  :options="suppliers.map(x => ({value: x.Id, label: x.Name}))"/>
         <ErrorMess :params="[64]" title="Supplier" :validator="v$.supplierId.$errors[0]?.$validator" />
       </a-form-item>
@@ -17,12 +17,11 @@
         <a-select class="w-1/6" :placeholder="translate('SelectWarehouse')" v-model:value="v$.warehouseId.$model" :options="warehouses.map(x => ({ value: x.Id, label: x.Name }))"/>
         <ErrorMess :params="[64]" title="Warehouse" :validator="v$.warehouseId.$errors[0]?.$validator" />
       </a-form-item>
-      <a-form-item :label="translate('common.Status')" required>
+      <a-form-item :label="translate('common.Status')">
         <a-radio-group v-model:value="v$.isRestock.$model">
           <a-radio :value="true">{{ translate("common.active")}}</a-radio>
           <a-radio :value="false">{{ translate("common.deactive") }}</a-radio>
         </a-radio-group>
-        <ErrorMess :params="[64]" title="Warehouse" :validator="v$.warehouseId.$errors[0]?.$validator" />
       </a-form-item>
     </a-form>
     <template #footer>
@@ -89,15 +88,16 @@ const rules = {
   warehouseId: {
     required,
   },
-  isRestock: {
-    required,
-  },
+  isRestock: {},
 };
 
 const v$ = useVuelidate(rules, formState);
 
 const warehouses = computed(() => store.getters["warehouse/warehouseInfo"]);
-const suppliers = computed(() => store.getters["producer/producerData"]);
+const suppliers = computed(() => {
+  const result =  store.getters["producer/producerData"];
+  return result.filter((x) => x.IsCollab === true);
+});
 
 const handleSubmit = () => {
   v$.value.$touch();

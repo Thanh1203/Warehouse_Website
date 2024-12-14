@@ -37,7 +37,7 @@ export default {
         commit("SET_LOADING", true);
         const { data }: any = await DataService.callApi(ConstantAPI.personnel.GET, null, payload);
         await commit("SET_PERSONNEL_DATA", data.data);
-        await commit("SET_TOTAL_PERSONNEL", data?.totalElemnts || 0);
+        await commit("SET_TOTAL_PERSONNEL", data?.totalRecord || 0);
         commit("SET_LOADING", false);
       } catch (error) {
         console.log(error);

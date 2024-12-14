@@ -289,4 +289,5 @@ export const vi = {
   StopCollaborating: "Dừng hợp tác",
   DeleteFilter: "Xóa bộ lọc",
   SelectSupplier: "Chọn nhà cung cấp",
+  SelectCategory: "Chọn chủng loại",
 };

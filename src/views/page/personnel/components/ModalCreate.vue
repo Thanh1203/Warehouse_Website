@@ -1,29 +1,29 @@
 <template>
   <BaseModal :visible="isVisible" :title="title" :default-footer="false" @cancel="$emit('closeModal')">
     <a-form :model="state" layout="vertical">
-      <a-form-item class="!mb-2" :label="translate('EmployeeName')" required>
+      <a-form-item :label="translate('EmployeeName')" required>
         <a-input v-model:value="v$.name.$model" :placeholder="translate('EnterEmployeeName')" :status="v$.name.$error ? 'error' : ''" />
         <ErrorMess :params="[64]" title="EmployeeName" :validator="v$.name.$errors[0]?.$validator" />
       </a-form-item>
-      <a-form-item class="!mb-2" label="Email" required>
+      <a-form-item label="Email" required>
         <a-input v-model:value="v$.email.$model" :placeholder="translate('EnterEmail')" :status="v$.email.$error ? 'error' : ''" />
         <ErrorMess :params="[64]" title="Email" :validator="v$.name.$errors[0]?.$validator" />
       </a-form-item>
-      <a-form-item class="!mb-2" :label="translate('PhoneNumber')" required>
+      <a-form-item :label="translate('PhoneNumber')" required>
         <a-input v-model:value="v$.phone.$model" :placeholder="translate('EnterPhoneNumber')" :status="v$.phone.$error ? 'error' : ''" />
         <ErrorMess :params="[64]" title="PhoneNumber" :validator="v$.name.$errors[0]?.$validator" />
       </a-form-item>
-      <a-form-item class="!mb-2" :label="translate('Address')">
+      <a-form-item :label="translate('Address')">
         <a-input v-model:value="v$.address.$model" :placeholder="translate('EnterAddress')" />
       </a-form-item>
-      <a-form-item class="!mb-2" :label="translate('Role')" required>
+      <a-form-item :label="translate('Role')" required>
         <a-select v-model:value="v$.role.$model" :placeholder="translate('SelectRole')" :status="v$.role.$error ? 'error' : ''">
           <a-select-option value="Admin">{{ translate("common.admin") }}</a-select-option>
           <a-select-option value="Employee">{{ translate("common.employee") }}</a-select-option>
         </a-select>
         <ErrorMess :params="[64]" title="Role" :validator="v$.name.$errors[0]?.$validator" />
       </a-form-item>
-      <a-form-item class="!mb-2" :label="translate('PassWord')">
+      <a-form-item :label="translate('PassWord')">
         <a-input-password v-model:value="v$.password.$model" :placeholder="translate('EnterPass')" />
       </a-form-item>
       <a-form-item :hidden="!props.isEdit" :label="translate('common.Status')">
