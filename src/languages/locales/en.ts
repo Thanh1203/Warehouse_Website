@@ -286,4 +286,5 @@ export const en = {
     Cooperating: "Cooperating",
     StopCollaborating: "Stop collaborating",
     DeleteFilter: "Delete filter",
+    SelectSupplier: "Select supplier",
 };

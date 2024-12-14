@@ -21,11 +21,9 @@ export default {
   },
   mutations: {
     SET_CATEGORY_DATA(state, payload) {
-      state.loading = false;
       state.categoryData = payload;
     },
     SET_TOTAL_CATEGORY(state, payload) {
-      state.loading = false;
       state.totalElement = payload;
     },
     SET_LOADING(state, payload) {
@@ -37,9 +35,10 @@ export default {
     async getCategory({ commit }, payload) {
       try {
         commit("SET_LOADING", true);
-        const response: any = await DataService.callApi(ConstantAPI.category.GET, null, payload);
-        await commit("SET_CATEGORY_DATA", response?.data);
-        await commit("SET_TOTAL_CATEGORY", response?.totalElement);
+        const { data }: any = await DataService.callApi(ConstantAPI.category.GET, null, payload);
+        await commit("SET_CATEGORY_DATA", data?.data);
+        await commit("SET_TOTAL_CATEGORY", data?.totalElement);
+        commit("SET_LOADING", false);
       } catch (error) {
         console.log(error);
       }
@@ -57,7 +56,7 @@ export default {
     //update
     async updateCategory({ dispatch }, payload) {
       try {
-        const response: any = await DataService.callApi(ConstantAPI.category.UPDATE, payload.state, null);
+        const response: any = await DataService.patch(`${ConstantAPI.category.UPDATE.url}/${payload.state.id}`, payload.state, null);
         await dispatch("getCategory", payload.params);
         return response;
       } catch (error) {

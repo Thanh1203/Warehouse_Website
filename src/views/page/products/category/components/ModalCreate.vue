@@ -1,30 +1,29 @@
 <template>
   <BaseModal :width="'1000px'" :visible="isVisible" :title="titleModal" :defaultFooter="false" :maskClosable="false" @cancel="$emit('closeModal')">
-    <a-form class="w-full mb-6">
-      <div class="w-full flex items-start mb-6">
-        <div class="basis-1/2 flex flex-col items-start justify-start mr-3">
-          <span class="mb-2">{{ translate("CategoryCode") }}<span class="required-star">*</span></span>
-          <a-input v-model:value="v$.code.$model" :status="v$.code.$error ? 'error' : ''" :placeholder="translate('CategoryCode')" :disabled="isEdit" />
-          <ErrorMess :params="[64]" title="CategoryCode" :validator="v$.code.$errors[0]?.$validator" />
-        </div>
-        <div class="basis-1/2 flex flex-col items-start justify-start">
-          <span class="mb-2">{{ translate("CategoryName") }}<span class="required-star">*</span></span>
-          <a-input v-model:value="v$.name.$model" :status="v$.name.$error ? 'error' : ''" :placeholder="translate('CategoryName')" />
-          <ErrorMess :params="[64]" title="CategoryName" :validator="v$.name.$errors[0]?.$validator" />
-        </div>
-      </div>
-      <div class="w-full flex flex-col items-start mb-6">
-        <span>{{ translate("DefaultProperties") }}:</span>
-        <div class="w-full mt-2 flex items-center justify-between">
-          <div v-for="(item, idx) in propsDefault" :key="idx" class="max-w-[150px] px-4 py-2 border border-slate-700 flex justify-center items-center rounded-xl">
-            <span>{{ item.label }}</span>
-          </div>
-        </div>
-      </div>
-      <!-- <div class="w-full flex flex-col items-start">
-        <span class="mb-2">{{ translate("CustomProperties") }}:</span>
-        <a-select mode="tags" class="w-full" v-model:value="v$.propertyExtend.$model" :placeholder="translate('EnterProperty')" />
-      </div> -->
+    <a-form class="w-full mb-6" model="horizontal" :labelCol="{span: 5}">
+      <a-form-item :label="translate('CategoryCode')" required class="!mb-4">
+        <a-input v-model:value="v$.code.$model" :status="v$.code.$error ? 'error' : ''" :placeholder="translate('CategoryCode')" :disabled="isEdit" />
+        <ErrorMess :params="[64]" title="CategoryCode" :validator="v$.code.$errors[0]?.$validator" />
+      </a-form-item>
+      <a-form-item :label="translate('CategoryName')" required class="!mb-4">
+        <a-input v-model:value="v$.name.$model" :status="v$.name.$error ? 'error' : ''" :placeholder="translate('CategoryName')" />
+        <ErrorMess :params="[64]" title="CategoryName" :validator="v$.name.$errors[0]?.$validator" />
+      </a-form-item>
+      <a-form-item :label="translate('Supplier')" required class="!mb-4">
+        <a-select class="w-1/6" :placeholder="translate('SelectSupplier')" v-model:value="v$.supplierId.$model"  :options="suppliers.map(x => ({value: x.Id, label: x.Name}))"/>
+        <ErrorMess :params="[64]" title="Supplier" :validator="v$.supplierId.$errors[0]?.$validator" />
+      </a-form-item>
+      <a-form-item :label="translate('Warehouse')" required>
+        <a-select class="w-1/6" :placeholder="translate('SelectWarehouse')" v-model:value="v$.warehouseId.$model" :options="warehouses.map(x => ({ value: x.Id, label: x.Name }))"/>
+        <ErrorMess :params="[64]" title="Warehouse" :validator="v$.warehouseId.$errors[0]?.$validator" />
+      </a-form-item>
+      <a-form-item :label="translate('common.Status')" required>
+        <a-radio-group v-model:value="v$.isRestock.$model">
+          <a-radio :value="true">{{ translate("common.active")}}</a-radio>
+          <a-radio :value="false">{{ translate("common.deactive") }}</a-radio>
+        </a-radio-group>
+        <ErrorMess :params="[64]" title="Warehouse" :validator="v$.warehouseId.$errors[0]?.$validator" />
+      </a-form-item>
     </a-form>
     <template #footer>
       <AntdButton :type="'primary'" @click="handleSubmit()">
@@ -45,6 +44,7 @@ import { ref, watch, defineAsyncComponent, reactive, computed, onMounted } from 
 import { required, maxLength } from "@vuelidate/validators";
 import useVuelidate from "@vuelidate/core";
 import { DEFAULT_PROPERTY } from "@/constants";
+import { useStore } from "vuex";
 
 const emit = defineEmits(["closeModal", "handleSubmit"]);
 const props = defineProps({
@@ -65,12 +65,15 @@ const props = defineProps({
     required: true,
   },
 });
+const store = useStore();
 
 const formState = reactive<any>({
   id: props.form?.id,
   code: props.form?.code,
   name: props.form?.name,
-  allowDelete: props?.form?.allowDelete,
+  supplierId: props.form?.supplierId,
+  warehouseId: props.form?.warehouseId,
+  isRestock: props.form?.isRestock,
 });
 
 const rules = {
@@ -80,11 +83,21 @@ const rules = {
   name: {
     required,
   },
+  supplierId: {
+    required,
+  },
+  warehouseId: {
+    required,
+  },
+  isRestock: {
+    required,
+  },
 };
 
 const v$ = useVuelidate(rules, formState);
 
-const propsDefault = computed(() => Object.values(DEFAULT_PROPERTY)?.map((x) => ({ value: x, label: translate(`${x}`) })));
+const warehouses = computed(() => store.getters["warehouse/warehouseInfo"]);
+const suppliers = computed(() => store.getters["producer/producerData"]);
 
 const handleSubmit = () => {
   v$.value.$touch();
@@ -102,7 +115,7 @@ watch(
   () => props.form,
   (val) => {
     v$.value.$reset();
-    (formState.id = val.id), (formState.code = val.code), (formState.name = val.name), (formState.allowDelete = val.allowDelete);
+    (formState.id = val.id), (formState.code = val.code), (formState.name = val.name), (formState.supplierId = val.supplierId), (formState.warehouseId = val.warehouseId), (formState.isRestock = val.isRestock);
   },
   {
     deep: true,

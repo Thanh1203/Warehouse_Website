@@ -19,19 +19,19 @@ export default {
   },
   category: {
     GET: {
-      url: "/api/category",
+      url: "/categories",
       method: "GET",
     },
     CREATE: {
-      url: "/api/category",
+      url: "/categories",
       method: "POST",
     },
     UPDATE: {
-      url: "/api/category",
-      method: "PUT",
+      url: "/categories",
+      method: "PATCH",
     },
     DELETE: {
-      url: "/api/category",
+      url: "/categories",
       method: "DELETE",
     },
   },

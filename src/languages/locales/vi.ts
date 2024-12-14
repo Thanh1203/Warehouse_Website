@@ -274,8 +274,8 @@ export const vi = {
     selectMultiple: "Chọn nhiều",
     quantity: "Số lượng",
     exportStatus: "Trạng thái xuất",
-    active: "Đã kích hoạt",
-    deactive: "Hủy kích hoạt",
+    active: "Hoạt động",
+    deactive: "Vô hiệu hóa",
     admin: "Quản trị viên",
     employee: "Nhân viên",
   },
@@ -288,4 +288,5 @@ export const vi = {
   Cooperating: "Đang hợp tác",
   StopCollaborating: "Dừng hợp tác",
   DeleteFilter: "Xóa bộ lọc",
+  SelectSupplier: "Chọn nhà cung cấp",
 };

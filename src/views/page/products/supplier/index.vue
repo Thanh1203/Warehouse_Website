@@ -45,8 +45,8 @@
             {{ dayjs(record.CreateAt).format("DD/MM/YYYY") }}
           </template>
           <template v-if="column.key === 'Status' && record">
-            <a-tag v-if="record.IsCollab" color="success">{{ translate("Cooperating")}}</a-tag>
-            <a-tag v-else color="error">{{ translate("StopCollaborating") }}</a-tag>
+            <a-tag v-if="record.IsCollab" color="success">{{ translate("common.active") }}</a-tag>
+            <a-tag v-else color="error">{{ translate("common.deactive") }}</a-tag>
           </template>
           <template v-if="column.key === 'action' && record">
             <div class="action">
@@ -129,8 +129,8 @@ const columns = ref<Array<any>>([
     key: "Status",
     aligin: "left",
     filters: [
-      { text: `${translate('Cooperating')}`, value: true },
-      { text: `${translate('StopCollaborating')}`, value: false },
+      { text: `${translate('common.active')}`, value: true },
+      { text: `${translate('common.deactive')}`, value: false },
     ],
     filterMultiple: false,
     filteredValue: supplierFilter.status ? supplierFilter.status : null,
