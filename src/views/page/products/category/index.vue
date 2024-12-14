@@ -20,8 +20,18 @@
     <template #action-second>
       <div class="flex gap-3 mt-3">
         <a-input :placeholder="translate('Search')" v-model:value="filterSearching.keyword" class="w-1/5" />
-        <a-select class="w-1/6" :placeholder="translate('SelectWarehouse')" v-model:value="filterSearching.warehouseId" :options="warehouses.map(x => ({ value: x.Id, label: x.Name }))"/>
-        <a-select class="w-1/6" :placeholder="translate('SelectSupplier')" v-model:value="filterSearching.supplierId"  :options="suppliers.map(x => ({value: x.Id, label: x.Name}))"/>
+        <a-select
+          class="w-1/6"
+          :placeholder="translate('SelectWarehouse')"
+          v-model:value="filterSearching.warehouseId"
+          :options="warehouses.map((x) => ({ value: x.Id, label: x.Name }))"
+        />
+        <a-select
+          class="w-1/6"
+          :placeholder="translate('SelectSupplier')"
+          v-model:value="filterSearching.supplierId"
+          :options="suppliers.map((x) => ({ value: x.Id, label: x.Name }))"
+        />
         <AntdButton :type="'text'" danger @click="handleClearFilter">
           <template #icon>
             <font-awesome-icon :icon="['far', 'trash-can']" />
@@ -50,13 +60,10 @@
           </template>
           <template v-if="column.key === 'IsRestock' && record">
             <a-tag v-if="record.IsRestock" color="success">{{ translate("common.active") }}</a-tag>
-            <a-tag v-else color="error">{{ translate("common.deactive") }}</a-tag>  
+            <a-tag v-else color="error">{{ translate("common.deactive") }}</a-tag>
           </template>
           <template v-if="column.key === 'action' && record">
             <div class="action">
-              <AntdButton class="action-btn" :type="'light-hover'" shape="circle" @click="handleView(record)">
-                <font-awesome-icon :icon="['fas', 'circle-info']" style="color: #4caf50" />
-              </AntdButton>
               <AntdButton class="action-btn" :type="'light-hover'" shape="circle" @click="handleUpdate(record)">
                 <font-awesome-icon :icon="['far', 'pen-to-square']" style="color: #001f3f" />
               </AntdButton>
@@ -67,13 +74,12 @@
           </template>
         </template>
       </AntdTable>
-      
+
       <a-skeleton v-else active />
     </template>
   </Section>
   <!-- modal -->
   <ModalCreate :isVisible="isVisibleModalCreate" :titleModal="titleModal" :form="formState" :isEdit="isEdit" @closeModal="onCancel" @handleSubmit="handleSubmitForm" />
-  <ModalInfo :isVisible="isVisibleModalInfo" :titleModal="titleModal" :form="formState" @closeModal="onCancel" />
 </template>
 <script setup lang="ts">
 import { translate } from "@/languages/i18n";
@@ -90,7 +96,6 @@ import { debounce } from "vue-debounce";
 import dayjs from "dayjs";
 
 const ModalCreate = defineAsyncComponent(() => import("./components/ModalCreate.vue"));
-const ModalInfo = defineAsyncComponent(() => import("./components/ModalInfo.vue"));
 
 const store = useStore();
 const route = useRoute();
@@ -104,7 +109,6 @@ const suppliers = computed(() => store.getters["producer/producerData"]);
 
 const listSelect = ref<any>([]);
 const isVisibleModalCreate = ref<boolean>(false);
-const isVisibleModalInfo = ref<boolean>(false);
 const isEdit = ref<boolean>(false);
 const titleModal = ref<string>("");
 const filterSearching = reactive({
@@ -150,8 +154,8 @@ const columns = ref<Array<any>>([
     key: "IsRestock",
     aligin: "left",
     filters: [
-      { text: `${translate('common.active')}`, value: true },
-      { text: `${translate('common.deactive')}`, value: false },
+      { text: `${translate("common.active")}`, value: true },
+      { text: `${translate("common.deactive")}`, value: false },
     ],
     filterMultiple: false,
     filteredValue: filterSearching.status ? filterSearching.status : null,
@@ -165,8 +169,6 @@ const columns = ref<Array<any>>([
     fixed: "right",
   },
 ]);
-
-
 
 const formState = reactive<any>({
   id: null,
@@ -189,12 +191,11 @@ const handleClearFilter = () => {
 // close modal
 const onCancel = () => {
   isVisibleModalCreate.value = false;
-  isVisibleModalInfo.value = false;
 };
 
 // handle data table
 const handleSelectRow = (rows: any) => {
-  listSelect.value = rows.map((x: any) => x?.Id );
+  listSelect.value = rows.map((x: any) => x?.Id);
 };
 
 // create, update, delete & view
@@ -280,32 +281,24 @@ const handleDeleteCategory = async (itemDelete: any, isMany: boolean) => {
 
 const handleDelete = async (itemDelete: any) => {
   if (itemDelete.length > 1) {
-      const temp = itemDelete.map((x: any) => x?.id);
-      await store.dispatch("category/deleteCategory", {
-        state: temp,
-        params: {
-          ...route.query,
-        },
-      });
-    } else {
-      await store.dispatch("category/deleteCategory", {
-        state: [itemDelete.id],
-        params: {
-          ...route.query,
-        },
-      });
-    }
-    listSelect.value = [];
-    notification["success"]({
-      message: translate("noti.deleteSuccess"),
+    await store.dispatch("category/deleteCategory", {
+      state: {categoryIds: itemDelete},
+      params: {
+        ...route.query,
+      },
     });
-};
-
-const handleView = (item: any) => {
-  isVisibleModalInfo.value = true;
-  titleModal.value = translate("DetailCategory");
-  formState.code = item.code;
-  formState.name = item.name;
+  } else {
+    await store.dispatch("category/deleteCategory", {
+      state: {categoryIds: [itemDelete.Id]},
+      params: {
+        ...route.query,
+      },
+    });
+  }
+  listSelect.value = [];
+  notification["success"]({
+    message: translate("noti.deleteSuccess"),
+  });
 };
 
 const fetData = async (params) => {
@@ -314,11 +307,11 @@ const fetData = async (params) => {
 
 const fetchDataFilter = async () => {
   await Promise.all([store.dispatch("warehouse/getWarehouse", null), store.dispatch("producer/getSupplier", null)]);
-}
+};
 
-const handleTable = (pag:any, filter:any) => {
+const handleTable = (pag: any, filter: any) => {
   filterSearching.status = filter.IsRestock?.[0];
-}
+};
 
 watch(
   () => filterSearching,

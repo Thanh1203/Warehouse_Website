@@ -88,7 +88,7 @@ import AntdTable from "@/components/antd-table/index.vue";
 import { useStore } from "vuex";
 import { useRoute, useRouter } from "vue-router";
 import { Modal, notification } from "ant-design-vue";
-import { checkDeleteItem, removeNullObjects } from "@/utils/common";
+import { removeNullObjects } from "@/utils/common";
 import { debounce } from "vue-debounce";
 
 const ModalCreate = defineAsyncComponent(() => import("./components/modalCreate.vue"));
