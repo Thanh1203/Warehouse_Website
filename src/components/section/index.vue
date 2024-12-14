@@ -5,7 +5,7 @@
             <span class="mb-2 text-[18px] text-base font-medium">{{ title }}</span>
             <div class="text-xs">
                 <span class="mr-2">{{ subTitle }}</span>
-                <span>{{ number }}</span>
+                <span>{{ Number(number) || 'N/A' }} </span>
             </div>
         </div>
         <div class="flex gap-3 items-end">
@@ -23,6 +23,7 @@ import VueTypes from "vue-types";
 const props = defineProps({
     title: VueTypes.string.def(""),
     subTitle: VueTypes.string.def(""),
-    number: VueTypes.string.def(""),
+    number: VueTypes.string.def("NA"),
 })
+
 </script>

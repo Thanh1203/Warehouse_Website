@@ -70,19 +70,19 @@ export default {
   },
   producer: {
     GET: {
-      url: "/api/producer",
+      url: "/suppliers",
       method: "GET",
     },
     CREATE: {
-      url: "/api/producer",
+      url: "/suppliers",
       method: "POST",
     },
     UPDATE: {
-      url: "/api/producer",
-      method: "PUT",
+      url: "/suppliers",
+      method: "PATCH",
     },
     DELETE: {
-      url: "/api/producer",
+      url: "/suppliers",
       method: "DELETE",
     },
   },

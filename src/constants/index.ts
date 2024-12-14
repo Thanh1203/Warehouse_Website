@@ -51,7 +51,7 @@ export const PC_MENU = [
   },
   {
     key: "PRODUCTPRODUCER",
-    path: "/product-producer",
+    path: "/supplier",
   },
   {
     key: "PRICECONFIG",

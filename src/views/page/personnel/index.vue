@@ -1,17 +1,6 @@
 <template>
-  <Section
-    :title="translate('PersonnelList')"
-    :sub-title="translate('NumberOfPersonnel')"
-    :number="String(totalPersonnel)"
-    class="w-full h-full bg-white overflow-hidden"
-  >
+  <Section :title="translate('PersonnelList')" :sub-title="translate('NumberOfPersonnel')" :number="String(totalPersonnel)" class="w-full h-full bg-white overflow-hidden">
     <template #action>
-      <AntdButton :type="'text'" danger @click="handleClearFilter">
-        <template #icon>
-          <font-awesome-icon :icon="['far', 'trash-can']" />
-        </template>
-        <span class="ml-2">{{ translate("Delete") }}</span>
-      </AntdButton>
       <AntdButton :type="'primary'" @click="handleCreate">
         <template #icon>
           <font-awesome-icon :icon="['fas', 'plus']" />
@@ -20,8 +9,14 @@
       </AntdButton>
     </template>
     <template #action-second>
-      <div class="mt-3 w-1/4">
-        <a-input :placeholder="translate('EnterEmployeeName')" v-model:value="userFilter.name"/>
+      <div class="mt-3 w-1/4 flex gap-3">
+        <a-input :placeholder="translate('EnterEmployeeName')" v-model:value="userFilter.name" />
+        <AntdButton :type="'text'" danger @click="handleClearFilter">
+          <template #icon>
+            <font-awesome-icon :icon="['far', 'trash-can']" />
+          </template>
+          <span class="ml-2">{{ translate("DeleteFilter") }}</span>
+        </AntdButton>
       </div>
     </template>
     <template #body>
@@ -43,7 +38,7 @@
             {{ dayjs(record.CreateAt).format("DD/MM/YYYY") }}
           </template>
           <template v-if="column.key === 'Status'">
-            <a-tag v-if="record.Status === 'ACTIVE'" color="success">{{ translate("common.active")}}</a-tag>
+            <a-tag v-if="record.Status === 'ACTIVE'" color="success">{{ translate("common.active") }}</a-tag>
             <a-tag v-if="record.Status === 'DEACTIVE'" color="error">{{ translate("common.deactive") }}</a-tag>
           </template>
           <template v-if="column.key === 'action'">
@@ -110,8 +105,8 @@ const columns = ref<Array<any>>([
     key: "Role",
     aligin: "left",
     filters: [
-      { text: `${translate('common.admin')}`, value: 'Admin' },
-      { text: `${translate('common.employee')}`, value: 'Employee' },
+      { text: `${translate("common.admin")}`, value: "Admin" },
+      { text: `${translate("common.employee")}`, value: "Employee" },
     ],
     filterMultiple: false,
     filteredValue: userFilter.role ? [userFilter.role] : null,
@@ -140,8 +135,8 @@ const columns = ref<Array<any>>([
     key: "Status",
     aligin: "left",
     filters: [
-      { text: `${translate('common.active')}`, value: 'ACTIVE' },
-      { text: `${translate('common.deactive')}`, value: 'DEACTIVE' },
+      { text: `${translate("common.active")}`, value: "ACTIVE" },
+      { text: `${translate("common.deactive")}`, value: "DEACTIVE" },
     ],
     filterMultiple: false,
     filteredValue: userFilter.status ? [userFilter.status] : null,
@@ -156,10 +151,10 @@ const columns = ref<Array<any>>([
   },
 ]);
 
-const handleTable = (pag:any, filter:any) => {
+const handleTable = (pag: any, filter: any) => {
   userFilter.role = filter.Role?.[0];
   userFilter.status = filter.Status?.[0];
-}
+};
 
 const formState = reactive({
   id: null,

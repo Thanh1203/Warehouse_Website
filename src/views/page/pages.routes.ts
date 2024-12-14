@@ -79,7 +79,7 @@ export default (): RouteRecordRaw[] => {
     {
       path: "/warehouse-configuration",
       name: "warehouse configuration",
-      component: () => import("./warehouse/warehouse-setting/index.vue"),
+      component: () => import("./warehouse/setting/index.vue"),
       meta: {
         title: translate("Warehouse"),
         layout: defaultLayout,
@@ -88,7 +88,7 @@ export default (): RouteRecordRaw[] => {
     {
       path: "/product-category",
       name: "product category",
-      component: () => import("./products/product-category/index.vue"),
+      component: () => import("./products/category/index.vue"),
       meta: {
         title: translate("ProductCategory"),
         layout: defaultLayout,
@@ -97,7 +97,7 @@ export default (): RouteRecordRaw[] => {
     {
       path: "/product-information",
       name: "product information",
-      component: () => import("./products/product-information/index.vue"),
+      component: () => import("./products/infomation/index.vue"),
       meta: {
         title: translate("ProductInformation"),
         layout: defaultLayout,
@@ -106,7 +106,7 @@ export default (): RouteRecordRaw[] => {
     {
       path: "/warehouse-import",
       name: "warehouse import",
-      component: () => import("./warehouse/warehouse-import/index.vue"),
+      component: () => import("./warehouse/import/index.vue"),
       meta: {
         title: translate("EnterWarehouse"),
         layout: defaultLayout,
@@ -115,7 +115,7 @@ export default (): RouteRecordRaw[] => {
     {
       path: "/warehouse-export",
       name: "warehouse export",
-      component: () => import("./warehouse/warehouse-export/index.vue"),
+      component: () => import("./warehouse/export/index.vue"),
       meta: {
         title: translate("ExportWarehouse"),
         layout: defaultLayout,
@@ -124,16 +124,16 @@ export default (): RouteRecordRaw[] => {
     {
       path: "/product-classify",
       name: "product classify",
-      component: () => import("./products/product-classify/index.vue"),
+      component: () => import("./products/classify/index.vue"),
       meta: {
         title: translate("ProductClassify"),
         layout: defaultLayout,
       },
     },
     {
-      path: "/product-producer",
+      path: "/supplier",
       name: "product producer",
-      component: () => import("./products/product-producer/index.vue"),
+      component: () => import("./products/supplier/index.vue"),
       meta: {
         title: translate("Supplier"),
         layout: defaultLayout,
@@ -150,7 +150,7 @@ export default (): RouteRecordRaw[] => {
     {
       path: "/import-goods/:id",
       name: "import goods",
-      component: () => import("./warehouse/warehouse-import/components/importGoods.vue"),
+      component: () => import("./warehouse/import/components/importGoods.vue"),
       meta: {
         title: translate("ImportGoods"),
         layout: detailLayout,
@@ -159,7 +159,7 @@ export default (): RouteRecordRaw[] => {
     {
       path: "/export-goods/:id",
       name: "export goods",
-      component: () => import("./warehouse/warehouse-export/components/exportGoods.vue"),
+      component: () => import("./warehouse/export/components/exportGoods.vue"),
       meta: {
         title: translate("ImportGoods"),
         layout: detailLayout,

@@ -285,4 +285,7 @@ export const vi = {
   EnterAddress: "Nhập địa chỉ",
   EnterPass: "Nhập mật khẩu",
   SelectRole: "Chọn chức vụ",
+  Cooperating: "Đang hợp tác",
+  StopCollaborating: "Dừng hợp tác",
+  DeleteFilter: "Xóa bộ lọc",
 };

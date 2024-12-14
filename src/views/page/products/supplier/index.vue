@@ -1,33 +1,5 @@
 <template>
-  <a-form class="flex rounded-xl bg-white px-6 py-5 mb-6">
-    <a-form-item class="w-[300px] h-[62px] !mr-3">
-      <span class="opacity-70">{{ translate("SupplierName") }}</span>
-      <a-input :placeholder="translate('Search')" v-model:value="filterSearching.Keyword" class="mt-2" />
-    </a-form-item>
-    <a-form-item class="flex items-end">
-      <AntdButton
-        :type="'text'"
-        danger
-        :disabled="disabledDeleteFilter"
-        @click="
-          () => {
-            filterSearching.Keyword = '';
-          }
-        "
-      >
-        <template #icon>
-          <font-awesome-icon :icon="['far', 'trash-can']" />
-        </template>
-        <span class="ml-2">{{ translate("Delete") }}</span>
-      </AntdButton>
-    </a-form-item>
-  </a-form>
-  <Section
-    :title="translate('SupplierList')"
-    :subTitle="translate('TotalRecordSupplier')"
-    :number="String(tottalSupplier)"
-    class="w-full h-full bg-white overflow-hidden"
-  >
+  <Section :title="translate('SupplierList')" :subTitle="translate('TotalRecordSupplier')" :number="String(tottalSupplier)" class="w-full h-full bg-white overflow-hidden">
     <template #action>
       <AntdButton :type="'text'" danger :disabled="disableDeleteMany" class="mr-2" @click="handleDeleteSupplier(listSelect, true)">
         <template #icon>
@@ -44,20 +16,38 @@
         <span class="text-sm ml-2">{{ translate("AddNew") }}</span>
       </AntdButton>
     </template>
+    <template #action-second>
+      <div class="mt-3 w-1/4 flex gap-3">
+        <a-input :placeholder="translate('EnterSupplierName')" v-model:value="supplierFilter.Keyword"/>
+        <AntdButton :type="'text'" danger @click="handleClearFilter">
+          <template #icon>
+            <font-awesome-icon :icon="['far', 'trash-can']" />
+          </template>
+          <span class="ml-2">{{ translate("DeleteFilter") }}</span>
+        </AntdButton>
+      </div>
+    </template>
     <template #body>
       <AntdTable
         ref="table"
-        key-field="id"
+        key-field="Id"
         :index-column="true"
         :has-checkbox="true"
-        
         :columns="columns"
         :dataSource="producerData"
         @onSelected="handleSelectRow"
-        class="w-full h-[calc(100vh-290px)] overflow-hidden overflow-y-auto"
+        class="w-full h-[calc(100vh-204px)] overflow-hidden overflow-y-auto"
+        @onChange="handleTable"
         v-if="!loading"
-      >
+        >
         <template #custom-body="{ column, record }">
+          <template v-if="column.key === 'CreateAt' && record">
+            {{ dayjs(record.CreateAt).format("DD/MM/YYYY") }}
+          </template>
+          <template v-if="column.key === 'Status' && record">
+            <a-tag v-if="record.IsCollab" color="success">{{ translate("Cooperating")}}</a-tag>
+            <a-tag v-else color="error">{{ translate("StopCollaborating") }}</a-tag>
+          </template>
           <template v-if="column.key === 'action' && record">
             <div class="action">
               <AntdButton class="action-btn" :type="'light-hover'" shape="circle" @click="handleUpdate(record)">
@@ -75,7 +65,7 @@
     </template>
   </Section>
   <!-- modal -->
-  <ModalCreate :isVisible="isVisibleModalCreate" :titleModal="titleModal" :form="formState" @closeModal="onCancel" @handleSubmit="handleSubmitForm" />
+  <ModalCreate :is-edit="isEdit" :isVisible="isVisibleModalCreate" :titleModal="titleModal" :form="formState" @closeModal="onCancel" @handleSubmit="handleSubmitForm" />
 </template>
 <script setup lang="ts">
 import { translate } from "@/languages/i18n";
@@ -87,15 +77,8 @@ import { Modal, notification } from "ant-design-vue";
 import { useStore } from "vuex";
 import { useRoute, useRouter } from "vue-router";
 import { debounce } from "vue-debounce";
-import { checkDeleteItem, removeNullObjects } from "@/utils/common";
-
-interface FormState {
-  id: number;
-  code: string | number;
-  name: string;
-  origin: string;
-  allowDelete?: boolean;
-}
+import { removeNullObjects } from "@/utils/common";
+import dayjs from "dayjs";
 
 const ModalCreate = defineAsyncComponent(() => import("./components/modalCreate.vue"));
 
@@ -111,30 +94,47 @@ const listSelect = ref<any>([]);
 const isVisibleModalCreate = ref<boolean>(false);
 const isEdit = ref<boolean>(false);
 const titleModal = ref<string>("");
+const supplierFilter = reactive({
+  Keyword: "",
+  status: null,
+});
 const columns = ref<Array<any>>([
   {
     title: translate("SupplierCode"),
-    dataIndex: "code",
-    key: "code",
+    dataIndex: "Code",
+    key: "Code",
     align: "left",
   },
   {
     title: translate("SupplierName"),
-    dataIndex: "name",
-    key: "name",
+    dataIndex: "Name",
+    key: "Name",
     align: "left",
   },
   {
     title: translate("Origin"),
-    dataIndex: "origin",
-    key: "origin",
+    dataIndex: "Origin",
+    key: "Origin",
     align: "left",
   },
   {
     title: translate("DateCreated"),
-    dataIndex: "timeCreate",
-    key: "timeCreate",
+    dataIndex: "CreateAt",
+    key: "CreateAt",
     align: "left",
+  },
+  {
+    title: translate("common.Status"),
+    dataIndex: "Status",
+    key: "Status",
+    aligin: "left",
+    filters: [
+      { text: `${translate('Cooperating')}`, value: true },
+      { text: `${translate('StopCollaborating')}`, value: false },
+    ],
+    filterMultiple: false,
+    filteredValue: supplierFilter.status ? supplierFilter.status : null,
+    width: 150,
   },
   {
     dataIndex: "action",
@@ -145,49 +145,50 @@ const columns = ref<Array<any>>([
   },
 ]);
 
-const filterSearching = reactive({
-  Keyword: "",
-});
-const formState = reactive<FormState>({
-  id: 0,
+const handleTable = (pag:any, filter:any) => {
+  supplierFilter.status = filter.Status?.[0];
+}
+
+const handleClearFilter = () => {
+  supplierFilter.Keyword = "";
+  supplierFilter.status = null;
+};
+
+const formState = reactive({
+  id: null,
   code: "",
   name: "",
   origin: "",
-  allowDelete: true,
+  isCollab: true,
 });
 
-// handle filter
-const disabledDeleteFilter = computed(() => filterSearching?.Keyword?.length === 0);
-
 const handleSelectRow = (rows: any) => {
-  listSelect.value = rows.value.map((x: any) => ({ id: x?.id, allowDelete: x?.allowDelete }));
+  listSelect.value = rows.map((x: any) => x?.Id);
 };
 
 // CRUD
 const handelCreate = () => {
-  formState.id = 0;
   formState.name = "";
   formState.origin = "";
   formState.code = "";
-  formState.allowDelete = true;
-  formState.allowDelete = true;
+  formState.isCollab = true;
   isVisibleModalCreate.value = true;
   titleModal.value = translate("AddManufacturer");
   isEdit.value = false;
 };
 
-const handleUpdate = (item: FormState) => {
-  formState.id = item.id;
-  formState.code = item.code;
-  formState.name = item.name;
-  formState.origin = item.origin;
-  formState.allowDelete = item.allowDelete;
+const handleUpdate = (item) => {
+  formState.id = item.Id;
+  formState.code = item.Code;
+  formState.name = item.Name;
+  formState.origin = item.Origin;
+  formState.isCollab = item.IsCollab;
   isVisibleModalCreate.value = true;
   isEdit.value = true;
   titleModal.value = translate("UpdateManufacturerInfo");
 };
 
-const handleSubmitForm = async (state: FormState) => {
+const handleSubmitForm = async (state) => {
   if (isEdit.value && state.id !== 0) {
     try {
       await store.dispatch("producer/updateSupplier", {
@@ -246,32 +247,29 @@ const handleDeleteSupplier = async (itemDelete: any, isMany: boolean) => {
 };
 
 const handleDelete = async (itemDelete: any) => {
-  if (checkDeleteItem(itemDelete)) {
-    if (itemDelete.length > 1) {
-      const temp = itemDelete.map((x: any) => x?.id);
-      await store.dispatch("producer/deleteSupplier", {
-        state: temp,
-        params: {
-          ...route.query,
-        },
-      });
-    } else {
-      await store.dispatch("producer/deleteSupplier", {
-        state: [itemDelete.id],
-        params: {
-          ...route.query,
-        },
-      });
-    }
-    listSelect.value = [];
-    notification["success"]({
-      message: translate("noti.deleteSuccess"),
+  if (itemDelete.length > 1) {
+    await store.dispatch("producer/deleteSupplier", {
+      state: {
+        supplierIds: itemDelete
+      },
+      params: {
+        ...route.query,
+      },
     });
   } else {
-    notification["error"]({
-      message: translate("noti.deleteSupplierFail"),
+    await store.dispatch("producer/deleteSupplier", {
+      state: {
+        supplierIds: [itemDelete.Id]
+      },
+      params: {
+        ...route.query,
+      },
     });
   }
+  listSelect.value = [];
+  notification["success"]({
+    message: translate("noti.deleteSuccess"),
+  });
 };
 
 // close modal
@@ -284,10 +282,12 @@ const fetchData = async (params) => {
 };
 
 watch(
-  () => filterSearching,
+  () => supplierFilter,
   debounce(() => {
+    console.log(supplierFilter);
     const params = {
-      name: filterSearching?.Keyword,
+      name: supplierFilter?.Keyword,
+      isCollab: supplierFilter?.status,
     };
     fetchData(removeNullObjects(params));
   }, 500),

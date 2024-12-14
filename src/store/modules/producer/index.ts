@@ -1,19 +1,13 @@
 import ConstantAPI from "@/services/ConstantAPI";
 import { DataService } from "@/services/request";
 
-export interface producer {
-  producerData: any;
-  totalElement: number;
-  loading: boolean;
-}
-
 export default {
   namespaced: true as true,
   state: {
     producerData: [],
     totalElement: 0,
     loading: true,
-  } as producer,
+  } as any,
   getters: {
     producerData: (state) => state.producerData,
     totalElement: (state) => state.totalElement,
@@ -21,11 +15,9 @@ export default {
   },
   mutations: {
     SET_PRODUCER_DATA(state, payload) {
-      state.loading = false;
       state.producerData = payload;
     },
     SET_TOTAL_CATEGORY(state, payload) {
-      state.loading = false;
       state.totalElement = payload;
     },
     SET_LOADING(state, payload) {
@@ -37,9 +29,11 @@ export default {
     async getSupplier({ commit }, payload) {
       try {
         commit("SET_LOADING", true);
-        const response: any = await DataService.callApi(ConstantAPI.producer.GET, null, payload);
-        await commit("SET_PRODUCER_DATA", response?.data);
-        await commit("SET_TOTAL_CATEGORY", response?.totalElement);
+        const { data }: any = await DataService.callApi(ConstantAPI.producer.GET, null, payload);
+        await commit("SET_PRODUCER_DATA", data?.data);
+        await commit("SET_TOTAL_CATEGORY",data?.totalElements);
+        commit("SET_LOADING", false);
+        return data;
       } catch (error) {
         console.log(error);
       }
@@ -47,7 +41,7 @@ export default {
     //create
     async createSupplier({ dispatch }, payload) {
       try {
-        const response: any = DataService.callApi(ConstantAPI.producer.CREATE, payload.state, null);
+        const response: any = await DataService.callApi(ConstantAPI.producer.CREATE, payload.state, null);
         await dispatch("getSupplier", payload.params);
         return response;
       } catch (error) {
@@ -57,7 +51,7 @@ export default {
     //update
     async updateSupplier({ dispatch }, payload) {
       try {
-        const response: any = DataService.callApi(ConstantAPI.producer.UPDATE, payload.state, null);
+        const response: any = await DataService.patch(`${ConstantAPI.producer.UPDATE.url}/${payload.state?.id}`, payload.state, null);
         await dispatch("getSupplier", payload.params);
         return response;
       } catch (error) {

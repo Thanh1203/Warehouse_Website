@@ -1,12 +1,6 @@
 <template>
   <Section :title="translate('WarehouseList')" :sub-title="translate('NumberOfWarehouses')" :number="String(totalWarehouse)" class="w-full h-full bg-white overflow-hidden">
     <template #action>
-      <AntdButton :type="'text'" danger @click="handleClearFilter">
-        <template #icon>
-          <font-awesome-icon :icon="['far', 'trash-can']" />
-        </template>
-        <span class="ml-2">{{ translate("Delete") }}</span>
-      </AntdButton>
       <AntdButton :type="'primary'" @click="handleCreate">
         <template #icon>
           <font-awesome-icon :icon="['fas', 'plus']" />
@@ -15,8 +9,14 @@
       </AntdButton>
     </template>
     <template #action-second>
-      <div class="mt-3 w-1/4">
+      <div class="mt-3 w-1/4 flex gap-3">
         <a-input :placeholder="translate('EnterWarehouseName')" v-model:value="whFilter.name" />
+        <AntdButton :type="'text'" danger @click="handleClearFilter">
+          <template #icon>
+            <font-awesome-icon :icon="['far', 'trash-can']" />
+          </template>
+          <span class="ml-2">{{ translate("DeleteFilter") }}</span>
+        </AntdButton>
       </div>
     </template>
     <template #body>
