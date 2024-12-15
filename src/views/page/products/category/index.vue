@@ -224,40 +224,40 @@ const handleUpdate = (item: any) => {
 };
 
 const handleSubmitForm = async (state: any) => {
+  let res;
+  
   if (isEdit.value && state.id !== 0) {
-    try {
-      await store.dispatch("category/updateCategory", {
-        state: state,
-        params: {
-          ...route.query,
-        },
-      });
+    res = await store.dispatch("category/updateCategory", {
+      state: state,
+      params: {
+        ...route.query,
+      },
+    });
 
-      notification["success"]({
-        message: translate("noti.updateSuccess"),
-      });
-    } catch (error) {
-      console.log(error);
+    if (res.status === 403) {
       notification["error"]({
         message: translate("noti.updateFail"),
       });
+    } else {
+      notification["success"]({
+        message: translate("noti.updateSuccess"),
+      });
     }
   } else {
-    try {
-      await store.dispatch("category/createCategory", {
-        state: state,
-        params: {
-          ...route.query,
-        },
-      });
+    res = await store.dispatch("category/createCategory", {
+      state: state,
+      params: {
+        ...route.query,
+      },
+    });
 
-      notification["success"]({
-        message: translate("noti.createSuccess"),
-      });
-    } catch (error) {
-      console.log(error);
+    if (res.status === 403) {
       notification["error"]({
         message: translate("noti.createFail"),
+      });
+    } else {
+      notification["success"]({
+        message: translate("noti.createSuccess"),
       });
     }
   }

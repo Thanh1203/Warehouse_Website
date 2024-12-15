@@ -10,6 +10,7 @@
   @cancel="onCancel"
   :okText="okText"
   :cancelText="cancelText"
+  :style="style"
   >
     <slot></slot>
     <template #footer v-if="!defaultFooter">
@@ -34,6 +35,7 @@ const props = defineProps({
   okText: VueTypes.string.def(translate('Agree')),
   cancelText: VueTypes.string.def(translate('Cancel')),
   defaultFooter: VueTypes.bool.def(false),
+  style: VueTypes.object,
 });
 
 let isVisible = ref(props.visible);

@@ -15,9 +15,9 @@
         <div class="basis-1/2 flex flex-col items-start mr-3">
           <span>{{ translate("PhoneNumber") }}<span class="required-star">*</span></span>
           <div class="mt-2 w-full">
-            <a-input class="rounded-xl" v-model:value="v$.phoneNumber.$model" :status="v$.phoneNumber.$error ? 'error' : ''" />
+            <a-input class="rounded-xl" v-model:value="v$.phone.$model" :status="v$.phone.$error ? 'error' : ''" />
           </div>
-          <ErrorMess title="PhoneNumber" :validator="v$.phoneNumber.$errors[0]?.$validator" />
+          <ErrorMess title="PhoneNumber" :validator="v$.phone.$errors[0]?.$validator" />
         </div>
       </div>
       <div class="mb-6 w-full flex flex-col items-start">
@@ -64,7 +64,7 @@ import { useRouter } from "vue-router";
 interface State {
   password: string;
   email: string;
-  phoneNumber: string;
+  phone: string;
   name: string;
 }
 
@@ -85,7 +85,7 @@ const rules = {
     required,
     maxLength: maxLength(128),
   },
-  phoneNumber: {
+  phone: {
     required,
     maxLength: maxLength(15),
     telephone: function (value: string) {
@@ -107,7 +107,7 @@ const state = reactive<State>({
   name: "",
   password: "",
   email: "",
-  phoneNumber: "",
+  phone: "",
 });
 const v$ = useVuelidate(rules, state);
 

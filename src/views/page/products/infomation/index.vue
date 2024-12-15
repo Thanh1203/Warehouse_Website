@@ -1,116 +1,99 @@
 <template>
-  <a-form class="flex rounded-xl bg-white px-6 py-5 mb-6">
-    <a-form-item class="w-[300px] !mr-3">
-      <span class="opacity-70">{{ translate("ProductName") }}</span>
-      <a-input :placeholder="translate('Search')" v-model:value="filterSearching.Keyword" class="mt-2" />
-    </a-form-item>
-    <a-form-item class="w-[250px] !mr-3">
-      <span class="opacity-70">{{ translate("ProductClassify") }}</span>
-      <a-select :placeholder="translate('Classify')" v-model:value="filterSearching.classifyId" class="mt-2" :options="classifyData.map((x) => ({value: x.id, label: x.name}))"/>
-    </a-form-item>
-    <a-form-item class="w-[200px] !mr-3">
-      <span class="opacity-70">{{ translate("Supplier") }}</span>
-      <a-select
-        :placeholder="translate('Supplier')"
-        v-model:value="filterSearching.producerId"
-        :options="producerData.map((x) => ({ value: x.id, label: x.name }))"
-        class="mt-2"
-      />
-    </a-form-item>
-    <a-form-item class="flex items-end">
-      <AntdButton :type="'text'" danger :disabled="disabledDeleteFilter" @click="handleClearFilter">
+  <div class="bg-white px-6 py-5 mb-6">
+    <a-form class="grow" layout="vertical">
+      <a-row :gutter="16">
+        <a-col class="w-1/4">
+          <a-form-item :label="translate('Warehouse')">
+            <a-select :placeholder="translate('Search')" v-model:value="filterSearching.warehouseId" :options="warehouses" />
+          </a-form-item>
+          <a-form-item :label="translate('ProductCode')">
+            <a-input :placeholder="translate('Search')" v-model:value="filterSearching.keyword" />
+          </a-form-item>
+        </a-col>
+        <a-col class="w-1/4">
+          <a-form-item :label="translate('Supplier')">
+            <a-select :placeholder="translate('Search')" v-model:value="filterSearching.supplierId" :options="suppliers" />
+          </a-form-item>
+          <a-form-item :label="translate('ProductName')">
+            <a-input :placeholder="translate('Search')" v-model:value="filterSearching.keyword" />
+          </a-form-item>
+        </a-col>
+        <a-col class="w-1/4">
+          <a-form-item :label="translate('Category')">
+            <a-select :placeholder="translate('Search')" v-model:value="filterSearching.categoryId" :options="categories" />
+          </a-form-item>
+        </a-col>
+        <a-col class="w-1/4 flex flex-col justify-between">
+          <a-form-item :label="translate('ProductClassify')">
+            <a-select :placeholder="translate('Search')" v-model:value="filterSearching.classifyId" :options="classifies" />
+          </a-form-item>
+          <div class="mb-4">
+            <AntdButton :type="'text'" danger @click="handleClearFilter">
+              <template #icon>
+                <font-awesome-icon :icon="['far', 'trash-can']" />
+              </template>
+              <span class="ml-2">{{ translate("DeleteFilter") }}</span>
+            </AntdButton>
+          </div>
+        </a-col>
+      </a-row>
+    </a-form>
+  </div>
+  <Section :title="translate('ListProducts')" :subTitle="translate('TotalProducts')" :number="String(totalProduct)" class="w-full h-full bg-white overflow-hidden">
+    <template #action>
+      <AntdButton :type="'text'" danger class="mr-2" :disabled="disableDeleteMany" @click="handleDeleteProduct(listSelect, true)">
         <template #icon>
           <font-awesome-icon :icon="['far', 'trash-can']" />
         </template>
-        <span class="ml-2">{{ translate("Delete") }}</span>
-      </AntdButton>
-    </a-form-item>
-  </a-form>
-  <div class="w-full h-full flex bg-white p-6 rounded-xl product-Info overflow-hidden">
-    <Section
-      class="!w-[18%] !h-auto bg-transparent border border-solid mr-2"
-      :title="translate('CategoryList')"
-      :subTitle="translate('TotalCategories')"
-      :number="String(totalCategory)"
-    >
-      <template #body>
-        <a-menu
-          mode="inline"
-          @click="handleSelectCategory"
-          :items="
-            categoryData.map((x) => ({
-              key: x.id,
-              label: x.name,
-            }))
-          "
-          v-model:selectedKeys="selectedKeys"
-          v-if="!loadingCategory"
-        />
-
-        <a-skeleton v-else active />
-      </template>
-    </Section>
-    <Section
-      class="!w-[82%] h-[calc(100vh-223px)] bg-transparent border border-solid ml-2 overflow-hidden"
-      :title="translate('ListProducts')"
-      :subTitle="translate('TotalProducts')"
-      :number="String(totalProduct)"
-    >
-      <template #action>
-        <AntdButton :type="'text'" danger class="mr-2" :disabled="disableDeleteMany" @click="handleDeleteProduct(listSelect, true)">
-          <template #icon>
-            <font-awesome-icon :icon="['far', 'trash-can']" />
-          </template>
-          <span class="text-sm ml-2"
-            >{{ translate("Delete") }} <span v-if="listSelect?.length > 0">({{ listSelect?.length }})</span></span
-          >
-        </AntdButton>
-        <AntdButton :type="'primary'" @click="handleCreate">
-          <template #icon>
-            <font-awesome-icon :icon="['fas', 'plus']" />
-          </template>
-          <span class="text-sm ml-2">{{ translate("AddNew") }}</span>
-        </AntdButton>
-      </template>
-      <template #body>
-        <AntdTable
-          ref="table"
-          key-field="id"
-          :index-column="false"
-          :has-checkbox="true"
-          
-          :dataSource="productData"
-          :columns="columns"
-          @onSelected="handleSelectRow"
-          class="h-[calc(100vh-342px)] w-full overflow-hidden overflow-y-auto"
-          v-if="!loadingProduct"
+        <span class="text-sm ml-2"
+          >{{ translate("Delete") }} <span v-if="listSelect?.length > 0">({{ listSelect?.length }})</span></span
         >
-          <template #custom-body="{ column, record }">
-            <template v-if="column.key === 'name'">
-              <div class="w-full py-4 my-[-16px] cursor-pointer viewByName" @click="handleView">
-                <span class="viewByName_name">{{ record.name }}</span>
-              </div>
-            </template>
-            <template v-if="column.key === 'action'">
-              <div class="action">
-                <AntdButton class="action-btn" type="text" shape="circle" @click="handleEdit(record)">
-                  <font-awesome-icon :icon="['far', 'pen-to-square']" style="color: #001f3f" />
-                </AntdButton>
-                <AntdButton class="action-btn" type="text" shape="circle" @click="handleDeleteProduct(record, false)">
-                  <font-awesome-icon :icon="['far', 'trash-can']" style="color: #ff0000" />
-                </AntdButton>
-              </div>
-            </template>
+      </AntdButton>
+      <AntdButton :type="'primary'" @click="handleCreate">
+        <template #icon>
+          <font-awesome-icon :icon="['fas', 'plus']" />
+        </template>
+        <span class="text-sm ml-2">{{ translate("AddNew") }}</span>
+      </AntdButton>
+    </template>
+    <template #body>
+      <AntdTable
+        ref="table"
+        key-field="Id"
+        :index-column="true"
+        :has-checkbox="true"
+        :dataSource="products"
+        :columns="columns"
+        @onChange="handleTable"
+        @onSelected="handleSelectRow"
+        class="w-full h-[calc(100vh-380px)] overflow-hidden overflow-y-auto"
+        v-if="!isLoading"
+      >
+        <template #custom-body="{ column, record }">
+          <template v-if="column.key === 'Status' && record">
+            <a-tag v-if="record.Status === 'ACTIVE'" color="success">{{ translate("common.active") }}</a-tag>
+            <a-tag v-if="record.Status === 'DEACTIVE'" color="error">{{ translate("common.deactive") }}</a-tag>
           </template>
-        </AntdTable>
-
-        <a-skeleton v-else active />
-      </template>
-    </Section>
-  </div>
+          <template v-if="column.key === 'CreateAt'">
+            {{ dayjs(record.CreateAt).format("DD/MM/YYYY") }}
+          </template>
+          <template v-if="column.key === 'action' && record">
+            <div class="action">
+              <AntdButton class="action-btn" type="text" shape="circle" @click="handleEdit(record)">
+                <font-awesome-icon :icon="['far', 'pen-to-square']" style="color: #001f3f" />
+              </AntdButton>
+              <AntdButton class="action-btn" type="text" shape="circle" @click="handleDeleteProduct(record, false)">
+                <font-awesome-icon :icon="['far', 'trash-can']" style="color: #ff0000" />
+              </AntdButton>
+            </div>
+          </template>
+        </template>
+      </AntdTable>
+      <a-skeleton v-else active />
+    </template>
+  </Section>
   <!-- modal -->
-  <ModalCreate :isVisible="isVisibleModalCreate" :form="formState" :isEdit="isEdit" :titleModal="titleModal" @closeModal="onCancel" @handleSubmit="handleSubmitForm" />
-  <ModalInfo :isVisible="isVisibleModalInfo" :titleModal="titleModal" :idProduct="idProduct" @closeModal="onCancel" />
+  <ModalCreate v-if="isVisibleModalCreate" :isVisible="isVisibleModalCreate" :form="formState" :isEdit="isEdit" :titleModal="titleModal" @closeModal="onCancel" @handleSubmit="handleSubmitForm" />
 </template>
 <script setup lang="ts">
 import { translate } from "@/languages/i18n";
@@ -122,225 +105,79 @@ import { Modal, notification } from "ant-design-vue";
 import { useStore } from "vuex";
 import { useRoute, useRouter } from "vue-router";
 import { debounce } from "vue-debounce";
-import { checkDeleteItem, removeNullObjects } from "@/utils/common";
+import { removeNullObjects } from "@/utils/common";
+import dayjs from "dayjs";
 
 const ModalCreate = defineAsyncComponent(() => import("./components/modalCreate.vue"));
-const ModalInfo = defineAsyncComponent(() => import("./components/modalInfo.vue"));
 
 const store = useStore();
 const route = useRoute();
 const router = useRouter();
 
-const productData = computed(() => store.getters["product/productData"]);
-const classifyData = computed(() => store.getters["classify/classifyData"]);
-const producerData = computed(() => store.getters["producer/producerData"]);
-const categoryData = computed(() => {
-  const result = [...store.getters["category/categoryData"]];
-  result.unshift(
-    {
-      id: "ALL",
-      name: translate("All")
-    }
-  )
-  return result;
+const warehouses = computed(() => {
+  const result = store.getters["warehouse/warehouseInfo"];
+  return result.map((x) => ({ label: x?.Code, value: x?.Id }));
 });
-const totalProduct = computed(() => store.getters["product/totalElement"]);
-const totalCategory = computed(() => store.getters["category/totalElement"]);
-const loadingCategory = computed(() => store.getters["category/loading"]);
-const loadingProduct = computed(() => store.getters["product/loading"]);
-
-const listSelect = ref<Array<string | number>>([]);
-const idProduct = ref<string>("");
-const titleModal = ref<string>("");
-const selectedKeys = ref<string[]>(["ALL"]);
-const isVisibleModalCreate = ref<boolean>(false);
-const isVisibleModalInfo = ref<boolean>(false);
-const confirmMany = ref<boolean>(false);
-const isEdit = ref<boolean>(false);
-const columns = ref<Array<any>>([
-  {
-    title: translate("ProductCode"),
-    dataIndex: "code",
-    key: "code",
-    align: "left",
-  },
-  {
-    title: translate("ProductName"),
-    dataIndex: "name",
-    key: "name",
-    align: "left",
-  },
-  {
-    title: translate("Category"),
-    dataIndex: "categoryName",
-    key: "categoryName",
-    align: "left",
-  },
-  {
-    title: translate("Classify"),
-    dataIndex: "classifyName",
-    key: "classifyName",
-    align: "left",
-  },
-  {
-    title: translate("Supplier"),
-    dataIndex: "producerName",
-    key: "producerName",
-    align: "left",
-  },
-  {
-    title: translate("DateCreated"),
-    dataIndex: "timeCreate",
-    key: "timeCreate",
-    align: "left",
-  },
-  {
-    dataIndex: "action",
-    key: "action",
-    width: 80,
-    align: "center",
-    fixed: "right",
-  },
-]);
+const suppliers = computed(() => {
+  const result = store.getters["producer/producerData"];
+  return result.filter((x) => x?.IsCollab === true).map((x) => ({ label: x?.Code, value: x?.Id }));
+});
+const categories = computed(() => {
+  const result = store.getters["category/categoryData"];
+  return result.filter(x => x?.IsRestock === true && x?.SupplierId === filterSearching.supplierId && x?.WarehouseId === filterSearching.warehouseId).map(x => ({ label: x?.Code, value: x?.Id })); 
+});
+const classifies = computed(() => {
+  const result = store.getters["classify/classifyData"];
+  return result.filter(x => x?.IsRestock === true && x?.CategoryId === filterSearching.categoryId && x?.WarehouseId === filterSearching.warehouseId).map(x => ({ label: x?.Code, value: x?.Id }));
+});
 
 const filterSearching = reactive({
-  Keyword: "",
-  producerId: null,
-  classifyId: null,
-  categoryId: null,
-});
-const formState = reactive<any>({
-  id: "",
+  keyword: "",
   code: "",
-  name: "",
+  warehouseId: null,
+  supplierId: null,
   categoryId: null,
   classifyId: null,
-  producerId: null,
-  size: "",
-  material: "",
-  connectionTypes: "",
-  color: "",
-  designs: "",
-  describe: "",
-  allowDelete: true,
+  status: null,
 });
-
-const disabledDeleteFilter = computed(() => filterSearching?.Keyword?.length === 0 && filterSearching?.producerId === null && filterSearching?.classifyId === null);
-const disableDeleteMany = computed(() => listSelect?.value?.length === 0);
 
 const handleClearFilter = () => {
-  filterSearching.Keyword = "";
-  filterSearching.producerId = null;
+  filterSearching.keyword = "";
+  filterSearching.code = "";
+  filterSearching.warehouseId = null;
+  filterSearching.supplierId = null;
+  filterSearching.categoryId = null;
   filterSearching.classifyId = null;
+  filterSearching.status = null;
 };
 
-//handle product category
-const handleSelectCategory = (item: any) => {
-  selectedKeys.value = [item.key];
-  if (selectedKeys.value[0] === "ALL") {
-    filterSearching.categoryId = "";
-  } else {
-    filterSearching.categoryId = selectedKeys.value[0];
-  }
-};
+watch(
+  () => filterSearching,
+  debounce(() => {
+    const params = {
+      name: filterSearching.keyword,
+      code: filterSearching.code,
+      warehouseId: filterSearching.warehouseId,
+      supplierId: filterSearching.supplierId,
+      categoryId: filterSearching.categoryId,
+      classifyId: filterSearching.classifyId,
+      status: filterSearching.status,
+    };
+    fetchData(removeNullObjects(params));
+  }, 500),
+  { deep: true },
+);
 
-// close modal
-const onCancel = () => {
-  isVisibleModalCreate.value = false;
-  isVisibleModalInfo.value = false;
-};
+const listSelect = ref<Array<string | number>>([]);
+const disableDeleteMany = computed(() => listSelect?.value?.length === 0);
 
-// handle data table
-const handleSelectRow = (rows: any) => {
-  listSelect.value = rows.value.map((x: any) => ({ id: x?.id, allowDelete: x?.allowDelete }));
-};
+const products = computed(() => store.getters["product/productData"]);
+const totalProduct = computed(() => store.getters["product/totalElement"]);
 
-// create, delete product
-const handleCreate = () => {
-  isVisibleModalCreate.value = true;
-  isEdit.value = false;
-  titleModal.value = translate("AddProductInfo");
-  formState.id = 0;
-  formState.code = "";
-  formState.name = "";
-  formState.categoryId = null;
-  formState.classifyId = null;
-  formState.producerId = null;
-  formState.size = "";
-  formState.material = "";
-  formState.connectionTypes = "";
-  formState.color = "";
-  formState.designs = "";
-  formState.describe = "";
-  formState.allowDelete = true;
-};
-
-const handleEdit = (item: any) => {
-  isVisibleModalCreate.value = true;
-  isEdit.value = true;
-  titleModal.value = translate("UpdateProductInfo");
-  formState.id = item.id;
-  formState.code = item.code;
-  formState.name = item.name;
-  formState.categoryId = item.categoryId;
-  formState.size = item.size;
-  formState.material = item.material;
-  formState.connectionTypes = item.connectionTypes;
-  formState.color = item.color;
-  formState.designs = item.designs;
-  formState.describe = item.describe;
-  formState.classifyId = item.classifyId;
-  formState.producerId = item.producerId;
-  formState.allowDelete = item.allowDelete;
-};
-
-const handleView = (item: any) => {
-  isVisibleModalInfo.value = true;
-  isEdit.value = false;
-  titleModal.value = translate("ProductInformation");
-  idProduct.value = item.id;
-};
-
-const handleSubmitForm = async (state: any) => {
-  if (isEdit.value && state.id !== 0) {
-    try {
-      await store.dispatch("product/updateProduct", {
-      state: state,
-      params: {
-        ...route.query,
-      },
-    });
-
-      notification["success"]({
-        message: translate("noti.updateSuccess"),
-      });
-    } catch (error) {
-      console.log(error);
-      notification["error"]({
-        message: translate("noti.updateFail"),
-      });
-    }
-  } else {
-    try {
-      await store.dispatch("product/createProduct", {
-        state: state,
-        params: {
-          ...route.query,
-        },
-      });
-
-      notification["success"]({
-        message: translate("noti.createSuccess"),
-      });
-    } catch (error) {
-      console.log(error);
-      notification["error"]({
-        message: translate("noti.createFail"),
-      });
-    }
-  }
-  onCancel();
-};
+const isVisibleModalCreate = ref<boolean>(false);
+const titleModal = ref<string>("");
+const isEdit = ref<boolean>(false);
+const isLoading = computed(() => store.getters["product/loading"]);
 
 const handleDeleteProduct = async (itemDelete: any, isMany: boolean) => {
   Modal.confirm({
@@ -357,71 +194,199 @@ const handleDeleteProduct = async (itemDelete: any, isMany: boolean) => {
 };
 
 const handleDelete = async (itemDelete: any) => {
-  if (checkDeleteItem(itemDelete)) {
-    if (itemDelete.length > 1) {
-      const temp = itemDelete.map((x: any) => x?.id);
-      await store.dispatch("product/deleteProduct", {
-        state: temp,
-        params: {
-          ...route.query,
-        },
-      });
-    } else {
-      await store.dispatch("product/deleteProduct", {
-        state: [itemDelete.id],
-        params: {
-          ...route.query,
-        },
-      });
-    }
-    listSelect.value = [];
+  let res;
+  if (itemDelete.length > 1) {
+    res = await store.dispatch("product/deleteProduct", {
+      state: {productIds: itemDelete},
+      params: {
+        ...route.query,
+      },
+    });
+  } else {
+    res = await store.dispatch("product/deleteProduct", {
+      state: {productIds: [itemDelete.Id]},
+      params: {
+        ...route.query,
+      },
+    });
+  }
+  listSelect.value = [];
+  if (res.status === 403) {
+    notification["error"]({
+      message: translate("noti.deleteFail"),
+    });
+  } else {
     notification["success"]({
       message: translate("noti.deleteSuccess"),
     });
-  } else {
-    notification["error"]({
-      message: translate("noti.deleteProductFail"),
-    });
   }
 };
 
-const fetchData = async () => {
-  await store.dispatch("category/getCategory", null);
-  await store.dispatch("classify/getClassify", null);
-  await store.dispatch("producer/getSupplier", null);
+const formState = reactive({
+  id: null,
+  code: "",
+  name: "",
+  categoryId: null,
+  classifyId: null,
+  supplierId: null,
+  warehouseId: null,
+  size: "",
+  material: "",
+  color: "",
+  design: "",
+  describe: "",
+  status: "ACTIVE",
+});
+
+const handleCreate = () => {
+  isVisibleModalCreate.value = true;
+  isEdit.value = false;
+  titleModal.value = translate("AddProductInfo");
+  formState.id = null;
+  formState.code = "";
+  formState.name = "";
+  formState.categoryId = null;
+  formState.classifyId = null;
+  formState.supplierId = null;
+  formState.warehouseId = null;
+  formState.size = "";
+  formState.material = "";
+  formState.color = "";
+  formState.design = "";
+  formState.describe = "";
+  formState.status = "ACTIVE";
 };
 
-const handleFetchProduct = async (params: any) => {
+const columns = ref<Array<any>>([
+  {
+    title: translate("ProductCode"),
+    dataIndex: "Code",
+    key: "Code",
+    align: "left",
+  },
+  {
+    title: translate("ProductName"),
+    dataIndex: "Name",
+    key: "Name",
+    align: "left",
+  },
+  {
+    title: translate("Category"),
+    dataIndex: "categoryCode",
+    key: "categoryCode",
+    align: "left",
+  },
+  {
+    title: translate("Classify"),
+    dataIndex: "classifyCode",
+    key: "classifyCode",
+    align: "left",
+  },
+  {
+    title: translate("Supplier"),
+    dataIndex: "supplierCode",
+    key: "supplierCode",
+    align: "left",
+  },
+  {
+    title: translate("DateCreated"),
+    dataIndex: "CreateAt",
+    key: "CreateAt",
+    align: "left",
+  },
+  {
+    title: translate("common.Status"),
+    dataIndex: "Status",
+    key: "Status",
+    aligin: "left",
+    filters: [
+      { text: `${translate("common.active")}`, value: 'ACTIVE' },
+      { text: `${translate("common.deactive")}`, value: 'DEACTIVE' },
+    ],
+    filterMultiple: false,
+    filteredValue: filterSearching.status ? [filterSearching.status] : null,
+    width: 150,
+  },
+  {
+    dataIndex: "action",
+    key: "action",
+    width: 80,
+    align: "center",
+    fixed: "right",
+  },
+]);
+
+const handleTable = (pag: any, filter: any) => {
+  filterSearching.status = filter.Status?.[0];
+};
+
+const handleSelectRow = (rows: any) => {
+  listSelect.value = rows.map((x: any) => x?.Id);
+};
+
+
+const handleEdit = (item: any) => {
+  isVisibleModalCreate.value = true;
+  isEdit.value = true;
+  titleModal.value = translate("UpdateProductInfo");
+  formState.id = item?.Id;
+  formState.code = item?.Code;
+  formState.name = item?.Name;
+  formState.categoryId = item?.CategoryId;
+  formState.classifyId = item?.ClassifyId;
+  formState.supplierId = item?.SupplierId;
+  formState.warehouseId = item?.WarehouseId;
+  formState.size = item?.Size;
+  formState.material = item?.Material;
+  formState.color = item?.Color;
+  formState.design = item?.Desgin;
+  formState.describe = item?.Describe;
+  formState.status = item?.Status;
+};
+
+const handleSubmitForm = async (state: any) => {
+  let res;
+  const data = {
+    state,
+    params: {
+      ...route.query,
+    },
+  };
+  if (isEdit.value) {
+    res = await store.dispatch("product/updateProduct", data);
+  } else {
+    res = await store.dispatch("product/createProduct", data);
+  }
+  if (res.status === 403) {
+    notification["error"]({
+      message: translate("noti.createFail"),
+    });
+  } else {
+    notification["success"]({
+      message: translate("noti.createSuccess"),
+    });
+  }
+  onCancel();
+};
+const onCancel = () => {
+  isVisibleModalCreate.value = false;
+};
+
+const fetchDataFilter = async () => {
+  await Promise.all([
+    store.dispatch("producer/getSupplier", null),
+    store.dispatch("category/getCategory", null),
+    store.dispatch("classify/getClassify", null),
+    store.dispatch("warehouse/getWarehouse", null),
+  ]);
+};
+
+const fetchData = async (params) => {
   await store.dispatch("product/getProduct", params);
 };
 
-watch(
-  () => filterSearching,
-  debounce(() => {
-    const params = {
-      categoryId: filterSearching.categoryId,
-      classifyId: filterSearching.classifyId,
-      producerId: filterSearching.producerId,
-      name: filterSearching.Keyword
-    };
-    handleFetchProduct(removeNullObjects(params));
-  }, 500),
-  {deep: true},
-);
-
 onMounted(async () => {
-  await fetchData();
-  await handleFetchProduct(null);
+  await Promise.all([fetchDataFilter(), fetchData(null)]);
 });
 </script>
-<style lang="scss">
-.product-Info {
-  .ant-menu {
-    border-top: 1px solid #e5e7eb !important;
-    padding: 12px 0;
-    .ant-menu-item {
-      padding: 0 12px !important;
-    }
-  }
-}
-</style>
+<style lang="scss"></style>

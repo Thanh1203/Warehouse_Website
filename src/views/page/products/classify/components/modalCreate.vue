@@ -100,7 +100,7 @@ const suppliers = computed(() => {
 });
 const categories = computed(() => {
   const result = store.getters["category/categoryData"];
-  return result.filter((item: any) => item.IsRestock === true).map((item: any) => ({ label: item.Code, value: item.Id }));
+  return result.filter((item: any) => item.IsRestock === true && item.WarehouseId === state.warehouseId).map((item: any) => ({ label: item.Code, value: item.Id }));
 });
 
 const handleSubmit = () => {

@@ -42,7 +42,6 @@ import { translate } from "@/languages/i18n";
 import { ref, watch, defineAsyncComponent, reactive, computed, onMounted } from "vue";
 import { required, maxLength } from "@vuelidate/validators";
 import useVuelidate from "@vuelidate/core";
-import { DEFAULT_PROPERTY } from "@/constants";
 import { useStore } from "vuex";
 
 const emit = defineEmits(["closeModal", "handleSubmit"]);

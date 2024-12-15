@@ -88,19 +88,19 @@ export default {
   },
   product: {
     GET: {
-      url: "/api/productInfo",
+      url: "products",
       method: "GET",
     },
     CREATE: {
-      url: "/api/productInfo",
+      url: "products",
       method: "POST",
     },
     UPDATE: {
-      url: "/api/productInfo",
-      method: "PUT",
+      url: "products",
+      method: "PATCH",
     },
     DELETE: {
-      url: "/api/productInfo",
+      url: "products",
       method: "DELETE",
     },
     GET_IN_WH: {
