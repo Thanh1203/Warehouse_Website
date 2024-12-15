@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white px-6 py-5 mb-6">
+  <div class="bg-white px-6 py-5 mb-6 rounded-xl">
     <a-form class="grow" layout="vertical">
       <a-row :gutter="16">
         <a-col class="w-1/4">
@@ -211,7 +211,7 @@ const handleDelete = async (itemDelete: any) => {
     });
   }
   listSelect.value = [];
-  if (res.status === 403) {
+  if (res.status === 403 || res.status === 500) {
     notification["error"]({
       message: translate("noti.deleteFail"),
     });

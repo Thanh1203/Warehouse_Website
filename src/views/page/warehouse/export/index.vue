@@ -1,56 +1,68 @@
 <template>
-  <div class="mb-6 p-6 bg-white rounded-xl">
-    <a-Tabs v-model:activeKey="activeKey" type="card" class="h-[177px]" v-if="!loading">
-      <a-tab-pane v-for="item in listWhInfo" :key="item.id" :tab="item.name">
-        <TabWhInfo :data="item" />
-      </a-tab-pane>
-    </a-Tabs>
-    <a-skeleton v-else active />
-  </div>
-
-  <div class="w-full flex gap-6 justify-between">
-    <div class="bg-white rounded-xl p-6 basis-1/4">
-      <div class="opacity-70 mb-2">{{ translate("SelectDay") }}</div>
-      <a-date-picker class="mb-6" :placeholder="translate('SelectDay')" v-model:value="searchingDay" :allowClear="false" />
-      <div class="opacity-70 mb-2">{{ translate("SelectMonth") }}</div>
-      <a-date-picker class="mb-6" picker="month" :placeholder="translate('SelectMonth')" v-model:value="searchingMonth" :allowClear="false" />
-      <div class="opacity-70 mb-2">{{ translate("SelectYear") }}</div>
-      <a-date-picker class="mb-6" picker="year" :placeholder="translate('SelectYear')" v-model:value="searchingYear" :allowClear="false" />
-      <AntdButton type="primary" class="mb-6 w-[200px]" @click="handleSubmitFilter">
-        <span class="text-sm ml-2">{{ translate("LookUpExportHistory") }}</span>
-      </AntdButton>
-      <AntdButton :type="'text'" class="mb-6" danger :disabled="disabledDeleteFilter" @click="handleClearFilter">
+  <div class="bg-white px-6 py-5 mb-6 rounded-xl">
+    <a-config-provider :locale="locale">
+      <a-form class="grow" layout="vertical">
+        <a-row :gutter="16">
+          <a-col class="w-1/5">
+            <a-form-item :label="translate('GoodsReceiptCode')">
+              <a-input :placeholder="translate('Search')" v-model:value="filterSearching.code" />
+            </a-form-item>
+          </a-col>
+          <a-col class="w-1/5">
+            <a-form-item :label="translate('Warehouse')" class="mb-0">
+              <a-select :placeholder="translate('Search')" v-model:value="filterSearching.warehouseId" :options="warehouses" />
+            </a-form-item>
+          </a-col>
+          <a-col class="w-1/5">
+            <a-form-item :label="translate('Supplier')" class="mb-0">
+              <a-select :placeholder="translate('Search')" v-model:value="filterSearching.supplierId" :options="suppliers" />
+            </a-form-item>
+          </a-col>
+          <a-col class="w-1/5">
+            <a-form-item :label="translate('StaffCharge')" class="mb-0">
+              <a-select :placeholder="translate('Search')" v-model:value="filterSearching.staffId" :options="personnel" />
+            </a-form-item>
+          </a-col>
+          <a-col class="w-1/5">
+            <a-form-item :label="translate('ImportDate')" class="mb-0">
+              <a-date-picker :placeholder="translate('Search')" v-model:value="filterSearching.createAt" format="DD/MM/YYYY" style="width: 100%" />
+            </a-form-item>
+          </a-col>
+        </a-row>
+      </a-form>
+    </a-config-provider>
+    <div class="flex justify-end">
+      <AntdButton :type="'text'" danger @click="handleClearFilter">
         <template #icon>
           <font-awesome-icon :icon="['far', 'trash-can']" />
         </template>
-        <span class="ml-2">{{ translate("Delete") }}</span>
+        <span class="ml-2">{{ translate("DeleteFilter") }}</span>
       </AntdButton>
     </div>
-
-    <div class="grow min-h-[calc(100vh-240px)]">
-      <Section class="w-full bg-white h-full" :title="translate('ExportHistory')">
-        <template #action>
-          <AntdButton type="primary" @click="goToExportGoods">
-            <span class="text-sm ml-2">{{ translate("ExportGoods") }}</span>
-          </AntdButton>
-        </template>
-        <template #body>
-          <AntdTable
-            ref="table"
-            key-field="id"
-            :index-column="true"
-            :columns="columns"
-            :data-source="listWHExport"
-            class="w-full h-[60vh] overflow-hidden overflow-y-auto"
-            v-if="!loadingExport"
-          >
-          </AntdTable>
-
-          <a-skeleton v-else active />
-        </template>
-      </Section>
-    </div>
   </div>
+
+  <Section :title="translate('ExportHistory')">
+    <template #action>
+      <AntdButton :type="'primary'" @click="handleToExport">
+        <template #icon>
+          <font-awesome-icon :icon="['fas', 'minus']" />
+        </template>
+        <span class="text-sm ml-2">{{ translate("ExportGoods") }}</span>
+      </AntdButton>
+    </template>
+    <template #body>
+      <AntdTable
+        ref="table"
+        key-field="Id"
+        :columns="columns"
+        :data-source="exportOrders"
+        :index-column="true"
+        class="w-full h-[calc(100vh-334px)] overflow-hidden overflow-y-auto"
+      >
+      </AntdTable>
+    </template>
+  </Section>
+
 </template>
 <script setup lang="ts">
 import { computed, defineAsyncComponent, onMounted, reactive, ref, watch } from "vue";
@@ -62,137 +74,109 @@ import AntdTable from "@/components/antd-table/index.vue";
 import dayjs, { Dayjs } from "dayjs";
 import { removeNullObjects } from "@/utils/common";
 import { useRoute, useRouter } from "vue-router";
-import TabWhInfo from "@/components/list-tab-warehouse/index.vue";
+import viVN from "ant-design-vue/es/locale/vi_VN";
+import "dayjs/locale/vi";
+import { debounce } from "vue-debounce";
 
+
+dayjs.locale("vi");
+
+const locale = ref(viVN);
 const store = useStore();
 const router = useRouter();
 const route = useRoute();
 
-const listWhInfo = computed(() => store.getters["warehouse/warehouseInfo"]);
-const listWHExport = computed(() => store.getters["warehouse/warehouseExport"]);
-const loading = computed(() => store.getters["warehouse/loading"]);
-const loadingExport = computed(() => store.getters["warehouse/loadingExport"]);
+const warehouses = computed(() => {
+  const result = store.getters["warehouse/warehouseInfo"];
+  return result.map((x) => ({ label: x.Code, value: x.Id }));
+});
+const suppliers = computed(() => {
+  const result = store.getters["producer/producerData"];
+  return result.filter((x) => x?.IsCollab === true).map((x) => ({ label: x?.Code, value: x?.Id }));
+});
+const personnel = computed(() => {
+  const result = store.getters["personnel/personnelData"];
+  return result.filter((x) => x?.Status === "ACTIVE").map((x) => ({ label: x?.Name, value: x?.Id }));
+});
 
-const activeKey = ref<number>(0);
+const filterSearching = reactive({
+  code: "",
+  warehouseId: null,
+  supplierId: null,
+  staffId: null,
+  createAt: null,
+  status: null,
+});
+
+const handleClearFilter = () => {
+  filterSearching.code = "";
+  filterSearching.warehouseId = null;
+  filterSearching.supplierId = null;
+  filterSearching.staffId = null;
+  filterSearching.createAt = null;
+  filterSearching.status = null;
+};
+
+const handleToExport = () => {
+  router.push({ name: "exportGoods" });
+};
+
+const exportOrders = computed(() => store.getters["warehouse/historyExport"]);
 const columns = ref<Array<any>>([
   {
-    title: translate("GoodsIssueCode"),
-    dataIndex: "code",
-    key: "code",
+    title: translate("GoodsReceiptCode"),
+    dataIndex: "Code",
+    key: "Code",
     align: "left",
   },
   {
-    title: translate("ProductQuantity"),
-    dataIndex: "totalProduct",
-    key: "totalProduct",
+    title: translate("StaffCharge"),
+    dataIndex: "staffName",
+    key: "staffName",
     align: "left",
   },
   {
-    title: translate("ImportDate"),
-    dataIndex: "timeCreate",
-    key: "timeCreate",
+    title: translate("common.Status"),
+    dataIndex: "Status",
+    key: "Status",
     align: "left",
   },
   {
-    title: translate("TotalValueOrder"),
-    dataIndex: "totalValue",
-    key: "totalValue",
+    title: translate("ExportDate"),
+    dataIndex: "CreateAt",
+    key: "CreateAt",
     align: "left",
   },
 ]);
-const searchingDay = ref<Dayjs>();
-const searchingMonth = ref<Dayjs>();
-const searchingYear = ref<Dayjs>();
-
-const disabledDeleteFilter = computed(() => false);
-
-const handleClearFilter = () => {
-  searchingDay.value = null;
-  searchingMonth.value = null;
-  searchingYear.value = null;
-  fetchData({ id: activeKey.value, params: null });
-};
-
-const handleSubmitFilter = () => {
-  let params: any = {
-    day: null,
-    month: null,
-    year: null,
-  };
-
-  if (searchingDay.value) {
-    params.day = searchingDay.value.format("DD");
-    params.month = searchingDay.value.format("MM");
-    params.year = searchingDay.value.format("YYYY");
-  }
-
-  if (searchingMonth.value) {
-    params.day = null;
-    params.month = searchingMonth.value.format("MM");
-    params.year = searchingMonth.value.format("YYYY");
-  }
-
-  if (searchingYear.value) {
-    params.day = null;
-    params.month = null;
-    params.year = searchingYear.value.format("YYYY");
-  }
-  const payload = {
-    id: activeKey.value,
-    params: removeNullObjects(params),
-  };
-
-  fetchData(payload);
-};
-
-const goToExportGoods = () => {
-  router.push(`/export-goods/${activeKey.value}`);
-};
-
-const fetchData = async (params) => {
-  await store.dispatch("warehouse/getWarehouseExport", params);
-};
 
 watch(
-  () => searchingDay.value,
-  (val) => {
-    if (val) {
-      searchingMonth.value = null;
-      searchingYear.value = null;
-    }
-  },
+  () => filterSearching,
+  debounce(async () => {
+    const params = {
+      code: filterSearching.code,
+      warehouseId: filterSearching.warehouseId,
+      supplierId: filterSearching.supplierId,
+      staffId: filterSearching.staffId,
+      createAt: filterSearching.createAt ? dayjs(filterSearching.createAt).toISOString() : null,
+      status: filterSearching.status,
+    };
+    await store.dispatch("warehouse/getHistoryImport", removeNullObjects(params));
+  }, 500),
+  { deep: true },
 );
 
-watch(
-  () => searchingMonth.value,
-  (val) => {
-    if (val) {
-      searchingDay.value = null;
-      searchingYear.value = null;
-    }
-  },
-);
-
-watch(
-  () => searchingYear.value,
-  (val) => {
-    if (val) {
-      searchingDay.value = null;
-      searchingMonth.value = null;
-    }
-  },
-);
-
-watch(
-  () => activeKey.value,
-  (val) => {
-    fetchData({ id: val, params: null });
-  },
-);
+const fetchDataFilter = async () => {
+  await Promise.all([
+    store.dispatch("producer/getSupplier", null),
+    store.dispatch("warehouse/getWarehouse", null),
+    store.dispatch("personnel/getPersonnel", null),
+    store.dispatch("product/getProduct", null),
+  ]);
+};
 
 onMounted(async () => {
-  const temp = await store.dispatch("warehouse/getWarehouse", null);
-  activeKey.value = temp?.data[0].id;
+  await fetchDataFilter();
+  await store.dispatch("warehouse/getWarehouseExport", null);
 });
 </script>
 <style scoped lang="scss"></style>

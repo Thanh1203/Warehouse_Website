@@ -148,31 +148,13 @@ export default (): RouteRecordRaw[] => {
       },
     },
     {
-      path: "/import-goods/:id",
-      name: "import goods",
-      component: () => import("./warehouse/import/components/importGoods.vue"),
-      meta: {
-        title: translate("ImportGoods"),
-        layout: detailLayout,
-      },
-    },
-    {
-      path: "/export-goods/:id",
-      name: "export goods",
-      component: () => import("./warehouse/export/components/exportGoods.vue"),
-      meta: {
-        title: translate("ImportGoods"),
-        layout: detailLayout,
-      },
-    },
-    {
-      path: "/price-configuration",
-      name: "price configuuration",
-      component: () => import("./price-config/index.vue"),
-      meta: {
-        title: translate('PriceConfiguration'),
-        layout: defaultLayout,
+      path:"/export-goods",
+      name:"exportGoods",
+      component:()=>import("./warehouse/export/components/exportGoods.vue"),
+      meta:{
+        title:translate("ExportGoods"),
+        layout: detailLayout
       }
-    },
+    }
   ];
 };

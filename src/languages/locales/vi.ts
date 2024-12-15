@@ -232,7 +232,7 @@ export const vi = {
   English: "Tiếng Anh",
   SelectLanguage: "Chọn ngôn ngữ",
   Reload: "Làm mới(F5)",
-  PriceConfiguration: "Cấu hình giá bán",
+  PriceConfiguration: "Cấu hình giá",
   UnitPrice: "Đơn giá",
   EditUnitPrice: "Sửa đơn giá",
   ClientInformation: "Thông tin khách hàng",
@@ -278,6 +278,8 @@ export const vi = {
     deactive: "Vô hiệu hóa",
     admin: "Quản trị viên",
     employee: "Nhân viên",
+    createFrom: "Tạo từ ngày",
+    createTo: "Tạo đến ngày",
   },
   Profile: "Hồ sơ",
   EnterEmail: "Nhập email",
@@ -290,4 +292,5 @@ export const vi = {
   DeleteFilter: "Xóa bộ lọc",
   SelectSupplier: "Chọn nhà cung cấp",
   SelectCategory: "Chọn chủng loại",
+  RECEIVED: "Đã nhận",
 };

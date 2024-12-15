@@ -21,7 +21,7 @@ export const en = {
     CreateWarehouse: "Create warehouse",
     WarehouseCode: "Warehouse code",
     WarehouseName: "Warehouse name",
-    EnterWarehouseName: "Enter the warehouse name",
+EnterWarehouseName: "Enter the warehouse name",
     Nation: "Nation",
     Area: "Area",
     DateCreated: "Date created",
@@ -276,6 +276,8 @@ export const en = {
         Deactive: "Deactive",
         admin: "Admin",
         employee: "Employee",
+        createFrom: "Create from",
+        createTo: "Create to",
     },
     Profile: "Profile",
     EnterEmail: "Enter email",
@@ -288,4 +290,5 @@ export const en = {
     DeleteFilter: "Delete filter",
     SelectSupplier: "Select supplier",
     SelectCategory: "Select category",
+    RECEIVED: "RECEIVED",
 };

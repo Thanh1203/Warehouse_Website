@@ -88,11 +88,7 @@ const menuAdmin = [
             },
         ]
     },
-    {
-        key: "PRICECONFIG",
-        label: translate('PriceConfiguration'),
-        icon: () => h(FontAwesomeIcon, { icon: faCoins}),
-    }
+   
 ];
 
 export { menuAdmin };

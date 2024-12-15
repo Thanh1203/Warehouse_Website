@@ -118,7 +118,9 @@ export default {
       try {
         commit("SET_LOADING", true);
         const response: any = await DataService.get(`${ConstantAPI.product.GET_LIST_UNIT_PRICE.url}/${payload.id}`, payload?.params, null);
-        await commit("SET_PRODUCT_CONFIG_UNIT_PRICE", response);
+        
+        // await commit("SET_PRODUCT_CONFIG_UNIT_PRICE", response);
+        commit("SET_LOADING", false);
         return response;
       } catch (error) {
         console.log(error);

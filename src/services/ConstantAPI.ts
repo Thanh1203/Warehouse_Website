@@ -122,11 +122,11 @@ export default {
   },
   warehouseImport: {
     GET: {
-      url: "/api/WarehouseImport",
+      url: "purchase-orders",
       method: "GET",
     },
     POST: {
-      url: "/api/warehouseData",
+      url: "purchase-orders",
       method: "POST",
     },
     PUT_GOODS_IMPORT: {
@@ -140,7 +140,7 @@ export default {
   },
   warehouseExport: {
     GET: {
-      url: "api/WarehouseExport",
+      url: "invoices",
       method: "GET",
     },
   },

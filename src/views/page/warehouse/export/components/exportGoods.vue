@@ -1,317 +1,238 @@
 <template>
-  <div class="mb-6">
-    <a-breadcrumb separator=">>" class="flex items-center">
-      <a-breadcrumb-item>
-        <RouterLink to="/">
-          <font-awesome-icon :icon="['fas', 'house']" />
-        </RouterLink>
-      </a-breadcrumb-item>
-      <a-breadcrumb-item>
-        <RouterLink to="/warehouse-export">
-          {{ translate("ExportWarehouse") }}
-        </RouterLink>
-      </a-breadcrumb-item>
-      <a-breadcrumb-item>
-        {{ translate("ExportGoods") }}
-      </a-breadcrumb-item>
-    </a-breadcrumb>
-  </div>
-
-  <div class="mb-6 p-6 bg-white rounded-xl">
-    <div class="mb-6 font-semibold text-[20px]">
-      {{ translate("ClientInformation") }}
-    </div>
-
-    <a-form class="flex items-end gap-x-6 mb-6">
-      <a-form-item class="max-w-[400px] min-w-[130px]">
-        <span class="opacity-70">{{ translate("PhoneNumber") }}</span>
-        <a-input class="w-full mt-2" v-model:value="clientState.phoneNumber" />
-      </a-form-item>
-      <a-form-item>
-        <span class="opacity-70">{{ translate("CustomerName") }}</span>
-        <a-input class="w-full mt-2" v-model:value="clientState.name" />
-      </a-form-item>
-      <a-form-item>
-        <span class="opacity-70">{{ translate("Address") }}</span>
-        <a-input class="w-full mt-2" v-model:value="clientState.address" />
-      </a-form-item>
-    </a-form>
-  </div>
-
-  <div class="p-6 bg-white rounded-xl">
-    <div class="mb-6 flex gap-6 items-center justify-between">
-      <span class="font-semibold text-[20px]">{{ translate("ExportGoods") }}</span>
-      <a-alert type="error" :message="translate('ErrorNotConfigPrice')" banner v-if="!allHasUntiPrice" class="rounded-xl font-medium"/>
-    </div>
-
-    <a-form class="flex items-end gap-x-6 mb-6">
-      <a-form-item class="max-w-[400px] min-w-[130px]">
-        <span class="opacity-70">{{ translate("ProductCode") }}</span>
-        <a-input class="w-full mt-2" v-model:value="filterSearching" />
-      </a-form-item>
-      <a-form-item>
-        <AntdButton :type="'text'" danger :disabled="disabledDeleteFilter" @click="handleClearFilter">
-          <template #icon>
-            <font-awesome-icon :icon="['far', 'trash-can']" />
-          </template>
-          <span class="ml-2">{{ translate("Delete") }}</span>
-        </AntdButton>
-      </a-form-item>
-    </a-form>
-
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-      <div class="basis-1/2 p-4 border rounded-xl shadow shadow-blue-100">
-        <div class="mb-6 font-semibold flex justify-between gap-2 flex-wrap">
-          <span>{{ translate("ListProductsWarehouse") }}</span>
+  <a-page-header style="border: 1px solid rgb(235, 237, 240)" :title="translate('ExportGoods')" @back="() => router.push({ path: '/warehouse-export' })" />
+  <a-row :gutter="24">
+    <a-col :span="6">
+      <a-card class="bg-white" title="Thông tin chung" :bordered="false">
+        <a-form layout="vertical">
+          <a-form-item label="Mã phiếu xuất" required>
+            <a-input v-model:value="formExport.code" placeholder="Mã phiếu xuất" />
+          </a-form-item>
+          <a-form-item label="Kho xuất" required>
+            <a-select v-model:value="formExport.warehouseId" placeholder="Kho xuất" :options="warehouses" />
+          </a-form-item>
+          <a-form-item :label="translate('StaffCharge')" required>
+            <a-select v-model:value="formExport.staffId" :placeholder="translate('Search')" :options="personnel" />
+          </a-form-item>
+        </a-form>
+      </a-card>
+      <a-card class="mt-6 bg-white" title="Bộ lọc" :bordered="false">
+        <a-form layout="vertical">
+          <a-form-item :label="translate('Supplier')">
+            <a-select :placeholder="translate('Search')" v-model:value="filterSearching.supplierId" :options="suppliers" />
+          </a-form-item>
+          <a-form-item :label="translate('Category')">
+            <a-select :placeholder="translate('Search')" v-model:value="filterSearching.categoryId" :options="categories" />
+          </a-form-item>
+          <a-form-item :label="translate('ProductClassify')">
+            <a-select :placeholder="translate('Search')" v-model:value="filterSearching.classifyId" :options="classifies" />
+          </a-form-item>
+        </a-form>
+      </a-card>
+    </a-col>
+    <a-col :span="12">
+      <div class="bg-white rounded-xl p-4">
+        <a-select class="w-full mb-6" v-model:value="detailExport.productId" placeholder="Sản phẩm" :options="products.map(x => ({value: x?.Id, label: x?.Name}))" @select="handelSelectProcut"/>
+        <div>
+          <a-card v-for="(item, index) in formExport.detail" :key="index" size="small" class="mb-4">
+            <div class="flex justify-between items-end">
+              <a-card-meta :title="item.name" :description="`${translate('UnitPrice')}: ${item.price}`" />
+              <a-input-number v-model="item.quantity" @change="updateTotal(item, index)" :placeholder="translate('Quantity')" />
+              <p>{{ item.total }}</p>
+              <a-button type="text" danger  @click="handleRemoveProduct(index)">{{ translate('Delete') }}</a-button>
+            </div>
+          </a-card>
         </div>
-        <AntdTable
-          ref="table"
-          key-field="id"
-          :index-column="true"
-          :columns="columnDataCurrent"
-          :data-source="productInWh"
-          class="w-full h-[calc(100vh-330px)] overflow-hidden overflow-y-auto"
-        >
-          <template #custom-body="{ column, record }">
-            <template v-if="column.key === 'action' && record">
-              <AntdButton type="primary" danger shape="circle" @click="handleAdd(record)">
-                <font-awesome-icon :icon="['fas', 'plus']" style="color: #ffffff" />
-              </AntdButton>
-            </template>
-          </template>
-        </AntdTable>
       </div>
-
-      <div class="basis-1/2 p-4 border rounded-xl shadow shadow-blue-100">
-        <div class="mb-6 font-semibold flex justify-between gap-2 flex-wrap">
-          <span>{{ translate("ProductListUpdatedQuantity") }}</span>
-        </div>
-        <AntdTable
-          ref="table"
-          key-field="id"
-          :index-column="true"
-          :columns="columnDataUpdate"
-          :data-source="dataList"
-          class="w-full h-[calc(100vh-330px)] overflow-hidden overflow-y-auto"
-        >
-          <template #custom-body="{ column, record }">
-            <template v-if="column.key === 'action' && record">
-              <AntdButton type="primary" danger shape="circle" @click="handleDelete(record.id)">
-                <font-awesome-icon :icon="['far', 'trash-can']" style="color: #fff" />
-              </AntdButton>
+    </a-col>
+    <a-col :span="6">
+      <a-card class="bg-white" title="Thông tin khách hàng" :bordered="false">
+        <template #extra>
+          <AntdButton :type="'primary'" @click="handleCreateCustomer">
+            <template #icon>
+              <font-awesome-icon :icon="['fas', 'plus']" />
             </template>
-          </template>
-        </AntdTable>
-      </div>
-    </div>
-
-    <div class="w-full flex items-center justify-end">
-      <AntdButton :type="'primary'" @click="handleSubmit()" :disabled="disabledHandleSubmit">
-        <template #icon>
-          <font-awesome-icon :icon="['fas', 'upload']" />
+            <span class="text-sm ml-2">{{ translate("AddNew") }}</span>
+          </AntdButton>
         </template>
-        <span class="ml-2 text-sm">{{ translate("ExportGoods") }}</span>
-      </AntdButton>
-    </div>
-  </div>
-  <!-- modal -->
-  <ModalExport :is-visible="isVisibleModalQuantity" :form="state" :max-quantity="maxQuantity" @close-modal="cancelAdd" @handle-submit="handleAddProduct" />
+        <a-form layout="vertical">
+          <a-form-item label="Số điện thoại">
+            <a-select show-search v-model:value="formExport.customerId" placeholder="Số điện thoại" :options="customers" @search="handleSearchCus"/>
+          </a-form-item>
+        </a-form>
+      </a-card>
+      <a-card class="bg-white my-6" title="Hóa đơn">
+        <p>Tổng tiền khách phải trả:  {{totalAmount}}</p>
+      </a-card>
+
+      <a-button type="primary" class="w-full" @click="handleSubmit">{{ translate('ExportGoods') }}</a-button>
+    </a-col>
+  </a-row>
+
+  <AddNewCustomer :is-visible="visibleModalCustomer" :form="customerForm" @close-modal="closeModal" @handle-submit="handleSubmitCustomer" />
 </template>
+
 <script setup lang="ts">
 import { translate } from "@/languages/i18n";
+import useVuelidate from "@vuelidate/core";
+import { required } from "@vuelidate/validators";
 import { computed, defineAsyncComponent, onMounted, reactive, ref, watch } from "vue";
-import AntdButton from "@/components/antd-button/index.vue";
-import AntdTable from "@/components/antd-table/index.vue";
-import { debounce } from "vue-debounce";
-import { useStore } from "vuex";
 import { useRoute, useRouter } from "vue-router";
-import { notification } from "ant-design-vue";
-import { removeNullObjects } from "@/utils/common";
+import { useStore } from "vuex";
+import AntdButton from "@/components/antd-button/index.vue";
+import ConstantAPI from "@/services/ConstantAPI";
+import { DataService } from "@/services/request";
+import { debounce } from "lodash";
+
+const AddNewCustomer = defineAsyncComponent(() => import("./addNewCustomer.vue"));
 
 const store = useStore();
-const router = useRouter();
 const route = useRoute();
+const router = useRouter();
 
-const ModalExport = defineAsyncComponent(() => import("./ModalExport.vue"));
-
-const productInWh = computed(() => store.getters["product/productInWh"]);
-
-const dataList = ref<Array<any>>([]);
-const filterSearching = ref<string>("");
-const isVisibleModalQuantity = ref<boolean>(false);
-const allHasUntiPrice = ref<boolean>(true);
-const maxQuantity = ref<number>(0);
-const state = reactive<any>({
-  id: null,
-  code: null,
-  quantity: null,
+const warehouses = computed(() => {
+  const result = store.getters["warehouse/warehouseInfo"];
+  return result.map((x) => ({ label: x.Code, value: x.Id }));
 });
-const clientState = reactive<any>({
-  phoneNumber: "",
+const suppliers = computed(() => {
+  const result = store.getters["producer/producerData"];
+  return result.filter((x) => x?.IsCollab === true).map((x) => ({ label: x?.Code, value: x?.Id }));
+});
+const personnel = computed(() => {
+  const result = store.getters["personnel/personnelData"];
+  return result.filter((x) => x?.Status === "ACTIVE").map((x) => ({ label: x?.Name, value: x?.Id }));
+});
+const categories = computed(() => {
+  const result = store.getters["category/categoryData"];
+  return result.filter((item: any) => item.IsRestock === true && item.WarehouseId === formExport.warehouseId).map((item: any) => ({ label: item.Code, value: item.Id }));
+});
+const classifies = computed(() => {
+  const result = store.getters["classify/classifyData"];
+  return result
+    .filter((x) => x?.IsRestock === true && x?.CategoryId === filterSearching.categoryId && x?.WarehouseId === formExport.warehouseId)
+    .map((x) => ({ label: x?.Code, value: x?.Id }));
+});
+const products = computed(() => store.getters["product/productData"]);
+
+const filterSearching = reactive({
+  name: "",
+  code: "",
+  warehouseId: null,
+  supplierId: null,
+  categoryId: null,
+  classifyId: null,
+  status: null,
+});
+
+watch(
+  filterSearching,
+  debounce((val) => {
+    fetchDataProduct(val);
+  }, 500),
+  { deep: true }
+);
+
+const detailExport = reactive({
+  productId: null,
+  quantity: 0,
+  price: 0,
+  total: 0,
+  name: ''
+});
+
+const formExport = reactive({
+  code: "",
+  customerId: null,
+  warehouseId: null,
+  staffId: null,
+  total: 0,
+  discount: null,
+  detail: [],
+});
+
+const customerForm = reactive({
+  phone: "",
   name: "",
   address: "",
+  email: "",
+  warehouseId: null,
+});
+const visibleModalCustomer = ref<boolean>(false);
+
+const handleCreateCustomer = () => {
+  visibleModalCustomer.value = true;
+  customerForm.warehouseId = formExport.warehouseId;
+};
+
+const handleSubmitCustomer = async (state) => {
+  const result = await DataService.post("customers", state, {});
+  closeModal();
+};
+
+const customers = ref<any>([]);
+
+const handleSearchCus = debounce(async (val: string) => {
+  const resultCus = await DataService.get("customers", {keyword: val}, {});
+  customers.value = resultCus.data.map(x => ({ label: x.Name, value: x.Id }));
+}, 300);
+
+const fetchDataCustomer = async () => {
+  const resultCus = await DataService.get("customers", null, {});
+  customers.value = resultCus.data.map(x => ({ label: x.Name, value: x.Id }));
+};
+
+const closeModal = () => {
+  visibleModalCustomer.value = false;
+};
+
+const handelSelectProcut = (val) => {
+  detailExport.productId = val; 
+  detailExport.name = products.value.find(x => x.Id === val)?.Name;
+  detailExport.price = products.value.find(x => x.Id === val)?.Price;
+  const existingIndex = formExport.detail.findIndex((x) => x.productId === val);
+  if (existingIndex !== -1) {
+    detailExport.quantity = formExport.detail[existingIndex].quantity;
+    detailExport.price = formExport.detail[existingIndex].price;
+  } else {
+    formExport.detail.push({ ...detailExport });
+  }
+}
+
+const handleRemoveProduct = (index) => {
+  formExport.detail.splice(index, 1);
+};
+
+const updateTotal = (item, idx) => {
+  formExport.detail[idx].total = item.quantity * item.price;
+
+};
+
+const totalAmount = computed(() => {
+  return formExport.detail.reduce((acc, item) => acc + item.total, 0);
 });
 
-const disabledDeleteFilter = computed(() => filterSearching.value?.length === 0);
-
-const handleClearFilter = () => {
-  filterSearching.value = "";
-};
-
-const columnDataCurrent = ref<Array<any>>([
-  {
-    title: translate("ProductCode"),
-    dataIndex: "code",
-    key: "code",
-    align: "left",
-  },
-  {
-    title: translate("CurrentQuantity"),
-    dataIndex: "quantity",
-    key: "quantity",
-    align: "left",
-  },
-  {
-    dataIndex: "action",
-    key: "action",
-    width: 80,
-    align: "center",
-    fixed: "right",
-  },
-]);
-const columnDataUpdate = ref<Array<any>>([
-  {
-    title: translate("ProductCode"),
-    dataIndex: "code",
-    key: "code",
-    align: "left",
-  },
-  {
-    title: translate("Quantity"),
-    dataIndex: "quantity",
-    key: "quantity",
-    align: "left",
-  },
-  {
-    dataIndex: "action",
-    key: "action",
-    width: 80,
-    align: "center",
-    fixed: "right",
-  },
-]);
-
-const handleAdd = (item) => {
-  state.id = item?.id;
-  state.code = item?.code;
-  state.quantity = null;
-  maxQuantity.value = item.quantity;
-  isVisibleModalQuantity.value = true;
-};
-
-const cancelAdd = () => {
-  state.id = null;
-  state.code = null;
-  state.quantity = null;
-  isVisibleModalQuantity.value = false;
-};
-
-const checkData = (item) => {
-  return dataList.value.find((e) => e.id === item.idProduct);
-};
-
-const handleAddProduct = (data) => {
-  const value = {
-    idProduct: data.id,
-    codeProduct: data.code,
-    quantity: Number(data.quantity),
-  };
-  if (checkData(data)) {
-    dataList.value.map((item) => {
-      if (item.id === data.id) {
-        item.quantity += value.quantity;
-      }
-    });
-  } else {
-    dataList.value.push(value);
-  }
-  cancelAdd();
-};
-
-const handleDelete = (idItem) => {
-  dataList.value = dataList.value.filter((ele) => ele?.id !== idItem);
-};
-
-const disabledHandleSubmit = computed(() => dataList.value?.length === 0);
-
-const totalProductImport = (data) => {
-  let restult = 0;
-  data?.forEach(ele => {
-    restult += ele?.quantity;
-  });
-  return restult;
-};
-
-
 const handleSubmit = async () => {
-  const payload = {
-    dataUpdate: {
-      idWarehouse: Number(route.params?.id),
-      DataUpdate: dataList.value,
-      totalProduct: totalProductImport(dataList.value)
-    },
-    customer: {
-      phoneNumber: clientState.phoneNumber,
-      name: clientState.name,
-      address: clientState.address
-    }
-  }
 
-  try {
-    await store.dispatch("warehouse/goodsExport", payload);
-    fetchProduct({ id: Number(route.params?.id) });
-    notification["success"]({
-      message: translate("noti.SuccessfulExport"),
-    });
-  } catch (error) {
-    console.log(error);
-    notification["error"]({
-      message: translate("noti.FaildExport"),
-    });
-  }
-  dataList.value = [];
-  clientState.phoneNumber = "";
-  clientState.name = "";
-  clientState.address = "";
+}
+
+const fetchDataFilter = async () => {
+  await Promise.all([
+    store.dispatch("producer/getSupplier", null),
+    store.dispatch("category/getCategory", null),
+    store.dispatch("classify/getClassify", null),
+    store.dispatch("warehouse/getWarehouse", null),
+    store.dispatch("personnel/getPersonnel", null),
+  ]);
 };
 
-watch(
-  () => clientState?.phoneNumber,
-  debounce((val) => {
-
-  }, 500)
-)
-
-watch(
-  () => filterSearching.value,
-  debounce(() => {
-    const params = {
-      code: filterSearching.value
-    }
-    const payload = {
-      id: Number(route.params?.id),
-      params: removeNullObjects(params)
-    };
-    fetchProduct(payload);
-  }, 500)
-)
-
-const fetchProduct = async (params) => {
-  const res = await store.dispatch("product/getProductInWh", params);
-  allHasUntiPrice.value = res.allHasUntiPrice;
+const fetchDataProduct = async (params) => {
+  await store.dispatch("product/getProduct", params);
 };
 
 onMounted(async () => {
-  await fetchProduct({id: route.params?.id});
+  await fetchDataFilter();
+  await fetchDataProduct(null);
+  await fetchDataCustomer();
 });
 </script>
+
+<style lang="scss" scoped></style>
