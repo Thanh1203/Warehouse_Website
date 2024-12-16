@@ -36,7 +36,7 @@
           <a-card v-for="(item, index) in formExport.detail" :key="index" size="small" class="mb-4">
             <div class="flex justify-between items-end">
               <a-card-meta :title="item.name" :description="`${translate('UnitPrice')}: ${item.price}`" />
-              <a-input-number v-model="item.quantity" @change="updateTotal(item, index)" :placeholder="translate('Quantity')" />
+              <a-input-number v-model:value="item.quantity" @change="updateTotal(item, index)" :placeholder="translate('Quantity')" />
               <p>{{ item.total }}</p>
               <a-button type="text" danger  @click="handleRemoveProduct(index)">{{ translate('Delete') }}</a-button>
             </div>
@@ -211,7 +211,8 @@ const totalAmount = computed(() => {
 });
 
 const handleSubmit = async () => {
-
+  formExport.total = totalAmount.value;
+  await store.dispatch('warehouse/goodsExport', formExport);
 }
 
 const fetchDataFilter = async () => {

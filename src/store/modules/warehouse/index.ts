@@ -126,7 +126,7 @@ export default {
     },
     async goodsExport({ dispatch }, payload) {
       try {
-        const response: any = await DataService.callApi(ConstantAPI.warehouseImport.PUT_GOODS_EXPORT, payload, null);
+        const response: any = await DataService.post(ConstantAPI.warehouseExport.GET.url, payload, null);
         return response;
       } catch (error) {
         console.log(error);
